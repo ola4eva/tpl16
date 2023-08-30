@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+
+.o_list_number {
+    text-align: right;
+    white-space: nowrap;
+    height: 2rem;
+    font-size: 100%;
+}

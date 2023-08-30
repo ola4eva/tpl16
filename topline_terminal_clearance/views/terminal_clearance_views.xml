@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+
+    <record id="action_terminal_clearance_view" model="ir.actions.act_window">
+      <field name="name">Terminal Clearance Form</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">terminal.clearance</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+		        Terminal Clearance
+        </p>
+        <p>
+		         Click Create!!
+        </p>
+      </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_terminal_clearance_form" model="ir.ui.view">
+      <field name="name">view.terminal.clearance.form</field>
+      <field name="model">terminal.clearance</field>
+      <field name="arch" type="xml">
+        <form string="Terminal Clearance">
+          <header>
+            <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object" groups="topline_terminal_clearance.group_user" />
+            <button name="validate_request" string="Manager Approval" class="oe_highlight" states="confirm" type="object" groups="topline_terminal_clearance.group_manager" />
+            <button name="approve_request" string="Approve" class="oe_highlight" states="validate" type="object" groups="topline_terminal_clearance.group_administrator" />
+            <button name="refuse_request" string="Refuse" id="manager_reject" states="confirm" type="object" groups="topline_terminal_clearance.group_manager" />
+            <button name="refuse_request" string="Refuse" states="validate" id="administrator_reject" type="object" groups="topline_terminal_clearance.group_administrator" />
+            <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate,approved"/>
+          </header>
+          <sheet>
+            <group>
+              <field name="employee_id"/>
+              <field name="department_id"/>
+            </group>
+            <notebook>
+              <page string="ITEMS RETUREND">
+                <field name="terminal_clearance_line_ids">
+                  <tree editable="1">
+                    <field name="items_id"/>
+                    <field name="quantity"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_terminal_clearance_tree" model="ir.ui.view">
+      <field name="name">view..tree</field>
+      <field name="model">terminal.clearance</field>
+      <field name="arch" type="xml">
+        <tree string="Terminal Clearance">
+          <field name="employee_id"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <menuitem id="terminal_clearance_form" name="Terminal Clearance" parent="hr.menu_hr_root" action="action_terminal_clearance_view"/>
+    
+  </data>
+</odoo>

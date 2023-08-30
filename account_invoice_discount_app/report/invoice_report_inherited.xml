@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Signature print in invoice/bill report -->
+        <template id="invoice_qweb_report_inherited" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[hasclass('clearfix')]/div[@id='total']/div/table/tr[1]" position="after">
+<!--                <t t-if="o.is_global_discount == True">-->
+                     <tr class="border-black o_subtotal" style="">
+                        <td><strong>Discount</strong></td>
+                        <td class="text-right">
+                            <t t-if="o.discount_type == 'fix'">
+                                <span t-field="o.discount"/>
+                            </t>
+                            <t t-elif="o.discount_type == 'percent'">
+                                <t t-if="o.discount &gt; 0">
+                                    <span t-esc="(o.amount_untaxed * o.discount) / 100"/>
+                                </t>
+                                <t t-else="">
+                                    <span>0</span>
+                                </t>
+
+                            </t>
+                            <t t-else="">
+                                <span>0</span>
+                            </t>
+
+                        </td>
+                    </tr>
+<!--                </t>-->
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

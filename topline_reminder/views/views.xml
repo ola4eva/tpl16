@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<odoo>
+  <data>
+	
+	<!-- topline reminder action-->
+    <record model="ir.actions.act_window" id="topline_reminder_form_action">
+		<field name="name">Reminders</field>
+		<field name="res_model">topline.reminder</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- topline.reminder tree view-->
+    <record id="topline_reminder_tree_view" model="ir.ui.view">
+		<field name="name">topline.reminder.tree</field>
+		<field name="model">topline.reminder</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree decoration-info="date_deadline == 'False'" decoration-danger="date_deadline &lt; current_date">
+				<field name="name"/>
+				<field name="date"/>
+				<field name="date_deadline"/>
+			</tree>
+		</field>
+	</record>
+	
+	<record id="topline_reminder_form_view" model="ir.ui.view">
+	    <field name="name">topline.reminder.form</field>
+	    <field name="model">topline.reminder</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Reminders">
+				 <sheet>
+				 	<div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" groups="hr.group_hr_user" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                        </button>
+                    </div>
+				 	<div class="oe_title">
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Reminder For..." required="1"/>
+                        </h1>
+                        <group>
+                        	<field name="periodicity" widget="radio" options="{'horizontal': true}"/><!--  class="oe_edit_only" -->
+                        </group>
+                    </div>
+			 		<group col="4" colspan="4">
+			 			<field name="date"/>
+			 			<field name="date_deadline" required="1"/>
+			 			<field name="employee_id"/>
+			 			<field name="reminder_group_ids" widget="many2many_tags"/>
+			 			<field name="file" filename="datas_fname"/>
+						<field name="datas_fname" invisible="1" class="oe_inline oe_right"/>
+			 		</group>
+			 		<group col="2" colspan="4">
+			 			<field name="day" attrs="{'invisible': [('periodicity','!=', 'day')], 'required': [('periodicity','=', 'day')]}"/>
+						<field name="week" attrs="{'invisible': [('periodicity','!=', 'week')], 'required': [('periodicity','=', 'week')]}"/>
+						<field name="month" attrs="{'invisible': [('periodicity','!=', 'month')], 'required': [('periodicity','=', 'month')]}"/>
+						<field name="year" attrs="{'invisible': [('periodicity','!=', 'year')], 'required': [('periodicity','=', 'year')]}"/>
+			 		</group>
+			 		<field name="comments" placeholder="Coments..."/>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+	
+	<menuitem name="Reminder" id="topline_reminder_form_menus" 
+  			  parent="purchase.menu_purchase_config"
+              action="topline_reminder_form_action"/>
+              
+   	<menuitem name="Reminder" id="topline_reminder_form_menus" 
+  			  parent="crm.crm_menu_config"
+              action="topline_reminder_form_action"/>
+              
+    <menuitem name="Reminders" id="topline_admin_reminder_form_menus" 
+  			  parent="topline.topline_admin_main_menu"
+              action="topline_reminder_form_action"/>
+              
+    <menuitem name="Reminders" id="topline_hse_reminder_form_menus" 
+  			  parent="topline.topline_hse_main_menu"
+              action="topline_reminder_form_action" sequence="20"/>
+  </data>
+</odoo>

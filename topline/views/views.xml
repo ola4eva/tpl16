@@ -1,0 +1,4476 @@
+<odoo>
+  <data>
+
+	
+
+	<record id="search_salary_advance_form" model="ir.ui.view">
+		<field name="name">search.salary.advance.form</field>
+		<field name="model">salary.advance.form</field>
+		<field name="arch" type="xml">
+			<search string="Salary Advance">
+				<field name="name"/>
+				<field name="department_id"/>
+				<field name="employee_id"/>
+			</search>
+		</field>
+	</record>
+
+	<record id="search_cash_advance_request_form" model="ir.ui.view">
+		<field name="name">search.cash.advance.request.form</field>
+		<field name="model">cash.advance.request.form</field>
+		<field name="arch" type="xml">
+			<search string="Cash Advance">
+				<field name="name"/>
+				<field name="department_id"/>
+				<field name="cash_advance_request_form_line_ids" string="Details/purpose"/>
+				<field name="date"/>
+				<field name="employee_id"/>
+			</search>
+		</field>
+	</record>
+
+	<record id="search_cash_retirement_form" model="ir.ui.view">
+		<field name="name">search.cash.retirement.form</field>
+		<field name="model">cash.retirement.form</field>
+		<field name="arch" type="xml">
+			<search string="Cash Retirement">
+				<field name="name"/>
+				<field name="department_id"/>
+				<field name="cash_retirement_form_line_ids" string="Details/purpose"/>
+				<field name="date"/>
+				<field name="employee_id"/>
+			</search>
+		</field>
+	</record>
+
+	<record id="search_missing_stolen_asset_report_form" model="ir.ui.view">
+		<field name="name">search.missing.stolen.asset.report.form</field>
+		<field name="model">missing.stolen.asset.report.form</field>
+		<field name="arch" type="xml">
+			<search string="Missing Asset">
+				<field name="name_ref"/>
+				<field name="department_id"/>
+				<field name="employee_id"/>
+				<field name="name"/>
+				<field name="serial_no"/>
+			</search>
+		</field>
+	</record>
+
+	<record id="search_service_order" model="ir.ui.view">
+		<field name="name">search.service.order</field>
+		<field name="model">service.order</field>
+		<field name="arch" type="xml">
+			<search string="Service Order">
+				<field name="name"/>
+				<field name="department_id"/>
+				<field name="employee_id"/>
+				<field name="project_description"/>
+				<field name="service_order_line_ids" string="Descritpion"/>
+				<field name="date"/>
+			</search>
+		</field>
+	</record>
+
+
+	<record id="search_journey_request" model="ir.ui.view">
+		<field name="name">search.journey.request</field>
+		<field name="model">journey.request</field>
+		<field name="arch" type="xml">
+			<search string="Journey Request">
+				<field name="name"/>
+				<field name="department_id"/>
+				<field name="employee_id"/>
+				<field name="purpose_of_journey"/>
+				<field name="date_of_journey"/>
+			</search>
+		</field>
+	</record>
+
+	<record id="search_maintenance_request_failure_report_sheet" model="ir.ui.view">
+		<field name="name">search.maintenance.request.failure.report.sheet</field>
+		<field name="model">maintenance.request.failure.report.sheet</field>
+		<field name="arch" type="xml">
+			<search string="Maintenance Failure report">
+				<field name="ref"/>
+				<field name="name"/>
+				<field name="asset_no"/>
+				<field name="employee_id"/>
+				<field name="observations"/>
+			</search>
+		</field>
+	</record>
+
+  	<!-- construction.equipment.checklist-->
+    <record model="ir.actions.act_window" id="topline_construction_equipment_checklist_form_action">
+		<field name="name">Construction Equipment Checklist</field>
+		<field name="res_model">construction.equipment.checklist</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- service.order-->
+    <record model="ir.actions.act_window" id="topline_service_order_form_action">
+		<field name="name">Service Order</field>
+		<field name="res_model">service.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="search_service_order"/>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- action.request.log-->
+    <record model="ir.actions.act_window" id="topline_action_request_log_form_action">
+		<field name="name">CORRECTIVE/PREVENTIVE ACTION LOG</field>
+		<field name="res_model">action.request.log</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- maintenance.request.failure.report.sheet-->
+    <record model="ir.actions.act_window" id="topline_maintenance_request_failure_report_sheet_form_action">
+		<field name="name">Maintenance Request And Failure Report Sheet</field>
+		<field name="res_model">maintenance.request.failure.report.sheet</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="search_maintenance_request_failure_report_sheet"/>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- qaqc.premobilization.checklist-->
+    <record model="ir.actions.act_window" id="topline_qaqc_premobilization_checklist_form_action">
+		<field name="name">QA/QC Premobilization Checklist (Onshore And Offshore)</field>
+		<field name="res_model">qaqc.premobilization.checklist</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- employee.requisition.form-->
+    <record model="ir.actions.act_window" id="topline_employee_requisition_form_action">
+		<field name="name">Employee Requisition Form</field>
+		<field name="res_model">employee.requisition.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- instruments.calibration.status.log action-->
+    <record model="ir.actions.act_window" id="topline_instruments_calibration_status_log_form_action">
+		<field name="name">Instruments Calibration Status Log Form</field>
+		<field name="res_model">instruments.calibration.status.log</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- work.completion.certificate action-->
+    <record model="ir.actions.act_window" id="topline_work_completion_certificate_form_action">
+		<field name="name">Work Completion Certificate</field>
+		<field name="res_model">work.completion.certificate</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- electricity.use.monitoring action-->
+    <record model="ir.actions.act_window" id="topline_electricity_use_monitoring_action">
+		<field name="name">Electricity Use Monitoring</field>
+		<field name="res_model">electricity.use.monitoring</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,kanban</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- water.use.monitoring action-->
+    <record model="ir.actions.act_window" id="topline_water_use_monitoring_action">
+		<field name="name">Water Use Mmonitoring</field>
+		<field name="res_model">water.use.monitoring</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,kanban</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- asset.movement.form action-->
+    <record model="ir.actions.act_window" id="topline_asset_movement_form_action">
+		<field name="name">Asset Movement Form</field>
+		<field name="res_model">asset.movement.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- job.call.out.form action-->
+    <record model="ir.actions.act_window" id="topline_job_call_out_form_action">
+		<field name="name">Job Call Out Form</field>
+		<field name="res_model">job.call.out.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- drivers.health.checklist action-->
+    <record model="ir.actions.act_window" id="topline_drivers_health_checklist_form_action">
+		<field name="name">Drivers Health Checklist</field>
+		<field name="res_model">drivers.health.checklist</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- job.safety.inspection.checklist action-->
+    <record model="ir.actions.act_window" id="topline_job_safety_inspection_checklist_form_action">
+		<field name="name">Job Safety Inspection Checklist</field>
+		<field name="res_model">job.safety.inspection.checklist</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- waste.management.form action-->
+    <record model="ir.actions.act_window" id="topline_waste_management_form_action">
+		<field name="name">Waste Management Form</field>
+		<field name="res_model">waste.management.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- late.arrival.form action-->
+    <record model="ir.actions.act_window" id="topline_late_arrival_form_action">
+		<field name="name">Late Arrival Form</field>
+		<field name="res_model">late.arrival.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- insurance.log action-->
+    <record model="ir.actions.act_window" id="topline_insurance_log_action">
+		<field name="name">Insurance Log</field>
+		<field name="res_model">insurance.log</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- outgoing.document.template action-->
+    <record model="ir.actions.act_window" id="topline_outgoing_document_template_action">
+		<field name="name">Outgoing Document Template</field>
+		<field name="res_model">outgoing.document.template</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- incoming.document.template action-->
+    <record model="ir.actions.act_window" id="topline_incoming_document_template_action">
+		<field name="name">Incoming Document Template</field>
+		<field name="res_model">incoming.document.template</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- certificates.for.tendering action-->
+    <record model="ir.actions.act_window" id="topline_certificates_for_tendering_action">
+		<field name="name">Certificates For Tendering</field>
+		<field name="res_model">certificates.for.tendering</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- journey.request action-->
+    <record model="ir.actions.act_window" id="topline_journey_request_action">
+		<field name="name">Journey Request</field>
+		<field name="res_model">journey.request</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="search_journey_request"/>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<record id="topline_qaqc_calibration_log_view_search" model="ir.ui.view">
+        <field name="name">calibration.log.search</field>
+        <field name="model">calibration.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Calibration Log" name="type_of_calibration_log_id" context="{'group_by':'type_of_calibration_log_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+	
+	<!-- calibration.log action-->
+    <record model="ir.actions.act_window" id="topline_calibration_log_action">
+		<field name="name">Calibration Log</field>
+		<field name="res_model">calibration.log</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="topline_qaqc_calibration_log_view_search"/>
+		<field name="domain">[]</field>
+		<field name="context">{'search_default_type_of_calibration_log_id':1, 'group_by':[]}</field>
+	</record>
+	
+	<!-- type.calibration.log action-->
+    <record model="ir.actions.act_window" id="topline_type_calibration_log_action">
+		<field name="name">type of calibration log</field>
+		<field name="res_model">type.calibration.log</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- mdr.forms action-->
+    <record model="ir.actions.act_window" id="topline_mdr_forms_action">
+		<field name="name">Master Document Register</field>
+		<field name="res_model">mdr.forms</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<record id="topline_prc_forms_view_search" model="ir.ui.view">
+        <field name="name">prc.forms.search</field>
+        <field name="model">prc.forms</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Department" name="department_id" context="{'group_by':'department_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+	
+	<!-- prc.forms action-->
+    <record model="ir.actions.act_window" id="topline_prc_forms_action">
+		<field name="name">PRC Forms</field>
+		<field name="res_model">prc.forms</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,kanban</field>
+		<field name="search_view_id" ref="topline_prc_forms_view_search"/>
+		<field name="domain">[]</field>
+		<field name="context">{'search_default_department_id':1, 'group_by':[]}</field>
+	</record>
+	
+	<!-- receiving.inspection.report action-->
+    <record model="ir.actions.act_window" id="topline_receiving_inspection_report_action">
+		<field name="name">Receiving Inspection Report</field>
+		<field name="res_model">receiving.inspection.report</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<record id="topline_tender_analysis_view_search" model="ir.ui.view">
+        <field name="name">tender.analysis.search</field>
+        <field name="model">tender.analysis</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Type" name="type" context="{'group_by':'type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+	
+	<!-- tender.analysis action-->
+    <record model="ir.actions.act_window" id="topline_tender_analysis_action">
+		<field name="name">ANALYSIS FOR TECHNICAL BIDS</field>
+		<field name="res_model">tender.analysis</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,kanban</field>
+		<field name="search_view_id" ref="topline_tender_analysis_view_search"/>
+		<field name="domain">[]</field>
+		<field name="context">{'search_default_type':1, 'group_by':[]}</field>
+	</record>
+	
+	<record id="topline_tender_monitoring_sheet_view_search" model="ir.ui.view">
+        <field name="name">tender.monitoring.sheet.search</field>
+        <field name="model">tender.monitoring.sheet</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Tender" name="tender_id" context="{'group_by':'tender_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+	
+	<!-- tender.monitoring.sheet action-->
+    <record model="ir.actions.act_window" id="topline_tender_monitoring_sheet_action">
+		<field name="name">Tender Monitoring Sheet</field>
+		<field name="res_model">tender.monitoring.sheet</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,kanban</field>
+		<field name="search_view_id" ref="topline_tender_monitoring_sheet_view_search"/>
+		<field name="domain">[]</field>
+		<field name="context">{'search_default_tender_id':1, 'group_by':[]}</field>
+	</record>
+	
+	<!-- type.tender.monitoring.sheet action-->
+    <record model="ir.actions.act_window" id="topline_type_tender_monitoring_sheet_action">
+		<field name="name">Tender(s)</field>
+		<field name="res_model">type.tender.monitoring.sheet</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<record id="topline_fleet_vehicle_movement_register_view_search" model="ir.ui.view">
+        <field name="name">vehicle.movement.register.search</field>
+        <field name="model">vehicle.movement.register</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Date" name="date" context="{'group_by':'date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+	
+	<!-- vehicle.movement.register action-->
+    <record model="ir.actions.act_window" id="topline_vehicle_movement_register_action">
+		<field name="name">Vehicle Movement Register</field>
+		<field name="res_model">vehicle.movement.register</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="topline_fleet_vehicle_movement_register_view_search"/>
+		<field name="domain">[]</field>
+		<field name="context">{'search_default_date':1, 'group_by':[]}</field>
+	</record>
+	
+	<!-- tpl maintenance.equipment tree view-->
+    <record id="topline_maintenance_equipment_tree_view" model="ir.ui.view">
+		<field name="name">maintenance.equipment.tree</field>
+		<field name="model">maintenance.equipment</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="asset_number"/>
+			<field name="location"/>
+			<field name="scrap_date" string="Outgoing Date"/>
+			<field name="current_status"/>
+		</field>
+	</record>
+	
+	<record id="topline_maintenance_equipment_view_search" model="ir.ui.view">
+        <field name="name">maintenance.equipment.search</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Category" name="category_id" context="{'group_by':'category_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+	
+	<!-- tpl maintenance.equipment action-->
+    <record model="ir.actions.act_window" id="topline_maintenance_equipment_action">
+		<field name="name">Equipment Status Log</field>
+		<field name="res_model">maintenance.equipment</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name = "view_id" ref= "topline_maintenance_equipment_tree_view"/>
+		<field name="search_view_id" ref="topline_maintenance_equipment_view_search"/>
+		<field name="domain">[]</field>
+		<field name="context">{'search_default_category_id':1, 'group_by':[]}</field>
+	</record>
+	
+	
+	<!-- exit.form action-->
+    <record model="ir.actions.act_window" id="topline_exit_form_action">
+		<field name="name">Exit Form (Working Hours)</field>
+		<field name="res_model">exit.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- absense.information action-->
+    <record model="ir.actions.act_window" id="topline_absense_information_form_action">
+		<field name="name">Absense Information</field>
+		<field name="res_model">absense.information</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- internet.downtime.register action-->
+    <record model="ir.actions.act_window" id="topline_internet_downtime_register_form_action">
+		<field name="name">Internet Downtime Register</field>
+		<field name="res_model">internet.downtime.register</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- ms.office.deployment action-->
+    <record model="ir.actions.act_window" id="topline_ms_office_deployment_form_action">
+		<field name="name">MS Office Deployment</field>
+		<field name="res_model">ms.office.deployment</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- antivirus.tracker.renewal action-->
+    <record model="ir.actions.act_window" id="topline_antivirus_tracker_renewal_form_action">
+		<field name="name">Antivirus Tracker Renewal</field>
+		<field name="res_model">antivirus.tracker.renewal</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- planned.preventive.maintenance action-->
+    <record model="ir.actions.act_window" id="topline_planned_preventive_maintenance_form_action">
+		<field name="name">Planned Preventive Maintenance</field>
+		<field name="res_model">planned.preventive.maintenance</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- equipment.maintenance.register action-->
+    <record model="ir.actions.act_window" id="topline_equipment_maintenance_register_form_action">
+		<field name="name">Equipment Maintenance Register</field>
+		<field name="res_model">equipment.maintenance.register</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- ict.paid.services action-->
+    <record model="ir.actions.act_window" id="topline_ict_paid_services_form_action">
+		<field name="name">ICT Paid Services</field>
+		<field name="res_model">ict.paid.services</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- project.monitoring.sheet action-->
+    <record model="ir.actions.act_window" id="topline_project_monitoring_sheet_form_action">
+		<field name="name">Project Monitoring Sheet</field>
+		<field name="res_model">project.monitoring.sheet</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- client.feedback.log action-->
+    <record model="ir.actions.act_window" id="topline_client_feedback_log_form_action">
+		<field name="name">Client Feedback Log</field>
+		<field name="res_model">client.feedback.log</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- client.complaints.log action-->
+    <record model="ir.actions.act_window" id="topline_client_complaints_log_form_action">
+		<field name="name">Client Complaints Log</field>
+		<field name="res_model">client.complaints.log</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- qaqc.vendors.facility.audit.checklist action-->
+    <record model="ir.actions.act_window" id="topline_qaqc_vendors_facility_audit_checklist_form_action">
+		<field name="name">QA/QC Vendors Facility Audit Checklist</field>
+		<field name="res_model">qaqc.vendors.facility.audit.checklist</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- atp.form action-->
+    <record model="ir.actions.act_window" id="topline_atp_form_action">
+		<field name="name">Authorization To Purchase(ATP)</field>
+		<field name="res_model">atp.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- travel.report action-->
+    <record model="ir.actions.act_window" id="topline_travel_report_action">
+		<field name="name">Travel Report</field>
+		<field name="res_model">travel.report</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- stationery.report action-->
+    <record model="ir.actions.act_window" id="topline_stationery_report_action">
+		<field name="name">Stationery Report</field>
+		<field name="res_model">stationery.report</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- salary.advance.form action-->
+    <record model="ir.actions.act_window" id="topline_salary_advance_form_action">
+		<field name="name">Salary Advance</field>
+		<field name="res_model">salary.advance.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,pivot</field>
+		<field name="search_view_id" ref="search_salary_advance_form"/>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	
+	<!-- missing.stolen.asset.report.form action-->
+    <record model="ir.actions.act_window" id="topline_missing_stolen_asset_report_form_action">
+		<field name="name">Missing/Stolen Asset Reporting Form</field>
+		<field name="res_model">missing.stolen.asset.report.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,pivot</field>
+		<field name="search_view_id" ref="search_missing_stolen_asset_report_form"/>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- cash.advance.request.form action-->
+    <record model="ir.actions.act_window" id="topline_cash_advance_request_form_action">
+		<field name="name">Cash Advance Request</field>
+		<field name="res_model">cash.advance.request.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,pivot</field>
+		<field name="search_view_id" ref="search_cash_advance_request_form"/>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- cash.retirement.form action-->
+    <record model="ir.actions.act_window" id="topline_cash_retirement_form_action">
+		<field name="name">Cash Retirement Form</field>
+		<field name="res_model">cash.retirement.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,pivot</field>
+		<field name="search_view_id" ref="search_cash_retirement_form"/>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- site.time.sheet action-->
+    <record model="ir.actions.act_window" id="topline_site_time_sheet_form_action">
+		<field name="name">Site Time Sheet</field>
+		<field name="res_model">site.time.sheet</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<record id="topline_ems_monitoring_view_search" model="ir.ui.view">
+        <field name="name">ems.monitoring.search</field>
+        <field name="model">ems.monitoring</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Month" name="date" context="{'group_by':'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+	
+	<!-- ems.monitoring action-->
+    <record model="ir.actions.act_window" id="topline_ems_monitoring_form_action">
+		<field name="name">EMS Monitoring</field>
+		<field name="res_model">ems.monitoring</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="topline_ems_monitoring_view_search"/>
+		<field name="domain">[]</field>
+		<field name="context">{'search_default_date':1, 'group_by':[]}</field>
+	</record>
+	
+	<!-- ems.kpi action-->
+    <record model="ir.actions.act_window" id="topline_ems_kpi_form_action">
+		<field name="name">EMS KPI</field>
+		<field name="res_model">ems.kpi</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- fumigation.schedule action-->
+    <record model="ir.actions.act_window" id="topline_fumigation_schedule_form_action">
+		<field name="name">Fumigation Schedule</field>
+		<field name="res_model">fumigation.schedule</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- daily.checklist action-->
+    <record model="ir.actions.act_window" id="topline_ict_daily_checklist_form_action">
+		<field name="name">Daily Checklist</field>
+		<field name="res_model">daily.checklist</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- daily.checklist.equipment action-->
+    <record model="ir.actions.act_window" id="topline_daily_checklist_equipment_form_action">
+		<field name="name">Daily Checklist Equipment</field>
+		<field name="res_model">daily.checklist.equipment</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	
+	
+	<!--		Lifitng Plan Form-->
+		<record id="action_lifting_plan_view" model="ir.actions.act_window">
+		    <field name="name">Lifting Plan</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">lifting.plan</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Lifting Plan
+		      </p><p>
+
+		      </p>
+		    </field>
+		</record>
+	
+	
+	<record model="ir.actions.act_window" id="topline_missing_stolen_asset_report_form_reporting_action">
+		<field name="name">Missing Stolen Asset Report Analysis</field>
+		<field name="res_model">missing.stolen.asset.report.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,pivot,kanban,activity</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	<record model="ir.actions.act_window" id="topline_cash_advance_request_form_reporting_action">
+		<field name="name">Cash Advance Request Analysis</field>
+		<field name="res_model">cash.advance.request.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,pivot,kanban,activity</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	<record model="ir.actions.act_window" id="topline_cash_retirement_form_reporting_action">
+		<field name="name">Cash Retirement Analysis</field>
+		<field name="res_model">cash.retirement.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,pivot,kanban,activity</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	<record model="ir.actions.act_window" id="topline_salary_advance_form_reporting_action">
+		<field name="name">Salary Advance Analysis</field>
+		<field name="res_model">salary.advance.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,pivot,kanban,activity</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	<record model="ir.actions.act_window" id="topline_journey_request_form_reporting_action">
+		<field name="name">Journey Request Analysis</field>
+		<field name="res_model">journey.request</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,pivot,kanban,activity</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+	</record>
+	
+	<!-- construction.equipment.checklist tree view-->
+    <record id="topline_construction_equipment_checklist_tree_view" model="ir.ui.view">
+		<field name="name">construction.equipment.checklist.tree</field>
+		<field name="model">construction.equipment.checklist</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="date"/>
+			<field name="state"/>
+		</field>
+	</record>
+		
+	<!-- service.order tree view-->
+    <record id="topline_service_order_tree_view" model="ir.ui.view">
+		<field name="name">service.order.tree</field>
+		<field name="model">service.order</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="employee_id"/>
+ 			<field name="department_id"/>
+ 			<field name="location"/>
+ 			<field name="project_id"/>
+ 			<field name="project_description"/>
+ 			<field name="date"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- action.request.log tree view-->
+    <record id="topline_action_request_log_tree_view" model="ir.ui.view">
+		<field name="name">action.request.log.tree</field>
+		<field name="model">action.request.log</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="employee_id"/>
+ 			<field name="date"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- maintenance.request.failure.report.sheet view-->
+    <record id="topline_maintenance_request_failure_report_sheet_tree_view" model="ir.ui.view">
+		<field name="name">maintenance.request.failure.report.sheet.tree</field>
+		<field name="model">maintenance.request.failure.report.sheet</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="ref"/>
+			<field name="name"/>
+ 			<field name="asset_no"/>
+			<field name="employee_id"/>
+			<field name="date"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- aqc.premobilization.checklist tree view-->
+    <record id="topline_qaqc_premobilization_checklist_tree_view" model="ir.ui.view">
+		<field name="name">qaqc.premobilization.checklist.tree</field>
+		<field name="model">qaqc.premobilization.checklist</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="project_id"/>
+ 			<!-- <field name="asset_no"/>
+			<field name="employee_id"/>
+			<field name="date"/> -->
+		</field>
+	</record>
+	
+	<!-- employee.requisition.form tree view-->
+    <record id="topline_employee_requisition_form_tree_view" model="ir.ui.view">
+		<field name="name">employee.requisition.form.tree</field>
+		<field name="model">employee.requisition.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="department_id"/>
+ 			<field name="job_id"/>
+			<field name="employee_id"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- instruments.calibration.status.log tree view-->
+    <record id="topline_instruments_calibration_status_log_tree_view" model="ir.ui.view">
+		<field name="name">instruments.calibration.status.log.tree</field>
+		<field name="model">instruments.calibration.status.log</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="employee_id"/>
+			<field name="date"/>
+		</field>
+	</record>
+	
+	<!-- work.completion.certificate tree view-->
+    <record id="topline_work_completion_certificate_tree_view" model="ir.ui.view">
+		<field name="name">work.completion.certificate.tree</field>
+		<field name="model">work.completion.certificate</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="employee_id"/>
+			<field name="date"/>
+			<field name="po_ref_id"/>
+			<field name="vendor_rep"/>
+		</field>
+	</record>
+	
+	<!-- electricity.use.monitoring tree view-->
+    <record id="topline_electricity_use_monitoring_tree_view" model="ir.ui.view">
+		<field name="name">electricity.use.monitoring.tree</field>
+		<field name="model">electricity.use.monitoring</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="month"/>
+			<field name="date_of_purchase"/>
+			<field name="quantity"/>
+			<field name="remark"/>
+			<field name="control_measure"/>
+		</field>
+	</record>
+	
+	<!-- water.use.monitoring tree view-->
+    <record id="topline_water_use_monitoring_tree_view" model="ir.ui.view">
+		<field name="name">water.use.monitoring.tree</field>
+		<field name="model">water.use.monitoring</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="date_time"/>
+			<field name="level"/>
+			<field name="week"/>
+			<field name="remark"/>
+			<field name="control_measure"/>
+		</field>
+	</record>
+	
+	<!-- asset.movement.form tree view-->
+    <record id="topline_asset_movement_form_tree_view" model="ir.ui.view">
+		<field name="name">asset.movement.form.tree</field>
+		<field name="model">asset.movement.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+				<field name="requested_employee_id"/>
+				<field name="source_location"/>
+				<field name="dest_location"/>
+				<field name="date_of_transfer"/>
+				<field name="date_recieved"/>
+				<field name="reason_for_transfer"/>
+		</field>
+	</record>
+	
+	<!-- job.call.out.form tree view-->
+    <record id="topline_job_call_out_form_tree_view" model="ir.ui.view">
+		<field name="name">job.call.out.form.tree</field>
+		<field name="model">job.call.out.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+				<field name="client"/>
+				<field name="job_type"/>
+				<field name="location"/>
+				<field name="est_job_start"/>
+				<field name="engineer_in_charge"/>
+		</field>
+	</record>
+	
+	<!-- waste.management.form tree view-->
+    <record id="topline_waste_management_form_tree_view" model="ir.ui.view">
+		<field name="name">waste.management.form.tree</field>
+		<field name="model">waste.management.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+				<field name="name"/>
+				<field name="waste_originator_name"/>
+				<field name="waste_originator_date"/>
+				<field name="qty"/>
+		</field>
+	</record>
+	
+	<!-- drivers.health.checklist tree view-->
+    <record id="topline_drivers_health_checklist_tree_view" model="ir.ui.view">
+		<field name="name">drivers.health.checklist.tree</field>
+		<field name="model">drivers.health.checklist</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+				<field name="date"/>
+				<field name="inspector_id"/>
+				<field name="supervisor_id"/>
+		</field>
+	</record>
+	
+	
+	<!-- drivers.health.checklist tree view-->
+    <record id="topline_job_safety_inspection_checklist_tree_view" model="ir.ui.view">
+		<field name="name">job.safety.inspection.checklist.tree</field>
+		<field name="model">job.safety.inspection.checklist</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+				<field name="client_id"/>
+				<field name="location"/>
+				<field name="date"/>
+		</field>
+	</record>
+	
+	<!-- late.arrival.form tree view-->
+    <record id="topline_late_arrival_form_tree_view" model="ir.ui.view">
+		<field name="name">late.arrival.form.tree</field>
+		<field name="model">late.arrival.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="employee_id"/>
+			<field name="department_id"/>
+			<field name="date"/>
+		</field>
+	</record>
+	
+	<!-- insurance.log tree view-->
+    <record id="topline_insurance_log_tree_view" model="ir.ui.view">
+		<field name="name">insurance.log.tree</field>
+		<field name="model">insurance.log</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree decoration-info="expiry_date == 'False'" decoration-danger="expiry_date &lt; current_date">
+				<field name="name"/>
+		 		<!-- <field name="policy_type"/>  -->
+		 		<field name="start_date"/>
+		 		<field name="expiry_date"/>
+		 		<field name="start_date"/>
+		 		<field name="renewal_date"/>
+			</tree>
+		</field>
+	</record>
+	
+	<!-- outgoing.document.template tree view-->
+    <record id="topline_outgoing_document_template_tree_view" model="ir.ui.view">
+		<field name="name">outgoing.document.template.tree</field>
+		<field name="model">outgoing.document.template</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="destination"/>
+			<field name="date_time_pickup"/>
+			<field name="sent_by"/>
+			<field name="means_of_delivery"/>
+		</field>
+	</record>
+	
+	<!-- incoming.document.template tree view-->
+    <record id="topline_incoming_document_template_tree_view" model="ir.ui.view">
+		<field name="name">incoming.document.template.tree</field>
+		<field name="model">incoming.document.template</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="recieved_by"/>
+			<field name="destination"/>
+			<field name="date_time_del"/>
+			<field name="issued_to"/>
+		</field>
+	</record>
+	
+	<!-- certificates.for.tendering tree view-->
+    <record id="topline_certificates_for_tendering_tree_view" model="ir.ui.view">
+		<field name="name">certificates.for.tendering.tree</field>
+		<field name="model">certificates.for.tendering</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree decoration-info="expiry_date == 'False'" decoration-danger="expiry_date &lt; current_date">
+				<field name="name"/>
+				<field name="expiry_date"/>
+				<field name="state"/>
+				<field name="department_id"/>
+			</tree>
+		</field>
+	</record>
+	
+	<!-- journey.request tree view-->
+    <record id="topline_journey_request_tree_view" model="ir.ui.view">
+		<field name="name">journey.request.tree</field>
+		<field name="model">journey.request</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="employee_id"/>
+			<field name="department_id"/>
+			<field name="date_of_journey"/>
+			<field name="planned_returned_date"/>
+			<field name="purpose_of_journey"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	
+	<!-- calibration.log tree view-->
+    <record id="topline_calibration_log_tree_view" model="ir.ui.view">
+		<field name="name">calibration.log.tree</field>
+		<field name="model">calibration.log</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<!-- <field name="number"/>-->
+			<field name="name"/>
+			<field name="calibration_carried_out"/>
+			<field name="calibrated_by_id"/>
+			<field name="date_last_calibration"/>
+			<field name="calibration_next_due"/>
+			<field name="remarks"/>
+		</field>
+	</record>
+	
+	<!-- type.calibration.log tree view-->
+    <record id="topline_type_calibration_log_tree_view" model="ir.ui.view">
+		<field name="name">type.calibration.log.tree</field>
+		<field name="model">type.calibration.log</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree editable="top">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+	
+	<!-- tender.analysis tree view-->
+    <record id="topline_tender_analysis_tree_view" model="ir.ui.view">
+		<field name="name">tender.analysis.tree</field>
+		<field name="model">tender.analysis</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="partner_id"/>
+			<field name="state"/>
+			<field name="source"/>
+			<field name="tender_number"/>
+			<field name="date_submitted"/>
+			<field name="comments"/>
+			<field name="corrective_action"/>
+		</field>
+	</record>
+	
+	<!-- tender.monitoring.sheet tree view-->
+    <record id="topline_tender_monitoring_sheet_tree_view" model="ir.ui.view">
+		<field name="name">tender.monitoring.sheet.tree</field>
+		<field name="model">tender.monitoring.sheet</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="partner_id"/>
+			<field name="state"/>
+			<field name="source"/>
+			<field name="tender_number"/>
+			<field name="date_submitted"/>
+			<field name="comments"/>
+		</field>
+	</record>
+	
+	<!-- type.tender.monitoring.sheet tree view-->
+    <record id="topline_type_tender_monitoring_sheet_tree_view" model="ir.ui.view">
+		<field name="name">type.tender.monitoring.sheet.tree</field>
+		<field name="model">type.tender.monitoring.sheet</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="active"/>
+		</field>
+	</record>
+	
+	<!-- vehicle.movement.register tree view-->
+    <record id="topline_vehicle_movement_register_tree_view" model="ir.ui.view">
+		<field name="name">vehicle.movement.register.tree</field>
+		<field name="model">vehicle.movement.register</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="driver_id"/>
+			<field name="vehicle_no"/>
+			<field name="proceeding_to"/>
+			<field name="requester_id"/>
+			<field name="time_out"/>
+			<field name="mileage_out"/>
+			<field name="gas_level_out"/>
+			<field name="time_in"/>
+			<field name="mileage_in"/>
+			<field name="gas_level_in"/>
+			<field name="date"/>
+		</field>
+	</record>
+	
+	<!-- exit.form tree view-->
+    <record id="topline_exit_form_tree_view" model="ir.ui.view">
+		<field name="name">exit.form.tree</field>
+		<field name="model">exit.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+            <field name="name"/>
+			<field name="employee_id"/>
+			<field name="applicant_function"/>
+			<field name="date"/>
+			<field name="purpose_of_exit"/>
+			<field name="time_of_leaving"/>
+			<field name="time_of_returrning"/>
+		</field>
+	</record>
+	
+	<!-- absense.information tree view-->
+    <record id="topline_absense_information_tree_view" model="ir.ui.view">
+		<field name="name">absense.information.tree</field>
+		<field name="model">absense.information</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="employee_id"/>
+			<field name="department_id"/>
+			<field name="type_of_absense"/>
+			<field name="date_absense_from"/>
+			<field name="date_absense_to"/>
+		</field>
+	</record>
+
+	
+	<!-- internet.downtime.register tree view-->
+    <record id="topline_internet_downtime_register_tree_view" model="ir.ui.view">
+		<field name="name">internet.downtime.register.tree</field>
+		<field name="model">internet.downtime.register</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="date"/>
+			<field name="downtime" widget="float_time"/>
+			<field name="uptime" widget="float_time"/>
+			<field name="duration"/>
+			<field name="issue"/>
+			<field name="resolutions"/>
+		</field>
+	</record>
+	
+	<!-- ms.office.deployment tree view-->
+    <record id="topline_ms_office_deployment_tree_view" model="ir.ui.view">
+		<field name="name">ms.office.deployment.tree</field>
+		<field name="model">ms.office.deployment</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="device_type"/>
+			<field name="asset_number"/>
+			<field name="key_in_use"/>
+			<field name="status"/>
+			<field name="remark"/>
+		</field>
+	</record>
+	
+	<!-- planned.preventive.maintenance tree view-->
+    <record id="topline_planned_preventive_maintenance_tree_view" model="ir.ui.view">
+		<field name="name">planned.preventive.maintenance.tree</field>
+		<field name="model">planned.preventive.maintenance</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="equipment_id"/>
+			<field name="asset_number"/>
+			<field name="department_id"/>
+			<field name="preventive_action"/>
+			<field name="schedule"/>
+			<field name="next_due_date"/>
+			<field name="due_date"/>
+			<field name="action_party"/>
+			<field name="contingency_plan"/>
+		</field>
+	</record>
+	
+	<!-- antivirus.tracker.renewal tree view-->
+    <record id="topline_antivirus_tracker_renewal_tree_view" model="ir.ui.view">
+		<field name="name">antivirus.tracker.renewal.tree</field>
+		<field name="model">antivirus.tracker.renewal</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="type_of_device"/>
+			<field name="asset_number"/>
+			<field name="renewal_date"/>
+			<field name="due_date"/>
+			<field name="type"/>
+			<field name="status"/>
+			<field name="remark"/>
+		</field>
+	</record>
+	
+	<!--equipment.maintenance.register tree view-->
+    <record id="topline_equipment_maintenance_register_tree_view" model="ir.ui.view">
+		<field name="name">equipment.maintenance.register.tree</field>
+		<field name="model">equipment.maintenance.register</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="equipment_id"/>
+			<field name="asset_number"/>
+			<field name="department_id"/>
+			<field name="fault_status"/>
+			<field name="repair_status"/>
+			<field name="repair_date"/>
+			<field name="cost"/>
+			<field name="routine_check"/>
+		</field>
+	</record>
+	
+	<!-- ict.paid.services tree view-->
+    <record id="topline_ict_paid_services_tree_view" model="ir.ui.view">
+		<field name="name">ict.paid.services.tree</field>
+		<field name="model">ict.paid.services</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="sub"/>
+			<field name="cost"/>
+			<field name="currency_id"/>
+			<field name="renewal_date"/>
+			<field name="due_date"/>
+			<field name="status"/>
+		</field>
+	</record>
+	
+	<!-- mdr.forms tree view-->
+    <record id="topline_mdr_forms_tree_view" model="ir.ui.view">
+		<field name="name">mdr.forms.tree</field>
+		<field name="model">mdr.forms</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="department_id"/>
+			<field name="doc_no"/>
+			<field name="name"/>
+			<field name="rev_no"/>
+			<field name="issue_date"/>
+		</field>
+	</record>
+	
+	<!-- prc.forms tree view-->
+    <record id="topline_mdr_forms_tree_view" model="ir.ui.view">
+		<field name="name">prc.forms.tree</field>
+		<field name="model">prc.forms</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="doc_type"/>
+			<field name="department_id"/>
+			<field name="doc_ref"/>
+			<field name="name"/>
+			<field name="rev_no"/>
+			<field name="status"/>
+			<field name="review_date"/>
+			<field name="remark"/>
+		</field>
+	</record>
+	
+	
+	<!-- receiving.inspection.report tree view-->
+    <record id="topline_receiving_inspection_report_tree_view" model="ir.ui.view">
+		<field name="name">receiving.inspection.report.tree</field>
+		<field name="model">receiving.inspection.report</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="partner_id"/>
+			<field name="date_verification"/>
+			<field name="location_id"/>
+			<field name="remarks"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	
+	<!-- project.monitoring.sheet tree view-->
+    <record id="topline_project_monitoring_sheet_tree_view" model="ir.ui.view">
+		<field name="name">project.monitoring.sheet.tree</field>
+		<field name="model">project.monitoring.sheet</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="partner_id"/>
+			<field name="mob_date"/>
+			<field name="demob_date"/>
+			<field name="remark"/>
+		</field>
+	</record>
+	
+	<!-- client.feedback.log tree view-->
+    <record id="topline_client_feedback_log_tree_view" model="ir.ui.view">
+		<field name="name">client.feedback.log.tree</field>
+		<field name="model">client.feedback.log</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="project_id"/>
+			<field name="overall_project_outcome"/>
+			<field name="communication"/>
+			<field name="project_leader"/>
+			<field name="staff_competence"/>
+			<field name="delivery_time"/>
+			<field name="quality_project_outcome"/>
+		</field>
+	</record>
+	
+	
+	<!-- client.complaints.log tree view-->
+    <record id="topline_client_complaints_log_tree_view" model="ir.ui.view">
+		<field name="name">client.complaints.log.tree</field>
+		<field name="model">client.complaints.log</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="partner_id"/>
+			<field name="name"/>
+			<field name="date_complaint"/>
+			<field name="description"/>
+			<field name="root_cause"/>
+			<field name="action_taken"/>
+			<field name="date_closed"/>
+		</field>
+	</record>
+	
+	<!-- qaqc.vendors.facility.audit.checklist tree view-->
+    <record id="topline_qaqc_vendors_facility_audit_checklist_tree_view" model="ir.ui.view">
+		<field name="name">qaqc.vendors.facility.audit.checklist.tree</field>
+		<field name="model">qaqc.vendors.facility.audit.checklist</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="partner_id"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- atp.form tree view-->
+    <record id="topline_atp_form_tree_view1" model="ir.ui.view">
+		<field name="name">atp.form.tree</field>
+		<field name="model">atp.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="project_des"/>
+			<field name="remark"/>
+			<field name="expected_date"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- travel.report tree view-->
+    <record id="topline_atp_form_tree_view" model="ir.ui.view">
+		<field name="name">travel.report.tree</field>
+		<field name="model">travel.report</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="date_booking"/>
+			<field name="employee_id"/>
+			<field name="department_id"/>
+			<field name="from_des"/>
+			<field name="to_des"/>
+			<field name="reason"/>
+			<field name="cost"/>
+			<field name="type"/>
+			<field name="remark"/>
+		</field>
+	</record>
+	
+	<!-- stationery.report tree view-->
+    <record id="topline_stationery_report_tree_view" model="ir.ui.view">
+		<field name="name">stationery.report.tree</field>
+		<field name="model">stationery.report</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="date"/>
+			<field name="product_id"/>
+			<field name="name"/>
+			<field name="qty"/>
+			<field name="name"/>
+			<field name="employee_id"/>
+			<field name="location"/>
+		</field>
+	</record>
+	
+	<!-- salary.advance.form tree view-->
+    <record id="topline_salary_advance_form_tree_view" model="ir.ui.view">
+		<field name="name">salary.advance.form.tree</field>
+		<field name="model">salary.advance.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="employee_id"/>
+			<field name="department_id"/>
+			<field name="job_title"/>
+			<field name="month_of"/>
+			<field name="advance_of"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+
+	
+	<!-- missing.stolen.asset.report.form tree view-->
+    <record id="topline_missing_stolen_asset_report_form_tree_view" model="ir.ui.view">
+		<field name="name">missing.stolen.asset.report.form.tree</field>
+		<field name="model">missing.stolen.asset.report.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name_ref"/>
+			<field name="name"/>
+			<field name="serial_no"/>
+			<field name="last_known_location"/>
+			<field name="employee_name"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- cash.advance.request.form tree view-->
+    <record id="topline_cash_advance_request_form_tree_view" model="ir.ui.view">
+		<field name="name">cash.advance.request.form.tree</field>
+		<field name="model">cash.advance.request.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="date"/>
+			<field name="employee_id"/>
+			<field name="department_id"/>
+			<field name="total_amount"/>
+			<field name="location"/>
+			<field name="bank_details"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- cash.retirement.form tree view-->
+    <record id="topline_cash_retirement_form_tree_view" model="ir.ui.view">
+		<field name="name">cash.retirement.form.tree</field>
+		<field name="model">cash.retirement.form</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="date"/>
+			<field name="department_id"/>
+			<field name="employee_id"/>
+			<field name="total_amount_requested"/>
+			<field name="total_amount_approved"/>
+			<field name="location"/>
+			<field name="project_description"/>
+			<field name="state"/>
+		</field>
+	</record>
+	
+	<!-- site.time.sheet tree view-->
+    <record id="topline_site_time_sheet_tree_view" model="ir.ui.view">
+		<field name="name">site.time.sheet.tree</field>
+		<field name="model">site.time.sheet</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="employee_id"/>
+			<field name="department_id"/>
+			<field name="employee_designstion"/>
+			<field name="month"/>
+			<field name="date"/>
+		</field>
+	</record>
+	
+	<!-- ems.monitoring tree view-->
+    <record id="topline_ems_monitoring_tree_view" model="ir.ui.view">
+		<field name="name">ems.monitoring.tree</field>
+		<field name="model">ems.monitoring</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="date"/>
+			<field name="kpi_id"/>
+			<field name="uom_id"/>
+			<field name="department_id"/>
+			<field name="target"/>
+			<field name="month"/>
+			<field name="remarks"/>
+		</field>
+	</record>
+	
+	<!-- ems.kpi tree view-->
+    <record id="topline_ems_kpi_tree_view" model="ir.ui.view">
+		<field name="name">ems.kpi.tree</field>
+		<field name="model">ems.kpi</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="name"/>
+			<field name="active"/>
+		</field>
+	</record>
+	
+	<!-- fumigation.schedule tree view-->
+    <record id="topline_certificates_for_tendering_tree_view" model="ir.ui.view">
+		<field name="name">fumigation.schedule.tree</field>
+		<field name="model">fumigation.schedule</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree decoration-info="due_date == 'False'" decoration-danger="due_date &lt; current_date">
+				<field name="due_date"/>
+				<field name="actual_date"/>
+				<field name="location"/>
+				<field name="remarks"/>
+			</tree>
+		</field>
+	</record>
+	
+	<!-- daily.checklist view-->
+    <record id="topline_ict_daily_checklist_tree_view" model="ir.ui.view">
+		<field name="name">daily checklist tree</field>
+		<field name="model">daily.checklist</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" string="S/N"/>
+				<field name="date"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+	
+	<!-- daily.checklist.equipment view-->
+    <record id="topline_daily_checklist_equipment_tree_view" model="ir.ui.view">
+		<field name="name">daily checklist equipment tree</field>
+		<field name="model">daily.checklist.equipment</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree editable="bottom">
+				<field name="name"/>
+				<field name="active"/>
+			</tree>
+		</field>
+	</record>
+	
+		
+	<record id="topline_construction_equipment_checklist_form_view" model="ir.ui.view">
+	    <field name="name">construction.equipment.checklist.form</field>
+	    <field name="model">construction.equipment.checklist</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="CONSTRUCTION EQUIPMENT CHECKLIST">
+	        	<header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="action_line_manager_approval" states="supervisor" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="action_store_approval" states="manager" string="Approve" class="btn btn-primary" type="object"/>
+	        		<button name="action_qa_qc_approval" states="store" string="Store Approval" type="object" groups="stock.group_stock_manager"/>
+	        		<button name="action_approval" states="qa_qc" string="QA/QC Approval" class="btn btn-primary" type="object" groups="quality.group_quality_manager"/>
+	        		<button name="action_reject" states="supervisor,manager,store,qa_qc" class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,supervisor,manager,store,qa_qc,approve"/>
+	        	</header>
+				 <sheet>
+				 	<span><b>CONSTRUCTION EQUIPMENT CHECKLIST</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="name" required="1" readonly="0"/>
+			 			<field name="job_location" required="1"/>
+			 			<field name="date"/>
+			 			<field name="project_id"/>
+			 		</group>
+			 		<field name="construction_equpiment_line_ids" nolabel="1" widget="section_and_note_one2many" mode="tree,kanban" attrs="{'readonly': [('state', '=', 'approve')]}">
+	                   	<tree editable="bottom">
+	                       <field name="product_id"/>
+	                       <field name="description"/>
+	                       <field name="qty_mob"/>
+	                       <field name="qty_demob"/>
+	                       <field name="demob_remarks"/>
+	                   	</tree>
+	               </field>
+	               <group colspan="2">
+			 			<field name="employee_id" readonly="1"/>
+			 		</group>
+			 		<group string = "Supervisor" col="4" colspan="4">
+		            	<field name="supervisor_approval"/>
+		            	<field name="supervisor_approval_date"/>
+		        	</group>
+	           		<group string = "Manager" col="4" colspan="4">
+		            	<field name="manager_approval"/>
+		            	<field name="manager_approval_date"/>
+		        	</group>
+	            	<group string = "Store" col="4" colspan="4">
+		            	<field name="store_approval"/>
+		            	<field name="store_approval_date"/>
+	            	</group>
+	            	<group string = "QA/QC" col="4" colspan="4">
+		            	<field name="qa_qc_approval"/>
+		            	<field name="qa_qc_approval_date"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_service_order_form_view" model="ir.ui.view">
+	    <field name="name">service.order.form</field>
+	    <field name="model">service.order</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Service Order">
+	        	<header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="action_line_manager_approval" states="line_manager" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="action_qaqc_approval" states="qaqc" string="Approve" type="object" class="btn btn-primary" groups="topline.group_qa"/>
+	        		<button name="button_procurement_approval" states="procurement" string="Approve" class="btn btn-primary" type="object" groups="purchase.group_purchase_manager"/>
+	        		<button name="create_purchase_order2" states="approve" string="Create RFQ" type="object" groups="purchase.group_purchase_manager"/>
+	        		<button name="create_payment_requisition" states="approve" string="Create Payment Requisition" type="object" groups="purchase.group_purchase_manager"/>
+	        		<button name="action_reject" states="line_manager,qaqc,procurement," class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,line_manager,qaqc,procurement,approve"/>
+	        	</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+                        <button name="open_po" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="po_count" widget="statinfo" string="RFQ's"/>
+                        </button>
+                        <button name="open_payr" type="object" class="oe_stat_button" icon="fa-money">
+                            <field name="payment_req_count" widget="statinfo" string="Payment Requisitions"/>
+                        </button>
+                    </div>
+					<div class="oe_title">
+                        <span class="o_form_label">Service Order</span>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_id" required="1" readonly="0"/>
+			 			<field name="department_id"/>
+			 			<field name="location"/>
+			 			<field name="project_id"/>
+			 			<field name="project_description"/>
+			 			<field name="date"/>
+			 		</group>
+			 		<field name="service_order_line_ids" nolabel="1" widget="section_and_note_one2many">
+	                   <tree editable="bottom">
+	                       <field name="product_id"/>
+	                       <field name="description"/>
+	                       <field name="serial_no"/>
+	                       <field name="qty"/>
+	                   </tree>
+	               </field>
+	               <group colspan="2">
+			 			<field name="employee_id" readonly="1"/>
+			 		</group>
+			 		<group string = "Department Approval" col="4" colspan="4">
+		            	<field name="line_manager_approval"/>
+		            	<field name="line_manager_approval_date"/>
+		        	</group>
+	            	<group string = "Authorization" col="4" colspan="4">
+		            	<field name="procurement_approval"/>
+		            	<field name="procurement_approval_date"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_action_request_log_form_view" model="ir.ui.view">
+	    <field name="name">action.request.log.form</field>
+	    <field name="model">action.request.log</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="CORRECTIVE/PREVENTIVE ACTION LOG">
+	        	<header>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,open,on_hold,closed" readonly="0" clickable="1"/>
+	        	</header>
+	        	<sheet>
+				 	<span><b>CORRECTIVE/PREVENTIVE ACTION LOG</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_id" required="1" readonly="0"/>
+			 			<field name="department_id"/>
+			 			<field name="project_id"/>
+			 			<field name="date"/>
+			 		</group>
+			 		<field name="action_request_log_line_ids" nolabel="1" widget="section_and_note_one2many">
+	                   <tree editable="bottom">
+	                       <field name="ar_no"/>
+	                       <field name="initiator_id"/>
+	                       <field name="date_initiated"/>
+	                       <field name="description_of_problem"/>
+	                       <field name="root_cause"/>
+	                       <field name="action_taken"/>
+	                       <field name="date_closed"/>
+	                   </tree>
+	               </field>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_maintenance_request_failure_report_sheet_form_view" model="ir.ui.view">
+	    <field name="name">maintenance.request.failure.report.sheet.form</field>
+	    <field name="model">maintenance.request.failure.report.sheet</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Maintenance Request And Failure Report Sheet">
+	        	<header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="action_line_manager_approval" states="supervisor" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="action_reject" states="supervisor" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,supervisor,approve"/>
+	        	</header>
+	        	<sheet>
+	        		<div class="oe_title">
+                        <span class="o_form_label">MAINTENANCE REQUEST AND FAILURE REPORT SHEET</span>
+                        <h1>
+                            <field name="ref" readonly="1"/>
+                        </h1>
+                    </div>
+                    <!-- <group>
+                    	<field name="asset_id" placeholder="Search by Asset No."/>
+                    </group>  -->
+			 		<group col="4" colspan="4">
+			 			<field name="name" />
+			 			<field name="asset_no"/>
+			 			<field name="hour_odo_meter"/>
+			 			<field name="date"/>
+			 			<field name="project_id" />
+			 			<field name="location"/>
+			 			<field name="employee_id"/>
+			 			<field name="employee_user"/>
+			 		</group>
+			 		<notebook>
+			 			<page string="MAINTENANCE REQUEST/FAILURE DESCRIPTION">
+			 				<span><b>OBSERVATIONS</b></span><br/>
+			 				<field name="observations" widget="html"/><br/><br/>
+			 				<span><b>ACTION TAKEN</b></span><br/>
+			 				<field name="action_taken" widget="html"/><br/>
+			 				<group string="Approved By:" col="4" colspan="4">
+				 				<field name="supervisor_approval"/>
+				 				<field name="supervisor_approval_date"/>
+				 			</group>
+			 			</page>
+			 			<page string="ANALYSIS OF FAILURE">
+			 				<span><b>DIAGNOSIS:</b></span><br/>
+			 				<field name="diagnosis" widget="html"/><br/>
+			 				<span><b>CAUSES:</b></span><br/>
+			 				<field name="causes" widget="html"/><br/>
+			 				<span><b>REPAIRS DONE/TO BE DONE:</b></span><br/>
+			 				<field name="repairs_done" widget="html"/><br/>
+			 				<span><b>PARTS REPLACED/TO BE REPLACED:</b></span><br/>
+			 				<field name="part_replaced" widget="html"/><br/>
+			 				<group string="DETAILS OF REPAIR" col="4" colspan="4">
+			 					<field name="repair_date"/>
+			 					<field name="cost_of_repair"/>
+			 					<field name="currency_id"/>
+			 					<field name="partner_id"/>
+			 					<field name="job_supervised_by_id"/>
+			 				</group>
+			 				<group string="Approved By:" col="4" colspan="4">
+				 				<field name="manager_approval"/>
+				 				<field name="manager_approval_date"/>
+				 			</group>			 				
+			 			</page>
+			 		</notebook>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_qaqc_premobilization_checklist_form_view" model="ir.ui.view">
+	    <field name="name">qaqc.premobilization.checklist.form</field>
+	    <field name="model">qaqc.premobilization.checklist</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="QA/QC Premobilization Checklist (Onshore And Offshore)">
+	        	<sheet>
+				 	<span><b>QA/QC Premobilization Checklist (Onshore And Offshore)</b></span>
+			 		<group colspan="2">
+			 			<field name="project_id" required="1"/>
+			 		</group>
+			 		<span style="color:Red;">
+		 				Instructions: <b>Verify Box</b> to be ticked by Project lead/ Project Manager before QA/QC final inspection. 
+			 			<b>Check Box</b> to be ticked after inspection by QA/QC Rep. Equipment and Personnel list to be attached with checklist.
+			 		</span>
+			 		<notebook>
+			 			<page string="A. PERSONNEL">
+			 				<field name="personnel_qaqc_premobilization_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="requirement"/>
+			                       <field name="verify"/>
+			                       <field name="check"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="B. EQUIPMENT AND ACCESSORIES">
+	 						<field name="equipment_accessories_qaqc_premobilization_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="requirement"/>
+			                       <field name="verify"/>
+			                       <field name="check"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="C. EQUIPMENT LOAD-OUT">
+			 				<field name="equipment_loadout_qaqc_premobilization_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="requirement"/>
+			                       <field name="verify"/>
+			                       <field name="check"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="D. DOCUMENTATIONS">
+			 				<field name="documentation_qaqc_premobilization_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="requirement"/>
+			                       <field name="verify"/>
+			                       <field name="check"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 		</notebook>
+			 		<group col="4" colspan="4">
+		            	<field name="supervisor_approval"/>
+		            	<field name="supervisor_approval_date"/>
+		            	<field name="manager_approval"/>
+		            	<field name="manager_approval_date"/>
+		            	<field name="store_approval"/>
+		            	<field name="store_approval_date"/>
+		            	<field name="qa_qc_approval"/>
+		            	<field name="qa_qc_approval_date"/>
+		        	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_employee_requisition_form_form_view" model="ir.ui.view">
+	    <field name="name">employee.requisition.form.form</field>
+	    <field name="model">employee.requisition.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="EMPLOYEE REQUISITION FORM">
+	        	<header>
+					<button name="action_submit" type="object" string="Submit" states="draft" class="oe_highlight" />
+					<button name="action_line_manager_approve" type="object" string="Line Manager Approval" states="submit" class="oe_highlight" />
+					<button name="action_hr_manager_approve" type="object" string="HR Manager Approval" states="line_manager" class="oe_highlight" />
+					<button name="action_final_approve" type="object" string="Final Approval" states="hr_manager" class="oe_highlight" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,submit,line_manager,hr_manager,approve" readonly="0" clickable="1"/>
+	        	</header>
+	        	<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button name="open_job_posting" type="object" context="{'search_default_id': job_id}">
+							<span><i class="fa fa-list"></i>Posting</span>
+						</button>
+					</div>
+				 	<span><b>EMPLOYEE REQUISITION FORM</b></span><br/><br/>
+				 	<span>The Recruitment Requisition Procedure detailed below must be completed prior to the commencement of any recruitment exercise.</span><br/>
+				 	<span>a) Prior to the employment of any employee the Employee Requisition Form must be completed.</span><br/>
+				 	<span>b). Requisition Form duly completed by Immediate Supervisor and approved by respective Department HOD will be submitted to HR Department. The HR Department then sources and concludes the recruitment as outlined in Topline’s Recruitment Procedure. </span><br/>
+			 		
+			 		<group col="4" colspan="4">
+			 			<field name="department_id" required="1"/>
+			 			<field name="job_id"/>
+			 			<field name="no_personnel_required"/>
+			 			<field name="existing_staff_present_in_category"/>
+			 			<field name="location"/>
+			 			<field name="type_of_appointment"/>
+			 			<field name="temporary_duration"/>
+			 			<field name="qualification_required"/>
+			 			<field name="skill_required"/>
+			 			<field name="experience_required"/>
+			 			<field name="job_description"/>
+			 			<field name="resource_required_date"/>
+			 			<field name="vacancy_cause"/>
+			 			<field name="vacancy_filled_internally"/>
+			 			<field name="benefits_to_accrue"/>
+			 		</group>
+			 		<group>
+			 			<field name="employee_id" readonly="1"/>
+			 			<field name="line_manager_approval" readonly="1"/>
+			 		</group>
+			 		
+			 		<notebook>
+			 			<page string="For HR Purpose only">
+			 				<group col="4" colspan="4">
+			 					<field name="suggestion_for_replacement"/>
+			 					<field name="name_of_person"/>
+			 					<field name="statement_of_justification"/>
+			 					<field name="salary_range"/>
+			 					<field name="when_position_filled"/>
+			 					<field name="remarks"/>			 					
+			 				</group>
+			 			</page>
+			 		</notebook>
+			 		<group>
+			 			<field name="hr_manager_approval" readonly="1"/>
+			 		</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_instruments_calibration_status_log_form_view" model="ir.ui.view">
+	    <field name="name">instruments.calibration.status.log.form</field>
+	    <field name="model">instruments.calibration.status.log</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Instruments Calibration Status Log">
+				 <sheet>
+				 	<span><b>Instruments Calibration Status Log</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_id"/>
+			 			<field name="date"/>
+			 		</group>
+			 		<field name="instruments_calibration_status_line_ids" nolabel="1" widget="section_and_note_one2many" mode="tree,kanban">
+	                   <tree editable="bottom">
+	                       <field name="product_id"/>
+	                       <field name="type_of_calibration_log_id"/>
+	                       <field name="description"/>
+	                       <field name="type_of_calibration"/>
+	                       <field name="calibrated_by"/>
+	                       <field name="last_calibration_date"/>
+	                       <field name="next_calibration_date"/>
+	                       <field name="remarks"/>
+	                   </tree>
+	               </field>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_work_completion_certificate_form_view" model="ir.ui.view">
+	    <field name="name">work.completion.certificate.form</field>
+	    <field name="model">work.completion.certificate</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Work Completion Certificate">
+        		 <header>
+	        		<button name="button_submit" states="draft" string="Submit" type="object"/>
+	        		 <button name="button_qa_qc_approval" states="submit" string="Approve" class="btn btn-primary" type="object" groups="quality.group_quality_manager"/>
+	        		 <button name="action_reject" states="admin,md" class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,submit,qa_qc"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Work Completion Certificate</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_id"/>
+			 			<field name="date"/>
+			 		</group>
+			 		<group>
+			 			<field name="po_ref_id"/>
+			 		</group>
+			 		<span><b>This certifies that the below descriped job has been satisfactorily completed</b></span><br/>
+			 		<span>BRIEF DESCRIPTION OF WORD RENDERED</span><br/>
+			 		<field name="description_work_rendered" widget="html"/>
+			 		<group string="DATE OF COMPLETION OF WORK">
+			 			<field name="date_of_completion"/>
+			 		</group>
+			 		<group string="VENDOR REPRESENTATIVE" col="4" colspan="4">
+				 		<field name="vendor_rep"/>
+				 		<field name="vendor_rep_date"/>
+				 	</group>
+			 		<group string="AUTHORIZED TOPLINE REPRESENATATIVE THAT SUPERVISED WORK" col="4" colspan="4">
+			 			<field name="topline_authorized_rep"/>
+				 		<field name="topline_authorized_rep_date"/>
+				 	</group>
+			 		<group string="QA/QC REPRESENTATIVE" col="4" colspan="4">
+			 			<field name="qa_qc_rep"/>
+				 		<field name="qa_qc_rep_date"/>
+				 	</group>
+				 	<group string="COMMENT"/>
+			 			<field name="comment"/>		 		
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_electricity_use_monitoring_form_view" model="ir.ui.view">
+	    <field name="name">electricity.use.monitoring.form</field>
+	    <field name="model">electricity.use.monitoring</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Electricity Use Monitoring">
+        		 <header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		 <button name="button_approval" states="manager" string="Approve" class="btn btn-primary" type="object" groups="topline.group_admin_manager"/>
+	        		<button name="action_reject" states="supervisor,manager" class="btn btn-danger" string="Reject" type="object" groups="topline.group_admin_manager"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,manager,approve"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Electricity Use Monitoring</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_id"/>
+			 			<field name="date"/>
+			 		</group>
+			 		<group col="4" colspan="4">
+			 			<field name="month" required="1"/>
+			 			<field name="date_of_purchase" required="1"/>
+			 			<field name="quantity" required="1"/>
+			 			<field name="remark"/>
+			 			<field name="control_measure"/>
+			 		</group>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_water_use_monitoring_form_view" model="ir.ui.view">
+	    <field name="name">water.use.monitoring.form</field>
+	    <field name="model">water.use.monitoring</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Water Use Monitoring">
+        		<header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		 <button name="button_approval" states="manager" string="Approve" class="btn btn-primary" type="object" groups="topline.group_admin_manager"/>
+	        		<button name="action_reject" states="supervisor,manager" class="btn btn-danger" string="Reject" type="object" groups="topline.group_admin_manager"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,manager,approve"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Water Use Monitoring</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_id"/>
+			 			<field name="date"/>
+			 		</group>
+			 		<group col="4" colspan="4">
+			 			<field name="date_time" required="1"/>
+						<field name="level" required="1"/>
+						<field name="week" required="1"/>
+						<field name="remark"/>
+						<field name="control_measure"/>
+			 		</group>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_job_call_out_form_view" model="ir.ui.view">
+	    <field name="name">job.call.out.form</field>
+	    <field name="model">job.call.out.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Job Call Out Form">
+        		 <header>
+	        		<button name="button_engineer_in_charge_sign"  string="Sign" type="object"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Job Call Out Form</b></span><br/>
+			 		<group string="A request for the following job has been made to Topline Limited:" col="4" colspan="4">
+			 			<field name="client"/>
+			 			<field name="job_type"/>
+			 			<field name="location"/>
+			 			<field name="est_job_start"/>
+			 		</group>
+			 		<group string="This job Order has been assigned to the following Crew:" col="4" colspan="4">
+			 			<field name="engineer_in_charge"/>
+			 			<field name="supervisor"/>
+			 			<field name="operator_1"/>
+			 			<field name="mechanic"/>
+			 			<field name="operator_2"/>
+			 			<field name="operator_3"/>
+			 			<field name="trainee"/>
+			 			<field name="operator"/>
+			 		</group>
+			 		<group string="As the Engineer-In-Charge, I understand that the Client’s objectives for requesting this job are:"/>
+			 			<field name="objectives_for_requesting_job" widget="html"/>
+			 			
+			 		<group string="This job will require the following certifications and job experiences:"/>
+			 		<field name="certifications_line_ids" nolabel="1" widget="section_and_note_one2many" mode="tree,kanban">
+	                   <tree editable="bottom">
+	                       <field name="cert_work"/>
+	                       <field name="crew_member"/>
+	                   </tree>
+	               </field>
+	               
+	               <group string="The person responsible for Safety on the job (and possesses HSE Level 3 Certification) is:" col="4" colspan="4">
+	               		<field name="responsible_for_safety"/>
+			 			<field name="have_hse3"/>
+	               </group>
+	               <group col="4" colspan="4">
+	               		<field name="engineer_in_charge_approval"/>
+	               		<field name="engineer_in_charge_approval_date"/>
+	               </group>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_asset_movement_form_view" model="ir.ui.view">
+	    <field name="name">asset.movement.form</field>
+	    <field name="model">asset.movement.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Asset Movement Form">
+        		 <header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="action_line_manager_approval" states="line_manager" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="button_store_approval" states="store" string="Approve" class="btn btn-primary" type="object" groups="stock.group_stock_manager"/>
+	        		<button name="button_md_approval" states="md" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md"/>
+	        		<button name="action_reject" states="line_manager,store,md" class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,line_manager,store,approve"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Asset Movement Form</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="source_location"/>
+			 			<field name="date_of_transfer"/>
+			 			<field name="dest_location"/>
+			 			<field name="date_recieved"/>
+			 		</group>
+			 		<field name="asset_movement_line_ids" nolabel="1" widget="section_and_note_one2many" mode="tree,kanban">
+	                   <tree editable="bottom">
+	                       <field name="asset_number"/>
+	                       <field name="asset_description"/>
+	                       <field name="dept"/>
+	                       <field name="location"/>
+	                   </tree>
+	               </field>
+	               <group col="4" colspan="4">
+			 			<field name="requested_employee_id" readonly="1"/>
+			 			<field name="store_employee_id" readonly="1"/>
+			 			<field name="line_manager_approval" readonly="1"/>
+			 			<field name="line_manager_approval_date" readonly="1"/>
+			 			<field name="store_approval" readonly="1"/>
+			 			<field name="store_approval_date" readonly="1"/>
+			 			<field name="md_approval" readonly="1"/>
+			 			<field name="md_approval_date" readonly="1"/>
+			 		</group>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    <record id="topline_waste_management_form_view" model="ir.ui.view">
+	    <field name="name">waste.management.form</field>
+	    <field name="model">waste.management.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Waste Management Form">
+        		 <header>
+	        		<button name="button_submit" states="draft" string="Submit To HSE" type="object"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,line_manager,store,approve"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Waste Management Form</b></span>
+			 		<notebook>
+			 			<page string="Waste Originator">
+			 				<group>
+			 					<field name="waste_originator_name" />
+			 					<field name="waste_originator_date" />
+			 					<field name="waste_originator_tel" />
+			 				</group>
+			 			</page>
+			 			<page string="Waste Dispatcher">
+			 				<group>
+			 					<field name="waste_dispatcher_name" />
+			 					<field name="waste_dispatcher_date" />
+			 					<field name="waste_dispatcher_tel" />
+			 				</group>
+			 				<group col="4" colspan="4">
+				 				<field name="qty" />
+				 				<field name="loading_point" />
+				 			</group>
+				 			<field name="waste_originator_remark" placeholder="Remarks..."/>
+			 			</page>
+			 		</notebook>
+			 		<notebook>
+			 			<page string="Transporter (Driver Vehicle)">
+			 				<group>
+			 					<field name="transporter_name" />
+			 					<field name="transporter_vehicle_vessel_no" />
+			 					<field name="transporter_tel" />
+			 				</group>
+			 			</page>
+			 			<page string="Waste Reciever">
+			 				<group>
+			 					<field name="waste_reciever_name" />
+			 					<field name="waste_reciever_contact_person" />
+			 					<field name="waste_reciever_tel" />
+			 				</group>
+			 				<field name="waste_reciever_remark" placeholder="Remarks..."/>
+			 			</page>
+			 		</notebook>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    <record id="topline_drivers_health_checklist_form_view" model="ir.ui.view">
+	    <field name="name">drivers.health.checklist.form</field>
+	    <field name="model">drivers.health.checklist</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Drivers Health Checklist">
+				 <sheet>
+				 	<span><b>Drivers Health Checklist</b></span>
+				 	<group>
+				 		<field name="date"/>
+				 	</group>
+			 		<group col="4" colspan="4">
+			 			<field name="inspector_id"/>
+			 			<field name="supervisor_id"/>
+			 		</group>
+			 		<field name="checklist_line_ids" nolabel="1" widget="section_and_note_one2many" mode="tree,kanban">
+	                   <tree editable="bottom">
+	                       <field name="requirements"/>
+	                       <field name="result"/>
+	                   </tree>
+	               </field>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_job_safety_inspection_checklist_form_view" model="ir.ui.view">
+	    <field name="name">job.safety.inspection.checklist.form</field>
+	    <field name="model">job.safety.inspection.checklist</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Job Safety Inspection Checklist">
+				 <sheet>
+				 	<span><b>Job Safety Inspection Checklist</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="client_id"/>
+			 			<field name="location"/>
+			 			<field name="inspection_id"/>
+			 			<field name="date"/>
+			 		</group>
+			 		<notebook>
+				 		<page string="WORK SITE INFORMATION">
+				 			<group col="2" colspan="4">
+					 			<field name="posting_pressure"/>
+					 			<field name="safety_meeting"/>
+					 			<field name="first_aid_box"/>
+					 			<field name="site_injury_record"/>
+					 			<field name="emergency_tel"/>
+					 			<field name="emergency_info_posted"/>
+					 			<field name="describe_violation" widget="html"/>
+					 		</group>
+				 		</page>
+				 		<page string="HOUSEKEEPING AND SANITATION">
+				 			<group col="2" colspan="4">
+					 			<field name="emergency_lights"/>
+					 			<field name="general_neatness"/>
+					 			<field name="regular_disposal_waste"/>
+					 			<field name="passageways_walkways"/>
+					 			<field name="waste_container_usage"/>
+					 			<field name="job_sanitary_facilities"/>
+					 			<field name="adequate_water_supply"/>
+					 			<field name="adequate_lighting"/>
+					 			<field name="handrails_good"/>
+					 			<field name="smoking_restrictions"/>
+					 			<field name="electrical_cords_good"/>
+					 			<field name="circuit_breakers_free"/>
+					 			<field name="violations_description" widget="html"/>
+					 		</group>
+				 		</page>
+				 		<page string="FIRE PREVENTION">
+				 			<group>
+					 			<field name="fire_instructions"/>
+					 			<field name="fire_extinguishers"/>
+					 			<field name="no_smoking_signs"/>
+					 			<field name="work_area_tidy"/>
+					 			<field name="handling_flammables"/>
+					 			<field name="fire_hazards_checked"/>
+					 			<field name="diesel_contained_properly"/>
+					 			<field name="fire_violations" widget="html"/>
+					 		</group>
+				 		</page>
+			 		</notebook>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+    
+  	
+  	<record id="topline_late_arrival_form_form_view" model="ir.ui.view">
+	    <field name="name">late.arrival.form</field>
+	    <field name="model">late.arrival.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Late Arrival Form">
+        		 <header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="action_line_manager_approval" states="supervisor" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="button_hr_approval" states="manager" string="Approve" class="btn btn-primary" type="object" groups="hr.group_hr_manager"/>
+	        		<button name="action_reject" states="supervisor,manager" class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,line_manager,store,approve"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Late Arrival Form</b></span>
+					<div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"  attrs="{'invisible': [('name', '=', 'New')]}"/>
+                        </h1>
+                    </div>
+				 	<group col="4" colspan="4">
+				 		<field name="employee_id"/>
+				 		<field name="department_id"/>
+				 		<field name="job_title"/>
+				 	</group>
+				 	<span>Reason(s) for being late on:</span>
+				 		<group>
+				 			<field name="date"/>
+				 		</group>
+			 		<span>Please state the reason(s) for being late:</span>
+			 			<field name="reason_for_lateness" widget="html"/>
+				 	<span>Did you inform your supervisor?</span><br/>
+				 		<field name="informed_supervisor" widget="radio" options="{'horizontal': true}"/>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_insurance_log_form_view" model="ir.ui.view">
+	    <field name="name">insurance.log</field>
+	    <field name="model">insurance.log</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Insurance Log">
+				 <sheet>
+				 	<div class="oe_button_box" name="button_box">
+		                <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+	                        <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+	                    </button>
+	                </div>
+				 	<span><b>Insurance Log</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+				 		<field name="expiry_date"/>
+				 		<field name="start_date"/>
+				 		<field name="renewal_date"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_outgoing_document_template_form_view" model="ir.ui.view">
+	    <field name="name">outgoing.document.template</field>
+	    <field name="model">outgoing.document.template</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Outgoing Document Template">
+				 <sheet>
+				 	<span><b>Outgoing Document Template</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+				 		<field name="destination"/>
+				 		<field name="date_time_pickup"/>
+				 		<field name="sent_by"/>
+				 		<field name="authorization"/>
+				 		<field name="means_of_delivery"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_incoming_document_template_form_view" model="ir.ui.view">
+	    <field name="name">incoming.document.template</field>
+	    <field name="model">incoming.document.template</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Incoming Document Template">
+				 <sheet>
+				 	<span><b>Incoming Document Template</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+				 		<field name="recieved_by"/>
+				 		<field name="destination"/>
+				 		<field name="date_time_del"/>
+				 		<field name="issued_to"/>
+				 		<field name="date_time"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_certificates_for_tendering_form_view" model="ir.ui.view">
+	    <field name="name">certificates.for.tendering</field>
+	    <field name="model">certificates.for.tendering</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Certificates For Tendering">
+        		 <header>
+	        		<field name="state" widget="statusbar" statusbar_visible="valid,expired"/>
+	        	 </header>
+				 <sheet>
+				 	<div class="oe_button_box" name="button_box">
+		                <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+	                        <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+	                    </button>
+	                </div>
+				 	<span><b>Certificates For Tendering</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+				 		<field name="expiry_date"/>
+				 		<field name="department_id"/>
+				 		<field name="tender_certificate_category_id"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+	
+	<record id="topline_journey_request_form_form_view" model="ir.ui.view">
+	    <field name="name">journey.request.form</field>
+	    <field name="model">journey.request</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Journey Request Form">
+        		 <header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="action_line_manager_approval" states="supervisor" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="action_reject" states="supervisor" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager"/>
+	        		<button name="button_logistics_approval" states="manager" string="Approve" class="btn btn-primary" type="object" groups="fleet.fleet_group_manager"/>
+	        		<button name="action_reject" states="manager" class="btn btn-danger" string="Reject" type="object" groups="fleet.fleet_group_manager" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,supervisor,manager,approve"/>
+	        	 </header>
+				 <sheet>
+				 	<div class="oe_title">
+                        <span class="o_form_label"><b>Journey Request Form</b></span>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+				 	<group col="4" colspan="4">
+				 		<field name="date_of_journey"/>
+				 		<label for="time_of_journey"/>
+					    <div>
+					        <field name="time_of_journey" widget="float_time" class="oe_inline" style="width:80%%"/>
+				 			<field name="time_of_journey_am_pm" class="oe_inline" required="1"/>
+					    </div>
+				 		<field name="planned_returned_date"/>
+				 		<label for="planned_returned_time"/>
+					    <div>
+					        <field name="planned_returned_time" widget="float_time" class="oe_inline" style="width:80%%"/>
+				 			<field name="planned_returned_time_am_pm" class="oe_inline" required="1"/>
+					    </div>
+				 		<field name="destination"/>
+				 		<field name="purpose_of_journey"/>
+				 		<field name="employee_id"/>
+				 		<field name="department_id"/>
+				 		<field name="vehicle_id" attrs="{'readonly':[('state', '!=', 'manager')], 'required':[('state', '=', 'manager')]}"/>
+				 	</group>
+				 	<span>Did you inform your supervisor?</span><br/>
+				 		<field name="informed_supervisor" widget="radio" options="{'horizontal': true}"/>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+	
+  	<record id="topline_calibration_log_form_view" model="ir.ui.view">
+	    <field name="name">calibration.log</field>
+	    <field name="model">calibration.log</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Calibration Log">
+				 <sheet>
+				 	<span><b>Calibration Log</b></span>
+				 	<group>
+				 		<field name="type_of_calibration_log_id"/>
+				 	</group>
+				 	<group col="4" colspan="4">
+				 		<field name="number" invisible="1"/>
+						<field name="name"/>
+						<field name="calibration_carried_out"/>
+						<field name="calibrated_by_id"/>
+						<field name="date_last_calibration"/>
+						<field name="calibration_next_due"/>
+				 	</group>
+				 	<span>Remarks</span><br/>
+				 		<field name="remarks"/>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    
+    
+    <record id="topline_tender_analysis_form_view" model="ir.ui.view">
+	    <field name="name">tender.analysis</field>
+	    <field name="model">tender.analysis</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="tender analysis">
+				 <sheet>
+				 	<span><b>Tender Analysis</b></span>
+				 	<group>
+				 		<field name="type"/>
+				 	</group>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+						<field name="partner_id"/>
+						<field name="state"/>
+						<field name="source"/>
+						<field name="tender_number"/>
+						<field name="date_submitted"/>
+				 	</group>
+				 	<span>Comments</span><br/>
+				 		<field name="comments"/>
+				 	<span>Corrective Action</span><br/>
+				 		<field name="corrective_action"/>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_tender_monitoring_sheet_form_view" model="ir.ui.view">
+	    <field name="name">tender.monitoring.sheet</field>
+	    <field name="model">tender.monitoring.sheet</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="tender monitoring sheet">
+				 <sheet>
+				 	<span><b>Tender Monitoring Sheet</b></span>
+				 	<group>
+				 		<field name="tender_id"/>
+				 	</group>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+						<field name="partner_id"/>
+						<field name="state"/>
+						<field name="source"/>
+						<field name="tender_number"/>
+						<field name="date_submitted"/>
+				 	</group>
+				 	<span>Comments</span><br/>
+				 		<field name="comments"/>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_type_tender_monitoring_sheet_form_view" model="ir.ui.view">
+	    <field name="name">type.tender.monitoring.sheet</field>
+	    <field name="model">type.tender.monitoring.sheet</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Tender">
+				 <sheet>
+				 	<div class="oe_button_box" name="button_box">
+		                <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+	                        <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+	                    </button>
+	                </div>
+				 	<span><b>Tender</b></span>
+				 	<group>
+						<field name="name"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_vehicle_movement_register_form_view" model="ir.ui.view">
+	    <field name="name">vehicle.movement.register</field>
+	    <field name="model">vehicle.movement.register</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Vehicle Movement Register">
+				 <sheet>
+				 	<span><b>Vehicle Movement Register</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="driver_id"/>
+						<field name="vehicle_no"/>
+						<field name="proceeding_to"/>
+						<field name="requester_id"/>
+						<field name="time_out" widget="float_time"/>
+						<field name="mileage_out"/>
+						<field name="gas_level_out"/>
+						<field name="time_in" widget="float_time"/>
+						<field name="mileage_in"/>
+						<field name="gas_level_in"/>
+						<field name="date"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_type_calibration_log_form_view" model="ir.ui.view">
+	    <field name="name">type.calibration.log</field>
+	    <field name="model">type.calibration.log</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Type Calibration Log">
+				 <sheet>
+				 	<div class="oe_button_box" name="button_box">
+		                <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+	                        <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+	                    </button>
+	                </div>
+				 	<span><b>Type of Calibration Log</b></span>
+				 	<group>
+						<field name="name"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	
+  	<record id="topline_exit_form_form_view" model="ir.ui.view">
+	    <field name="name">exit.form</field>
+	    <field name="model">exit.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Exit Form">
+        		 <header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="action_line_manager_approval" states="supervisor" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="button_hr_approval" states="manager" string="Approve" class="btn btn-primary" type="object" groups="hr.group_hr_manager"/>
+	        		<button name="action_reject" states="supervisor,manager" class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,line_manager,store,approve"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Exit Form</b></span>
+				 	<div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"  attrs="{'invisible': [('name', '=', 'New')]}"/>
+                        </h1>
+                    </div>
+				 	<group col="4" colspan="4">
+				 		<field name="employee_id"/>
+						<field name="applicant_function"/>
+						<field name="purpose_of_exit"/>
+						<field name="date"/>
+						<field name="time_of_leaving" widget="float_time"/>
+						<field name="time_of_returrning" widget="float_time"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    <record id="topline_absense_information_form_view" model="ir.ui.view">
+	    <field name="name">absense.information</field>
+	    <field name="model">absense.information</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Exit Form">
+        		 <header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="button_approval" states="supervisor" string="Approve" class="btn btn-primary" type="object" groups="topline.group_hr_line_manager"/>
+	        		<button name="button_hr_approval" states="manager" string="Approve" class="btn btn-primary" type="object" groups="hr.group_hr_manager"/>
+	        		<button name="action_reject" states="supervisor" class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,line_manager,store,approve"/>
+	        	 </header>
+				 <sheet>
+				 	<span><b>Absense Information</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="employee_id"/>
+						<field name="department_id"/>
+						<field name="type_of_absense"/>
+						<field name="date_absense_from"/>
+						<field name="date_absense_to"/>
+				 	</group>
+				 	<span>Reason(s) of Absense:</span>
+				 		<field name="reason_for_absense"/>
+				 	<span>Comments:</span>
+				 		<field name="comments" groups="topline.group_hr_line_manager"/>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    <record id="topline_internet_downtime_register_form_view" model="ir.ui.view">
+	    <field name="name">internet.downtime.register</field>
+	    <field name="model">internet.downtime.register</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Internet Downtime Register">
+				 <sheet>
+				 	<span><b>Internet Downtime Register</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="date"/>
+				 		
+				 		<label for="downtime"/>
+					    <div>
+					        <field name="downtime" widget="float_time" class="oe_inline" style="width:80%%"/>
+				 			<field name="downtime_am_pm" class="oe_inline" required="1"/>
+					    </div>
+					    
+					    <label for="uptime"/>
+					    <div>
+					        <field name="uptime" widget="float_time" class="oe_inline" style="width:80%%"/>
+				 			<field name="uptime_am_pm" class="oe_inline" required="1"/>
+					    </div>
+				 		
+						<field name="duration"/>
+						<field name="issue"/>
+						<field name="resolutions"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_ms_office_deployment_form_view" model="ir.ui.view">
+	    <field name="name">ms.office.deployment</field>
+	    <field name="model">ms.office.deployment</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="MS Office Deployment">
+				 <sheet>
+				 	<span><b>MS Office Deployment</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+						<field name="device_type"/>
+						<field name="asset_number"/>
+						<field name="key_in_use"/>
+						<field name="status"/>
+						<field name="remark"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_antivirus_tracker_renewal_form_view" model="ir.ui.view">
+	    <field name="name">antivirus.tracker.renewal</field>
+	    <field name="model">antivirus.tracker.renewal</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Antivirus Tracker Renewal">
+				 <sheet>
+				 	<span><b>Antivirus Tracker Renewal</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+						<field name="type_of_device"/>
+						<field name="asset_number"/>
+						<field name="renewal_date"/>
+						<field name="due_date"/>
+						<field name="type"/>
+						<field name="status"/>
+						<field name="remark"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_planned_preventive_maintenance_form_view" model="ir.ui.view">
+	    <field name="name">planned.preventive.maintenance</field>
+	    <field name="model">planned.preventive.maintenance</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Planned Preventive Maintenance">
+				 <sheet>
+				 	<span><b>Planned Preventive Maintenance</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="equipment_id"/>
+						<field name="asset_number"/>
+						<field name="department_id"/>
+						<field name="preventive_action"/>
+						<field name="schedule"/>
+						<field name="next_due_date"/>
+						<field name="due_date"/>
+						<field name="action_party"/>
+						<field name="contingency_plan"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_equipment_maintenance_register_form_view" model="ir.ui.view">
+	    <field name="name">equipment.maintenance.register</field>
+	    <field name="model">equipment.maintenance.register</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Equipment Maintenance Register">
+				 <sheet>
+				 	<span><b>Equipment Maintenance Register</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="equipment_id"/>
+						<field name="asset_number"/>
+						<field name="department_id"/>
+						<field name="fault_status"/>
+						<field name="repair_status"/>
+						<field name="repair_date"/>
+						<field name="cost"/>
+						<field name="routine_check"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_ict_paid_services_form_view" model="ir.ui.view">
+	    <field name="name">ict.paid.services</field>
+	    <field name="model">ict.paid.services</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Exit Form">
+				 <sheet>
+				 	<span><b>ICT Paid Services</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+						<field name="sub"/>
+						<field name="cost"/>
+						<field name="currency_id"/>
+						<field name="renewal_date"/>
+						<field name="due_date"/>
+						<field name="status"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_mdr_form_view" model="ir.ui.view">
+	    <field name="name">mdr.forms</field>
+	    <field name="model">mdr.forms</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="MDR Form">
+				<sheet>
+				 	<span><b>MDR Forms</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="department_id"/>
+						<field name="doc_no"/>
+						<field name="name"/>
+						<field name="rev_no"/>
+						<field name="issue_date"/>
+				 	</group>
+				</sheet>
+				<div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    <record id="topline_prc_form_view" model="ir.ui.view">
+	    <field name="name">prc.forms</field>
+	    <field name="model">prc.forms</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="PRC Form">
+				 <sheet>
+				 	<span><b>PRC Forms</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="doc_type"/>
+						<field name="department_id"/>
+						<field name="doc_ref"/>
+						<field name="name"/>
+						<field name="rev_no"/>
+						<field name="status"/>
+						<field name="review_date"/>
+						<field name="remark"/>
+				 	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    	<record id="receiving_inspection_report_verification_view_form" model="ir.ui.view">
+            <field name="name">receiving.inspection.report.verification.form</field>
+            <field name="model">receiving.inspection.report.verification</field>
+            <field name="arch" type="xml">
+                <form string="Verification Personnels">
+                    <group class="oe_title">
+                        <field name="end_user_ids" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="action_receiving_inspection_report_submit" string="Submit for Verification" type="object" class="btn btn-sm btn-primary"/>
+                        <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="receiving_inspection_report_verification_action" model="ir.actions.act_window">
+	       <field name="name">Verification Personnels</field>
+	       <field name="type">ir.actions.act_window</field>
+	       <field name="res_model">receiving.inspection.report.verification</field>
+	       <field name="view_mode">form</field>
+	       <field name="view_id" ref="receiving_inspection_report_verification_view_form"/>
+	       <field name="target">new</field>
+	   </record>
+    
+    <record id="topline_receiving_inspection_report_form_view" model="ir.ui.view">
+	    <field name="name">receiving.inspection.report.form</field>
+	    <field name="model">receiving.inspection.report</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Receiving Inspection Report">
+	        	<header>
+	        		<button name="button_accept" states="draft" string="Accept" type="object" class="oe_highlight"/>
+	        		<button name="%(topline.receiving_inspection_report_verification_action)d" states="approve" string="Submit for Verification" groups="quality.group_quality_manager" type="action"/>
+	        		<button name="button_verify" states="awaiting_verification" string="Accept" type="object" class="oe_highlight"/>
+	        		<button name="button_reset" states="reject" string="Reset to Draft" type="object"/>
+	        		<button name="button_reject" states="draft,awaiting_verification" string="Reject" type="object" class="btn-danger"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,approve,awaiting_verification,verify"/>
+	        	</header>
+				<sheet>
+					<div class="oe_title">
+                        <span class="o_form_label">Receiving Inspection Report</span>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+			 		<group col="4" colspan="4">
+			 			<field name="partner_id" required="1" domain="[('supplier', '=', True)]"/>
+			 			<field name="date_verification" readonly="1"/>
+			 			<field name="location_id"/>
+			 		</group>
+			 		<field name="receiving_inspection_report_line_ids" nolabel="1" widget="section_and_note_one2many">
+	                   <tree editable="bottom">
+	                       <field name="product_id"/>
+	                       <field name="name"/>
+	                       <field name="qty"/>
+	                       <field name="defects"/>
+	                       <field name="type_verification"/>
+	                   </tree>
+	               </field>
+	               
+	               <span><b>Other Verification Parameters (tick boxes that are applicable)</b></span><br/>
+	               <field name="manufactured_by_specified_manufacturer"/><span>
+								Verify if product was manufactured by specified manufacturer/distributor and tested as required
+								</span><br/>
+                    <field name="vendor_topline_approved_list"/><span>
+								Confirm that vendor is on the Topline approved list, if not, confirm reason(s) for usage
+								</span><br/>
+				    <field name="incorporated_noted_instructions"/><span>
+								Verify that items incorporated noted instructions per purchase order
+								</span><br/>
+				    <field name="confirm_delivery_time_date"/><span>
+								Confirm delivery time/date as specified in the request
+								</span><br/>
+				    <field name="item_matches_product_description"/><span>
+								Verify that item matches product description
+								</span><br/>
+				    <field name="item_quantity_correct"/><span>
+								Confirm that item quantity is correct
+								</span><br/><br/>
+				    
+				    <span>Remarks</span><br/>
+				    <field name="remarks"/>
+								
+	            	<group col="4" colspan="4">
+		            	<field name="manager_approval"/>
+		            	<field name="approval_date"/>
+	            	</group>
+	            	<group col="4" colspan="4">
+		            	<field name="verification_approval"/>
+		            	<field name="date_verification" readonly="1"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_project_monitoring_sheet_view" model="ir.ui.view">
+	    <field name="name">project.monitoring.sheet.forms</field>
+	    <field name="model">project.monitoring.sheet</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Project Monitoring Sheet">
+				 <sheet>
+				 	<span><b>Project Monitoring Sheet</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+						<field name="partner_id"/>
+						<field name="mob_date"/>
+						<field name="demob_date"/>
+					</group>
+					<group string="Status">
+						<field name="close_out_status"/>
+						<field name="client_feedback_status"/>
+						<field name="lessons_learnt_status"/>
+					</group>
+					<span>Remarks</span>
+					<field name="remark"/>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    <record id="topline_client_feedback_log_view" model="ir.ui.view">
+	    <field name="name">client.feedback.log.forms</field>
+	    <field name="model">client.feedback.log</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Client Feedback Log">
+				 <sheet>
+				 	<span><b>Client Feedback Log</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="name"/>
+						<field name="project_id"/>
+					</group>
+					<group string="Degree of Satisfaction">
+						<field name="overall_project_outcome" widget="priority"/>
+						<field name="communication" widget="priority"/>
+						<field name="project_leader" widget="priority"/>
+						<field name="staff_competence" widget="priority"/>
+						<field name="delivery_time" widget="priority"/>
+						<field name="quality_project_outcome" widget="priority"/>
+					</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_client_complaints_log_view" model="ir.ui.view">
+	    <field name="name">client.complaints.log.forms</field>
+	    <field name="model">client.complaints.log</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Client Complaints Log">
+				 <sheet>
+				 	<span><b>Client Complaints Log</b></span>
+				 	<group col="4" colspan="4">
+				 		<field name="partner_id"/>
+						<field name="name"/>
+						<field name="project_id"/>
+						<field name="date_complaint"/>
+						<field name="description"/>
+						<field name="root_cause"/>
+						<field name="action_taken"/>
+						<field name="date_closed"/>
+					</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+	            </div>
+        	</form>
+    	</field>
+    </record>
+    
+    
+    <record id="topline_qaqc_vendors_facility_audit_checklist_form_view" model="ir.ui.view">
+	    <field name="name">qaqc.vendors.facility.audit.checklist.form</field>
+	    <field name="model">qaqc.vendors.facility.audit.checklist</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Service Order">
+	        	<header>
+	        		<button name="button_audit_approve" states="draft" string="Review" type="object" groups="topline.group_internal_audit"/>
+	        		<button name="button_approve" states="draft" string="Approve" type="object" class="btn btn-primary" groups="topline.group_md"/>
+	        		<button name="button_reject" states="draft" class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,approve"/>
+	        	</header>
+				<sheet>
+					<group>
+						<field name="partner_id" widget="res_partner_many2one" context="{'search_default_customer':1, 'show_address': 1, 'default_is_company': True, 'show_vat': True}" options="{&quot;always_reload&quot;: True, &quot;no_quick_create&quot;: True}" domain="[('customer', '=', True)]" required="1"/>
+				 	</group>
+			 		<group string="Activity" col="2" colspan="4">
+			 			<span style="color:Red;"><b>GENERAL REQUIREMENTS (NOTE: all documents should be approved)</b></span><br/>
+			 			
+			 			<field name="cac_docs_provided" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="current_income_taxclearance_certificate_provided" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="established_quality_program" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="workmen_conpensation" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="evidence_equipment_ownership" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="evidence_operator" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="approved_vendor_list" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="individual_training_plans" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="approved_preventive_maintenance" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="approved_equipment_operating_procedure" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="necessary_equipment_certified_fit" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="equipment_physically_sighted" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="equipment_equipped_with_loading_offloading_apparatus" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="defined_communication_path_for_product" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="storage_workshop_kept_in_order" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="safety_apparatus_provided_operator" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="general_contractor_attitude" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="valid_evidence_road_statutory_requirement_compliance" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="approved_logistics_management_procedure" widget="radio" options="{'horizontal': true}"/>
+			 			
+			 			
+			 			<span style="color:Red;"><b>Suppliers</b></span><br/>
+			 			
+			 			<field name="adequate_system_documented" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="packaging_procedure" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="warranties_claim_policies" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="adequate_administrative_documents" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="storage_facilities_appropriate_environmental_conditions" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="periodically_detect_possible_deterioration" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="packaging_provide_clear_description" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="protection_provided_quality" widget="radio" options="{'horizontal': true}"/>
+			 			<field name="control_provided_identification" widget="radio" options="{'horizontal': true}"/>
+			 		</group>
+			 		
+			 		<group>
+			 			<field name="accepted" widget="radio" options="{'horizontal': true}"/>
+			 		</group>
+			 		
+			 		<span><b>Comment</b></span><br/>
+			 		<field name="comment"/>
+			 		
+			 		<group col="4" colspan="4">
+		            	<field name="audit_approval"/>
+		            	<field name="audit_date"/>
+		        	</group>
+	            	<group col="4" colspan="4">
+		            	<field name="manager_approval"/>
+		            	<field name="approval_date"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+    
+  	<record id="topline_atp_form_view" model="ir.ui.view">
+	    <field name="name">atp.form.form</field>
+	    <field name="model">atp.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Authorization To Purchase">
+	        	<header>
+	        		<button name="button_submit" states="draft" string="Submit" type="object"/>
+	        		<button name="button_approval" states="submit" string="Accept" type="object" class="btn-primary" groups="quality.group_quality_manager,topline.group_qa"/>
+	        		<button name="button_reject" states="submit" string="Reject" type="object" class="btn-danger" groups="quality.group_quality_manager,topline.group_qa"/>
+	        		<button name="create_purchase_order2" states="approve" string="Create RFQ" type="object" groups="purchase.group_purchase_manager"/>
+	        		<button name="create_payment_requisition" states="approve" string="Create Payment Requisition" type="object" groups="purchase.group_purchase_manager"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,submit,approve"/>
+	        	</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+                        <button name="open_po" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="po_count" widget="statinfo" string="RFQ's"/>
+                        </button>
+                        <button name="open_payr" type="object" class="oe_stat_button" icon="fa-money">
+                            <field name="payment_req_count" widget="statinfo" string="Payment Requisitions"/>
+                        </button>
+                    </div>
+					<div class="oe_title">
+                        <span class="o_form_label">Authorization To Purchase</span>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+			 		<group col="4" colspan="4">
+			 			<field name="project_des" />
+			 			<field name="date"/>
+			 			<field name="project_id"/>
+			 			<field name="expected_date"/>
+			 		</group>
+			 		<field name="atp_form_line_ids" nolabel="1" widget="section_and_note_one2many">
+	                   <tree editable="bottom">
+	                       <field name="product_id"/>
+	                       <field name="name"/>
+	                       <field name="model"/>
+						   <field name="size"/>
+	                       <field name="brand_id"/>
+	                       <field name="certificate_required"/>
+	                       <field name="qty"/>
+	                       <field name="price"/>
+	                       <field name="price_subtotal"/>
+	                   </tree>
+	               </field>
+	               <group class="oe_subtotal_footer oe_right">
+                        <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </group>
+				    <span>Remarks</span><br/>
+				    <field name="remark"/>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	
+  	<record id="topline_travel_report_view" model="ir.ui.view">
+	    <field name="name">travel.report.form</field>
+	    <field name="model">travel.report</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Travel Report">
+				<sheet>
+			 		<group col="4" colspan="4">
+			 			<field name="date_booking"/>
+						<field name="employee_id"/>
+						<field name="department_id"/>
+						<field name="from_des"/>
+						<field name="to_des"/>
+						<field name="reason"/>
+						<field name="cost"/>
+						<field name="type"/>
+						<field name="remark"/>
+			 		</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_stationery_report_view" model="ir.ui.view">
+	    <field name="name">stationery.report.form</field>
+	    <field name="model">stationery.report</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Stationery Report">
+				<sheet>
+			 		<group col="4" colspan="4">
+			 			<field name="date"/>
+						<field name="product_id"/>
+						<field name="name"/>
+						<field name="qty"/>
+						<field name="name"/>
+						<field name="employee_id"/>
+						<field name="location"/>
+			 		</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	
+  	<record id="topline_salary_advance_form_view" model="ir.ui.view">
+	    <field name="name">salary.advance.form</field>
+	    <field name="model">salary.advance.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="salary advance form">
+	        	<header>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="button_line_manager_approval" states="submit" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
+	        		<button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md"/>
+	        		<button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
+	        		<button name="button_reject" states="submit,line_approve,internal_approve,md_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
+	        	</header>
+				<sheet>
+					<div class="oe_title">
+                        <!--<span class="o_form_label">Service Order</span>-->
+                        <h1>
+                            <field name="name" readonly="1" attrs="{'invisible': [('name', '=', 'New')]}"/>
+                        </h1>
+                    </div>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_id" required="1" readonly="0"/>
+			 			<field name="department_id"/>
+			 			<field name="job_title"/>
+			 		</group>
+			 		<span>
+			 		I apply for a salary advance of N<field name="advance_of"/> from my salary of the month of <field name="month_of"/><br/>
+			 		I agree that the advance shall be recovered in full in the month of <field name="pay_off_month"/>
+			 		</span>
+	               <group col="4" colspan="4">
+			 			<field name="employee_name" readonly="1"/>
+			 			<field name="employee_approval_date" readonly="1"/>
+			 		</group>
+			 		<group string = "Departmental Approval" col="4" colspan="4">
+		            	<field name="supervisor_approval"/>
+		            	<field name="supervisor_approval_date"/>
+		        	</group>
+	            	<group string = "FOR ACCOUNTS USE ONLY">
+	            	</group>
+	            	<span><b>Accounts/Finance Mgr’s Comments:</b></span>
+	            	<field name="finance_comments"/>
+	            	<group  col="4" colspan="4">
+		            	<field name="finance_approval"/>
+		            	<field name="finance_approval_date"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	
+    
+    <record id="topline_missing_stolen_asset_report_form_view" model="ir.ui.view">
+	    <field name="name">missing.stolen.asset.report.form</field>
+	    <field name="model">missing.stolen.asset.report.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="missing.stolen.asset.report.form">
+	        	<header>
+	        		<button name="button_submit_report" states="draft" string="Submit Report" type="object"/>
+	        		<button name="button_store_report" states="submit" string="Validate" type="object" class="btn btn-primary" groups="stock.group_stock_manager"/>
+	        		<button name="button_finance_approval" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
+	        		<button name="button_reject" states="submit,line_approve,internal_approve" class="btn btn-danger" string="Reject" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,approve"/>
+	        	</header>
+				<sheet>
+					<div class="oe_title">
+                        <h1>
+                            <field name="name_ref" readonly="1"  attrs="{'invisible': [('name_ref', '=', 'New')]}"/>
+                        </h1>
+                    </div>
+			 		<group string="ASSET DETAILS" col="4" colspan="4">
+			 			<field name="employee_id"/>
+						<field name="department_id"/>
+			 			<field name="name"/>
+						<field name="serial_no"/>
+						<field name="cost_asset"/>
+						<field name="book_value"/>
+			 		</group>
+	               <group string="EXPLANATION OF MISPLACEMENT" colspan="2">
+			 			<field name="last_known_location"/>
+			 			<field name="incident_lead_misplacement" widget="html"/>
+			 		</group>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_name" readonly="1"/>
+			 			<field name="employee_approval_date" readonly="1"/>
+			 		</group>
+			 		<span>(Asset Custodian at Time of Incidence)</span><br/><br/>
+	            	<group string = "ASSET CONTROL USE ONLY" col="4" colspan="4">
+	            		<field name="store_approval"/>
+		            	<field name="store_approval_date"/>
+	        			<br/>
+	            		<field name="finance_approval"/>
+		            	<field name="finance_approval_date"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_cash_advance_request_form_view" model="ir.ui.view">
+	    <field name="name">cash.advance.request.form</field>
+	    <field name="model">cash.advance.request.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Cash Advance Request Form">
+	        	<header>
+					<field name="paid" readonly="1" invisible="1"/>
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="button_line_manager_approval" states="submit" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
+	        		<button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md"/>
+	        		<button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
+	        		<button name="button_reject" states="submit,line_approve,internal_approve,md_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
+	        		<button name="post_entries" attrs="{'invisible': ['|', ('paid', '=', True), ('state', 'not in', ['approve'])]}" class="oe_highlight" string="Register Payment" type="object" groups="topline.group_finance_manager"/>
+	        		<button name="reset_paid" class="btn-danger" string="Reset Pay" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
+	        	</header>
+				<sheet>
+					<div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" attrs="{'invisible': [('name', '=', 'New')]}"/>
+                        </h1>
+                    </div>
+			 		<group col="4" colspan="4">
+			 			<field name="date"/>
+			 			<field name="department_id"/>
+						<field name="employee_id"/>
+						<field name="location"/>
+						<field name="bank_details"/>
+			 		</group>
+			 		<field name="cash_advance_request_form_line_ids" nolabel="1" widget="section_and_note_one2many">
+	                   <tree editable="bottom">
+	                       <field name="name"/>
+	                       <field name="note"/>
+	                       <field name="account_id"/>
+	                       <field name="analytic_account_id"/>
+	                       <field name="amount"/>
+	                   </tree>
+	               </field>
+	               <group colspan="2">
+			 			<field name="total_amount" readonly="1"/>
+						<field name="move_id" attrs="{'invisible': [('paid', '=', False)]}" />
+						<field name="journal_id" required="1"/>
+			 		</group>
+	               <group colspan="2">
+			 			<field name="num_word" readonly="1"/>
+			 			<field name="date_recovery"/>
+			 		</group>
+			 		<span>
+			 		<b>ADVANCE HOLDER’S STATEMENT</b>: I hereby agree that my salary will be deducted to cover the Advance
+					in full in case I am unable to retire it on the date mentioned
+					</span>
+	            	<group string = "Approved By" col="4" colspan="4">
+	            		<field name="finance_approval"/>
+		            	<field name="finance_approval_date"/>
+	            	</group>
+	            	<group string = "Received By" col="4" colspan="4">
+	            		<field name="received_approval"/>
+		            	<field name="received_approval_date"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_cash_retirement_form_view" model="ir.ui.view">
+	    <field name="name">cash.retirement.form</field>
+	    <field name="model">cash.retirement.form</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Cash Retirement Form">
+	        	<header>
+					<field name="paid" readonly="1" invisible="1" />
+	        		<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+	        		<button name="button_line_manager_approval" states="submit" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+	        		<button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
+	        		<button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md"/>
+	        		<button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
+	        		<button name="button_reject" states="submit,line_approve,internal_approve,md_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
+					<button name="post_entries" attrs="{'invisible': ['|', ('paid', '=', True), ('state', 'not in', ['approve'])]}" class="oe_highlight" string="Register Payment" type="object" groups="topline.group_finance_manager"/>
+	        		<button name="reset_paid" class="btn-danger" string="Reset Pay" type="object" />
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
+	        	</header>
+				<sheet>
+					<div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"  attrs="{'invisible': [('name', '=', 'New')]}"/>
+                        </h1>
+                    </div>
+			 		<group col="4" colspan="4">
+			 			<field name="date"/>
+						<field name="department_id"/>
+						<field name="project_description"/>
+						<field name="employee_id"/>
+						<field name="currency_id"/>
+						<field name="location"/>
+			 		</group>
+					<group>
+						<field name="advance_id" domain="[('paid', '=', True)]"/>
+					</group>
+					<notebook>
+						<page string="Retirement Lines" name="retirement_lines">
+							<field name="cash_retirement_form_line_ids" nolabel="1" widget="section_and_note_one2many">
+								<tree editable="bottom">
+									<field name="name"/>
+									<field name="note"/>
+									<field name="account_id"/>
+									<field name="analytic_account_id"/>
+									<field name="amount_requested"/>
+									<field name="amount_approved"/>
+								</tree>
+							</field>
+						</page>
+						<page string="Other Info" name="other_information">
+							<group>
+								<field name="journal_id" />
+								<field name="move_id" />
+							</group>
+						</page>
+					</notebook>
+	               <group colspan="2">
+			 			<field name="total_amount_requested" readonly="1"/>
+			 			<field name="total_amount_approved" readonly="1"/>
+			 		</group>
+	               <group colspan="2">
+			 			<field name="num_word" readonly="1"/>
+			 		</group>
+			 		<group string = "Certified By" col="4" colspan="4">
+			 			<field name="employee_name" readonly="1"/>
+			 			<field name="employee_approval_date" readonly="1"/>
+			 		</group>
+			 		<span><b>By certifying, I hereby acknowledge that I have verified expenditure and that it is a true reflection of 
+			 		what was actually spent.</b></span>
+	            	<group string = "Approved By" col="4" colspan="4">
+	            		<field name="finance_approval"/>
+		            	<field name="finance_approval_date"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_site_time_sheet_form_view" model="ir.ui.view">
+	    <field name="name">site.time.sheet</field>
+	    <field name="model">site.time.sheet</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="site time sheet">
+	        	<header>
+	        		<button name="button_submit" states="draft" string="Submit" type="object"/>button_hr_approval
+	        		<button name="button_opm_approval" states="submit" string="Approve" type="object" class="btn-primary" groups="project.group_project_manager"/>
+	        		<button name="button_hr_approval" states="opm_approve" string="Approve" type="object" class="btn-primary" groups="hr.group_hr_manager"/>
+	        		<button name="button_reject" states="submit,opm_approve" string="Reject" type="object" class="btn-danger" groups="project.group_project_manager,hr.group_hr_manager"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="draft,submit,approve"/>
+	        	</header>
+				<sheet>
+			 		<group col="4" colspan="4">
+			 			<field name="employee_id"/>
+						<field name="department_id"/>
+						<field name="employee_designstion"/>
+						<field name="month"/>
+						<field name="date"/>
+			 		</group>
+			 		<field name="site_time_sheet_line_ids" nolabel="1" widget="section_and_note_one2many">
+	                   <tree editable="bottom">
+	                       <field name="date"/>
+	                       <field name="name"/>
+	                       <field name="location"/>
+	                       <field name="remarks"/>
+	                   </tree>
+	               </field>
+	               
+	               <group string = "OPM Approval" col="4" colspan="4">
+	            		<field name="opm_approval"/>
+		            	<field name="opm_approval_date"/>
+	            	</group>
+	            	<group string = "HR Approval" col="4" colspan="4">
+	            		<field name="hr_approval"/>
+		            	<field name="hr_approval_date"/>
+	            	</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	<record id="topline_ems_monitoring_form_view" model="ir.ui.view">
+	    <field name="name">ems.monitoring.form</field>
+	    <field name="model">ems.monitoring</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="EMS Monitoring">
+				 <sheet>
+				 	<span><b>Schedule of EMS Monitoring and Measurement</b></span>
+			 		<group col="4" colspan="4">
+			 			<field name="date"/>
+						<field name="kpi_id"/>
+						<field name="uom_id"/>
+						<field name="department_id"/>
+						<field name="target"/>
+						<field name="month"/>
+						<field name="remarks"/>
+			 		</group>
+				 </sheet>
+				 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_fumigation_schedule_view" model="ir.ui.view">
+	    <field name="name">fumigation.schedule.form</field>
+	    <field name="model">fumigation.schedule</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Fumigation Schedule">
+	        	<header>
+	        		<button name="action_fumigation_send" string="Send by Email" type="object"/>
+	        	</header>
+				<sheet>
+			 		<group col="4" colspan="4">
+			 			<field name="due_date"/>
+						<field name="actual_date"/>
+						<field name="location"/>
+						<field name="remarks"/>
+			 		</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_ict_daily_checklist_view" model="ir.ui.view">
+	    <field name="name">daily.checklist.form</field>
+	    <field name="model">daily.checklist</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Ict Daily Checklist">
+	        	<header>
+	        		<button name="prepare_on_lines" string="Power On" states="new" type="object"/>
+	        		<button name="prepare_off_lines" string="Power Off" states="on" type="object"/>
+	        		<field name="state" widget="statusbar" statusbar_visible="new,on,of"/>
+	        	</header>
+				<sheet>
+					<group>
+						<field name="date"/>
+					</group>
+			 		<notebook>
+			 			<page string="Power On">
+			 				<field name="daily_checklist_power_on_line_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="equipment_id"/>
+			                       <field name="equipment_on_bool"/>
+			                       <field name="equipment_off_bool"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="Power Off">
+			 				<field name="daily_checklist_power_off_line_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="equipment_id"/>
+			                       <field name="equipment_on_bool"/>
+			                       <field name="equipment_off_bool"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 		</notebook>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+    
+    <record id="topline_daily_checklist_equipment_view" model="ir.ui.view">
+	    <field name="name">daily.checklist.equipment.form</field>
+	    <field name="model">daily.checklist.equipment</field>
+	    <field name="priority" eval="2"/>
+	    <field name="arch" type="xml">
+        	<form string="Daily Checklist Equipment">
+				<sheet>
+					<group>
+						<field name="name"/>
+					</group>
+				 </sheet>
+				 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+        	</form>
+    	</field>
+    </record>
+  	
+  	
+  	<record id="topline_edit_project" model="ir.ui.view">
+        <field name="name">topline.project.form</field>
+	        <field name="model">project.project</field>
+	        <field name="inherit_id" ref="project.edit_project" />
+	        <field name="arch" type="xml">
+	        	<field name="user_id" position="after">
+		            <field name="site_eng_id" />
+		            <field name="project_team_ids" widget="many2many_tags"/>
+		        </field>
+	           	<field name="user_id" position="before">
+				  	<field name="crm_lead_id"/>
+				</field>
+				<field name="message_follower_ids" position="after">
+				  	<field name="activity_ids" widget="mail_activity"/>
+	             	<field name="message_ids" widget="mail_thread"/>
+				</field>
+	        </field>
+	</record>
+  	
+  	<record id="pipeline_topline_form" model="ir.ui.view">
+	    <field name="name">pipeline.topline.form</field>
+	    <field name="model">crm.lead</field>
+	    <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+	    <field name="arch" type="xml">
+	    	<field name="team_id" position="after">
+			  	<field name="bid_category"/>
+			</field>
+			<xpath expr="//page[@name='lead']" position="after">
+			    <page string="Contract">
+			    	<group>
+			    		<field name="document_submission_date"/>
+                    	<field name="contract_start_date"/>
+                    	<field name="contract_end_date"/>
+			    	</group>
+                </page>
+			</xpath>
+	    </field>
+	</record>
+	
+	<record id="topline_view_task_form2_form_view" model="ir.ui.view">
+        <field name="name">topline.project.task.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+        	<field name="priority" position="before">
+			  	<field name="task_done" invisible="1"/>
+			</field>
+			<field name="user_id" position="after">
+			  	<field name="task_team_ids" widge="mamy2many_tags"/>
+			</field>
+        	<xpath expr="//button[@name='action_assign_to_me']" position="after">
+        		<button name="button_task_complete" string="Mark as Complete" attrs="{'invisible': [('task_done', '=', True)]}" type="object" groups="base.group_user" confirm="Confirm Task is Completed?"/>
+        	</xpath>
+        </field>
+    </record>
+    
+    <record id="topline_hr_timesheet_view_task_form_inherited" model="ir.ui.view">
+        <field name="name">topline.project.task.form2</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='timesheet_ids']/tree/field[@name='date']" position="after">
+        		<field name="start_time" widget="float_time"/>
+        		<field name="start_time_am_pm" required="1" string=" "/>
+		        <field name="end_time" widget="float_time"/>
+		        <field name="end_time_am_pm" required="1" string=" "/>
+        	</xpath>
+        </field>
+    </record>
+	
+	<record id="topline_sale_order_form_view" model="ir.ui.view">
+        <field name="name">topline.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//button[@name='action_quotation_send']" position="before">
+        		<button name="button_submit" string="Submit to Manager" type="object" states="draft" groups="base.group_user"/>
+        	</xpath>
+        	
+        	<xpath expr="//button[@name='button_submit']" position="after">
+        		<button name="action_gm_approval" type="object" states='gm' string="Approve Quotation" class="oe_highlight"/>
+        	</xpath>
+        	
+        	<xpath expr="//button[@name='button_submit']" position="after">
+        		<button name="action_gm_approval" type="object" states='gm' string="Approve Quotation" class="oe_highlight"/>
+        	</xpath>
+        	
+        	<xpath expr="//button[@name='action_confirm']" position="after">
+        		<button name="action_confirm" id="action_confirm" string="Confirm Quotation" class="btn-primary" type="object" attrs="{'invisible': [('state', 'not in', ['md'])]}"/>
+        	</xpath>
+        	
+        	<xpath expr="//button[@name='action_cancel']" position="after">
+        		<button name="action_cancel" states="gm,md" type="object" string="Reject"/>
+        	</xpath>
+        	
+        </field>
+    </record>
+	
+	<record id="topline_fleet_vehicle_costs_view_form" model="ir.ui.view">
+	    <field name="name">topline.fleet.vehicle.cost.form</field>
+	    <field name="model">fleet.vehicle.cost</field>
+	    <field name="inherit_id" ref="fleet.fleet_vehicle_costs_view_form"/>
+	    <field name="arch" type="xml">
+	    	<field name="parent_id" position="after">
+			  	<field name="vehicle_return_date"/>
+			  	<field name="vehicle_date_of_standby"/>
+			  	<field name="reason_for_standby"/>
+			</field>
+	    </field>
+	</record>
+	
+	<record id="topline_fleet_vehicle_view_form" model="ir.ui.view">
+	    <field name="name">topline.fleet.vehicle.form</field>
+	    <field name="model">fleet.vehicle</field>
+	    <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+	    <field name="arch" type="xml">
+	    	<field name="color" position="after">
+			  	<field name="acquisition_date"/>
+			  	<field name="department_id"/>
+			  	<field name="project_id"/>
+			  	<field name="asset_number"/>
+			  	<field name="vendor_id"/>
+			  	<label for="duration"/>
+                <div>
+                    <field name="duration" widget="float_time" class="oe_inline"/> <span class="ml8">hours</span>
+                </div>
+			</field>
+	    </field>
+	</record>
+
+	<record id="maintenance_request_view_tree" model="ir.ui.view">
+        <field name="name">maintenance.request.view.tree</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//tree" position="inside">
+        		<field name="request_date" />
+        	</xpath>
+        </field>
+    </record>
+	
+	<record id="topline_hr_equipment_request_view_form" model="ir.ui.view">
+        <field name="name">topline.equipment.request.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//button[@name='archive_equipment_request']" position="before">
+        		<button name="button_submit_maintenance_manager" string="Submit" type="object" attrs="{'invisible': [('stage_id', '!=', 1)]}"/>
+        		<button name="button_approval_maintenance_manager" string="Approve" class="btn-primary" type="object" attrs="{'invisible': [('stage_id', '!=', 5)]}" groups="topline.group_hr_line_manager"/>
+        		<button name="button_reject" string="Reject" class="btn-danger" type="object" attrs="{'invisible': [('stage_id', '!=', 5)]}" groups="topline.group_hr_line_manager"/>
+        		
+        		<button name="button_approval_qaqc_manager" string="Approve" class="btn-primary" type="object" attrs="{'invisible': [('stage_id', '!=', 6)]}" groups="quality.group_quality_manager"/>
+        		<button name="button_reject" string="Reject" class="btn-danger" type="object" attrs="{'invisible': [('stage_id', '!=', 6)]}" groups="quality.group_quality_manager"/>
+        		
+        		<button name="button_approval_store_manager" string="Approve" class="btn-primary" type="object" attrs="{'invisible': [('stage_id', '!=', 7)]}" groups="stock.group_stock_manager"/>
+        		<button name="button_reject" string="Reject" class="btn-danger" type="object" attrs="{'invisible': [('stage_id', '!=', 7)]}" groups="stock.group_stock_manager"/>
+        	</xpath>
+        	<field name="priority" position="before">
+			  	<field name="department_id"/>
+			  	<field name="asset_number"/>
+			</field>
+			<field name="name" position="replace">
+				<field name="seq_name" attrs="{'invisible': [('seq_name', '=', 'New')]}"/>
+			</field>
+			<field name="seq_name" position="after">
+				<h3>
+                    <field name="name" placeholder="Maintenance Request Description"/>
+                </h3>
+			</field>
+        </field>
+    </record>
+
+	<record id="topline_hr_equipment_request_view_kanban" model="ir.ui.view">
+        <field name="name">topline.equipment.request.kanban</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//div[hasclass('o_kanban_record_top')] [1]" position="replace">
+        		<div class="o_kanban_record_top">
+					<b class="o_kanban_record_title"><field name="seq_name"/></b>
+				</div>
+        	</xpath>
+			<xpath expr="//div[hasclass('o_kanban_record_top')] [1]" position="after">
+        		<b><field name="name"/></b>
+        	</xpath>
+        </field>
+    </record>
+	
+	<record id="topline_hr_leave_allocation_view_form_manager_form" model="ir.ui.view">
+        <field name="name">topline.hr.leave.allocation.view.form.manager</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//button[@name='action_approve']" position="replace">
+                <button string="Approve" name="action_approve" states="confirm" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight" attrs="{'invisible': ['|', ('can_approve', '=', False), ('state', '!=', 'confirm')]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm']" position="replace">
+                <button string="Submit" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="topline_maintenance_hr_equipment_view_form" model="ir.ui.view">
+        <field name="name">topline.maintenance.equipment.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+        	<field name="location" position="after">
+			  	<field name="asset_number"/>
+			  	<field name="current_status"/>
+			</field>
+        </field>
+    </record>	
+	
+	<record id="hr_expense.hr_expense_actions_my_unsubmitted" model="ir.actions.act_window">
+            <field name="name">My Expenses</field>
+            <field name="res_model">hr.expense</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot,activity</field>
+            <field name="search_view_id" ref="hr_expense.view_hr_expense_filter"/>
+            <field name="domain">[('employee_id.user_id','=',uid)]</field>
+            <field name="context">{'search_default_my_expenses': 1, 'search_default_no_report': 1}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new expense
+              </p>
+            </field>
+        </record>
+	
+	<menuitem id="menu_checklist_categ" name="Checklist" parent="project.menu_main_pm" sequence=""/>
+
+  	<menuitem name="Construction Equipment Checklist" id="topline_construction_equipment_checklist_menu" 
+  			  parent="menu_checklist_categ"
+              action="topline_construction_equipment_checklist_form_action"/>
+    
+    <menuitem name="Job Call Out Form" id="topline_job_call_out_form_menu" 
+  			  parent="menu_checklist_categ"
+              action="topline_job_call_out_form_action"/>
+
+    <menuitem name="Work Completion Certificate" id="topline_work_completion_certificate_form_menu" 
+  			  parent="purchase.menu_procurement_management"
+              action="topline_work_completion_certificate_form_action"/>
+              
+  	<menuitem name="CORRECTIVE/PREVENTIVE ACTION LOG" id="topline_action_request_log_menu" 
+  			  parent="quality_control.menu_quality_control"
+              action="topline_action_request_log_form_action"/>
+              
+	<menuitem name="Instruments Calibration Status Log" id="topline_instruments_calibration_status_log_menu" 
+  			  parent="quality_control.menu_quality_control"
+              action="topline_instruments_calibration_status_log_form_action"/>
+              
+   	<menuitem name="Maintenance Request And Failure Report Sheet" id="topline_maintenance_request_failure_report_sheet_menu" 
+  			  parent="maintenance.menu_m_request"
+              action="topline_maintenance_request_failure_report_sheet_form_action"/>
+              
+   <menuitem name="QA/QC Premobilization Checklist (Onshore And Offshore)" id="topline_qaqc_premobilization_checklist_menu" 
+  			  parent="quality_control.menu_quality_control"
+              action="topline_qaqc_premobilization_checklist_form_action"/>
+              
+   <menuitem name="Calibration Log" id="topline_calibration_log_menu" 
+  			  parent="quality_control.menu_quality_control"
+              action="topline_calibration_log_action"/>
+   
+   <menuitem name="Equipment Category" id="topline_type_calibration_log_menu" 
+  			  parent="quality_control.menu_quality_configuration"
+              action="topline_type_calibration_log_action"/>
+   
+   <menuitem name="Employee Requisition Form" id="topline_employee_requisition_form_menu" 
+  			  parent="hr.menu_hr_root"
+              action="topline_employee_requisition_form_action"/>
+              
+   <menuitem name="Authorization to Purchase(ATP)" id="topline_atp_form_menu" 
+  			  parent="stock.menu_stock_root"
+              action="topline_atp_form_action" groups="stock.group_stock_manager,purchase.group_purchase_manager,topline.group_internal_audit,topline.group_qa"/>
+              
+   <menuitem name="Late Arrival Form" id="topline_late_arrival_form_menu" 
+  			  parent="hr.menu_hr_root"
+              action="topline_late_arrival_form_action"/>
+              
+   <menuitem name="Exit Form" id="topline_exit_form_menu" 
+  			  parent="hr.menu_hr_root"
+              action="topline_exit_form_action"/>
+              
+   <menuitem name="Absense Information" id="topline_absense_information_form_menu" 
+  			  parent="hr_holidays.menu_hr_holidays_root"
+              action="topline_absense_information_form_action"/>
+              
+   <menuitem name="Certificates For Tendering" id="topline_certificates_for_tendering_menu" 
+  			  parent="crm.crm_menu_sales"
+              action="topline_certificates_for_tendering_action"/>
+   
+   <menuitem name="Tender Analysis" id="topline_tender_analysis_menu" 
+  			  parent="crm.crm_menu_sales"
+              action="topline_tender_analysis_action"/>
+              
+   <menuitem name="Tender Monitoring Sheet" id="topline_tender_monitoring_sheet_menu" 
+  			  parent="crm.crm_menu_sales"
+              action="topline_tender_monitoring_sheet_action"/>
+              
+   <menuitem name="Tenders" id="topline_type_tender_monitoring_sheet_menu" 
+  			  parent="crm.crm_menu_config"
+              action="topline_type_tender_monitoring_sheet_action"/>
+   
+   
+   <menuitem name="Vehicles" parent="fleet.menu_root" id="fleet.fleet_vehicles" sequence="2"/>
+   <menuitem name="Journey Request" id="topline_journey_request_menus" 
+  			  parent="fleet.menu_root"
+              action="topline_journey_request_action"/>
+              
+   <menuitem name="Vehicle Movement Register" id="topline_vehicle_movement_register_menu" 
+  			  parent="fleet.fleet_vehicles"
+              action="topline_vehicle_movement_register_action"/>
+              
+   <menuitem name="Journey Request" id="topline_journey_request_menu" 
+  			  parent="fleet.fleet_vehicles"
+              action="topline_journey_request_action"/>
+              
+   <menuitem name="Equipment Status Log" id="topline_maintenance_equipment_menu" 
+  			  parent="maintenance.menu_m_request"
+              action="topline_maintenance_equipment_action"/>
+              
+   <menuitem id="topline_mdr_forms_menu" name="MDR Forms"
+   			 parent="quality_control.menu_quality_control" action="topline_mdr_forms_action"/>
+   			 
+   <menuitem id="topline_prc_forms_menu" name="PRC Forms"
+   			 parent="quality_control.menu_quality_control" action="topline_prc_forms_action"/>
+              
+   <menuitem id="topline_receiving_inspection_report_menu" name="Receiving Inspection Report"
+   			 parent="quality_control.menu_quality_control" action="topline_receiving_inspection_report_action"/>
+   			 
+   <menuitem id="topline_client_feedback_log_menu" name="Client Feedback Log"
+   			 parent="quality_control.menu_quality_control" action="topline_client_feedback_log_form_action"/>
+   			 
+   <menuitem id="topline_client_complaints_log_menu" name="Client Complaints Log"
+   			 parent="quality_control.menu_quality_control" action="topline_client_complaints_log_form_action"/>
+   			 
+   <menuitem id="topline_qaqc_vendors_facility_audit_checklist_menu" name="QA/QC Vendors Facility Audit Checklist"
+   			 parent="quality_control.menu_quality_control" action="topline_qaqc_vendors_facility_audit_checklist_form_action"/>
+   			 
+   <menuitem id="topline_qaqc_project_monitoring_sheet_menu" name="QA/QC Project Monitoring Sheet"
+   			 parent="quality_control.menu_quality_control" action="topline_project_monitoring_sheet_form_action"/>
+   
+   <menuitem name="Salary Advance Form" id="topline_salary_advance_menu" 
+  			  parent="hr_expense.menu_hr_expense_my_expenses"
+              action="topline_salary_advance_form_action"/>
+              
+   <menuitem name="Cash Advance Request" id="topline_cash_advance_request_menu" 
+  			  parent="hr_expense.menu_hr_expense_my_expenses"
+              action="topline_cash_advance_request_form_action"/>
+              
+   <menuitem name="Cash Retirement Form" id="topline_cash_retirement_form_menu" 
+  			  parent="hr_expense.menu_hr_expense_my_expenses"
+              action="topline_cash_retirement_form_action"/>
+              
+                 
+   <menuitem name="Missing/Stolen Asset Reporting Form" id="topline_missing_stolen_asset_report_menu" 
+  			  parent="hr_expense.menu_hr_expense_my_expenses"
+              action="topline_missing_stolen_asset_report_form_action"/>
+   
+   <menuitem name="Reporting" id="topline_expenses_reporting_main_menu" parent="hr_expense.menu_hr_expense_root"/>
+   <menuitem name="Salary Advance Report" id="topline_salary_advance_form_report_menu" 
+  			  parent="topline_expenses_reporting_main_menu"
+              action="topline_salary_advance_form_reporting_action"/>
+   <menuitem name="Missing/Stolen Asset Report" id="topline_missing_asset_report_form_report_menu" 
+  			  parent="topline_expenses_reporting_main_menu"
+              action="topline_missing_stolen_asset_report_form_reporting_action"/>
+   <menuitem name="Cash Advance Request Report" id="topline_cash_advance_request_form_report_menu" 
+  			  parent="topline_expenses_reporting_main_menu"
+              action="topline_cash_advance_request_form_reporting_action"/>
+   <menuitem name="Cash Retirement Report" id="topline_cash_retirement_form_report_menu" 
+  			  parent="topline_expenses_reporting_main_menu"
+              action="topline_cash_retirement_form_reporting_action"/>
+              
+   
+   <menuitem name="Journey Request Report" id="topline_journey_request_form_report_menu" 
+  			  parent="fleet.menu_fleet_reporting"
+              action="topline_journey_request_form_reporting_action"/>
+              
+   
+   
+   <menuitem name="ICT Main Tracker" id="topline_ict_sub_main_menu" parent="helpdesk.menu_helpdesk_root"/>
+  
+   <menuitem name="Internet Downtime Register" id="topline_internet_downtime_register_menu" 
+  			  parent="topline_ict_sub_main_menu"
+              action="topline_internet_downtime_register_form_action"/>
+   
+   <menuitem name="MS Office Deployment" id="topline_ms_office_deployment_menu" 
+  			  parent="topline_ict_sub_main_menu"
+              action="topline_ms_office_deployment_form_action"/>
+              
+   <menuitem name="Antivirus Tracker Renewal" id="topline_antivirus_tracker_renewal_menu" 
+  			  parent="topline_ict_sub_main_menu"
+              action="topline_antivirus_tracker_renewal_form_action"/>
+              
+   <menuitem name="Planned Preventive Maintenance" id="topline_planned_preventive_maintenance_menu" 
+  			  parent="topline_ict_sub_main_menu"
+              action="topline_planned_preventive_maintenance_form_action"/>
+              
+   <menuitem name="Equipment Maintenance Register" id="topline_equipment_maintenance_register_menu" 
+  			  parent="topline_ict_sub_main_menu"
+              action="topline_equipment_maintenance_register_form_action"/>
+   
+   <menuitem name="ICT Paid Services" id="topline_ict_paid_services_menu" 
+  			  parent="topline_ict_sub_main_menu"
+              action="topline_ict_paid_services_form_action"/>
+              
+   <menuitem name="Daily Checklist" id="topline_daily_checklist_menu" 
+  			  parent="topline_ict_sub_main_menu"
+              action="topline_ict_daily_checklist_form_action"/>
+              
+   <menuitem name="Daily Checklist Equipment" id="topline_daily_checklist_equipment_menu" 
+  			  parent="topline_ict_sub_main_menu"
+              action="topline_daily_checklist_equipment_form_action"/>
+         
+	
+   <menuitem name="Admin Module" id="topline_admin_main_menu" web_icon="topline,static/icon/topline_admin.png" groups="topline.group_admin"/>
+   <menuitem name="Admin Forms" id="topline_admin_sub_main_menu" parent="topline_admin_main_menu"/>
+  
+   <menuitem name="Electricity Use Monitoring" id="topline_electricity_use_monitoring_menu" 
+  			  parent="topline_admin_sub_main_menu"
+              action="topline_electricity_use_monitoring_action"/>
+              
+   <menuitem name="Water Use Monitoring" id="topline_water_use_monitoring_menu" 
+  			  parent="topline_admin_sub_main_menu"
+              action="topline_water_use_monitoring_action"/>
+              
+   <menuitem name="Asset Movement Form" id="topline_asset_movement_form_menu" 
+  			  parent="topline_admin_sub_main_menu"
+              action="topline_asset_movement_form_action"/>
+   
+   <menuitem name="Insurance Log" id="topline_insurance_log_form_menu" 
+  			  parent="topline_admin_sub_main_menu"
+              action="topline_insurance_log_action"/>
+
+   <menuitem name="Outgoing Document Template" id="topline_outgoing_document_template_form_menu" 
+  			  parent="topline_admin_sub_main_menu"
+              action="topline_outgoing_document_template_action"/>
+   
+   <menuitem name="Incoming Document Template" id="topline_incoming_document_template_form_menu" 
+  			  parent="topline_admin_sub_main_menu"
+              action="topline_incoming_document_template_action"/>
+              
+   <menuitem name="Travel Report" id="topline_travel_report_menu" 
+  			  parent="topline_admin_sub_main_menu"
+              action="topline_travel_report_action"/>
+              
+   <menuitem name="Stationery Report" id="topline_stationery_report_menu" 
+  			  parent="topline_admin_sub_main_menu"
+              action="topline_stationery_report_action"/>
+  
+  <menuitem name="Waste Management Form" id="topline_waste_management_form_menu_2" 
+ 			  parent="topline_admin_sub_main_menu"
+              action="topline_waste_management_form_action"/>
+              
+  <menuitem name="Fumigation Schedule" id="topline_fumigation_schedule_menu" 
+ 			  parent="topline_admin_sub_main_menu"
+              action="topline_fumigation_schedule_form_action"/>
+              
+   
+  <menuitem name="HSE Module" id="topline_hse_main_menu" web_icon="topline,static/icon/topline_hse.png" groups="topline.group_hse"/>
+  <menuitem name="HSE" id="topline_hse_sub_main_menu" parent="topline_hse_main_menu"/>
+ 
+  <menuitem name="Waste Management Form" id="topline_waste_management_form_menu" 
+ 			  parent="topline_hse_sub_main_menu"
+              action="topline_waste_management_form_action"/>
+  
+  <menuitem name="Drivers Health Checklist" id="topline_waste_management_form_action_menu" 
+ 			  parent="topline_hse_sub_main_menu"
+              action="topline_drivers_health_checklist_form_action"/>
+              
+  <menuitem name="Job Safety Inspection Checklist" id="topline_job_safety_inspection_checklist_form_action_menu" 
+ 			  parent="topline_hse_sub_main_menu"
+              action="topline_job_safety_inspection_checklist_form_action"/>
+              
+  <menuitem name="Site Time Sheet" id="topline_site_time_sheet_menu" 
+ 			  parent="topline_hse_sub_main_menu"
+              action="topline_site_time_sheet_form_action"/>
+              
+  <menuitem name="EMS Monitoring" id="topline_ems_monitoring_menu" 
+ 			  parent="topline_hse_sub_main_menu"
+              action="topline_ems_monitoring_form_action"/>
+              
+  <menuitem name="EMS KPI" id="topline_ems_kpi_menu" 
+ 			  parent="topline_hse_sub_main_menu"
+              action="topline_ems_kpi_form_action" groups="base.group_no_one"/>
+              
+  <!-- <menuitem id="vehicle_pretrip_checklists" name="Vehicle Pretrip Checklist" parent="topline_hse_sub_main_menu" action="vehicle_pretrip_checklist_action"/> -->
+  <menuitem id="menu_lifting_plan_views" name="Lifting Plan" parent="topline_hse_sub_main_menu" action="action_lifting_plan_view"/> 
+	
+  </data>
+</odoo>

@@ -1,0 +1,1367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    <record model="ir.actions.act_window" id="vehicle_pretrip_checklist_action">
+		<field name="name">Vehicle Pretrip Checklist</field>
+		<field name="res_model">vehicle.pretrip.checklist</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+        <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Checklist
+              </p><p>
+                 Click to add a checklist
+              </p>
+        </field>
+    </record>
+
+
+        #form view
+       <record id="view_vehicle_checklist_form" model="ir.ui.view">
+         <field name="name">view.vehicle.pretrip.form</field>
+         <field name="model">vehicle.pretrip.checklist</field>
+         <field name="arch" type="xml">
+           <form name="Vehicle Pre-Trip Checklist Form">
+              <header>
+                   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+                   <button name="approve_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+                   <button name="refuse_request" string="Refuse" states="draft,confirm" type="object" groups=""/>
+
+                   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+               </header>
+             <sheet>
+               <div class="oe_title">
+                   <label for="vehicle_id" class="oe_edit_only"/>
+                   <h1>
+                       <field name="vehicle_id" placeholder="Vehicle Checklist"/>
+                   </h1>
+               </div>
+			 		<notebook>
+			 			<page string="INTERIOR">
+			 				<field name="interior_vehicle_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+                                   <field name="status" widget="radio" options="{'horizontal': true}"/>
+<!--			                       <field name="ok"/>-->
+<!--			                       <field name="not_ok"/>-->
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="INDICATORS">
+	 						<field name="indicator_vehicle_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="status" widget="radio" options="{'horizontal': true}"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="LIGHTS">
+			 				<field name="lights_vehicle_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="status" widget="radio" options="{'horizontal': true}"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="MIRRORS">
+			 				<field name="mirrors_vehicles_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="status" widget="radio" options="{'horizontal': true}"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+                        <page string="PARTICULARS">
+			 				<field name="particulars_vehicle_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="status" widget="radio" options="{'horizontal': true}"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+                        <page string="ACCESSORIES">
+			 				<field name="accessories_vehicle_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="status" widget="radio" options="{'horizontal': true}"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+                        <page string="ENGINE CHECK">
+			 				<field name="engine_vehicle_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="status" widget="radio" options="{'horizontal': true}"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+                        <page string="EXTERIOR">
+			 				<field name="exterior_vehicle_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="status" widget="radio" options="{'horizontal': true}"/>
+			                       <field name="remark"/>
+			                   </tree>
+			               </field>
+			 			</page>
+						<page string="Additional Checks">
+			 				<field name="additional_vehicle_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+			                       <field name="ok"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 		</notebook>
+               <group col="4" colspan="4">
+		            	<field name="driver"/>
+		            	<field name="journey_manager"/>
+		            	<field name="checker"/>
+		            	<field name="approval_date"/>
+               </group>
+             </sheet>
+               <div class="oe_chatter">
+                   <field name="message_follower_ids" widget="mail_followers"/>
+                   <field name="message_ids" widget="mail_thread"/>
+               </div>
+           </form>
+
+         </field>
+       </record>
+
+      <record id="view_pretrip_checklist_tree" model="ir.ui.view">
+          <field name="name">view.vehicle.pretrip.checklist.tree</field>
+          <field name="model">vehicle.pretrip.checklist</field>
+          <field name="arch" type="xml">
+              <tree string="Vehicle Pretrip Checklist">
+                  <field name="vehicle_id"/>
+                  <field name="checker"/>
+                  <field name="journey_manager"/>
+				  <field name="state"/>
+              </tree>
+          </field>
+      </record>
+
+<!--		Vendor Audit Form-->
+    <record model="ir.actions.act_window" id="vendor_audit_form_action">
+		<field name="name">Vendor audit form</field>
+		<field name="res_model">vendor.audit.form</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+        <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Vendor Audit
+              </p><p>
+                 Click create to audit a Vendor
+              </p>
+        </field>
+    </record>
+        #form view
+       <record id="view_vendor_audit_form" model="ir.ui.view">
+         <field name="name">view.vendor.audit.form</field>
+         <field name="model">vendor.audit.form</field>
+         <field name="arch" type="xml">
+           <form name="Vendor Audit Form">
+              <header>
+                   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+                   <button name="approve_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+                   <button name="refuse_request" string="Refuse" states="draft,confirm" type="object" groups=""/>
+
+                   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+               </header>
+             <sheet>
+				<div class="oe_button_box" name="button_box">
+					<button name="hse_vendor_audit_checklist" class="oe_stat_button" type="object" string="HSE Requirements" icon="fa-paperclip"/>
+				</div>
+				<div class="oe_title">
+					<label for="vendor_id" class="oe_edit_only"/>
+					<h1>
+					   <field name="vendor_id" placeholder="Vendor Name"/>
+					</h1>
+				</div>
+				 <group col="4">
+					   <field name="visited_by"/>
+                       <field name="cat_of_supply"/>
+                       <field name="hse"/>
+				 </group>
+			 		<notebook>
+			 			<page string="Management Responsibility">
+			 				<field name="management_vendor_audit_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+                                   <field name="mark" widget="radio" options="{'horizontal': true}"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="Fundamentals">
+	 						<field name="fundamentals_vendor_audit_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="mark" widget="radio" options="{'horizontal': true}"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="Competency">
+			 				<field name="competency_vendor_audit_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="mark" widget="radio" options="{'horizontal': true}"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="Quality Systems">
+			 				<field name="quality_vendor_audit_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="checklist"/>
+								   <field name="mark" widget="radio" options="{'horizontal': true}"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 		</notebook>
+               <group col="4" colspan="4">
+		            	<field name="audit_score"/>
+		            	<field name="is_required"/>
+					  	<field name="details"/>
+               </group>
+             </sheet>
+               <div class="oe_chatter">
+                   <field name="message_follower_ids" widget="mail_followers"/>
+                   <field name="message_ids" widget="mail_thread"/>
+               </div>
+           </form>
+         </field>
+       </record>
+
+      <record id="view_vendor_audit_tree" model="ir.ui.view">
+          <field name="name">view.vendor.audit.form.tree</field>
+          <field name="model">vendor.audit.form</field>
+          <field name="arch" type="xml">
+              <tree string="Vendor Audit Form">
+                  <field name="vendor_id"/>
+                  <field name="visited_by"/>
+                  <field name="cat_of_supply"/>
+				  <field name="audit_score"/>
+				  <field name="is_required"/>
+				  <field name="state"/>
+
+              </tree>
+          </field>
+      </record>
+
+<!--		HSE Vendor Audit Checklist-->
+    <record model="ir.actions.act_window" id="hse_vendor_audit_checklist_action">
+		<field name="name">HSE Requirements for Vendors</field>
+		<field name="res_model">hse.vendor.audit.checklist</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+        <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                HSE Requirements
+              </p><p>
+                 Click create
+              </p>
+        </field>
+    </record>
+
+   	<record id="view_hse_vendor_audit_form" model="ir.ui.view">
+         <field name="name">view.hse.vendor.audit.form</field>
+         <field name="model">hse.vendor.audit.checklist</field>
+         <field name="arch" type="xml">
+           <form name="HSE Req">
+             <sheet>
+				<div class="oe_title">
+					<label for="vendor_id" class="oe_edit_only"/>
+					<h1>
+					   <field name="vendor_id"/>
+					</h1>
+				</div>
+			 		<notebook>
+			 			<page string="Sustainability Risk Score">
+			 				<field name="sustainability_hse_vendor_audit_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="section"/>
+                                   <field name="check" widget="selection" options="{'horizontal': true}"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="Company structure/organization/response">
+	 						<field name="structure_hse_vendor_audit_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="section"/>
+								   <field name="check" widget="selection" options="{'horizontal': true}"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="Environmental dimension: Location and environment impact">
+			 				<field name="environmental_hse_vendor_audit_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="section"/>
+								   <field name="check" widget="selection" options="{'horizontal': true}"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 			<page string="Social dimension: Employee safety and health">
+			 				<field name="social_hse_vendor_audit_checklist_ids" nolabel="1" widget="section_and_note_one2many">
+			                   <tree editable="bottom">
+			                       <field name="section"/>
+								   <field name="check" widget="selection" options="{'horizontal': true}"/>
+			                   </tree>
+			               </field>
+			 			</page>
+			 		</notebook>
+               <group col="8" colspan="8">
+		            	<field name="risk_score"/>
+               </group>
+             </sheet>
+               <div class="oe_chatter">
+                   <field name="message_follower_ids" widget="mail_followers"/>
+                   <field name="message_ids" widget="mail_thread"/>
+               </div>
+           </form>
+         </field>
+       </record>
+
+	  <record id="view_hse_vendor_checklist_tree" model="ir.ui.view">
+          <field name="name">view.hse.vendor.audit.checklist.tree</field>
+          <field name="model">hse.vendor.audit.checklist</field>
+          <field name="arch" type="xml">
+              <tree string="HSE Requirements for Vendors/Suppliers">
+                  <field name="vendor_id"/>
+                  <field name="risk_score"/>
+              </tree>
+          </field>
+      </record>
+
+<!--			Logistics Vendor Audit Checklist-->
+		<record id="action_logistics_vendor_audit_view" model="ir.actions.act_window">
+		    <field name="name">Logistics Vendor Audit Checklist</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">logistics.vendor.audit.checklist</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Logistics Vendor Audit Checklist
+		      </p><p>
+		         Click Create to get started
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_logistics_vendor_audit_form" model="ir.ui.view">
+		    <field name="name">view.logistics.vendor.audit.form</field>
+		    <field name="model">logistics.vendor.audit.checklist</field>
+		    <field name="arch" type="xml">
+		        <form string="vendor_id">
+			  		<header>
+					   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+					   <button name="approve_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+					   <button name="refuse_request" string="Refuse" states="draft,confirm" type="object" groups=""/>
+
+					   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+			 		</header>
+		            <sheet>
+						<div class="oe_title">
+							<label for="vendor_id" class="oe_edit_only"/>
+							<h1>
+							   <field name="vendor_id"/>
+							</h1>
+						</div>
+						<group colspan="1" col="1">
+							<seperator string="DOCUMENTS">
+								<h2>DOCUMENTS (NOTE: all documents should be approved)</h2>
+							</seperator>
+		                    <field name="has_cac"/>
+		                    <field name="has_tax"/>
+		                    <field name="has_pre_mob"/>
+		                    <field name="has_comp"/>
+		                    <field name="has_mou"/>
+		                    <field name="has_competence"/>
+		                    <field name="has_road_req"/>
+						</group>
+						<group colspan="1" col="1">
+							<seperator string="PROCEDURES">
+								<h2>PROCEDURES (NOTE: all procedures should be approved)</h2>
+							</seperator>
+		                    <field name="has_logistics"/>
+		                    <field name="has_maintenance"/>
+		                    <field name="has_equipment"/>
+						</group>
+						<group colspan="1" col="1">
+							<seperator string="FACILITIES, PERSONNEL  AND EQUIPMENT">
+								<h2>FACILITIES, PERSONNEL  AND EQUIPMENT (NOTE: all equipment  should be physically sighted)</h2>
+							</seperator>
+		                    <field name="has_necessary"/>
+		                    <field name="is_certified"/>
+		                    <field name="was_sighted"/>
+		                    <field name="has_safety"/>
+						</group>
+						<group>
+							<field name="is_accepted"/>
+						</group>
+						<group>
+							<notebook>
+								<page string="Remarks">
+									<field name="remarks"/>
+								</page>
+							</notebook>
+		                </group>
+						<group>
+							<field name="audited_by_id"/>
+							<field name="date"/>
+						</group>
+		            </sheet>
+						<div class="oe_chatter">
+						 	<field name="message_follower_ids" widget="mail_followers"/>
+				    		<field name="message_ids" widget="mail_thread"/>
+						</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_logistics_vendor_audit_tree" model="ir.ui.view">
+			<field name="name">view.logistics.vendor.audit.tree</field>
+			<field name="model">logistics.vendor.audit.checklist</field>
+			<field name="arch" type="xml">
+				<tree string="">
+					<field name="vendor_id"/>
+					<field name="is_accepted"/>
+					<field name="audited_by_id"/>
+					<field name="date"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+<!--		Supplier Evalation Form-->
+		<record id="action_supplier_eval_form_view" model="ir.actions.act_window">
+		    <field name="name">Supplier Evaluation</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">supplier.evaluation.form</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+				Create Supplier Evaluation
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_supplier_eval_form" model="ir.ui.view">
+		    <field name="name">view.supplier.eval.form</field>
+		    <field name="model">supplier.evaluation.form</field>
+		    <field name="arch" type="xml">
+		        <form string="Supplier Evaluation FOrm">
+					<header>
+					   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+					   <button name="approve_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+					   <button name="refuse_request" string="Refuse" states="draft,confirm" type="object" groups=""/>
+
+					   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+			 		</header>
+		            <sheet>
+		                <group col="4" colspan="4">
+		                    <field name="supplier_id"/>
+		                    <field name="phone"/>
+		                    <field name="email"/>
+		                    <field name="company_rep"/>
+		                    <field name="job_title"/>
+						</group>
+						<group >
+		                    <field name="question_1"/>
+		                    <field name="reg_evidence"/>
+		                    <field name="question_2"/>
+		                    <field name="sales_type"/>
+		                    <field name="credit_duration"/>
+		                </group>
+								<h2>Acceptance Criteria (For completion by TOPLINE)</h2>
+						<group colspan="4" col="4">
+		                    <field name="has_track_record"/>
+		                    <field name="has_facility_audit"/>
+		                    <field name="is_recommended"/>
+		                    <field name="has_sole_source"/>
+						</group>
+						<group>
+		                    <field name="is_accepted"/>
+		                </group>
+						<notebook>
+							<page string="Comments">
+								<field name="comments"/>
+							</page>
+						</notebook>
+		            </sheet>
+						<div class="oe_chatter">
+						 	<field name="message_follower_ids" widget="mail_followers"/>
+				    		<field name="message_ids" widget="mail_thread"/>
+						</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_supplier_eval_form_tree" model="ir.ui.view">
+		    <field name="name">view.supplier.eval.form.tree</field>
+		    <field name="model">supplier.evaluation.form</field>
+		    <field name="arch" type="xml">
+		        <tree string="Supplier Evaluation">
+		            <field name="supplier_id"/>
+		            <field name="sales_type"/>
+		            <field name="company_rep"/>
+		            <field name="is_accepted"/>
+		        </tree>
+		    </field>
+		</record>
+
+	<!--Supplier Re-Evaluation-->
+		<record id="action_supplier_revaluation_view" model="ir.actions.act_window">
+		    <field name="name">Supplier Re-Evaluation</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">supplier.revaluation</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Supplier Re-Evaluation
+		      </p><p>
+
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_supplier_revaluation_form" model="ir.ui.view">
+		    <field name="name">view.supplier.revaluation.form</field>
+		    <field name="model">supplier.revaluation</field>
+		    <field name="arch" type="xml">
+		        <form string="Supplier Re-Evaluation">
+					<header>
+					   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+					   <button name="approve_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+					   <button name="refuse_request" string="Refuse" states="draft,confirm" type="object" groups=""/>
+
+					   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+			 		</header>
+		            <sheet>
+		                <group col="4" colspan="4">
+		                    <field name="supplier_id"/>
+		                    <field name="scope"/>
+		                </group>
+						<notebook>
+							<page string="Re-Evaluation Criteria">
+								<field name="supplier_revaluation_ids">
+									<tree editable="1">
+										<field name="criteria"/>
+										<field name="score_1"/>
+										<field name="score_2"/>
+										<field name="score_3"/>
+										<field name="score_4"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+						<group colspan="4" col="4">
+							<field name="efficency_score"/>
+							<field name="mark"/>
+						</group>
+		            </sheet>
+						<div class="oe_chatter">
+						 	<field name="message_follower_ids" widget="mail_followers"/>
+				    		<field name="message_ids" widget="mail_thread"/>
+						</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_supplier_revaluation_tree" model="ir.ui.view">
+		    <field name="name">view.supplier.revaluation.tree</field>
+		    <field name="model">supplier.revaluation</field>
+		    <field name="arch" type="xml">
+		        <tree string="Supplier Re-Evaluation">
+		            <field name="supplier_id"/>
+		        </tree>
+		    </field>
+		</record>
+
+
+<!--		Terminal Clearance Form-->
+		<!-- <record id="action_terminal_clearance_view" model="ir.actions.act_window">
+		    <field name="name">Terminal Clearance Form</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">terminal.clearance</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Terminal Clearance
+		      </p><p>
+		         Click Create!!
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_terminal_clearance_form" model="ir.ui.view">
+		    <field name="name">view.terminal.clearance.form</field>
+		    <field name="model">terminal.clearance</field>
+		    <field name="arch" type="xml">
+		        <form string="Terminal Clearance">
+					<header>
+					   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+					   <button name="validate_request" string="Manager Approval" class="oe_highlight" states="confirm" type="object" groups=""/>
+					   <button name="approve_request" string="Approved" class="oe_highlight" states="validate" type="object" groups=""/>
+					   <button name="refuse_request" string="Refuse" states="draft,confirm,validate" type="object" groups=""/>
+					   <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate,approved"/>
+					</header>
+		            <sheet>
+		                <group>
+		                    <field name="employee_id"/>
+		                    <field name="department_id"/>
+		                </group>
+						<notebook>
+							<page string="ITEMS RETUREND">
+								<field name="terminal_clearance_line_ids">
+									<tree editable="1">
+										<field name="items_id"/>
+										<field name="quantity"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+		            </sheet>
+					   <div class="oe_chatter">
+						   <field name="message_follower_ids" widget="mail_followers"/>
+						   <field name="message_ids" widget="mail_thread"/>
+					   </div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_terminal_clearance_tree" model="ir.ui.view">
+		    <field name="name">view..tree</field>
+		    <field name="model">terminal.clearance</field>
+		    <field name="arch" type="xml">
+		        <tree string="Terminal Clearance">
+		            <field name="employee_id"/>
+		            <field name="state"/>
+		        </tree>
+		    </field>
+		</record> -->
+
+<!--		Cathodic Equipment Checklist-->
+
+		<record id="action_cathodic_protection_checklist_view" model="ir.actions.act_window">
+		    <field name="name">Cathodic Protection Equipment Checklist</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">cathodic.protection.checklist</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Cathodic Protection Checklist
+		      </p><p>
+
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_cathodic_protection_checklist_form" model="ir.ui.view">
+		    <field name="name">view.cathodic.protection.checklist.form</field>
+		    <field name="model">cathodic.protection.checklist</field>
+		    <field name="arch" type="xml">
+		        <form string="Cathodic Protection Equipment Checklist">
+              <header>
+                   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+                   <button name="validate_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+                   <button name="approve_request" string="Approved" class="oe_highlight" states="validate" type="object" groups=""/>
+                   <button name="refuse_request" string="Refuse" states="draft,confirm,validate" type="object" groups=""/>
+
+                   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+               </header>
+		            <sheet>
+						<div class="oe_title">
+						    <label for="project_id" class="oe_edit_only"/>
+						    <h1>
+						        <field name="project_id" placeholder="Select Project Name"/>
+						    </h1>
+						</div>
+						<group>
+							<notebook>
+								<page string="Equipment Checklist">
+										<field name="cathodic_protection_checklist_ids">
+											<tree editable="1">
+												<field name="product_id"/>
+												<field name="description"/>
+												<field name="qty_mob"/>
+												<field name="qty_demo"/>
+												<field name="remarks"/>
+											</tree>
+										</field>
+								</page>
+							</notebook>
+						</group>
+		            </sheet>
+					<div class="oe_chatter">
+					    <field name="message_follower_ids" widget="mail_followers"/>
+					    <field name="message_ids" widget="mail_thread"/>
+					</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_cathodic_protection_checklist_tree" model="ir.ui.view">
+		    <field name="name">view.cathodic.protection.checklist.tree</field>
+		    <field name="model">cathodic.protection.checklist</field>
+		    <field name="arch" type="xml">
+		        <tree string="">
+		            <field name="project_id"/>
+		        </tree>
+		    </field>
+		</record>
+
+		<!--		Valves Service Checklist-->
+
+		<record id="action_valves_service_checklist_view" model="ir.actions.act_window">
+		    <field name="name">Valves Service Checklist</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">valves.service.checklist</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Valves Service Checklist
+		      </p><p>
+
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_valves_service_checklist_form" model="ir.ui.view">
+		    <field name="name">view.valves.service.checklist.form</field>
+		    <field name="model">valves.service.checklist</field>
+		    <field name="arch" type="xml">
+		        <form string="Valves Service Equipment Checklist">
+              <header>
+                   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+                   <button name="validate_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+                   <button name="approve_request" string="Approved" class="oe_highlight" states="validate" type="object" groups=""/>
+                   <button name="refuse_request" string="Refuse" states="draft,confirm,validate" type="object" groups=""/>
+
+                   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+               </header>
+		            <sheet>
+						<group col="4" colspan="4">
+							<field name="staff_id"/>
+							<field name="date"/>
+							<field name="project_id"/>
+						</group>
+						<group>
+							<notebook>
+								<page string="Equipment Checklist">
+										<field name="valves_service_checklist_ids">
+											<tree editable="1">
+												<field name="product_id"/>
+												<field name="description"/>
+												<field name="qty_mob"/>
+												<field name="qty_demo"/>
+												<field name="remarks"/>
+											</tree>
+										</field>
+								</page>
+							</notebook>
+						</group>
+		            </sheet>
+					<div class="oe_chatter">
+					    <field name="message_follower_ids" widget="mail_followers"/>
+					    <field name="message_ids" widget="mail_thread"/>
+					</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_valves_service_checklist_tree" model="ir.ui.view">
+		    <field name="name">view.valves.service.checklist.tree</field>
+		    <field name="model">valves.service.checklist</field>
+		    <field name="arch" type="xml">
+		        <tree string="">
+		            <field name="project_id"/>
+		        </tree>
+		    </field>
+		</record>
+
+		<!--		Pump Equipment  Checklist-->
+
+		<record id="action_pump_equipment_checklist_view" model="ir.actions.act_window">
+		    <field name="name">Pump Equipment Checklist</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">pump.equipment.checklist</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Pump Equipment Checklist
+		      </p><p>
+
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_pump_equipment_checklist_form" model="ir.ui.view">
+		    <field name="name">view.pump.equipment.checklist.form</field>
+		    <field name="model">pump.equipment.checklist</field>
+		    <field name="arch" type="xml">
+		        <form string="Pump Equipment Checklist">
+					  <header>
+						   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+						   <button name="validate_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+						   <button name="approve_request" string="Approved" class="oe_highlight" states="validate" type="object" groups=""/>
+						   <button name="refuse_request" string="Refuse" states="draft,confirm,validate" type="object" groups=""/>
+
+						   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+					   </header>
+		            <sheet>
+						<group col="4" colspan="4">
+							<field name="staff_id"/>
+							<field name="location"/>
+							<field name="job"/>
+						</group>
+						<group>
+							<notebook>
+								<page string="Main Single Liftable Items">
+										<field name="pump_checklist_ids">
+											<tree editable="1">
+												<field name="product_id"/>
+												<field name="description"/>
+												<field name="qty_mob"/>
+												<field name="qty_demo"/>
+												<field name="remarks"/>
+											</tree>
+										</field>
+								</page>
+								<page string="Air Driven Pump Units">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Flexible Hoses">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Instrumentation">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Pressure Relief Valves/Burst Discs/Non Return Valves">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Tools">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Valves">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Nipples">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Tees/Barrels/Elbows">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Fittings">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Valves and fittings">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Nipples">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Reducing Bush">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Tees/Barrels/Elbows">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Additional Fittings">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Additional Adapters and Spools">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+								<page string="Miscellaneous">
+									<field name="pump_checklist_ids">
+										<tree editable="1">
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+							</notebook>
+						</group>
+		            </sheet>
+					<div class="oe_chatter">
+					    <field name="message_follower_ids" widget="mail_followers"/>
+					    <field name="message_ids" widget="mail_thread"/>
+					</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_pump_equipment_checklist_tree" model="ir.ui.view">
+		    <field name="name">view.pump.equipment.checklist.tree</field>
+		    <field name="model">pump.equipment.checklist</field>
+		    <field name="arch" type="xml">
+		        <tree string="">
+		            <field name="staff_id"/>
+		            <field name="job"/>
+		            <field name="location"/>
+		        </tree>
+		    </field>
+		</record>
+
+
+		<!--		Pigging  Checklist-->
+
+		<record id="action_pigging_equipment_checklist_view" model="ir.actions.act_window">
+		    <field name="name">Pigging Equipment Checklist</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">pigging.equipment.checklist</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Pigging Equipment Checklist
+		      </p><p>
+
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_pigging_equipment_checklist_form" model="ir.ui.view">
+		    <field name="name">view.pigging.equipment.checklist.form</field>
+		    <field name="model">pigging.equipment.checklist</field>
+		    <field name="arch" type="xml">
+		        <form string="Pigging Equipment Checklist">
+              <header>
+                   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+                   <button name="validate_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+                   <button name="approve_request" string="Approved" class="oe_highlight" states="validate" type="object" groups=""/>
+                   <button name="refuse_request" string="Refuse" states="draft,confirm,validate" type="object" groups=""/>
+
+                   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+               </header>
+		            <sheet>
+						<group col="4" colspan="4">
+							<field name="staff_id"/>
+							<field name="date"/>
+							<field name="project_id"/>
+						</group>
+						<group>
+							<notebook>
+								<page string="Equipment Checklist">
+										<field name="pigging_checklist_ids">
+											<tree editable="1">
+												<field name="product_id"/>
+												<field name="description"/>
+												<field name="qty_mob"/>
+												<field name="qty_demo"/>
+												<field name="remarks"/>
+											</tree>
+										</field>
+								</page>
+							</notebook>
+							<notebook>
+								<page string="Pigs">
+									<field name="pigging_checklist_ids" widget="section_and_note_one2many">
+									<tree string="Invoice Lines" editable="bottom">
+										<control>
+											<create string="Add a line"/>
+											<create string="Add a section" context="{'default_display_type': 'line_section'}"/>
+											<create string="Add a note" context="{'default_display_type': 'line_note'}"/>
+										</control>
+											<field name="product_id"/>
+											<field name="description"/>
+											<field name="qty_mob"/>
+											<field name="qty_demo"/>
+											<field name="remarks"/>
+										</tree>
+									</field>
+								</page>
+							</notebook>
+								<seperator string="DFF ODN OJNDS" colspan="2"/>
+						</group>
+		            </sheet>
+					<div class="oe_chatter">
+					    <field name="message_follower_ids" widget="mail_followers"/>
+					    <field name="message_ids" widget="mail_thread"/>
+					</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_pigging_equipment_checklist_tree" model="ir.ui.view">
+		    <field name="name">view.pigging.equipment.checklist.tree</field>
+		    <field name="model">pigging.equipment.checklist</field>
+		    <field name="arch" type="xml">
+		        <tree string="">
+		            <field name="project_id"/>
+		        </tree>
+		    </field>
+		</record>
+
+<!--		Preconfirmation Assesment -->
+		<record id="action_precofirmation_assesment_view" model="ir.actions.act_window">
+		    <field name="name">Precofirmation Assesment</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">preconfirmation.assesment</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Preconfirmation Assesment
+		      </p><p>
+
+		      </p>
+		    </field>
+		</record>
+
+		<record id="view_preconfirmation_assesment_form" model="ir.ui.view">
+		    <field name="name">view.preconfirmation_assesment.form</field>
+		    <field name="model">preconfirmation.assesment</field>
+		    <field name="arch" type="xml">
+		        <form string="Preconfirmation Assesment">
+			  	<header>
+                   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
+                   <button name="validate_request" string="Approved" class="oe_highlight" states="confirm" type="object" groups=""/>
+                   <button name="approve_request" string="Approved" class="oe_highlight" states="validate" type="object" groups=""/>
+                   <button name="refuse_request" string="Refuse" states="draft,confirm,validate" type="object" groups=""/>
+
+                   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+               </header>
+		            <sheet>
+		                <group colspan="4" col="4">
+		                    <field name="staff_id"/>
+		                    <field name="department_id"/>
+		                    <field name="date_joined"/>
+		                    <field name="location"/>
+		                </group>
+						<notebook>
+							<page string="Assesment">
+								<field name="preconfirmation_assesment_ids">
+									<tree editable="1">
+										<field name="attributes"/>
+										<field name="score" widget="radio" options="{'horizontal': true}"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+						<group col="4" colspan="4">
+							<field name="max_points"/>
+							<field name="recommendation" widget="radio" options="{'horizontal': true}"/>
+							<field name="extension_period"/>
+						</group>
+		            </sheet>
+					<div class="oe_chatter">
+					    <field name="message_follower_ids" widget="mail_followers"/>
+					    <field name="message_ids" widget="mail_thread"/>
+					</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_preconfirmation_assesment_tree" model="ir.ui.view">
+		    <field name="name">view.preconfirmation.assesment.tree</field>
+		    <field name="model">preconfirmation.assesment</field>
+		    <field name="arch" type="xml">
+		        <tree string="Preconfirmation Assesment">
+		            <field name="staff_id"/>
+		        </tree>
+		    </field>
+		</record>
+
+		<record id="view_lifting_plan_form" model="ir.ui.view">
+		    <field name="name">view.lifting.plan.form</field>
+		    <field name="model">lifting.plan</field>
+		    <field name="arch" type="xml">
+		        <form string="Liftng Plan">
+					<header>
+					   <button name="task_sup_confirm" string="Task Supervisor" class="oe_highlight" states="draft" type="object"/>
+					   <button name="rig_sup_confirm" string="Rigging Supervisor" class="oe_highlight" states="task_sup" type="object" groups=""/>
+					   <button name="hse_approval" string="HSE" class="oe_highlight" states="rig_sup" type="object" groups=""/>
+					   <button name="refuse_request" string="Refuse" states="draft,task_sup,rig_sup" type="object" groups=""/>
+
+					   <field name="state" widget="statusbar" statusbar_visible="draft"/>
+				   </header>
+		            <sheet>
+		                <group col="4" colspan="4">
+		                    <field name="name"/>
+		                    <field name="date"/>
+		                    <field name="load_desc"/>
+		                    <field name="life_desc"/>
+		                </group>
+						<notebook>
+							<page string="A. WEIGHT">
+								<group col="4" colspan="4">
+									<field name="condition" widget="radio"/>
+									<field name="weight_empty"/>
+									<field name="weight_headche"/>
+									<field name="weight_block"/>
+									<field name="weight_lifting"/>
+									<field name="weight_slings"/>
+									<field name="weight_jib_erect"/>
+									<field name="weight_jib_stored"/>
+									<field name="weight_headche_jib"/>
+									<field name="weight_cable"/>
+									<field name="allowance"/>
+									<field name="other"/>
+									<field name="total_weight" sum="Total"/>
+								</group>
+								<group col="4" colspan="4">
+									<field name="source_weight"/>
+									<field name="verified_id"/>
+								</group>
+							</page>
+							<page string="B. JIB">
+								<group col="4" colspan="4">
+									<field name="jib_erected"/>
+									<field name="jib_stored"/>
+									<field name="to_use"/>
+									<field name="jib_length"/>
+									<field name="jib_angle"/>
+									<field name="jib_capacity"/>
+								</group>
+							</page>
+							<page string="C. CRANE PLACEMENT">
+								<group col="4" colspan="4">
+									<field name="deviation"/>
+									<field name="electrical"/>
+									<field name="obstacles"/>
+									<field name="swing"/>
+								</group>
+							</page>
+							<page string="D. CABLE">
+								<group col="4" colspan="4">
+									<field name="parts_cable"/>
+									<field name="size_cable"/>
+								</group>
+							</page>
+							<page string="E. SIZING OF SLINGS">
+								<group col="2" colspan="2">
+									<span>1. SLING SELECTION</span>
+									<field name="type"/>
+									<field name="no_slings"/>
+									<field name="sling_size"/>
+									<field name="sling_length"/>
+									<field name="sling_capacity"/>
+								</group>
+								<group col="2" colspan="2">
+									<span>2. SHACKLE SELECTION</span>
+									<field name="pin_diameter"/>
+									<field name="capacity_tons"/>
+									<field name="shackle"/>
+									<field name="no_shackle"/>
+								</group>
+							</page>
+							<page string="F. CRANE">
+								<group col="2" colspan="2">
+									<field name="type_crane"/>
+									<field name="crane_capacity"/>
+									<field name="lift_arg"/>
+									<field name="max_dist"/>
+									<field name="boom"/>
+									<field name="boom_pickup"/>
+									<field name="boom_set"/>
+									<field name="crane_capacity"/>
+								</group>
+								<group col="2" colspan="2">
+									<span>LIFTING CONDITION (FROM CHART)</span>
+									<field name="over_rear"/>
+									<field name="over_front"/>
+									<field name="overside"/>
+									<field name="cap_crane"/>
+									<field name="max_load"/>
+									<field name="percentage"/>
+								</group>
+							</page>
+							<page string="G. PRE-LIFT CHECKLIST">
+								<group>
+									<field name="is_matting"/>
+									<field name="is_extended"/>
+									<field name="is_good"/>
+									<field name="swing_room"/>
+									<field name="head_room"/>
+									<field name="counterweights"/>
+									<field name="has_tagline"/>
+									<field name="is_experienced"/>
+									<field name="is_flagman"/>
+									<field name="is_rigger"/>
+									<field name="has_load_chart"/>
+									<field name="wind"/>
+								</group>
+								<group col="2" colspan="2">
+									<field name="inspection_id"/>
+									<field name="test_id"/>
+								</group>
+							</page>
+						</notebook>
+						<span>MULTIPLE CRANE LIFTS REQUIRE A SEPARATE LIFT PLAN FOR EACH CRANE. ANY CHANGES IN THE CONFIGURATION OF THE CRANE, PLACEMENT, RIGGING, LIFTING SCHEME ETC OR CHANGES
+							IN ANY CALCULATION REQUIRE THAT A NEW LIFT PLAN BE DEVELOPED.</span>
+		            </sheet>
+						<div class="oe_chatter">
+							<field name="message_follower_ids" widget="mail_followers"/>
+							<field name="message_ids" widget="mail_thread"/>
+						</div>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="view_lifting_plan_tree" model="ir.ui.view">
+		    <field name="name">view.lifting.plan.tree</field>
+		    <field name="model">lifting.plan</field>
+		    <field name="arch" type="xml">
+		        <tree string="">
+		            <field name="name"/>
+		            <field name="date"/>
+		            <field name="load_desc"/>
+		            <field name="life_desc"/>
+		        </tree>
+		    </field>
+		</record>
+
+
+<!--		Related menu-->
+        <menuitem id="vehicle_pretrip_checklist" name="Vehicle Pretrip Checklist" parent="menu_checklist_categ" action="vehicle_pretrip_checklist_action"/>
+<!--        <menuitem id="hse_vendor_audit_checklist" name="HSE Requirements for Vendors" parent="purchase.menu_procurement_management" action="hse_vendor_audit_checklist_action"/>-->
+        <menuitem id="vendor_audit_form" name="Vendor Audit Form" parent="purchase.menu_procurement_management" action="vendor_audit_form_action"/>
+        <menuitem id="supplier_eval_form" name="Supplier Evaluation Form" parent="purchase.menu_procurement_management" action="action_supplier_eval_form_view"/>
+        <!-- 
+        <menuitem id="logistics_vendor_audit_checklist" name="Logistics Vendor Audit Checklist" parent="quality_control.menu_quality_control" action="action_logistics_vendor_audit_view"/>
+         -->
+         <menuitem id="supplier_revaluation_form" name="Supplier Re-Evaluation" parent="purchase.menu_procurement_management" action="action_supplier_revaluation_view"/>
+        <!-- <menuitem id="terminal_clearance_form" name="Terminal Clearance" parent="hr.menu_hr_root" action="action_terminal_clearance_view"/> -->
+		<menuitem id="menu_cathodic_protection_checklist_view" name="Cathodic Protection Equipment Checklist" parent="menu_checklist_categ" action="action_cathodic_protection_checklist_view"/>
+		<menuitem id="menu_valves_service_checklist_view" name="Valves Service Equipment Checklist" parent="menu_checklist_categ" action="action_valves_service_checklist_view"/>
+		<menuitem id="menu_pump_equioment_checklist_view" name="Pump Equipment Checklist" parent="menu_checklist_categ" action="action_pump_equipment_checklist_view"/>
+		<menuitem id="menu_pigging_equioment_checklist_view" name="Pigging Equipment Checklist" parent="menu_checklist_categ" action="action_pigging_equipment_checklist_view"/>
+		<menuitem id="menu_preconfirmation_assesment_checklist_view" name="Preconfirmation Assesment" parent="hr_appraisal.menu_hr_appraisal_root" action="action_precofirmation_assesment_view"/>
+    </data>
+</odoo>

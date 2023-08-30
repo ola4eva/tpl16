@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+        <record id="seq_employee_appraisal" model="ir.sequence">
+            <field name="name">Appraisal</field>
+            <field name="code">employee.appraisal</field>
+            <field name="prefix">Appraisal/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+    </data>
+</odoo>

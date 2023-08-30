@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <template id="stock_voucher_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-6"><h4>STOCK ISSUE VOUCHER</h4></div>
+                            <div class="col-3"></div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <t t-foreach="docs" t-as="o">
+                            <div class="row">
+                                <div class="col-6" style="float:left;">
+                                    <span>Receiving Dept: __________________</span>
+                                </div>
+                                <div class="col-6" style="float:right;">
+                                    <span>Date: <t t-esc="o.request_date"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ITEM</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>UNIT</th>
+                                        <th>QTY</th>
+                                        <th>REMARK</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="serial" t-value="1" />
+                                    <t t-foreach="o.move_lines" t-as="line">
+                                        <tr>
+                                            <td><t t-esc="serial" /></td>
+                                            <td><t t-esc="line.product_id.name" /></td>
+                                            <td><t t-esc="line.product_uom.name"/></td>
+                                            <td><t t-esc="line.quantity_done" /></td>
+                                            <td><t t-esc="line.report_notes" /></td>
+                                        </tr>
+                                        <t t-set="serial" t-value="serial + 1"/>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>Signature: _________________________</div>
+                                    <br/>
+                                    <div>Name (in full): ______________________</div>
+                                </div>
+                                <div class="col-6">
+                                    <div>Date Received: ___________________</div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+         <record id="paperformat_euro_portrait" model="report.paperformat">
+            <field name="name">European A4 Landscape</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="stock_voucher"
+            string="Stock Voucher"
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            name="topline_product_vouchers.stock_voucher_template"
+            file="topline_product_vouchers.stock_voucher"
+            paperformat="paperformat_euro_portrait"
+        />
+
+    </data>
+</odoo>

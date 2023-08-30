@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="topline_payslip_details_report"
+        model="hr.payslip"
+        string="topline PaySlip Details"
+        report_type="qweb-pdf"
+        name="topline_hr_payroll.report_toplinepayslipdetails" 
+        file="topline_hr_payroll.report_toplinepayslipdetails"
+        print_report_name="'Payslip Details - %s' % (object.employee_id.name)"
+    />
+</odoo>

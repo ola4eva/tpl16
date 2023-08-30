@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!-- topline audit log default search view -->
+    <record id="topline_auditlog_view_search" model="ir.ui.view">
+      <field name="name">auditlog.log.search</field>
+      <field name="model">auditlog.log</field>
+      <field name="arch" type="xml">
+        <search>
+          <group expand="1" string="Group By">
+            <filter string="Model" name="type_of_model_id" context="{'group_by':'model_id'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- topline audit log action-->
+    <record id="topline_auditlog_action" model="ir.actions.act_window">
+      <field name="name">Logs</field>
+      <field name="res_model">auditlog.log</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" ref="topline_auditlog_view_search"/>
+      <field name="domain">[]</field>
+      <field name="context">{'search_default_type_of_model_id':1}</field>
+    </record>
+
+    <menuitem name="Audit Log" id="topline_auditlog_extended_main_menu" web_icon="topline_auditlog_extension,static/icon/audit.png" groups="topline.group_internal_audit" action="topline_auditlog_action"/>
+
+  </data>
+</odoo>

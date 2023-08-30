@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- Root menu -->
+        <menuitem id="menu_appraisal_root" name="Performance Appraisal" sequence="20" web_icon="topline_employee_appraisal,static/description/icon.png"/>
+
+        <!-- Appraisal -->
+        <menuitem id="employee_appraisal_heading_menu" name="Performance Appraisal" sequence="1" parent="menu_appraisal_root" />
+
+        <!-- Appraisal Action-->
+        <menuitem id="employee_appraisal_action_menu" name="Performance Appraisal" sequence="1" parent="employee_appraisal_heading_menu" action="employee_appraisal_readonly_action" />
+
+        <!-- Configuration -->
+        <menuitem id="menu_appraisal_config" name="Configuration" sequence="20" parent="menu_appraisal_root" />
+
+        <!-- Template Heading -->
+        <menuitem id="employee_appraisal_template_heading_menu" name="Appraisal" sequence="1" parent="menu_appraisal_config" />
+
+        <!-- Template Action -->
+        <menuitem id="employee_appraisal_template_action_menu" name="Appraisal Template" sequence="1" parent="employee_appraisal_template_heading_menu" action="employee_appraisal_template_action" />
+
+    </data>
+
+
+</odoo>

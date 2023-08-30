@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <data noupdate="0">
+
+        <!-- Send Appraisal Notification to Employee -->
+        <record id="employee_appraisal_request_email_to_employee" model="mail.template">
+            <field name="name">Appraisal: Completion Request</field>
+            <field name="subject">Request to Carry Out Appraisal Assessment</field>
+            <field name="email_from">${user.partner_id.email}</field>
+            <field name="email_to">${ ('' if not object.employee_id and not object.employee_id.email else object.employee_id.work_email) }</field>
+            <field name="model_id" ref="model_employee_appraisal_employee_appraisal" />
+            <field name="auto_delete" eval="False" />
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hello ${object.employee_id.name},</p>
+                    <p>${object.name}, has been sent to you for completion by your manager... Please fill it and forward to your manager for his own assessment</p>
+                    <p>Here is a <a href="${object.url}" target="_blank">link</a> to the record.</p>
+                    <p>Best Regards,</p>
+                    <p>${user.name}</p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Send Appraisal Notification to Employee's Manager -->
+        <record id="employee_appraisal_request_email_to_employee_manager" model="mail.template">
+            <field name="name">Appraisal: Completion Request</field>
+            <field name="subject">Request to Assess ${object.employee_id.name}</field>
+            <field name="email_from">${(user.partner_id.email or object.employee_id.work_email)}</field>
+            <field name="email_to">${ ('' if not (object.employee_id and object.employee_id.parent_id and object.employee_id.parent_id.work_email) else object.employee_id.parent_id.work_email) }</field>
+            <field name="model_id" ref="model_employee_appraisal_employee_appraisal" />
+            <field name="auto_delete" eval="False" />
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hello ${object.employee_id.parent_id.name},</p>
+                    <p>${object.name}, has been sent to you for assessment of ${object.employee_id.name}</p>
+                    <p>Here is a <a href="${object.url}" target="_blank">link</a> to the record.</p>
+                    <p>Best Regards,</p>
+                    <p>${object.employee_id.name}</p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Send Appraisal Completion to HR Manager -->
+        <record id="employee_appraisal_completion_email_to_hr" model="mail.template">
+            <field name="name">Appraisal: Assessment Completed</field>
+            <field name="subject">Assessment of ${object.employee_id.name} Is Complete</field>
+            <field name="email_from">${user.company_id.email}</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="auto_delete" eval="False" />
+            <field name="model_id" ref="model_employee_appraisal_employee_appraisal" />
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hello ${object.user_id.name"},</p>
+                    <p>${object.name}, which is an assessment of ${object.employee_id.name} has been completed.</p>
+                    <p>You can find the document <a href="${object.url}" target="_blank">here</a> for your review.</p>
+                    <p>Best Regards,</p>
+                    <p>${object.employee_id.parent_id.name}</p>
+                </div>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>
+

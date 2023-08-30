@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- User sends interdepartmental request to responsible -->
+        <record id="email_submit_request_to_responsible" model="mail.template">
+            <field name="name">Interdepartmental Request: Submit Request</field>
+            <field name="model_id" ref="topline_inter_departmental_request.model_inter_departmental_request"/>
+            <field name="subject">Interdepartmental Request ${object.name} Requires Your Attention</field>
+            <field name="partner_to">${object.responsible_user_id.partner_id.id}</field>
+            <field name="email_to">${object.responsible_user_id.email}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+				    	Hello ${object.responsible_user_id.name},
+                        <br/>
+                        <p>An Interdepartmental request has been submitted for your attention. Please set this in Progress if you have started working on it.</p>
+                        <p>You can reach out to the requester, ${object.user_id.name} if you need further clarifications.</p>
+                        <p>Click <a href="${object.get_record_url()}">here</a> to access the record.</p>
+                        <p>
+						Thank you for your usual co-operation.
+                        </p>
+                    </p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Responsible user marks as progress -->
+        <record id="email_request_responsible_set_to_progress" model="mail.template">
+            <field name="name">Interdepartmental Request: Set Progress</field>
+            <field name="model_id" ref="topline_inter_departmental_request.model_inter_departmental_request"/>
+            <field name="subject">Request ${object.name} Is Receiving Attention</field>
+            <field name="email_from">${object.responsible_user_id.email}</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+				    	Hello ${object.user_id.name},
+                        <br/>
+                        <p>An Interdepartmental request has been set to in progress by the responsible user. You would be notified when it is finally resolved.</p>
+                        <p>You can reach out to the responsible, ${object.responsible_user_id.name} if you need further clarifications.</p>
+                        <p>You view the progress <a href="${object.get_record_url()}">here</a>.
+                        </p>
+                        <p>
+						Thank you for your usual co-operation.
+                        </p>
+                    </p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Responsible user completes request -->
+        <record id="email_responsible_complete_request" model="mail.template">
+            <field name="name">Interdepartmental Request: Complete Request</field>
+            <field name="model_id" ref="topline_inter_departmental_request.model_inter_departmental_request"/>
+            <field name="subject">Interdepartmental Request ${object.name} Requires Your Attention</field>
+            <field name="email_from">${object.responsible_user_id.email}</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+				    	Hello ${object.user_id.name},
+                        <br/>
+                        <p>Your request ${object.name} has been updated as completed. Please confirm that this is so.</p>
+                        <p>For further enquiries, please reach out to the responsible user, ${object.responsible_user_id.name}.</p> 
+						Thank you for your usual co-operation.
+                        <p>
+                            <a href="${object.get_record_url()}">Here</a>
+                            <span>is the document for your review.</span>
+                        </p>
+                        <p>
+						Thank you for your usual co-operation.
+                        </p>
+                    </p>
+                </div>
+            </field>
+        </record>
+
+        <!-- User confirms completion -->
+        <record id="email_user_confirm_completion" model="mail.template">
+            <field name="name">Interdepartmental Request: Confirm Completion</field>
+            <field name="model_id" ref="topline_inter_departmental_request.model_inter_departmental_request"/>
+            <field name="subject">Interdepartmental Request ${object.name} Requires Your Attention</field>
+            <field name="email_from">${object.user_id.email}</field>
+            <field name="email_to">${object.responsible_user_id.email}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+				    	Hello ${object.responsible_user_id.name},
+                        <br/>
+                        <br/>
+                        <p>${object.user_id.name} has confirmed that their request ${object.name} has been resolved.</p>
+                        <p>Thank you for job well done.</p> 
+						Thank you for your usual co-operation.
+                    </p>
+                </div>
+            </field>
+        </record>
+
+        <!-- User disputes completion -->
+        <record id="email_user_dispute_completion" model="mail.template">
+            <field name="name">Interdepartmental Request: Dispute Completion</field>
+            <field name="model_id" ref="topline_inter_departmental_request.model_inter_departmental_request"/>
+            <field name="subject">Interdepartmental Request ${object.name} Requires Your Attention</field>
+            <field name="email_from">${object.responsible_user_id.email}</field>
+            <field name="email_to">${object.responsible_user_id.email}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+				    	Hello ${object.responsible_user_id.name},
+                        <br/>
+                        <br/>
+                        <p>The resolution of request ${object.name} cannot be confirmed at this time.</p>
+                        <p>You would need to reach out to the requester ${object.user_id.name}, to understand why this cannot be confirmed as done..</p>
+                        <p>Please click <a href="${object.get_record_url()}">here</a>.
+                        </p> 
+						Thank you for your usual co-operation.
+                        <br/>
+                        <br/>
+                    </p>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,115 @@
+<odoo>
+  <data>
+
+    <record id="inter_departmental_request_view_tree" model="ir.ui.view">
+      <field name="name">inter_departmental.request.view.tree</field>
+      <field name="model">inter_departmental.request</field>
+      <field name="arch" type="xml">
+        <tree string="Request">
+          <field name="name" />
+          <field name="user_id" />
+          <field name="src_department_id" />
+          <field name="dest_department_id" />
+          <field name="responsible_user_id" />
+          <field name="date_requested" />
+          <field name="state" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="inter_departmental_request_view_form" model="ir.ui.view">
+      <field name="name">inter_departmental.request.view.form</field>
+      <field name="model">inter_departmental.request</field>
+      <field name="arch" type="xml">
+        <form string="Request">
+        <header>
+          <button name="action_submit" string="Submit" type="object" class="oe_highlight" states="draft" />
+          <button name="action_process" string="Set In Progress" type="object" class="oe_highlight" states="submit" />
+          <button name="action_complete" string="Complete" type="object" class="oe_highlight" states="process" />
+          <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" states="complete" />
+          <button name="action_cancel" string="Cancel" type="object" states="draft" />
+          <field name="state" widget="statusbar" statusbar_visible="draft,submit,process,complete,confirm" />
+        </header>
+          <sheet>
+            <div class="oe_title">
+              <label for="name">
+              </label>
+                <h1>
+                  <field name="name" />
+                </h1>
+            </div>
+            <group>
+              <group>
+                <field name="user_id" />
+                <field name="src_department_id" />
+                <field name="date_requested" />
+                <field name="date_deadline" />
+              </group>
+              <div>
+                <label for="request_details"></label>
+                <field name="request_details" />
+              </div>
+              <group>
+                <field name="dest_department_id" />
+                <field name="responsible_user_id" />
+              </group>
+              <group string="Progress tracking">
+                <field name="date_requested" attrs="{'invisible': [('date_requested', '=', False)]}" readonly="1"/>
+                <field name="date_resolved" attrs="{'invisible': [('date_resolved', '=', False)]}" readonly="1" />
+                <field name="date_confirmed" attrs="{'invisible': [('resolution_timeline', '=', False)]}" readonly="1" />
+                <field name="resolution_timeline" attrs="{'invisible': [('resolution_timeline', '=', False)]}" readonly="1" />
+                <field name="resolution_delay" attrs="{'invisible': [('resolution_timeline', '=', False)]}"/>
+              </group>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+            <field name="activity_ids" widget="mail_activity"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="inter_departmental_request_view_search" model="ir.ui.view">
+      <field name="name">inter_departmental.request.view.search</field>
+      <field name="model">inter_departmental.request</field>
+      <field name="arch" type="xml">
+        <search string="Request">
+          <field name="name" />
+          <field name="user_id" />
+          <field name="src_department_id" />
+          <field name="dest_department_id" />
+          <field name="responsible_user_id" />
+          <field name="date_requested" />
+          <field name="state" />
+          <filter name="filter_group_by_request_department" string="Requesting Department" domain="[]" context="{'group_by': 'src_department_id'}" />
+          <filter name="filter_group_by_destination_department" string="Destination Department" domain="[]" context="{'group_by': 'dest_department_id'}" />
+          <filter name="filter_group_by_request_date" string="Request date" domain="[]" context="{'group_by': 'date_requested'}" />
+          <filter name="filter_group_by_date_deadline" string="Deadline" domain="[]" context="{'group_by': 'date_deadline'}" />
+          <filter name="filter_group_by_date_resolved" string="Completion Date" domain="[]" context="{'group_by': 'date_resolved'}" />
+          <filter name="filter_group_by_state" string="Request Status" domain="[]" context="{'group_by': 'state'}" />
+          <filter name="filter_group_by_responsible_user_id" string="Responsible User" domain="[]" context="{'group_by': 'responsible_user_id'}" />
+          <filter name="filter_group_by_user_id" string="Requester" domain="[]" context="{'group_by': 'user_id'}" />
+          <filter name="filter_late" string="Late Requests" domain="[('date_deadline', '&lt;', time.strftime('%Y-%m-%d %H:%M:%S')),('state', 'not in', ['complete', 'confirm'])]" />
+        </search>
+      </field>
+    </record>
+
+    <record id="inter_departmental_request_action" model="ir.actions.act_window">
+      <field name="name">Request</field>
+      <field name="res_model">inter_departmental.request</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+      <field name="context">{}</field>
+      <field name="help" type="html">
+        <p class="oe_no_content_create">Click to create new record.</p>
+      </field>
+    </record>
+
+    <menuitem name="Interdepartmental Request" id="topline_inter_departmental_request.menu_root" web_icon="topline_inter_departmental_request,static/description/icon.png"/>
+    <menuitem name="Interdeprtmental Request" id="topline_inter_departmental_request.menu_child" parent="topline_inter_departmental_request.menu_root"/>
+    <menuitem name="Request" id="topline_inter_departmental_request.menu_action" parent="topline_inter_departmental_request.menu_child" action="topline_inter_departmental_request.inter_departmental_request_action"/>
+
+  </data>
+</odoo>

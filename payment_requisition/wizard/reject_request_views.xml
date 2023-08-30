@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="reject_requisition_view_form" model="ir.ui.view">
+            <field name="name">reject.request.view.form</field>
+            <field name="model">reject.payment.requisition</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="requisition_id" />
+                            </group>
+                            <group>
+                                <field name="user_id" readonly="1"/>
+                            </group>
+                        </group>    
+                        <div>
+                            <field name="reject_reason" placeholder="I am rejecting this request because ..." />
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button special="cancel" string="Cancel" />
+                        <button name="log_reason" type="object" string="Confirm" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="reject_requisition_action" model="ir.actions.act_window">
+            <field name="name">Reject Payment Requisition</field>
+            <field name="res_model">reject.payment.requisition</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    
+    </data>
+</odoo>

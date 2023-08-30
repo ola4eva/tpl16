@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+topline.access_payment_requisition_form,payment.requisition.form,topline.model_payment_requisition_form,base.group_user,1,1,1,0
+access_payment_requisition_rejection_log_group_user,payment.requisition.rejection.log,model_payment_requisition_rejection_log,base.group_user,1,1,1,1
+access_account_move_internal_user,access_account_move_internal_user,model_account_move,base.group_user,1,0,0,0
