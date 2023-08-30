@@ -170,8 +170,8 @@ class MaintenanceRequestAndFailureReportSheet(models.Model):
         self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
         return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
 
-    asset_id = fields.Many2one(
-        comodel_name='account.asset.asset', string='Asset(s):')
+    # asset_id = fields.Many2one(
+    #     comodel_name='account.asset.asset', string='Asset(s):')
 
     name = fields.Char(string='ASSET NAME:', required=True)
     asset_no = fields.Char(string='ASSET NO:')
@@ -221,10 +221,10 @@ class MaintenanceRequestAndFailureReportSheet(models.Model):
                 'maintenance.request.failure.report.sheet') or '/'
         return super(MaintenanceRequestAndFailureReportSheet, self).create(vals)
 
-    @api.onchange('asset_id')
-    def _update_asset_fields(self):
-        self.name = self.asset_id.name
-        self.asset_no = self.asset_id.x_studio_asset_no
+    # @api.onchange('asset_id')
+    # def _update_asset_fields(self):
+    #     self.name = self.asset_id.name
+    #     self.asset_no = self.asset_id.x_studio_asset_no
 
     def button_submit(self):
         self.write({'state': 'supervisor'})

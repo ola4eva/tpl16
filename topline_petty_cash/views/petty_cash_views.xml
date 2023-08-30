@@ -124,7 +124,7 @@
         <record  id="petty_cash_action" model="ir.actions.act_window">
             <field name="name">Petty Cash</field>
             <field name="res_model">petty.cash</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">tree,form</field>
             <field name="domain">[]</field>
             <field name="context">{'search_default_filter_unposted': True}</field>

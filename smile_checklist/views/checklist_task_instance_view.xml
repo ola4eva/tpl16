@@ -38,7 +38,7 @@
       <field name="name">Checklist</field>
       <field name="type">ir.actions.client</field>
       <field name="res_model">checklist.task.instance</field>
-      <field name="view_type">form</field>
+      
       <field name="view_mode">tree,form</field>
       <field name="domain">[('res_id', '=', active_id), ('model', '=', context.get('active_model'))]</field>
       <field name="target">new</field>

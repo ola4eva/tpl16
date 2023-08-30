@@ -125,7 +125,6 @@
         <record model="ir.actions.act_window" id="topline_payment_requisition_form_action">
             <field name="name">Payment Requisition</field>
             <field name="res_model">payment.requisition.form</field>
-            <field name="view_type">form</field>
             <field name="view_mode">tree,form,pivot</field>
             <field name="search_view_id" ref="search_payment_requisition_form"/>
             <field name="domain">[]</field>
@@ -136,7 +135,6 @@
         <record model="ir.actions.act_window" id="topline_payment_requisition_form_reporting_action">
             <field name="name">Payment Requisition Analysis</field>
             <field name="res_model">payment.requisition.form</field>
-            <field name="view_type">form</field>
             <field name="view_mode">graph,pivot,kanban,activity</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>

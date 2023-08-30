@@ -2,7 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_construction_equipment_checklist_line_emp,construction.equipment.checklist.line,model_construction_equipment_checklist_line,base.group_user,1,1,1,0
 access_construction_equipment_checklist_emp,construction.equipment.checklist,model_construction_equipment_checklist,base.group_user,1,1,1,0
 access_asset_movement_form_emp,asset.movement.form,model_asset_movement_form,base.group_user,1,1,1,0
-access_asset_movement_form_line_emp,asset.movement.form.line,model_asset_movement_form_line,base.group_user,1,1,1,0
 access_service_order_emp,service.order,model_service_order,base.group_user,1,1,1,0
 access_service_order_line_emp,service.order.line,model_service_order_line,base.group_user,1,1,1,0
 access_action_request_log_emp,action.request.log,model_action_request_log,base.group_user,1,1,1,0
@@ -116,7 +115,3 @@ access_brand_type,brand.type,model_brand_type,base.group_user,1,1,1,1
 access_daily_checklist_equipment,daily.checklist.equipment,model_daily_checklist_equipment,base.group_user,1,1,1,1
 access_daily_checklist_power_on_line,daily.checklist.power.off.line,model_daily_checklist_power_on_line,base.group_user,1,1,1,1
 access_daily_checklist_power_off_line,daily.checklist.power.on.line,model_daily_checklist_power_off_line,base.group_user,1,1,1,1
-purchase.access_purchase_order,purchase.order,topline.model_purchase_order,purchase.group_purchase_user,1,1,1,0
-purchase.access_purchase_order_manager,purchase.order,topline.model_purchase_order,purchase.group_purchase_manager,1,1,1,0
-purchase.access_purchase_order_portal,purchase.order.portal,topline.model_purchase_order,base.group_portal,1,1,1,0
-purchase.access_purchase_order_line,purchase.order.line user,topline.model_purchase_order,purchase.group_purchase_user,1,1,1,0

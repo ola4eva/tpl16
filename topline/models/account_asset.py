@@ -21,8 +21,8 @@ class AssetMovementFormLine(models.Model):
     _name = "asset.movement.form.line"
     _description = 'Asset Movement Form Line'
 
-    asset_movement_id = fields.Many2one(
-        comodel_name='asset.movement.form', string='asset movement form')
+    # asset_movement_id = fields.Many2one(
+    #     comodel_name='asset.movement.form', string='asset movement form')
 
     asset_number = fields.Char(string='Asset Number')
     asset_description = fields.Char(string='Asset Description')

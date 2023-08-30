@@ -6,7 +6,7 @@
     <record model="ir.actions.act_window" id="topline_reminder_form_action">
 		<field name="name">Reminders</field>
 		<field name="res_model">topline.reminder</field>
-		<field name="view_type">form</field>
+		
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[]</field>
 		<field name="context">{}</field>

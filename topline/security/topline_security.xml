@@ -69,10 +69,10 @@
 
 		<delete id="survey.survey_users_access" model="ir.rule" />
 
-		<record id="hr_appraisal.hr_appraisal_survey_users_access" model="ir.rule">
+		<!-- <record id="hr_appraisal.hr_appraisal_survey_users_access" model="ir.rule">
 			<field name="name">Appraisal: remove survey edition rights for regular users</field>
 			<field name="domain_force">["|", ('create_uid', '=', user.id), ('user_input_ids.create_uid','in',[user.id])]</field>
-		</record>
+		</record> -->
 
 	</data>
 </odoo>

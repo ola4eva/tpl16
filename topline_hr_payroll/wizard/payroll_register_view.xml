@@ -41,7 +41,7 @@
             <field name="name">Payroll Register</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">payroll.register</field>
-            <field name="view_type">form</field>
+            
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>

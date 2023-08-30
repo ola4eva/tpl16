@@ -42,7 +42,6 @@
         <record id="payment_requisition_register_payment_wizard_action" model="ir.actions.act_window">
             <field name="name">Register Payment</field>
             <field name="res_model">payment.requisition.register.payment.wizard</field>
-            <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="payment_requisition_register_payment_view_form"/>
             <field name="target">new</field>

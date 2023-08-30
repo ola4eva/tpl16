@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+
+from odoo import api, fields, models, _
+
+from datetime import date
+
+from odoo.exceptions import UserError
+
+
 class CashAdvanceRequestForm(models.Model):
     _name = 'cash.advance.request.form'
     _description = 'Cash Advance Request Form'
@@ -38,7 +47,6 @@ class CashAdvanceRequestForm(models.Model):
                 'cash.advance.request') or '/'
         return super(CashAdvanceRequestForm, self).create(vals)
 
-    
     def _check_manager_approval(self):
         # if not self.user_has_groups('hr_expense.group_hr_expense_user'):
         #    raise UserError(_("Only Managers and HR Officers can approve expenses"))
@@ -76,13 +84,11 @@ class CashAdvanceRequestForm(models.Model):
     date_recovery = fields.Date(
         string='Date of Recovery', required=True, track_visibility='onchange')
 
-    
     def _compute_amount_in_word(self):
         for rec in self:
             rec.num_word = str(rec.currency_id.amount_to_text(
                 rec.total_amount)) + ' only'
 
-    
     @api.depends('cash_advance_request_form_line_ids.amount')
     def _total_amount(self):
         for line in self.cash_advance_request_form_line_ids:
@@ -120,7 +126,6 @@ class CashAdvanceRequestForm(models.Model):
     journal_id = fields.Many2one(
         comodel_name="account.journal", string="Journal")
 
-    
     def button_submit(self):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
@@ -136,7 +141,6 @@ class CashAdvanceRequestForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    
     def button_line_manager_approval(self):
         self._check_manager_approval()
         self.write({'state': 'line_approve'})
@@ -157,7 +161,6 @@ class CashAdvanceRequestForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_audit_approval_notification(self):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
@@ -177,7 +180,6 @@ class CashAdvanceRequestForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_md_approval_notification(self):
         self.write({'state': 'md_approve'})
         self.md_approval_date = date.today()
@@ -197,7 +199,6 @@ class CashAdvanceRequestForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_finance_approval(self):
         self.write({'state': 'approve'})
         self.finance_approval_date = date.today()
@@ -210,7 +211,6 @@ class CashAdvanceRequestForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Cash Advance Request '{}', for {} has been rejected".format(
@@ -269,4 +269,3 @@ class CashAdvanceRequestFormLines(models.Model):
     analytic_account_id = fields.Many2one(
         comodel_name="account.analytic.account", string='Analytic Account')
     amount = fields.Float(string='AMOUNT', required=True)
-
