@@ -41,9 +41,9 @@
         'data/mail_template_data.xml',
         'views/views.xml',
         'views/payment_requisition_form_views.xml',
-        'views/forms.xml',
         'views/stock_views.xml',
         'views/templates.xml',
         'views/report_invoice.xml',
+        'views/fleet_vehicle_cost_views.xml',
     ],
 }

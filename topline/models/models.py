@@ -9,653 +9,6 @@ from ast import literal_eval
 from odoo.tools import float_compare
 
 
-class ConstructionEquipmentChecklist(models.Model):
-    _name = "construction.equipment.checklist"
-    _description = 'CONSTRUCTION EQUIPMENT CHECKLIST'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
-    def _default_employee(self):
-        self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-
-    @api.model
-    def _get_default_project(self):
-        ctx = self._context
-        if ctx.get('active_model') == 'project.project':
-            return self.env['project.project'].browse(ctx.get('active_ids')[0]).id
-
-    state = fields.Selection([
-        ('draft', 'New'),
-        ('supervisor', 'Supervisor'),
-        ('manager', 'Manager'),
-        ('store', 'Store'),
-        ('qa_qc', 'QA/QC'),
-        ('approve', 'Approved'),
-        ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
-
-    name = fields.Char(string='Name')
-    job_location = fields.Char(string='Job Location')
-    project_id = fields.Many2one(comodel_name='project.project',
-                                 string='Project', readonly=False, default=_get_default_project)
-    employee_id = fields.Many2one(
-        comodel_name='hr.employee', string='Employee/Owner', default=_default_employee)
-    construction_equpiment_line_ids = fields.One2many(
-        'construction.equipment.checklist.line', 'construction_equpiment_line_id', string="Action Move", copy=True)
-    date = fields.Date(string='Date', default=date.today())
-    supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
-    supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-    manager_approval = fields.Many2one(
-        'res.users', 'Manager Name', readonly=True, track_visibility='onchange')
-    manager_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-    store_approval = fields.Many2one(
-        'res.users', 'Store Personnel Name', readonly=True, track_visibility='onchange')
-    store_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-    qa_qc_approval = fields.Many2one(
-        'res.users', 'QA/QC Personnel Name', readonly=True, track_visibility='onchange')
-    qa_qc_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-
-    @api.multi
-    def button_submit(self):
-        self.write({'state': 'supervisor'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_hr_line_manager')
-        user_ids = []
-        partner_ids = []
-        # partner_ids.append(self.employee_id.parent_id.user_id.partner_id.id)
-        for user in group_id.users:
-            user_ids.append(user.id)
-            # partner_ids.append(self.employee_id.parent_id.user_id.partner_id.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "CONSTRUCTION EQUIPMENT CHECKLIST '{}' needs approval".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def action_line_manager_approval(self):
-        self.write({'state': 'manager'})
-        self.supervisor_approval_date = date.today()
-        self.supervisor_approval = self._uid
-        subject = "CONSTRUCTION EQUIPMENT CHECKLIST {} has been approved by supervisor".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def action_store_approval(self):
-        self.write({'state': 'store'})
-        self.manager_approval_date = date.today()
-        self.manager_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'stock.group_stock_manager')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            # partner_ids.append(self.employee_id.parent_id.user_id.partner_id.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "CONSTRUCTION EQUIPMENT CHECKLIST '{}' needs approval from store".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def action_qa_qc_approval(self):
-        self.write({'state': 'qa_qc'})
-        self.store_approval_date = date.today()
-        self.store_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'quality.group_quality_manager')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            # partner_ids.append(self.employee_id.parent_id.user_id.partner_id.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "CONSTRUCTION EQUIPMENT CHECKLIST '{}' needs approval from QA/QC".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def action_approval(self):
-        self.write({'state': 'approve'})
-        self.qa_qc_approval_date = date.today()
-        self.qa_qc_approval = self._uid
-        subject = "CONSTRUCTION EQUIPMENT CHECKLIST {} has been approved by QA/QC".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def action_reject(self):
-        self.write({'state': 'reject'})
-        subject = "CONSTRUCTION EQUIPMENT CHECKLIST {} has been Rejected".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-
-class ConstructionEquipmentChecklistLine(models.Model):
-    _name = "construction.equipment.checklist.line"
-    _description = 'CONSTRUCTION EQUIPMENT CHECKLIST LINE'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
-    construction_equpiment_line_id = fields.Many2one(
-        'construction.equipment.checklist', 'Construction Equipment Checklist')
-
-    product_id = fields.Many2one(
-        comodel_name='product.product', string='ITEM', required=True)
-    description = fields.Char(
-        string='DESCRIPTION (make, type, size, asset code)', required=True)
-    qty_mob = fields.Float(string='QTY MOB')
-    qty_demob = fields.Float(string='QTY DEMOB')
-    demob_remarks = fields.Char(string='DE-MOB REMARKS')
-
-
-class ServiceOrder(models.Model):
-    _name = "service.order"
-    _description = 'Service Order'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'create_date DESC'
-
-    # this method is to search the hr.employee and return the user id of the person clicking the form atm
-    def _default_employee(self):
-        self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-
-    state = fields.Selection([
-        ('draft', 'New'),
-        ('line_manager', 'Line Manager Approval'),
-        ('qaqc', 'QA/QC Verification'),
-        ('procurement', 'Procurement Approval'),
-        ('approve', 'Approved'),
-        ('reject', 'Rejected'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
-
-    employee_id = fields.Many2one(
-        comodel_name='hr.employee', string='Requested by', default=_default_employee)
-    department_id = fields.Many2one(
-        comodel_name='hr.department', string='Department', related='employee_id.department_id')
-    location = fields.Char(string='Location')
-    project_id = fields.Many2one(
-        comodel_name='project.project', string='Project')
-    project_description = fields.Char(string='Project Description')
-    date = fields.Date(string='Date', default=date.today())
-
-    service_order_line_ids = fields.One2many(
-        'service.order.line', 'service_order_id', string="Service Order", copy=True)
-
-    line_manager_approval = fields.Many2one(
-        'res.users', 'Manager Name', readonly=True, track_visibility='onchange')
-    line_manager_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-    procurement_approval = fields.Many2one(
-        'res.users', 'Procurement Personnel Name', readonly=True, track_visibility='onchange')
-    procurement_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-
-    qaqc_approval = fields.Many2one(
-        'res.users', 'QAQC Personnel Name', readonly=True, track_visibility='onchange')
-    qaqc_approval_date = fields.Date(
-        string='QAQC Ver. Date', readonly=True, track_visibility='onchange')
-
-    name = fields.Char('Order Reference', readonly=True,
-                       required=True, index=True, copy=False, default='New')
-
-    payment_req_count = fields.Integer(
-        compute="_payr_count", string="Payment Requisitions", store=False)
-    po_count = fields.Integer(
-        compute="_po_count", string="RFQ's/PO's", store=False)
-
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'service.order') or '/'
-        return super(ServiceOrder, self).create(vals)
-
-    @api.multi
-    def button_submit(self):
-        self.write({'state': 'line_manager'})
-        partner_ids = []
-        if self.employee_id.parent_id.user_id:
-            partner_ids.append(
-                self.employee_id.parent_id.user_id.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Service Order '{}' needs approval".format(self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        # self.alert_hr()
-        return False
-
-    @api.multi
-    def button_submit_to_qa_qc(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_qa')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Service Order '{}' needs approval from QA/QC".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def button_submit_to_procurement(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'purchase.group_purchase_manager')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Service Order '{}' needs approval from procurement".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def alert_hr(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'hr.group_hr_manager')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Service Order '{}' has been created, please review".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def action_line_manager_approval(self):
-        self.write({'state': 'qaqc'})
-        self.line_manager_approval_date = date.today()
-        self.line_manager_approval = self._uid
-        subject = "Service Order {} has been approved by Line Manager".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        self.button_submit_to_qa_qc()
-
-    @api.multi
-    def action_qaqc_approval(self):
-        self.write({'state': 'procurement'})
-        self.qaqc_approval_date = date.today()
-        self.qaqc_approval = self._uid
-        subject = "Service Order {} has been approved by QAQC".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        self.button_submit_to_procurement()
-
-    @api.multi
-    def button_procurement_approval(self):
-        self.write({'state': 'approve'})
-        self.procurement_approval_date = date.today()
-        self.procurement_approval = self._uid
-        subject = "Service Order {} has been approved by Procurement".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def action_reject(self):
-        self.write({'state': 'reject'})
-        subject = "Service {} has been Rejected".format(self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def create_purchase_order2(self):
-        """
-        Method to open create atp form
-        """
-        view_ref = self.env['ir.model.data'].get_object_reference(
-            'purchase', 'purchase_order_form')
-        view_id = view_ref[1] if view_ref else False
-        for subscription in self:
-            order_lines = []
-            for line in subscription.service_order_line_ids:
-                order_lines.append((0, 0, {
-                    'name': line.product_id.name,
-                    'product_uom': line.product_id.uom_id.id,
-                    'product_id': line.product_id.id,
-                    'account_id': line.product_id.property_account_expense_id.id,
-                    'product_qty': line.qty,
-                    'date_planned': date.today(),
-                    'price_unit': line.product_id.standard_price,
-                }))
-
-        res = {
-            'type': 'ir.actions.act_window',
-            'name': ('Purchase Order'),
-            'res_model': 'purchase.order',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': view_id,
-            'target': 'current',
-            'context': {'default_stock_source': self.name, 'default_atp_id': self.id, 'default_order_line': order_lines}
-        }
-        return res
-
-    @api.multi
-    def create_payment_requisition(self):
-        """
-        Method to open create payment requisition
-        """
-        view_ref = self.env['ir.model.data'].get_object_reference(
-            'topline', 'topline_payment_requisition_form_view')
-        view_id = view_ref[1] if view_ref else False
-        for subscription in self:
-            order_lines = []
-            for line in subscription.service_order_line_ids:
-                if line.product_id:
-                    name = line.product_id.name + ': ' + line.description
-                else:
-                    name = line.description
-                order_lines.append((0, 0, {
-                    'name': name,
-                    'amount_requested': line.product_id.standard_price * line.qty,
-                }))
-
-        res = {
-            'type': 'ir.actions.act_window',
-            'name': ('Payment Requisition'),
-            'res_model': 'payment.requisition.form',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': view_id,
-            'target': 'current',
-            'context': {'default_source': self.name, 'default_date': date.today(), 'default_service_order_id': self.id, 'default_payment_requisition_form_line_ids': order_lines}
-        }
-
-        return res
-
-    @api.multi
-    def _payr_count(self):
-        oe_po = self.env['payment.requisition.form']
-        for pa in self:
-            domain = [('atp_id', '=', pa.id)]
-            pres_ids = oe_po.search(domain)
-            pres = oe_po.browse(pres_ids)
-            payment_req_count = 0
-            for pr in pres:
-                payment_req_count += 1
-            pa.payment_req_count = payment_req_count
-        return True
-
-    @api.multi
-    def _po_count(self):
-        oe_po = self.env['purchase.order']
-        for pa in self:
-            domain = [('atp_id', '=', pa.id)]
-            pres_ids = oe_po.search(domain)
-            pres = oe_po.browse(pres_ids)
-            po_count = 0
-            for pr in pres:
-                po_count += 1
-            pa.po_count = po_count
-        return True
-
-    @api.multi
-    def open_po(self):
-        self.ensure_one()
-        action = self.env.ref('purchase.purchase_rfq').read()[0]
-        action['domain'] = literal_eval(action['domain'])
-        action['domain'].append(('atp_id', '=', self.id))
-        return action
-
-    @api.multi
-    def open_payr(self):
-        self.ensure_one()
-        action = self.env.ref(
-            'topline.topline_payment_requisition_form_action').read()[0]
-        action['domain'] = literal_eval(action['domain'])
-        action['domain'].append(('atp_id', '=', self.id))
-        return action
-
-
-class ServiceOrderLine(models.Model):
-    _name = "service.order.line"
-    _description = 'Service Order Line'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
-    service_order_id = fields.Many2one('service.order', 'Service Order')
-
-    product_id = fields.Many2one(
-        comodel_name='product.product', string='Product')
-    description = fields.Char(string='DESCRIPTION', required=True)
-    serial_no = fields.Char(string='EQUIPMENT SERIAL NO./ ASSET NO.')
-    qty = fields.Float(string='QTY', required=True)
-
-
-class ActionRequestLog(models.Model):
-    _name = "action.request.log"
-    _description = 'CORRECTIVE/PREVENTIVE ACTION LOG'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
-    # this method is to search the hr.employee and return the user id of the person clicking the form atm
-    def _default_employee(self):
-        self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-
-    @api.model
-    def _get_default_project(self):
-        ctx = self._context
-        if ctx.get('active_model') == 'project.project':
-            return self.env['project.project'].browse(ctx.get('active_ids')[0]).id
-
-    partner_id = fields.Many2one(
-        comodel_name='res.partner', related='project_id.partner_id', string='Customer', readonly=True)
-
-    project_id = fields.Many2one(comodel_name='project.project',
-                                 string='Project', readonly=False, default=_get_default_project)
-
-    employee_id = fields.Many2one(
-        comodel_name='hr.employee', string='Owner', default=_default_employee)
-    department_id = fields.Many2one(
-        comodel_name='hr.department', string='Department', related='employee_id.department_id')
-
-    state = fields.Selection([
-        ('draft', 'New'),
-        ('open', 'Open'),
-        ('on_hold', 'On Hold'),
-        ('closed', 'Closed'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
-
-    action_request_log_line_ids = fields.One2many(
-        'action.request.log.line', 'action_request_log_id', string="Action Request Log Line", copy=True)
-    date = fields.Date(string='Date', default=date.today())
-
-
-class ActionRequestLogLine(models.Model):
-    _name = "action.request.log.line"
-    _description = 'CORRECTIVE/PREVENTIVE ACTION LOG Line'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
-    action_request_log_id = fields.Many2one(
-        'action.request.log', 'Action Request Log')
-
-    ar_no = fields.Char(string='AR No.')
-    initiator_id = fields.Many2one(
-        comodel_name='hr.employee', string='Initiator', required=True)
-    date_initiated = fields.Date(
-        string='Date Initiated', default=date.today(), required=True)
-    description_of_problem = fields.Char(
-        string='Description of Problem (Nonconformance / Potential Nonconformance)', required=True)
-    root_cause = fields.Char(string='Root Cause', required=True)
-    action_taken = fields.Char(string='Action Taken')
-    date_closed = fields.Date(string='Date Closed')
-
-
-class MaintenanceRequestAndFailureReportSheet(models.Model):
-    _name = "maintenance.request.failure.report.sheet"
-    _description = 'Maintenance Request And Failure Report Sheet'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = "create_date desc"
-
-    state = fields.Selection([
-        ('draft', 'New'),
-        ('supervisor', 'Supervisor Approved'),
-        ('qaqc', 'QA/QC Approved'),
-        ('store', 'Store Approved'),
-        ('approve', 'Approved'),
-        ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
-
-    # this method is to search the hr.employee and return the user id of the person clicking the form atm
-    def _default_employee(self):
-        self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-
-    asset_id = fields.Many2one(
-        comodel_name='account.asset.asset', string='Asset(s):')
-
-    name = fields.Char(string='ASSET NAME:', required=True)
-    asset_no = fields.Char(string='ASSET NO:')
-    hour_odo_meter = fields.Char(string='HOUR/ODO-METER:')
-    date = fields.Datetime(string='Date & Time:')
-    project_id = fields.Many2one(
-        comodel_name='project.project', string='PROJECT:')
-    location = fields.Char(string='LOCATION:')
-    employee_id = fields.Many2one(
-        comodel_name='hr.employee', string='REPORTED BY:', default=_default_employee)
-    employee_user = fields.Many2one(comodel_name='hr.employee', string='USER:')
-
-    observations = fields.Char(string='OBSERVATIONS')
-    action_taken = fields.Char(string='ACTION TAKEN')
-
-    supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
-    supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-
-    diagnosis = fields.Char(string='DIAGNOSIS:')
-    causes = fields.Char(string='CAUSES:')
-    repairs_done = fields.Char(string='REPAIRS DONE/TO BE DONE:')
-    part_replaced = fields.Char(string='PARTS REPLACED/TO BE REPLACED:')
-
-    repair_date = fields.Date(string='Repair Date:')
-    cost_of_repair = fields.Monetary(string='Cost Of Repair:')
-    currency_id = fields.Many2one(
-        comodel_name='res.currency', string='Currency')
-    partner_id = fields.Many2one(
-        comodel_name='res.partner', string='By/Vendor:')
-    job_supervised_by_id = fields.Many2one(
-        comodel_name='hr.employee', String='Job Supervised By:')
-
-    manager_approval = fields.Many2one(
-        'res.users', 'Manager Name', readonly=True, track_visibility='onchange')
-    manager_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-
-    ref = fields.Char('Order Reference', readonly=False,
-                      required=True, index=True, copy=False, default='New')
-
-    @api.model
-    def create(self, vals):
-        if vals.get('ref', 'New') == 'New':
-            vals['ref'] = self.env['ir.sequence'].next_by_code(
-                'maintenance.request.failure.report.sheet') or '/'
-        return super(MaintenanceRequestAndFailureReportSheet, self).create(vals)
-
-    @api.onchange('asset_id')
-    def _update_asset_fields(self):
-        self.name = self.asset_id.name
-        self.asset_no = self.asset_id.x_studio_asset_no
-
-    @api.multi
-    def button_submit(self):
-        self.write({'state': 'supervisor'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_hr_line_manager')
-        user_ids = []
-        partner_ids = []
-        # partner_ids.append(self.employee_id.parent_id.user_id.partner_id.id)
-        # for user in group_id.users:
-        #    user_ids.append(user.id)
-        # partner_ids.append(self.employee_id.parent_id.user_id.partner_id.id)=
-        if self.employee_id.parent_id.user_id:
-            partner_ids.append(
-                self.employee_id.parent_id.user_id.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Maintenance Request And Failure Report Sheet '{}' needs approval".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def action_line_manager_approval(self):
-        self.write({'state': 'approve'})
-        self.manager_approval_date = date.today()
-        self.manager_approval = self._uid
-        self.supervisor_approval_date = date.today()
-        self.supervisor_approval = self._uid
-        subject = "Maintenance Request And Failure Report Sheet {} has been approved by supervisor".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def action_reject(self):
-        self.write({'state': 'reject'})
-        subject = "Maintenance Request And Failure Report Sheet {} has been Rejected".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-
 class QAQCPremobilizationChecklist(models.Model):
     _name = "qaqc.premobilization.checklist"
     _description = 'QA/QC Premobilization Checklist (Onshore And Offshore)'
@@ -788,107 +141,6 @@ class DocumentationQAQCPremobilizationChecklist(models.Model):
     remark = fields.Char(string='Remark')
 
 
-class EmployeeRequisitionForm(models.Model):
-    _name = "employee.requisition.form"
-    _description = 'Employee Requisition Form'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
-    # this method is to search the hr.employee and return the user id of the person clicking the form atm
-    def _default_department(self):
-        user = self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return user.department_id.id
-
-    # this method is to search the hr.employee and return the user id of the person clicking the form atm
-    def _default_employee(self):
-        self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-
-    state = fields.Selection([
-        ('draft', 'New'),
-        ('submit', 'Submitted'),
-        ('line_manager', 'Supervisor'),
-        ('hr_manager', 'HR Manager'),
-        ('approve', 'Approved'),
-        ('reject', 'Rejected'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
-
-    department_id = fields.Many2one(
-        comodel_name='hr.department', string='Department', default=_default_department)
-    job_id = fields.Many2one(comodel_name='hr.job', string='Job Title')
-    no_personnel_required = fields.Integer(string='No. of Personnel Required')
-    existing_staff_present_in_category = fields.Integer(
-        string='Existing Staff at present in this category')
-    location = fields.Char(string='Location (mention details)')
-    type_of_appointment = fields.Char(string='Type of Appointment')
-    temporary_duration = fields.Char(
-        string='If contract/temporary, state duration')
-    qualification_required = fields.Char(
-        string='Educational/Professional Qualification Required')
-    skill_required = fields.Char(string='Skills Required')
-    experience_required = fields.Char(string='Experience Required')
-    job_description = fields.Char(string='Job Description')
-    resource_required_date = fields.Date(
-        string='Date by which Resource is Required')
-    vacancy_cause = fields.Char(
-        string='Vacancy caused due to (Resignation / Work Load / Additional Assignments)')
-    vacancy_filled_internally = fields.Selection([
-        ('yes', 'Yes'),
-        ('no', 'No'),
-    ], string='Can vacancy be filled through internal transfers/promotion etc?')
-    benefits_to_accrue = fields.Char(
-        string='Benefits to Accrue on Additional Appointment')
-
-    employee_id = fields.Many2one(
-        comodel_name='hr.employee', string='PROPOSED BY:', default=_default_employee)
-    line_manager_approval = fields.Many2one(
-        comodel_name='res.users', string='Name of Approving Authority')
-
-    suggestion_for_replacement = fields.Selection([
-        ('yes', 'Yes'),
-        ('no', 'No'),
-    ], string='Suggestion for replacement if possible')
-    name_of_person = fields.Char(
-        string='Name of Person you intend to replace with')
-    statement_of_justification = fields.Char(
-        string='Statement of Justification for Internal / External Recruitment :')
-    salary_range = fields.Float(string='Range of Salary ')
-    when_position_filled = fields.Date(
-        string='When the position can be filled up')
-    remarks = fields.Char(string='Remarks')
-
-    hr_manager_approval = fields.Many2one(
-        comodel_name='res.users', string='(Approval Of HEAD – HR)')
-
-    def action_submit(self):
-        self.state = "submit"
-
-    def action_line_manager_approve(self):
-        self.state = "line_manager"
-
-    def action_hr_manager_approve(self):
-        self.state = "hr_manager"
-
-    def action_final_approve(self):
-        if self.job_id:
-            if self.job_id.state != "recruit":
-                self.job_id.state = "recruit"
-            self.job_id.write({
-                "no_of_recruitment": self.no_personnel_required,
-                "department_id": self.department_id.id,
-                "hr_responsible_id": self.env.user.id,
-                "user_id": self.env.user.id,
-                "description": self.job_description
-            })
-        return self.write({'state': "approve"})
-
-    def open_job_posting(self):
-        action = self.env.ref('hr.action_hr_job').read()[0]
-        action['context'] = dict(self.env.context)
-        action['views'] = [(self.env.ref('hr.view_hr_job_form').id, 'form')]
-        action['res_id'] = self.job_id.id
-        return action
-
-
 class InstrumentsCalibrationStatusLog(models.Model):
     _name = "instruments.calibration.status.log"
     _description = 'Instruments Calibration Status Log'
@@ -978,7 +230,6 @@ class WorkCompletionCertificate(models.Model):
                 'work.completion.certificate') or '/'
         return super(WorkCompletionCertificate, self).create(vals)
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'submit'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -995,7 +246,6 @@ class WorkCompletionCertificate(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_submit_to_md(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'topline.group_md')
@@ -1011,7 +261,6 @@ class WorkCompletionCertificate(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_admin_approval(self):
         self.write({'state': 'md'})
         subject = "Work Completion Certificate for '{}' has been approved by Admin".format(
@@ -1023,7 +272,6 @@ class WorkCompletionCertificate(models.Model):
                           partner_ids=partner_ids)
         self.button_submit_to_md()
 
-    @api.multi
     def button_md_approval(self):
         self.write({'state': 'approve'})
         subject = "Work Completion Certificate for '{}' has been approved by MD".format(
@@ -1034,7 +282,6 @@ class WorkCompletionCertificate(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_qa_qc_approval(self):
         self.write({'state': 'approve'})
         subject = "Work Completion Certificate for '{}' has been approved by QA/QC".format(
@@ -1045,7 +292,6 @@ class WorkCompletionCertificate(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Work Completion Certificate for '{}' has been Rejected".format(
@@ -1091,7 +337,6 @@ class ElectricityUseMonitoring(models.Model):
     control_measure = fields.Char(
         string='Control Measure', track_visibility='onchange')
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'manager'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -1105,7 +350,6 @@ class ElectricityUseMonitoring(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_approval(self):
         self.write({'state': 'approve'})
         subject = "Electricity Use Monitoring has been approved".format()
@@ -1115,7 +359,6 @@ class ElectricityUseMonitoring(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Electricity Use Monitoring has been Rejected".format()
@@ -1156,7 +399,6 @@ class WaterUseMonitoring(models.Model):
     remark = fields.Char(
         string='Remarks (comment on trend status)', track_visibility='onchange')
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'manager'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -1170,7 +412,6 @@ class WaterUseMonitoring(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_approval(self):
         self.write({'state': 'approve'})
         subject = "Water Use Monitoring has been approved".format()
@@ -1180,7 +421,6 @@ class WaterUseMonitoring(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Water Use Monitoring has been Rejected".format()
@@ -1249,7 +489,6 @@ class AssetMovementForm(models.Model):
                 'asset.movement.form') or '/'
         return super(AssetMovementForm, self).create(vals)
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'line_manager'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -1267,7 +506,6 @@ class AssetMovementForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_submit_to_store(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'stock.group_stock_manager')
@@ -1283,7 +521,6 @@ class AssetMovementForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def alert_hr(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'hr.group_hr_manager')
@@ -1299,7 +536,6 @@ class AssetMovementForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def action_line_manager_approval(self):
         self.write({'state': 'store'})
         self.line_manager_approval_date = date.today()
@@ -1313,7 +549,6 @@ class AssetMovementForm(models.Model):
                           partner_ids=partner_ids)
         self.button_submit_to_store()
 
-    @api.multi
     def button_md_approval(self):
         self.write({'state': 'approve'})
         self.md_approval_date = date.today()
@@ -1325,7 +560,6 @@ class AssetMovementForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_store_approval(self):
         self.write({'state': 'md'})
         self.store_approval_date = date.today()
@@ -1338,7 +572,6 @@ class AssetMovementForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Asset Movement {} has been Rejected".format(self.name)
@@ -1347,19 +580,6 @@ class AssetMovementForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
-
-
-class AssetMovementFormLine(models.Model):
-    _name = "asset.movement.form.line"
-    _description = 'Asset Movement Form Line'
-
-    asset_movement_id = fields.Many2one(
-        comodel_name='asset.movement.form', string='asset movement form')
-
-    asset_number = fields.Char(string='Asset Number')
-    asset_description = fields.Char(string='Asset Description')
-    dept = fields.Many2one(comodel_name='hr.department', string='Department')
-    location = fields.Char(string='Location')
 
 
 class WasteManagementForm(models.Model):
@@ -1403,7 +623,6 @@ class WasteManagementForm(models.Model):
                 'waste.management.form') or '/'
         return super(WasteManagementForm, self).create(vals)
 
-    @api.multi
     def button_submit(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'topline.group_hse')
@@ -1570,7 +789,6 @@ class JobCallOutForm(models.Model):
     engineer_in_charge_approval_date = fields.Date(
         string='Date', readonly=True, track_visibility='onchange')
 
-    @api.multi
     def button_engineer_in_charge_sign(self):
         self.engineer_in_charge_approval_date = date.today()
         self.engineer_in_charge_approval = self._uid
@@ -1585,411 +803,6 @@ class JobCallOutFormCertifications(models.Model):
     cert_work = fields.Char(string='Certification/Work Experience')
     crew_member = fields.Many2one(
         comodel_name='hr.employee', string='Crew Members that hold it')
-
-
-class Project(models.Model):
-    _name = "project.project"
-    _inherit = ['project.project', 'mail.thread',
-                'mail.activity.mixin', 'rating.mixin']
-    _description = "Project"
-
-    _sql_constraints = [
-        ('project_code_uniq', 'UNIQUE(project_code)', 'Project Code must be Unique')]
-
-    crm_lead_id = fields.Many2one(comodel_name='crm.lead', string='Lead')
-
-    project_code = fields.Char('Project Code', readonly=True,
-                               required=True, index=True, copy=False, default='New')
-
-    site_eng_id = fields.Many2one(
-        comodel_name="hr.employee", string="Site Engineer", required=False, )
-    project_team_ids = fields.Many2many(
-        comodel_name="hr.employee", string="Project Team", )
-
-    @api.model
-    def create(self, vals):
-        if vals.get('project_code', 'New') == 'New':
-            vals['project_code'] = self.env['ir.sequence'].next_by_code(
-                'project.code') or '/'
-        return super(Project, self).create(vals)
-
-
-class Lead(models.Model):
-    _name = "crm.lead"
-    _inherit = 'crm.lead'
-
-    bid_category = fields.Selection([('technical', 'Technical Bid'), (
-        'commercial', 'Commercial Bid')], string='Bid Category', required=False)
-
-    contract_start_date = fields.Date(string='Start Date')
-    contract_end_date = fields.Date(string='End Date')
-    document_submission_date = fields.Date(string='Document Submission Date')
-
-    @api.multi
-    def write(self, vals):
-        if vals.get('stage_id.name', 'Negotiation') == 'Negotiation':
-            group_id = self.env['ir.model.data'].xmlid_to_object(
-                'account.group_account_manager')
-            user_ids = []
-            partner_ids = []
-            for user in group_id.users:
-                user_ids.append(user.id)
-                partner_ids.append(user.partner_id.id)
-            self.message_subscribe(partner_ids=partner_ids)
-            subject = "Budget report is needed for this oppurtunity '{}' ".format(
-                self.name)
-            self.message_post(subject=subject, body=subject,
-                              partner_ids=partner_ids)
-        return super(Lead, self).write(vals)
-
-
-class MaintenanceRequest(models.Model):
-    _name = 'maintenance.request'
-    _inherit = 'maintenance.request'
-    _order = "create_date desc"
-
-    maintenance_type = fields.Selection([('corrective', 'Corrective'), ('preventive', 'Preventive'), (
-        'breakdown', 'Breakdown')], string='Maintenance Type', default="corrective")
-    asset_number = fields.Char('Asset Number')
-
-    seq_name = fields.Char('Order Reference', readonly=True,
-                           required=True, index=True, copy=False, default='New')
-    active = fields.Boolean(string="Active", default=True)
-
-    @api.model
-    def create(self, vals):
-        if vals.get('seq_name', 'New') == 'New':
-            vals['seq_name'] = self.env['ir.sequence'].next_by_code(
-                'maintenance.request') or '/'
-        return super(MaintenanceRequest, self).create(vals)
-
-    @api.multi
-    def unlink(self):
-        for request in self:
-            if request.stage_id != self._default_stage():
-                raise UserError(
-                    "You can only delete requests in %s stage!!!" % self._default_stage().name)
-            return super(MaintenanceRequest, self).unlink()
-
-    @api.multi
-    def button_submit_maintenance_manager(self):
-        self.stage_id = 5
-        partner_ids = []
-        if self.employee_id.parent_id.user_id:
-            partner_ids.append(
-                self.employee_id.parent_id.user_id.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Maintenance Request '{}' has been submitted, awaiting your approval".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def button_submit_qaqc(self):
-        self.stage_id = 6
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'quality.group_quality_manager')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Maintenance Request '{}' is awaiting your approval".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def button_submit_store(self):
-        self.stage_id = 7
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'stock.group_stock_manager')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Maintenance Request '{}' has been created, awaiting your approval".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def button_approval_maintenance_manager(self):
-        subject = "Maintenance Request {} has been approved by Maintenance Manager".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        self.button_submit_qaqc()
-
-    @api.multi
-    def button_approval_qaqc_manager(self):
-        subject = "Maintenance Request {} has been approved by QA/QC Manager".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        self.button_submit_store()
-
-    @api.multi
-    def button_approval_store_manager(self):
-        self.stage_id = 2
-        subject = "Maintenance Request {} has been approved by Store Manager".format(
-            self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def button_repair(self):
-        self.stage_id = 3
-        subject = "Maintenance Request {} has been Rejected".format(self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def button_scrap(self):
-        self.stage_id = 4
-        subject = "Maintenance Request {} has been Scrapped".format(self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def button_reject(self):
-        self.stage_id = 8
-        subject = "Maintenance Request {} has been Rejected".format(self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-
-class FleetVehicle(models.Model):
-    _name = 'fleet.vehicle'
-    _inherit = 'fleet.vehicle'
-
-    def _default_department(
-            self):  # this method is to search the hr.employee and return the department id of the person clicking the form atm
-        user = self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return user.department_id.id
-
-    def _default_employee(
-            self):  # this method is to search the hr.employee and return the user id of the person clicking the form atm
-        self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-
-    employee_id = fields.Many2one(
-        comodel_name='hr.employee', string='Employee Name:', default=_default_employee)
-    department_id = fields.Many2one(
-        comodel_name='hr.department', string='Department', default=_default_department)
-    acquisition_date = fields.Date('Registration Date', required=False,
-                                   default=fields.Date.today, help='Date when the vehicle has been Registered')
-    asset_number = fields.Char(string='Asset Number')
-    project_id = fields.Many2one(
-        comodel_name='project.project', string='Project')
-    vendor_id = fields.Many2one(comodel_name='res.partner', string='Vendor')
-    duration = fields.Char(string='Duration')
-
-
-class FleetVehicleCost(models.Model):
-    _name = 'fleet.vehicle.cost'
-    _inherit = 'fleet.vehicle.cost'
-
-    vehicle_return_date = fields.Date(string='Return Date')
-    vehicle_date_of_standby = fields.Date(string='Date of Standby')
-    reason_for_standby = fields.Char(
-        string='Reason for standby', help="reason for delay. When return date is due and vehicle is yet to be returned")
-
-
-class Task(models.Model):
-    _inherit = "project.task"
-
-    task_done = fields.Boolean(string='task Completed', copy=False)
-    task_team_ids = fields.Many2many(comodel_name='hr.employee', string='Team')
-
-    @api.depends('effective_hours', 'subtask_effective_hours', 'planned_hours')
-    def _compute_progress_hours(self):
-        for task in self:
-            if (task.planned_hours > 0.0):
-                task_total_hours = task.effective_hours + task.subtask_effective_hours
-                if task_total_hours > task.planned_hours and task.remaining_hours > 0:
-                    task.progress = 100
-                elif task.remaining_hours < 0:
-                    task.progress = 80
-                else:
-                    task.progress = round(
-                        100.0 * task_total_hours / task.planned_hours, 2)
-
-    @api.onchange('progress')
-    def _onchange_progress(self):
-        if self.remaining_hours < 0:
-            self.progress = 80
-
-    @api.multi
-    def button_task_complete(self):
-        if any(task for task in self.timesheet_ids):
-            self.progress = 100
-            self.task_done = True
-            # self.stage_id.name = "DONE"
-            return {
-                'effect': {
-                    'fadeout': 'slow',
-                    'message': 'Go, go, go! Congrats on your task completion.',
-                    'img_url': '/web/static/src/img/smile.svg',
-                    'type': 'rainbow_man',
-                }
-            }
-        else:
-            warning_mess = {
-                'title': _('No Task(s) Recorded!'),
-                'message': _("You have attempted to mark a task as done without any timesheet lines "
-                             "please do specify some timesheet line(s)."),
-            }
-            user_warning = _(
-                'You have attempted to mark a task as done without any timesheet recording(s), please do specify some timesheet line(s).')
-            # return {'warning': warning_mess}
-            raise UserError(user_warning)
-
-
-class AnalyticLine(models.Model):
-    _inherit = 'account.analytic.line'
-
-    start_time = fields.Float(string='Start Time', required=True)
-    start_time_am_pm = fields.Selection([
-        ('am', 'AM'),
-        ('pm', 'PM')], string='AM/PM', copy=False)
-
-    end_time = fields.Float(string='End Time', required=True)
-    end_time_am_pm = fields.Selection([
-        ('am', 'AM'),
-        ('pm', 'PM')], string='AM/PM', copy=False)
-
-
-class SaleOrder(models.Model):
-    _name = "sale.order"
-    _inherit = ['sale.order']
-    _description = "Quotation"
-
-    state = fields.Selection([
-        ('draft', 'Quotation'),
-        ('sent', 'Quotation Sent'),
-        ('gm', 'GM Approval'),
-        ('md', 'MD Approval'),
-        ('sale', 'Sales Order'),
-        ('done', 'Locked'),
-        ('cancel', 'Cancelled'),
-    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
-
-    @api.multi
-    def button_submit(self):
-        self.write({'state': 'gm'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_gm')
-        user_ids = []
-        partner_ids = []
-        # partner_ids.append(self.employee_id.parent_id.user_id.partner_id.id)
-        for user in group_id.users:
-            user_ids.append(user.id)
-            # partner_ids.append(self.employee_id.parent_id.user_id.partner_id.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Service Order '{}' needs approval from GM".format(self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def button_submit_to_md(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_md')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Quotation '{}' needs approval from MD".format(self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def action_gm_approval(self):
-        self.write({'state': 'md'})
-        subject = "Quotation {} has been approved by GM".format(self.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        self.button_submit_to_md()
-
-
-class HolidaysRequest(models.Model):
-    _name = "hr.leave"
-    _inherit = "hr.leave"
-
-    state = fields.Selection([
-        ('draft', 'To Submit'),
-        ('cancel', 'Cancelled'),
-        ('confirm', 'To Approve'),
-        ('refuse', 'Refused'),
-        ('validate1', 'Second Approval'),
-        ('validate', 'Approved')
-    ], string='Status', readonly=True, track_visibility='onchange', copy=False, default='draft',
-        help="The status is set to 'To Submit', when a leave request is created." +
-        "\nThe status is 'To Approve', when leave request is confirmed by user." +
-        "\nThe status is 'Refused', when leave request is refused by manager." +
-        "\nThe status is 'Approved', when leave request is approved by manager.")
-
-
-class HolidaysType(models.Model):
-    _name = "hr.leave.type"
-    _inherit = "hr.leave.type"
-
-    # TODO: remove me in master
-    def _inverse_validation_type(self):
-        for holiday_type in self:
-            if holiday_type.double_validation == True:
-                holiday_type.validation_type = 'both'
-            else:
-                # IF to preserve the information (hr or manager)
-                if holiday_type.validation_type == 'both':
-                    holiday_type.validation_type = 'manager'
-
-
-class MaintenanceEquipment(models.Model):
-    _name = 'maintenance.equipment'
-    _inherit = "maintenance.equipment"
-
-    # this method is to search the hr.employee and return the department id of the person clicking the form atm
-    def _default_department(self):
-        user = self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return user.department_id.id
-
-    department_id = fields.Many2one(
-        comodel_name='hr.department', string='Department', default=_default_department)
-    asset_number = fields.Char('Asset Number')
-    current_status = fields.Char(string='Current Status')
 
 
 class VendorAudit(models.Model):
@@ -2025,20 +838,17 @@ class VendorAudit(models.Model):
                                                          ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
     # Smart Button
-    @api.multi
+
     def hse_vendor_audit_checklist(self):
         return {
             'name': _('HSE Requirements'),
@@ -2260,15 +1070,12 @@ class VehiclePretripChecklist(models.Model):
                                                          ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
         if self.state == "approved":
@@ -2497,15 +1304,12 @@ class LogisticsVendorAuditChecklist(models.Model):
                                                          ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
@@ -2546,15 +1350,12 @@ class SupplierEvalForm(models.Model):
                                                          ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
@@ -2577,15 +1378,12 @@ class SupplierRevaluation(models.Model):
                                                          ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
@@ -2623,19 +1421,15 @@ class CathodicProtectionEquipmentList(models.Model):
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def validate_request(self):
         self.state = 'validate'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
@@ -2673,19 +1467,15 @@ class ValvesServiceChecklist(models.Model):
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def validate_request(self):
         self.state = 'validate'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
@@ -2721,19 +1511,15 @@ class PumpEquipmentChecklist(models.Model):
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def validate_request(self):
         self.state = 'validate'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
@@ -2771,19 +1557,15 @@ class PiggingEquipmentChecklist(models.Model):
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def validate_request(self):
         self.state = 'validate'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
@@ -2829,19 +1611,15 @@ class PreConfirmationAssesment(models.Model):
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
     def validate_request(self):
         self.state = 'validate'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def approve_request(self):
         self.state = 'approved'
 
@@ -2991,19 +1769,15 @@ class LiftingPlan(models.Model):
                                                          ('refuse', 'Refuse'), ('hse', 'HSE')], default="draft",
                              track_visibility='onchange')
 
-    @api.multi
     def task_sup_confirm(self):
         self.state = 'task_sup'
 
-    @api.multi
     def rig_sup_confirm(self):
         self.state = 'rig_sup'
 
-    @api.multi
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
     def hse_approval(self):
         self.state = 'hse'
 
@@ -3105,7 +1879,6 @@ class LateArrivalForm(models.Model):
                 'late.arrival.form') or '/'
         return super(LateArrivalForm, self).create(vals)
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'supervisor'})
         partner_ids = []
@@ -3119,7 +1892,6 @@ class LateArrivalForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def alert_hr(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'hr.group_hr_manager')
@@ -3135,7 +1907,6 @@ class LateArrivalForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def action_line_manager_approval(self):
         self.write({'state': 'manager'})
         self.supervisor_approval_date = date.today()
@@ -3151,7 +1922,6 @@ class LateArrivalForm(models.Model):
                           partner_ids=partner_ids)
         # self.alert_hr()
 
-    @api.multi
     def button_hr_approval(self):
         self.write({'state': 'approve'})
         self.hr_approval_date = date.today()
@@ -3164,7 +1934,6 @@ class LateArrivalForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Late Arrival '{}'  for '{}' has been Rejected".format(
@@ -3188,7 +1957,6 @@ class InsuranceLog(models.Model):
     renewal_date = fields.Date(string='Renewal Date', required=True)
     active = fields.Boolean(string='Active', default=True)
 
-    @api.multi
     def alert_admin(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'topline.group_admin')
@@ -3204,7 +1972,6 @@ class InsuranceLog(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def send_reminder_mail(self):
         test = False
         insurance_log = self.env['insurance.log'].search([])
@@ -3277,7 +2044,6 @@ class CertificateforTendering(models.Model):
         comodel_name='certificates.for.tendering.category', string='Cateogry')
     active = fields.Boolean(string='Active', default=True)
 
-    @api.multi
     def update_status(self):
         exipry_date = datetime.datetime.strptime(
             str(self.expiry_date), "%Y-%m-%d")
@@ -3285,7 +2051,6 @@ class CertificateforTendering(models.Model):
         if today > exipry_date:
             self.write({'state': 'expired'})
 
-    @api.multi
     def alert_bus_dev(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'sales_team.group_sale_salesman_all_leads')
@@ -3301,7 +2066,6 @@ class CertificateforTendering(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def send_reminder_mail(self):
         test = False
         tender_certificate = self.env['certificates.for.tendering'].search([])
@@ -3405,7 +2169,6 @@ class JourneyRequest(models.Model):
                 'journey.request') or '/'
         return super(JourneyRequest, self).create(vals)
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'supervisor'})
         partner_ids = []
@@ -3419,7 +2182,6 @@ class JourneyRequest(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def alert_hr(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'hr.group_hr_manager')
@@ -3435,7 +2197,6 @@ class JourneyRequest(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def action_line_manager_approval(self):
         self.write({'state': 'manager'})
         self.supervisor_approval_date = date.today()
@@ -3450,7 +2211,6 @@ class JourneyRequest(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_logistics_approval(self):
         self.write({'state': 'approve'})
         self.logistics_approval_date = date.today()
@@ -3463,7 +2223,6 @@ class JourneyRequest(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Journey Request '{}', for '{}' has been Rejected".format(
@@ -3477,7 +2236,6 @@ class JourneyRequest(models.Model):
     def set_draft(self):
         self.state = 'draft'
 
-    @api.multi
     def unlink(self):
         for rec in self:
             if rec.state != 'draft':
@@ -3657,7 +2415,6 @@ class ExitForm(models.Model):
                 'exit.form') or '/'
         return super(ExitForm, self).create(vals)
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'supervisor'})
         partner_ids = []
@@ -3671,7 +2428,6 @@ class ExitForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def action_line_manager_approval(self):
         self.write({'state': 'manager'})
         self.supervisor_approval_date = date.today()
@@ -3686,7 +2442,6 @@ class ExitForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_hr_approval(self):
         self.write({'state': 'approve'})
         self.hr_approval_date = date.today()
@@ -3699,7 +2454,6 @@ class ExitForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Exit Form '{}' for '{}' has been Rejected".format(
@@ -3760,7 +2514,6 @@ class AbsenseInformation(models.Model):
     hr_approval_date = fields.Date(
         string='HR Date', readonly=True, track_visibility='onchange')
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'supervisor'})
         partner_ids = []
@@ -3774,7 +2527,6 @@ class AbsenseInformation(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_approval(self):
         self.write({'state': 'manager'})
         self.supervisor_approval_date = date.today()
@@ -3787,7 +2539,6 @@ class AbsenseInformation(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_hr_approval(self):
         self.write({'state': 'approve'})
         self.hr_approval_date = date.today()
@@ -3800,7 +2551,6 @@ class AbsenseInformation(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Absense Request for '{}' has been Rejected".format(
@@ -3922,7 +2672,6 @@ class ICTPaidServices(models.Model):
     due_date = fields.Date(string='Due Date', required=True)
     status = fields.Char(string='STATUS', required=True)
 
-    @api.multi
     def send_reminder_notification(self):
         reminders = self.env['ict.paid.services'].search([])
 
@@ -3952,7 +2701,6 @@ class ICTPaidServices(models.Model):
                             self.send_the_reminder_notification()
         return
 
-    @api.multi
     def send_the_reminder_notification(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'helpdesk.group_helpdesk_manager')
@@ -4057,27 +2805,22 @@ class ReceivingInspectionReport(models.Model):
     end_user_ids = fields.Many2many(
         comodel_name='res.users', string='End User(s)', copy=False)
 
-    @api.multi
     def button_accept(self):
         self.write({'state': 'approve'})
         self.approval_date = date.today()
         self.manager_approval = self._uid
 
-    @api.multi
     def button_verify(self):
         self.write({'state': 'verify'})
         self.date_verification = date.today()
         self.verification_approval = self._uid
 
-    @api.multi
     def button_reject(self):
         self.write({'state': 'reject'})
 
-    @api.multi
     def button_reset(self):
         self.write({'state': 'draft'})
 
-    @api.multi
     def button_awaiting_verification(self):
         self.write({'state': 'awaiting_verification'})
 
@@ -4108,7 +2851,6 @@ class ReceivingInspectionReportVerification(models.TransientModel):
     end_user_ids = fields.Many2many(
         comodel_name='res.users', string='End Users')
 
-    @api.multi
     def action_receiving_inspection_report_submit(self):
         receiving_inspection_report = self.env['receiving.inspection.report'].browse(
             self.env.context.get('active_ids'))
@@ -4341,19 +3083,16 @@ class QAQCVendorsFacilityAuditChecklist(models.Model):
     manager_approval = fields.Many2one(
         'res.users', 'Approved By', readonly=True, track_visibility='onchange')
 
-    @api.multi
     def button_audit_approve(self):
         # self.write({'state':'approve'})
         self.audit_date = date.today()
         self.audit_approval = self._uid
 
-    @api.multi
     def button_approve(self):
         self.write({'state': 'approve'})
         self.approval_date = date.today()
         self.manager_approval = self._uid
 
-    @api.multi
     def button_reject(self):
         self.write({'state': 'reject'})
 
@@ -4399,7 +3138,6 @@ class ATPform(models.Model):
 
     stock_source = fields.Char(string='Source', copy=False)
 
-    @api.multi
     def name_get(self):
         res = []
         for atp in self:
@@ -4410,7 +3148,6 @@ class ATPform(models.Model):
             res.append((atp.id, result))
         return res
 
-    @api.multi
     def create_purchase_order(self):
         """
         Method to open create purchase order form
@@ -4446,7 +3183,6 @@ class ATPform(models.Model):
             'context': {'default_stock_source': self.name, 'default_order_line': order_lines}
         }
 
-    @api.multi
     def create_purchase_order2(self):
         """
         Method to open create atp form
@@ -4488,7 +3224,6 @@ class ATPform(models.Model):
 
         return res
 
-    @api.multi
     def create_payment_requisition(self):
         """
         Method to open create payment requisition
@@ -4518,7 +3253,6 @@ class ATPform(models.Model):
 
         return res
 
-    @api.multi
     def _po_count(self):
         oe_po = self.env['purchase.order']
         for pa in self:
@@ -4531,7 +3265,6 @@ class ATPform(models.Model):
             pa.po_count = po_count
         return True
 
-    @api.multi
     def _payr_count(self):
         oe_po = self.env['payment.requisition.form']
         for pa in self:
@@ -4544,7 +3277,6 @@ class ATPform(models.Model):
             pa.payment_req_count = payment_req_count
         return True
 
-    @api.multi
     def open_po(self):
         self.ensure_one()
         action = self.env.ref('purchase.purchase_rfq').read()[0]
@@ -4552,7 +3284,6 @@ class ATPform(models.Model):
         action['domain'].append(('atp_id', '=', self.id))
         return action
 
-    @api.multi
     def open_payr(self):
         self.ensure_one()
         action = self.env.ref(
@@ -4561,7 +3292,6 @@ class ATPform(models.Model):
         action['domain'].append(('atp_id', '=', self.id))
         return action
 
-    @api.one
     @api.depends('atp_form_line_ids.price')
     def _total_unit(self):
         for line in self.atp_form_line_ids:
@@ -4574,7 +3304,6 @@ class ATPform(models.Model):
                 'atp.form') or '/'
         return super(ATPform, self).create(vals)
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'submit'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -4591,7 +3320,6 @@ class ATPform(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_approval(self):
         self.write({'state': 'approve'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -4607,7 +3335,6 @@ class ATPform(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Authorization to Purchase '{}' has been Rejected".format(
@@ -4647,7 +3374,6 @@ class ATPformLines(models.Model):
     price_subtotal = fields.Float(
         string='Est. Price Subtotal', readonly=True, compute='_price_subtotal')
 
-    @api.one
     def _price_subtotal(self):
         for line in self:
             self.price_subtotal = line.price * line.qty
@@ -4711,7 +3437,6 @@ class SalaryAdvanceForm(models.Model):
         self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
         return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
 
-    @api.multi
     def _check_manager_approval(self):
         # if not self.user_has_groups('hr_expense.group_hr_expense_user'):
         #    raise UserError(_("Only Managers and HR Officers can approve expenses"))
@@ -4780,7 +3505,6 @@ class SalaryAdvanceForm(models.Model):
                 'salary.advance') or '/'
         return super(SalaryAdvanceForm, self).create(vals)
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
@@ -4796,7 +3520,6 @@ class SalaryAdvanceForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_line_manager_approval(self):
         self._check_manager_approval()
         self.write({'state': 'line_approve'})
@@ -4817,7 +3540,6 @@ class SalaryAdvanceForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_audit_approval_notification(self):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
@@ -4835,7 +3557,6 @@ class SalaryAdvanceForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_md_approval_notification(self):
         self.write({'state': 'md_approve'})
         self.md_approval_date = date.today()
@@ -4855,7 +3576,6 @@ class SalaryAdvanceForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_finance_approval(self):
         self.write({'state': 'approve'})
         self.finance_approval_date = date.today()
@@ -4868,7 +3588,6 @@ class SalaryAdvanceForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Salary Advance '{}' for {} has been rejected".format(
@@ -4878,26 +3597,6 @@ class SalaryAdvanceForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
-
-
-class AccountMoveLine(models.Model):
-    _inherit = "account.move.line"
-
-    payment_requisition_id = fields.Many2one(
-        'payment.requisition.form', string='Payment Requisition', copy=False, help="Payment Requisition where the move line come from")
-
-    @api.multi
-    def reconcile(self, writeoff_acc_id=False, writeoff_journal_id=False):
-        res = super(AccountMoveLine, self).reconcile(
-            writeoff_acc_id=writeoff_acc_id, writeoff_journal_id=writeoff_journal_id)
-        account_move_ids = [l.move_id.id for l in self if float_compare(
-            l.move_id.matched_percentage, 1, precision_digits=5) == 0]
-        if account_move_ids:
-            expense_sheets = self.env['hr.expense.sheet'].search([
-                ('account_move_id', 'in', account_move_ids), ('state', '!=', 'done')
-            ])
-            expense_sheets.set_to_paid()
-        return res
 
 
 class MissingStolenAssetReportForm(models.Model):
@@ -4917,7 +3616,6 @@ class MissingStolenAssetReportForm(models.Model):
     name_ref = fields.Char('Order Reference', readonly=True,
                            required=True, index=True, copy=False, default='New')
 
-    @api.multi
     def _check_manager_approval(self):
         current_managers = self.employee_id.parent_id.user_id | self.employee_id.department_id.manager_id.user_id
         if self.employee_id.user_id == self.env.user:
@@ -4972,7 +3670,6 @@ class MissingStolenAssetReportForm(models.Model):
     finance_approval_date = fields.Date(
         string='Date', readonly=True, track_visibility='onchange')
 
-    @api.multi
     def button_submit_report(self):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
@@ -4991,7 +3688,6 @@ class MissingStolenAssetReportForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_store_report(self):
         self._check_manager_approval()
         self.write({'state': 'finance_approve'})
@@ -5011,7 +3707,6 @@ class MissingStolenAssetReportForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
     def button_finance_approval(self):
         self.write({'state': 'approve'})
         self.finance_approval_date = date.today()
@@ -5024,7 +3719,6 @@ class MissingStolenAssetReportForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Missing/Stolen Asset '{}' for  '{}' has been rejected".format(
@@ -5034,279 +3728,6 @@ class MissingStolenAssetReportForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
-
-
-class CashAdvanceRequestForm(models.Model):
-    _name = 'cash.advance.request.form'
-    _description = 'Cash Advance Request Form'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'create_date DESC'
-
-    # this method is to search the hr.employee and return the user id of the person clicking the form atm
-    def _default_department(self):
-        user = self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return user.department_id.id
-
-    # this method is to search the hr.employee and return the user id of the person clicking the form atm
-    def _default_employee(self):
-        self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-        return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-
-    @api.model
-    def _default_currency(self):
-        return self.env.user.company_id.currency_id
-
-    state = fields.Selection([
-        ('draft', 'New'),
-        ('submit', 'Submitted'),
-        ('line_approve', 'Line Manager Approved'),
-        ('internal_approve', 'Internal Audit Approved'),
-        ('md_approve', 'MD Approved'),
-        ('approve', 'Finance Approved'),
-        ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
-
-    name = fields.Char('Order Reference', readonly=True,
-                       required=True, index=True, copy=False, default='New')
-
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'cash.advance.request') or '/'
-        return super(CashAdvanceRequestForm, self).create(vals)
-
-    @api.multi
-    def _check_manager_approval(self):
-        # if not self.user_has_groups('hr_expense.group_hr_expense_user'):
-        #    raise UserError(_("Only Managers and HR Officers can approve expenses"))
-        # elif not self.user_has_groups('hr_expense.group_hr_expense_manager'):
-        current_managers = self.employee_id.parent_id.user_id | self.employee_id.department_id.manager_id.user_id
-        if self.employee_id.user_id == self.env.user:
-            raise UserError(_("You cannot approve your own Request"))
-
-        if not self.env.user in current_managers:
-            raise UserError(_("You can only approve your department expenses"))
-
-    cash_advance_request_form_line_ids = fields.One2many(
-        'cash.advance.request.form.lines', 'cash_advance_request_form_id', string="cash advance request form lines", copy=True)
-
-    date = fields.Date(string='Date', required=True,
-                       track_visibility='onchange', default=date.today())
-    employee_id = fields.Many2one(comodel_name='hr.employee', required=True,
-                                  string='Name', track_visibility='onchange', default=_default_employee)
-    department_id = fields.Many2one(comodel_name='hr.department', string='Department',
-                                    related='employee_id.department_id', track_visibility='onchange')
-    location = fields.Char(string='Location', required=True,
-                           track_visibility='onchange')
-    bank_details = fields.Char(
-        string='Bank Details',  track_visibility='onchange')
-
-    currency_id = fields.Many2one(comodel_name='res.currency', required=True,
-                                  string='Currency', default=_default_currency, track_visibility='onchange')
-
-    num_word = fields.Char(string="Amount In Words:",
-                           compute='_compute_amount_in_word')
-
-    total_amount = fields.Float(
-        string='Total amount', compute='_total_amount', readonly=True)
-
-    date_recovery = fields.Date(
-        string='Date of Recovery', required=True, track_visibility='onchange')
-
-    @api.multi
-    def _compute_amount_in_word(self):
-        for rec in self:
-            rec.num_word = str(rec.currency_id.amount_to_text(
-                rec.total_amount)) + ' only'
-
-    @api.one
-    @api.depends('cash_advance_request_form_line_ids.amount')
-    def _total_amount(self):
-        for line in self.cash_advance_request_form_line_ids:
-            self.total_amount += line.amount
-
-    employee_name = fields.Many2one(
-        'res.users', 'Employee Name', readonly=True, track_visibility='onchange')
-    employee_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-
-    supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
-    supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-
-    audit_approval = fields.Many2one(
-        'res.users', 'Auditors Name', readonly=True, track_visibility='onchange')
-    audit_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-
-    finance_comments = fields.Char(
-        string='Comments', track_visibility='onchange')
-    finance_approval = fields.Many2one(
-        'res.users', 'Finance Name', readonly=True, track_visibility='onchange')
-    finance_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
-
-    received_approval = fields.Many2one(
-        'res.users', 'Recipients Name',  track_visibility='onchange')
-    received_approval_date = fields.Date(
-        string='Date', track_visibility='onchange')
-    paid = fields.Boolean(string="Paid")
-    move_id = fields.Many2one(
-        comodel_name="account.move", string="Accounting Entry")
-    journal_id = fields.Many2one(
-        comodel_name="account.journal", string="Journal")
-
-    @api.multi
-    def button_submit(self):
-        self.write({'state': 'submit'})
-        self.employee_approval_date = date.today()
-        self.employee_name = self._uid
-        partner_ids = []
-        if self.employee_id.parent_id.user_id:
-            partner_ids.append(
-                self.employee_id.parent_id.user_id.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Cash Advance Request '{}', for {} needs approval".format(
-            self.name, self.employee_id.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
-
-    @api.multi
-    def button_line_manager_approval(self):
-        self._check_manager_approval()
-        self.write({'state': 'line_approve'})
-        self.supervisor_approval_date = date.today()
-        self.supervisor_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_internal_audit')
-        partner_ids = []
-        user_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Cash Advance Request '{}', for {} has been approved by supervisor".format(
-            self.name, self.employee_id.name)
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def button_audit_approval_notification(self):
-        self.write({'state': 'internal_approve'})
-        self.audit_approval_date = date.today()
-        self.audit_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_md')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Cash Advance Request '{}', for '{}' needs approval from Audit".format(
-            self.name, self.employee_id.name)
-        # for partner in self.message_partner_ids:
-        #   partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def button_md_approval_notification(self):
-        self.write({'state': 'md_approve'})
-        self.md_approval_date = date.today()
-        self.md_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_finance_manager')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Cash Advance Request '{}', for '{}' has been approved by MD and needs approval from Finance".format(
-            self.name, self.employee_id.name)
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def button_finance_approval(self):
-        self.write({'state': 'approve'})
-        self.finance_approval_date = date.today()
-        self.finance_approval = self._uid
-        subject = "Cash Advance Request '{}', for {} has been approved by Finance".format(
-            self.name, self.employee_id.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    @api.multi
-    def button_reject(self):
-        self.write({'state': 'reject'})
-        subject = "Cash Advance Request '{}', for {} has been rejected".format(
-            self.name, self.employee_id.name)
-        partner_ids = []
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    def post_entries(self):
-        requesting_partner = self.employee_id.user_id.partner_id
-        move_vals = {
-            'ref': self.name,
-            'date': date.today(),
-            'journal_id': self.journal_id.id,
-            'line_ids': [(0, 0, {
-                'name': self.name,
-                'debit': self.total_amount > 0 and self.total_amount,
-                'credit': 0.0,
-                # Debit employee receivable
-                'account_id': requesting_partner.property_account_receivable_id.id,
-                'date_maturity': date.today(),
-                'partner_id': requesting_partner.id,
-            }),
-                (0, 0, {
-                    'name': self.name,
-                    'credit': self.total_amount > 0 and self.total_amount,
-                    'debit': 0.0,
-                    'account_id': self.journal_id.default_credit_account_id.id,
-                    'date_maturity': date.today(),
-                    'partner_id': requesting_partner.id,
-                })
-            ]
-        }
-        account_move = self.env['account.move'].sudo().create(move_vals)
-        self.move_id = account_move.id
-        self.paid = True
-        return True
-
-    def reset_paid(self):
-        self.paid = False
-        return True
-
-
-class CashAdvanceRequestFormLines(models.Model):
-    _name = 'cash.advance.request.form.lines'
-
-    cash_advance_request_form_id = fields.Many2one(
-        comodel_name='cash.advance.request.form', string='cash advance request Form')
-
-    name = fields.Char(string='DETAILS/PURPOSE OF REQUEST', required=True)
-    account_id = fields.Many2one(
-        comodel_name="account.account", string='Account')
-    note = fields.Char(string='Description')
-    analytic_account_id = fields.Many2one(
-        comodel_name="account.analytic.account", string='Analytic Account')
-    amount = fields.Float(string='AMOUNT', required=True)
 
 
 class SiteTimeSheet(models.Model):
@@ -5364,7 +3785,6 @@ class SiteTimeSheet(models.Model):
     hr_approval_date = fields.Date(
         string='Date', readonly=True, track_visibility='onchange')
 
-    @api.multi
     def button_submit(self):
         self.write({'state': 'submit'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -5380,7 +3800,6 @@ class SiteTimeSheet(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_opm_approval(self):
         self.write({'state': 'opm_approve'})
         self.opm_approval_date = date.today()
@@ -5400,7 +3819,6 @@ class SiteTimeSheet(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_hr_approval(self):
         self.write({'state': 'approve'})
         self.hr_approval_date = date.today()
@@ -5413,7 +3831,6 @@ class SiteTimeSheet(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Site Time Sheet for {} has been rejected".format(
@@ -5492,7 +3909,6 @@ class FumigationSchedule(models.Model):
                 'fumigation.schedule') or '/'
         return super(FumigationSchedule, self).create(vals)
 
-    @api.multi
     def action_fumigation_send(self):
         '''
         This function opens a window to compose an email, with the edi purchase template message loaded by default
@@ -5602,7 +4018,6 @@ class DailyChecklist(models.Model):
                 'daily.checklist') or '/'
         return super(DailyChecklist, self).create(vals)
 
-    @api.one
     def prepare_on_lines(self):
         self.ensure_one()
         sub = self.env['daily.checklist.equipment'].search(
@@ -5617,7 +4032,6 @@ class DailyChecklist(models.Model):
             })
         self.write({'state': 'on'})
 
-    @api.one
     def prepare_off_lines(self):
         self.ensure_one()
         sub = self.env['daily.checklist.equipment'].search(

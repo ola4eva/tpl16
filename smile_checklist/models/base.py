@@ -8,7 +8,7 @@ from odoo import api, models, _
 class Base(models.AbstractModel):
     _inherit = 'base'
 
-    @api.one
+    
     def _get_checklist_task_instances(self):
         domain = [
             ('task_id.checklist_id.model_id.model', '=', self._name),
@@ -17,7 +17,7 @@ class Base(models.AbstractModel):
         self.x_checklist_task_instance_ids = \
             self.env['checklist.task.instance'].search(domain)
 
-    @api.multi
+    
     def _manage_checklist_task_instances(self):
         if self and not self._context.get('checklist_computation') and \
                 'x_checklist_task_instance_ids' in self._fields:
@@ -28,7 +28,7 @@ class Base(models.AbstractModel):
                 Checklist.browse(checklist_id).task_ids. \
                     _manage_task_instances(self)
 
-    @api.multi
+    
     def open_checklist(self):
         self.ensure_one()
         return {

@@ -24,7 +24,7 @@ class ChecklistTaskInstance(models.Model):
     active = fields.Boolean(compute='_compute_active', store=True)
     complete = fields.Boolean(readonly=True)
 
-    @api.one
+    
     @api.depends('task_id.filter_domain', 'task_id.active')
     def _compute_active(self):
         self.active = self.task_id.active

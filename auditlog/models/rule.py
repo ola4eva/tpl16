@@ -123,7 +123,7 @@ class AuditlogRule(models.Model):
             self = self.search([('state', '=', 'subscribed')])
         return self._patch_methods()
 
-    @api.multi
+    
     def _patch_methods(self):
         """Patch ORM methods of models defined in rules to log their calls."""
         updated = False
@@ -167,7 +167,7 @@ class AuditlogRule(models.Model):
                 updated = True
         return updated
 
-    @api.multi
+    
     def _revert_methods(self):
         """Restore original ORM methods of models defined in rules."""
         updated = False
@@ -190,7 +190,7 @@ class AuditlogRule(models.Model):
             modules.registry.Registry(self.env.cr.dbname).signal_changes()
         return new_record
 
-    @api.multi
+    
     def write(self, vals):
         """Update the registry when existing rules are updated."""
         super(AuditlogRule, self).write(vals)
@@ -198,13 +198,13 @@ class AuditlogRule(models.Model):
             modules.registry.Registry(self.env.cr.dbname).signal_changes()
         return True
 
-    @api.multi
+    
     def unlink(self):
         """Unsubscribe rules before removing them."""
         self.unsubscribe()
         return super(AuditlogRule, self).unlink()
 
-    @api.multi
+    
     def _make_create(self):
         """Instanciate a create method that log its calls."""
         self.ensure_one()
@@ -248,7 +248,7 @@ class AuditlogRule(models.Model):
 
         return create_full if self.log_type == 'full' else create_fast
 
-    @api.multi
+    
     def _make_read(self):
         """Instanciate a read method that log its calls."""
         self.ensure_one()
@@ -278,13 +278,13 @@ class AuditlogRule(models.Model):
             return result
         return read
 
-    @api.multi
+    
     def _make_write(self):
         """Instanciate a write method that log its calls."""
         self.ensure_one()
         log_type = self.log_type
 
-        @api.multi
+        
         def write_full(self, vals, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env['auditlog.rule']
@@ -300,7 +300,7 @@ class AuditlogRule(models.Model):
                 'write', old_values, new_values, {'log_type': log_type})
             return result
 
-        @api.multi
+        
         def write_fast(self, vals, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env['auditlog.rule']
@@ -319,13 +319,13 @@ class AuditlogRule(models.Model):
 
         return write_full if self.log_type == 'full' else write_fast
 
-    @api.multi
+    
     def _make_unlink(self):
         """Instanciate an unlink method that log its calls."""
         self.ensure_one()
         log_type = self.log_type
 
-        @api.multi
+        
         def unlink_full(self, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env['auditlog.rule']
@@ -337,7 +337,7 @@ class AuditlogRule(models.Model):
                 {'log_type': log_type})
             return unlink_full.origin(self, **kwargs)
 
-        @api.multi
+        
         def unlink_fast(self, **kwargs):
             self = self.with_context(auditlog_disabled=True)
             rule_model = self.env['auditlog.rule']
@@ -524,7 +524,7 @@ class AuditlogRule(models.Model):
             vals['new_value_text'] = new_value_text
         return vals
 
-    @api.multi
+    
     def subscribe(self):
         """Subscribe Rule for auditing changes on model and apply shortcut
         to view logs on that model.
@@ -545,7 +545,7 @@ class AuditlogRule(models.Model):
             rule.write({'state': 'subscribed', 'action_id': act_window.id})
         return True
 
-    @api.multi
+    
     def unsubscribe(self):
         """Unsubscribe Auditing Rule on model."""
         # Revert patched methods

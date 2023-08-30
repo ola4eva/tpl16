@@ -29,7 +29,7 @@ SQL2PYTHON_OPERATORS = {
 }
 
 
-@api.multi
+
 def filtered_from_domain(self, domain):
     if isinstance(domain, string_types):
         domain = safe_eval(domain)

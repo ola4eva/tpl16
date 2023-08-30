@@ -40,7 +40,7 @@ class PaymentRequisitionRegisterPaymentWizard(models.TransientModel):
     test_amount = fields.Monetary(string='Payment Amounts', required=True, default=_default_payment_amount)
     payment_difference = fields.Monetary(compute='_compute_payment_difference', readonly=True)
     
-    @api.one
+    
     @api.depends('amount', 'test_amount', 'payment_date', 'currency_id')
     def _compute_payment_difference(self):
         if self.amount:
@@ -57,7 +57,7 @@ class PaymentRequisitionRegisterPaymentWizard(models.TransientModel):
         else:
             self.partner_bank_account_id = False
 
-    @api.one
+    
     @api.constrains('amount')
     def _check_amount(self):
         if not self.amount > 0.0:
@@ -70,7 +70,7 @@ class PaymentRequisitionRegisterPaymentWizard(models.TransientModel):
         for payment in self:
             payment.show_partner_bank_account = payment.payment_method_id.code in self.env['account.payment']._get_method_codes_using_bank_account()
 
-    @api.one
+    
     @api.depends('journal_id')
     def _compute_hide_payment_method(self):
         if not self.journal_id:
@@ -105,7 +105,7 @@ class PaymentRequisitionRegisterPaymentWizard(models.TransientModel):
             'communication': self.communication
         }
 
-    @api.multi
+    
     def payment_post_payment(self):
         self.ensure_one()
         context = dict(self._context or {})

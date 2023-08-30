@@ -40,7 +40,7 @@ class ToplineReminder(models.Model):
     
     comments = fields.Char(string='Comments')
     
-    @api.multi
+    
     def send_reminder_notification(self):
         reminders = self.env['topline.reminder'].search([])
         
@@ -77,7 +77,7 @@ class ToplineReminder(models.Model):
                             self.send_the_reminder_notification()
         return
     
-    @api.multi
+    
     def send_the_reminder_notification(self):
         group_id = self.reminder_group_ids
         user_ids = []

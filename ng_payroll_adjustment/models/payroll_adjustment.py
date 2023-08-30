@@ -40,7 +40,7 @@ class PayrollAdjustment(models.Model):
     user_id = fields.Many2one('res.users', default=lambda self: self.env.user, string='Responsible User', readonly=True, states={'new': [('readonly', False)]})
     category_id = fields.Many2one('hr.salary.rule.category', 'Adjustment Category', required=True, readonly=True, states={'new': [('readonly', False)]})
 
-    @api.multi
+    
     def unlink(self):
         for statement in self:
             if statement.state != 'new':
@@ -54,27 +54,27 @@ class PayrollAdjustment(models.Model):
             self.contract_id = contract_ids[0]
         else:
             self.contract_id = False
-    @api.multi
+    
     def get_confirm(self):
         self.state = 'confirm'
 
-    @api.multi
+    
     def get_reset_new(self):
         self.state = 'new'
 
-    @api.multi
+    
     def get_cancel(self):
         self.state = 'cancel'
 
-    @api.multi
+    
     def get_cancel(self):
         self.state = 'cancel'
 
-    @api.multi
+    
     def get_close(self):
         self.state = 'close'
 
-    @api.multi
+    
     def get_running(self):
         for sub in self:
             ds = sub.start_date
@@ -91,7 +91,7 @@ class PayrollAdjustment(models.Model):
                     ds = ds + relativedelta(years=sub.period_nbr)
         self.state = 'running'
 
-    @api.multi
+    
     def remove_line(self):
         toremove = []
         for sub in self:
@@ -114,7 +114,7 @@ class AdjustmentTypeLine(models.Model):
     _name = 'adjustment.type.line'
     _description = 'adjustment.type.line'
 
-    @api.multi
+    
     @api.depends('adjustment_line_id', 'payslip_id', 'payslip_id', 'payslip_id.state', 'start_date')
     def _get_applied(self):
         for record in self:

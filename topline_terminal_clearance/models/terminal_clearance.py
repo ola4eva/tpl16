@@ -34,19 +34,19 @@ class TerminalClearance(models.Model):
         ('refuse', 'Refuse'), 
         ], default="draft", track_visibility='onchange')
 
-    @api.multi
+    
     def confirm_request(self):
         self.state = 'confirm'
 
-    @api.multi
+    
     def validate_request(self):
         self.state = 'validate'
 
-    @api.multi
+    
     def refuse_request(self):
         self.state = 'refuse'
 
-    @api.multi
+    
     def approve_request(self):
         self.state = 'approved'
 

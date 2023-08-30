@@ -38,7 +38,7 @@ class PettyCash(models.Model):
             [('user_id', '=', self.env.uid)])
         return self.env['res.partner'].search([('name', '=', employee.name)])
 
-    # @api.multi
+    # 
     # def _check_manager_approval(self):
     #     current_managers = self.employee_id.parent_id.user_id | self.employee_id.department_id.manager_id.user_id
     #     if self.employee_id.user_id == self.env.user:
@@ -142,7 +142,7 @@ class PettyCash(models.Model):
         if self.total_amount_requested > 10000:
             raise UserError("Please the limit for the petty cash is 10,000!!!")
 
-    @api.multi
+    
     def button_submit(self):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
@@ -158,7 +158,7 @@ class PettyCash(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
+    
     def button_line_manager_approval(self):
         # self._check_manager_approval()
         if self.total_amount_approved == 0.00:
@@ -182,7 +182,7 @@ class PettyCash(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_audit_approval_notification(self):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
@@ -202,7 +202,7 @@ class PettyCash(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_md_approval_notification(self):
         self.write({'state': 'md_approve'})
         self.md_approval_date = date.today()
@@ -222,7 +222,7 @@ class PettyCash(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_finance_approval(self):
         self.write({'state': 'approve'})
         self.finance_approval_date = date.today()
@@ -235,7 +235,7 @@ class PettyCash(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Petty Cash '{}', for {} has been rejected".format(
@@ -246,26 +246,26 @@ class PettyCash(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.one
+    
     @api.depends('line_ids.amount_requested')
     def _total_amount_requested(self):
         for line in self.line_ids:
             self.total_amount_requested += line.amount_requested
 
-    @api.one
+    
     @api.depends('line_ids.amount_approved')
     def _total_amount_approved(self):
         for line in self.line_ids:
             self.total_amount_approved += line.amount_approved
             self.total_amount_approved_due = self.total_amount_approved
 
-    @api.multi
+    
     def _compute_amount_in_word(self):
         for rec in self:
             rec.num_word = str(rec.currency_id.amount_to_text(
                 rec.total_amount_approved)) + ' only'
 
-    @api.multi
+    
     def action_sheet_move_create(self):
 
         if any(sheet.state != 'approve' for sheet in self):
@@ -312,7 +312,7 @@ class PettyCashLine(models.Model):
     petty_cash_id = fields.Many2one(
         comodel_name='petty.cash', string='Petty Cash')
 
-    @api.one
+    
     def _check_user_group(self):
         if self.user_has_groups('account.group_account_manager') or self.user_has_groups('topline.group_hr_line_manager') or self.user_has_groups('topline.group_internal_audit'):
             self.is_manager = True

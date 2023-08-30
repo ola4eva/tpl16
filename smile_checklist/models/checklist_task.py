@@ -29,7 +29,7 @@ class ChecklistTask(models.Model):
         task._manage_task_instances()
         return task
 
-    @api.multi
+    
     def write(self, vals):
         self = self._filter_tasks_to_update(vals)
         if not self:
@@ -38,14 +38,14 @@ class ChecklistTask(models.Model):
         self._manage_task_instances()
         return result
 
-    @api.multi
+    
     def unlink(self):
         checklists = self.mapped('checklist_id')
         result = super(ChecklistTask, self).unlink()
         checklists._compute_progress_rates()
         return result
 
-    @api.multi
+    
     def _filter_tasks_to_update(self, vals):
         # INFO: avoid to trigger checklist computation
         # when updating a module if checklist didn't change
@@ -59,7 +59,7 @@ class ChecklistTask(models.Model):
                 self -= task
         return self
 
-    @api.multi
+    
     def _manage_task_instances(self, records=None):
         for checklist in self.mapped('checklist_id'):
             _records = records
@@ -74,7 +74,7 @@ class ChecklistTask(models.Model):
             _records = _records.with_context(checklist_computation=True)
             checklist._compute_progress_rates(_records)
 
-    @api.one
+    
     def _update_task_instances_list(self, records):
         for record in records:
             task_inst = self.env['checklist.task.instance'].search([

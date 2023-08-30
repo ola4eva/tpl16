@@ -61,7 +61,7 @@ class payment_requisition(models.Model):
         res = super(payment_requisition, self).create(values)
         return res
 
-    @api.multi
+    
     def unlink(self):
         for rec in self:
             if rec.state != 'draft':
@@ -105,7 +105,7 @@ class payment_requisition(models.Model):
                         'analytic_account_id': record.default_analytic_account_id.id
                     })
 
-    @api.multi
+    
     def button_submit(self):
         requester = self.env['res.users'].search(
             [('partner_id', '=', self.payee_id.id)])
@@ -138,7 +138,7 @@ class payment_requisition(models.Model):
             "target": "new",
         }
 
-    @api.multi
+    
     def action_sheet_move_create(self, payment_type, amount=None):
 
         if any(sheet.state != 'approve' for sheet in self):
@@ -218,7 +218,7 @@ class payment_requisition(models.Model):
             requisition._check_fully_paid()
         return True
 
-    @api.multi
+    
     def action_view_journal_entries(self):
         """
         This function returns an action that display existing journal entries of the give payment requisition.
@@ -253,7 +253,7 @@ class payment_requisition(models.Model):
             }
         }
 
-    @api.multi
+    
     def button_finance_approval(self):
         res = super().button_finance_approval()
         for record in self:

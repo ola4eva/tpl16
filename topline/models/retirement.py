@@ -35,7 +35,7 @@ class CashRetirementForm(models.Model):
     def _default_currency(self):
         return self.env.user.company_id.currency_id
     
-    @api.multi
+    
     def _check_manager_approval(self):
         current_managers = self.employee_id.parent_id.user_id | self.employee_id.department_id.manager_id.user_id
         if self.employee_id.user_id == self.env.user:
@@ -167,7 +167,7 @@ class CashRetirementForm(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code('cash.retirement') or '/'
         return super(CashRetirementForm, self).create(vals)
     
-    @api.multi
+    
     def button_submit(self):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
@@ -180,7 +180,7 @@ class CashRetirementForm(models.Model):
         self.message_post(subject=subject,body=subject,partner_ids=partner_ids)
         return False
     
-    @api.multi
+    
     def button_line_manager_approval(self):
         self._check_manager_approval()
         self.write({'state':'line_approve'})
@@ -198,7 +198,7 @@ class CashRetirementForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject,body=subject,partner_ids=partner_ids)
         
-    @api.multi
+    
     def button_audit_approval_notification(self):
         self.write({'state':'internal_approve'})
         self.audit_approval_date = date.today()
@@ -215,7 +215,7 @@ class CashRetirementForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject,body=subject,partner_ids=partner_ids)
     
-    @api.multi
+    
     def button_md_approval_notification(self):
         self.write({'state':'md_approve'})
         self.md_approval_date = date.today()
@@ -232,7 +232,7 @@ class CashRetirementForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject,body=subject,partner_ids=partner_ids)
     
-    @api.multi
+    
     def button_finance_approval(self):
         self.write({'state':'approve'})
         self.finance_approval_date = date.today()
@@ -243,7 +243,7 @@ class CashRetirementForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject,body=subject,partner_ids=partner_ids)
     
-    @api.multi
+    
     def button_reject(self):
         self.write({'state':'reject'})
         subject = "Cash Retirement '{}' for {} has been rejected".format(self.name, self.employee_id.name)
@@ -252,19 +252,19 @@ class CashRetirementForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject,body=subject,partner_ids=partner_ids)
     
-    @api.one
+    
     @api.depends('cash_retirement_form_line_ids.amount_requested')
     def _total_amount_requested(self):
         for line in self.cash_retirement_form_line_ids:
             self.total_amount_requested += line.amount_requested
     
-    @api.one
+    
     @api.depends('cash_retirement_form_line_ids.amount_approved')
     def _total_amount_approved(self):
         for line in self.cash_retirement_form_line_ids:
             self.total_amount_approved += line.amount_approved
     
-    @api.multi
+    
     def _compute_amount_in_word(self):
         for rec in self:
             rec.num_word = str(rec.currency_id.amount_to_text(rec.total_amount_approved)) + ' only'

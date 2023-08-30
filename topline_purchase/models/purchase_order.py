@@ -28,7 +28,7 @@ class PurchaseOrder(models.Model):
     order_line = fields.One2many(comodel_name="purchase.order.line", inverse_name="order_id",
                                  readonly=True, states={'draft': [('readonly', False)], 'md_approve': [('readonly', False)]})
 
-    @api.multi
+    
     def button_submit(self):
         self.write({'state': 'submit'})
         partner_ids = []
@@ -80,7 +80,7 @@ class PurchaseOrder(models.Model):
         string='Date', readonly=True, track_visibility='onchange')
     active = fields.Boolean(string='Active?', default=True)
 
-    @api.multi
+    
     def button_line_manager_approval(self):
         self.write({'state': 'line_approve'})
         self.supervisor_approval_date = date.today()
@@ -98,7 +98,7 @@ class PurchaseOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_audit_approval_notification(self):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
@@ -116,7 +116,7 @@ class PurchaseOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "RFQ '{}', for {} has been rejected".format(
@@ -127,7 +127,7 @@ class PurchaseOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_md_approval_notification(self):
         """Notify Finance team of MD's approval...
         """
@@ -144,7 +144,7 @@ class PurchaseOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_md_approval(self):
         """Managing director approves purchase order and notification is sent to finance
         """
@@ -159,7 +159,7 @@ class PurchaseOrder(models.Model):
             })
         return True
 
-    @api.multi
+    
     def button_confirm(self):
         for order in self:
             if order.state not in ['md_approve']:
@@ -176,7 +176,7 @@ class PurchaseOrder(models.Model):
             order.button_approve()
         return True
 
-    @api.multi
+    
     def _compute_amount_in_word(self):
         for rec in self:
             rec.num_word = str(rec.currency_id.amount_to_text(

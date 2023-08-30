@@ -151,7 +151,7 @@ class payroll_reg(models.TransientModel):
         self.mnths_total = total_mnths
         return salary_list
 
-    @api.multi
+    
     def print_report(self):
         """
          To get the date and print the report

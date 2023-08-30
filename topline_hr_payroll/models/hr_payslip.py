@@ -21,7 +21,7 @@ class HRPayslip(models.Model):
             values['department_id'] = employee.department_id.id
         return super(HRPayslip, self).create(values)
 
-    @api.multi
+    
     def unlink(self):
         for payslip in self:
             if not payslip.state == 'draft':

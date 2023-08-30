@@ -26,7 +26,7 @@ class AccountMove(models.Model):
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    @api.multi
+    
     def _compute_amount_in_word(self):
         for rec in self:
             rec.num_word = str(rec.currency_id.amount_to_text(
@@ -60,229 +60,7 @@ class AccountInvoice(models.Model):
         return res
 
 
-# class PurchaseOrder(models.Model):
-#     _inherit = 'purchase.order'
-#     _order = 'create_date DESC'
 
-#     state = fields.Selection([
-#         ('draft', 'RFQ'),
-#         ('submit', 'Submitted'),
-#         ('line_approve', 'Line Manager Approved'),
-#         ('internal_approve', 'Internal Audit Approved'),
-#         ('md_approve', 'MD Approved'),
-#         ('sent', 'RFQ Sent'),
-#         ('to approve', 'To Approve'),
-#         ('purchase', 'Purchase Order'),
-#         ('done', 'Locked'),
-#         ('cancel', 'Cancelled')
-#     ], string='Status', readonly=True, index=True, copy=False, default='draft', track_visibility='onchange')
-
-#     @api.multi
-#     def button_submit(self):
-#         self.write({'state': 'submit'})
-#         user_ids = []
-#         partner_ids = []
-#         if self.employee_id.parent_id.user_id:
-#             partner_ids.append(
-#                 self.employee_id.parent_id.user_id.partner_id.id)
-#         self.message_subscribe(partner_ids=partner_ids)
-#         subject = "RFQ {} for {} needs approval".format(
-#             self.name, self.employee_id.name)
-#         self.message_post(subject=subject, body=subject,
-#                           partner_ids=partner_ids)
-#         return False
-#         return {}
-
-#     def _default_owner(self):
-#         return self.env.context.get('default_employee_id') or self.env['res.users'].browse(self.env.uid).partner_id
-
-#     def _default_employee(self):
-#         self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-#         return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
-
-#     owner_id = fields.Many2one('res.partner', 'Owner',
-#                                states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}, default=_default_owner,
-#                                help="Default Owner")
-
-#     employee_id = fields.Many2one('hr.employee', 'Requesting Employee',
-#                                   states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}, default=_default_employee,
-#                                   help="Default Owner")
-
-#     supervisor_approval = fields.Many2one(
-#         'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
-#     supervisor_approval_date = fields.Date(
-#         string='Date', readonly=True, track_visibility='onchange')
-
-#     audit_approval = fields.Many2one(
-#         'res.users', 'Auditors Name', readonly=True, track_visibility='onchange')
-#     audit_approval_date = fields.Date(
-#         string='Date', readonly=True, track_visibility='onchange')
-
-#     md_approval = fields.Many2one(
-#         'res.users', 'Managing Director', readonly=True, track_visibility='onchange')
-#     md_approval_date = fields.Date(
-#         string='Date', readonly=True, track_visibility='onchange')
-
-#     finance_comments = fields.Char(
-#         string='Comments', track_visibility='onchange')
-#     finance_approval = fields.Many2one(
-#         'res.users', 'Finance Name', readonly=True, track_visibility='onchange')
-#     finance_approval_date = fields.Date(
-#         string='Date', readonly=True, track_visibility='onchange')
-#     active = fields.Boolean(string='Active?', default=True)
-
-#     @api.multi
-#     def button_line_manager_approval(self):
-#         self.write({'state': 'line_approve'})
-#         self.supervisor_approval_date = date.today()
-#         self.supervisor_approval = self._uid
-#         group_id = self.env['ir.model.data'].xmlid_to_object(
-#             'topline.group_internal_audit')
-#         partner_ids = []
-#         user_ids = []
-#         for user in group_id.users:
-#             user_ids.append(user.id)
-#             partner_ids.append(user.partner_id.id)
-#         self.message_subscribe(partner_ids=partner_ids)
-#         subject = "RFQ '{}', for {} has been approved by supervisor and need approval from internal Audit".format(
-#             self.name, self.employee_id.name)
-#         self.message_post(subject=subject, body=subject,
-#                           partner_ids=partner_ids)
-
-#     @api.multi
-#     def button_audit_approval_notification(self):
-#         self.write({'state': 'internal_approve'})
-#         self.audit_approval_date = date.today()
-#         self.audit_approval = self._uid
-#         group_id = self.env['ir.model.data'].xmlid_to_object(
-#             'topline.group_md')
-#         user_ids = []
-#         partner_ids = []
-#         for user in group_id.users:
-#             user_ids.append(user.id)
-#             partner_ids.append(user.partner_id.id)
-#         self.message_subscribe(partner_ids=partner_ids)
-#         subject = "RFQ '{}', for '{}' has been approved by Audit needs approval from MD".format(
-#             self.name, self.employee_id.name)
-#         self.message_post(subject=subject, body=subject,
-#                           partner_ids=partner_ids)
-
-#     '''   
-#     @api.multi
-#     def button_md_approval_notification(self):
-#         self.write({'state':'md_approve'})
-#         self.md_approval_date = date.today()
-#         self.md_approval = self._uid
-#         group_id = self.env['ir.model.data'].xmlid_to_object('account.group_account_manager')
-#         user_ids = []
-#         partner_ids = []
-#         for user in group_id.users:
-#             user_ids.append(user.id)
-#             partner_ids.append(user.partner_id.id)
-#         self.message_subscribe(partner_ids=partner_ids)
-#         subject = "Payment Requisition '{}', for '{}' has been approved by MD and needs approval from Finance".format(self.name,  self.employee_id.name)
-#         for partner in self.message_partner_ids:
-#             partner_ids.append(partner.id)
-#         self.message_post(subject=subject,body=subject,partner_ids=partner_ids)
-    
-#     @api.multi
-#     def button_finance_approval(self):
-#         self.write({'state':'approve'})
-#         self.finance_approval_date = date.today()
-#         self.finance_approval = self._uid
-#         subject = "Payment Requisition '{}', for {} has been approved by Finance".format(self.name, self.employee_id.name)
-#         partner_ids = []
-#         for partner in self.message_partner_ids:
-#             partner_ids.append(partner.id)
-#         self.message_post(subject=subject,body=subject,partner_ids=partner_ids)
-#     '''
-
-#     @api.multi
-#     def button_reject(self):
-#         self.write({'state': 'reject'})
-#         subject = "RFQ '{}', for {} has been rejected".format(
-#             self.name, self.employee_id.name)
-#         partner_ids = []
-#         for partner in self.message_partner_ids:
-#             partner_ids.append(partner.id)
-#         self.message_post(subject=subject, body=subject,
-#                           partner_ids=partner_ids)
-
-#     @api.multi
-#     def button_md_approval_notification(self):
-#         # self.write({'state':'md_approve'})
-#         #self.md_approval_date = date.today()
-#         #self.md_approval = self._uid
-#         group_id = self.env['ir.model.data'].xmlid_to_object(
-#             'account.group_account_manager')
-#         user_ids = []
-#         partner_ids = []
-#         for user in group_id.users:
-#             user_ids.append(user.id)
-#             partner_ids.append(user.partner_id.id)
-#         self.message_subscribe(partner_ids=partner_ids)
-#         subject = "Purchase Order '{}', for '{}' has been approved by MD and needs action from Finance".format(
-#             self.name,  self.employee_id.name)
-#         self.message_post(subject=subject, body=subject,
-#                           partner_ids=partner_ids)
-
-#     @api.multi
-#     def button_confirm(self):
-#         for order in self:
-#             if order.state not in ['draft', 'submit', 'internal_approve', 'sent']:
-#                 continue
-#             self.md_approval_date = date.today()
-#             self.md_approval = self._uid
-#             # order.cost_valuation_update()
-#             order._add_supplier_to_product()
-#             # Deal with double validation process
-#             if order.company_id.po_double_validation == 'one_step'\
-#                     or (order.company_id.po_double_validation == 'two_step'
-#                         and order.amount_total < self.env.user.company_id.currency_id.compute(order.company_id.po_double_validation_amount, order.currency_id))\
-#                     or order.user_has_groups('purchase.group_purchase_manager'):
-#                 order.button_approve()
-#                 order.button_md_approval_notification()
-#             else:
-#                 order.write({'state': 'to approve'})
-#         return True
-
-#     @api.multi
-#     def _compute_amount_in_word(self):
-#         for rec in self:
-#             rec.num_word = str(rec.currency_id.amount_to_text(
-#                 rec.amount_total)) + ' only'
-
-#     num_word = fields.Char(string="Amount In Words:",
-#                            compute='_compute_amount_in_word')
-
-#     expectecd_delivery_date = fields.Date(string='Expected Delivery Date')
-#     atp_id = fields.Many2one(comodel_name='atp.form', string='ATP Form')
-
-
-class account_payment(models.Model):
-    _inherit = "account.payment"
-
-    @api.model
-    def create(self, vals):
-        payment = super(account_payment, self).create(vals)
-        payment.send_payment_creation_mail()
-        return payment
-
-    @api.multi
-    def send_payment_creation_mail(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
-            'topline.group_payment_notification')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "A new payment has been created and needs internal audit review".format(
-            self.name)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-        return False
 
 
 class Picking(models.Model):
@@ -314,7 +92,7 @@ class Picking(models.Model):
     active = fields.Boolean('Active', default=True)
     
     @api.depends('move_type', 'move_lines.state', 'move_lines.picking_id')
-    @api.one
+    
     def _compute_state(self):
         ''' State of a picking depends on the state of its related stock.move
         - Draft: only used for "planned pickings"
@@ -343,7 +121,7 @@ class Picking(models.Model):
             else:
                 self.state = relevant_move_state
                 
-    @api.multi
+    
     def unlink(self):
         for picking in self:
             store_request_picking_type = self.env.ref("topline.stock_picking_type_emp")
@@ -351,7 +129,7 @@ class Picking(models.Model):
                 raise UserError("You are not allowed to delete store requests, you may consider archiving instead!!!")
         return super(Picking, self).unlink()    
 
-    @api.multi
+    
     def button_submit(self):
         self.write({'state': 'submit'})
         for move in self.move_lines:
@@ -367,7 +145,7 @@ class Picking(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    @api.multi
+    
     def action_confirm(self):
         self.write({'is_locked': True})
         for move in self.move_lines:
@@ -389,7 +167,7 @@ class Picking(models.Model):
             return False
         return res
 
-    @api.multi
+    
     def action_line_manager_approval(self):
         self.write({'state': 'approve'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -407,7 +185,7 @@ class Picking(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def action_qa_qc_approval(self):
         self.write({'state': 'qa_qc_approve'})
         for move in self.move_lines:
@@ -422,7 +200,7 @@ class Picking(models.Model):
                           partner_ids=partner_ids)
         self.send_store_request_mail()
 
-    @api.multi
+    
     def manager_confirm(self):
         for order in self:
             order.write({'man_confirm': True})
@@ -464,20 +242,20 @@ class Picking(models.Model):
     rejection_reason = fields.Many2one(
         'stock.rejection.reason', string='Rejection Reason', index=True, track_visibility='onchange')
 
-    @api.multi
+    
     @api.depends('move_ids_without_package.product_uom_qty')
     def _total_cost(self):
         for a in self:
             for line in a.move_ids_without_package:
                 a.total_cost += line.price_cost * line.product_uom_qty
 
-    @api.multi
+    
     def button_reset(self):
         self.mapped('move_lines')._action_cancel()
         self.write({'state': 'draft'})
         return {}
 
-    @api.multi
+    
     def send_store_request_mail(self):
         if self.picking_type_id.name == "Staff Store Requests" and self.state in ['draft', 'approve', 'waiting', 'confirmed']:
             group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -495,7 +273,7 @@ class Picking(models.Model):
             return False
         return True
 
-    @api.multi
+    
     def send_store_request_done_mail(self):
         if self.state in ['done']:
             subject = "Store request '{}', for {} has been approved and validated".format(
@@ -506,7 +284,7 @@ class Picking(models.Model):
             self.sheet_id.message_post(
                 subject=subject, body=subject, partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Store request '{}', for {} has been rejected".format(
@@ -517,18 +295,18 @@ class Picking(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    @api.multi
+    
     def button_approve_srt(self):
         self.need_approval = False
         return {}
 
-    @api.one
+    
     @api.depends('move_lines.price_unit')
     def _total_price(self):
         for line in self.move_lines:
             self.total_price += line.price_subtotal
 
-    @api.multi
+    
     def create_atp_order(self):
         """
         Method to open create atp form
@@ -579,7 +357,7 @@ class StockPickingRejection(models.TransientModel):
     rejection_reason_id = fields.Many2one(
         'stock.rejection.reason', 'Rejection Reason')
 
-    @api.multi
+    
     def action_rejection_reason_apply(self):
         leads = self.env['stock.picking'].browse(
             self.env.context.get('active_ids'))
@@ -633,7 +411,7 @@ class HrExpenseSheet(models.Model):
     description = fields.Char(
         string='Expense Desciption', readonly=True, compute='get_desc')
 
-    @api.one
+    
     def get_desc(self):
         for expense in self.expense_line_ids:
             if expense.description:
@@ -641,7 +419,7 @@ class HrExpenseSheet(models.Model):
                 break
 
     '''
-    @api.multi
+    
     def button_line_manager_approval(self):
         self.write({'state': 'line_approval'})
         subject = "Expense '{}' has been approved by Line Manager".format(self.name)
@@ -652,7 +430,7 @@ class HrExpenseSheet(models.Model):
         return {}
     '''
 
-    @api.multi
+    
     def button_md_approval(self):
         self.write({'state': 'approve'})
         subject = "Expense '{}' has been approved by MD".format(self.name)
@@ -663,7 +441,7 @@ class HrExpenseSheet(models.Model):
                           partner_ids=partner_ids)
         return {}
 
-    @api.multi
+    
     def button_audit_approval(self):
         self.write({'state': 'audit'})
         subject = "Expense '{}' has been approved by Audit".format(self.name)
@@ -674,7 +452,7 @@ class HrExpenseSheet(models.Model):
                           partner_ids=partner_ids)
         return {}
 
-    @api.multi
+    
     def expense_audit_approval_notification(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'topline.group_internal_audit')
@@ -689,7 +467,7 @@ class HrExpenseSheet(models.Model):
                           partner_ids=partner_ids)
         return False
     '''
-    @api.multi
+    
     def expense_audit_approval_notification(self):
         subject = "Expense '{}' has been approved".format(self.name)
         partner_ids = []
@@ -697,7 +475,7 @@ class HrExpenseSheet(models.Model):
             partner_ids.append(partner.id)
         self.sheet_id.message_post(subject=subject,body=subject,partner_ids=partner_ids)
     '''
-    @api.multi
+    
     def approve_expense_sheets(self):
         if not self.user_has_groups('hr_expense.group_hr_expense_user'):
             raise UserError(
@@ -717,7 +495,7 @@ class HrExpenseSheet(models.Model):
         self.activity_update()
         # self.expense_audit_approval_notification()
 
-    @api.multi
+    
     def action_sheet_move_create(self):
         if any(sheet.state != 'approve' for sheet in self):
             raise UserError(
@@ -772,7 +550,7 @@ class StockMove(models.Model):
              "* Available: When products are reserved, it is set to \'Available\'.\n"
              "* Done: When the shipment is processed, the state is \'Done\'.")
 
-    @api.one
+    
     @api.depends('product_uom_qty', 'price_cost')
     def _compute_subtotal(self):
         for line in self:
@@ -837,18 +615,3 @@ class StockMoveLine(models.Model):
     _inherit = ['stock.move.line', 'mail.thread', 'mail.activity.mixin']
 
 
-class AccountAssetAsset(models.Model):
-    _inherit = "account.asset.asset"
-
-    x_studio_asset_no = fields.Char(string="Asset No.")
-
-    @api.multi
-    def name_get(self):
-        res = []
-
-        for asset in self:
-            result = asset.name
-            if asset.x_studio_asset_no:
-                result = str(asset.name) + " " + str(asset.x_studio_asset_no)
-            res.append((asset.id, result))
-        return res

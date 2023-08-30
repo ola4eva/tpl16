@@ -33,13 +33,13 @@ class Checklist(models.Model):
         'view_id', 'checklist_id', 'Views')
     model = fields.Char(related='model_id.model')
 
-    @api.one
+    
     def _get_active_field(self):
         if self.model_id:
             self.active_field = \
                 'active' in self.env[self.model_id.model]._fields
 
-    @api.one
+    
     @api.constrains('model_id')
     def _check_unique_checklist_per_model(self):
         self = self.with_context(active_test=True)
@@ -56,7 +56,7 @@ class Checklist(models.Model):
             res[checklist.model] = checklist.id
         return res
 
-    @api.one
+    
     def _compute_progress_rates(self, records=None):
         if not self._context.get('do_not_compute_progress_rates'):
             if not records:
@@ -76,7 +76,7 @@ class Checklist(models.Model):
                         }
                         self.action_id.with_context(**ctx).run()
 
-    @api.multi
+    
     def _get_record_vals(self, record):
         def compute_progress_rate(task_insts):
             if not task_insts:
@@ -117,7 +117,7 @@ class Checklist(models.Model):
             return create
 
         def make_write():
-            @api.multi
+            
             def _write(self, vals, **kw):
                 _write.origin(self, vals, **kw)
                 self._manage_checklist_task_instances()
@@ -212,7 +212,7 @@ class Checklist(models.Model):
             do_not_compute_progress_rates=False)._compute_progress_rates()
         return checklist
 
-    @api.multi
+    
     def write(self, vals):
         if 'task_ids' in vals:
             checklists_to_recompute = self
@@ -230,13 +230,13 @@ class Checklist(models.Model):
         checklists_to_recompute._compute_progress_rates()
         return res
 
-    @api.multi
+    
     def unlink(self):
         res = super(Checklist, self).unlink()
         self.clear_caches()
         return res
 
-    @api.one
+    
     def _update_models(self):
         Field = self.env['ir.model.fields']
         domain = [

@@ -10,7 +10,7 @@ from odoo.tools.safe_eval import safe_eval
 class IrActionsActWindow(models.Model):
     _inherit = 'ir.actions.act_window'
 
-    @api.one
+    
     def _update_context(self):
         eval_dict = {
             'active_id': unquote("active_id"),
@@ -33,7 +33,7 @@ class IrActionsActWindow(models.Model):
         act_window._update_context()
         return act_window
 
-    @api.multi
+    
     def write(self, vals):
         res = super(IrActionsActWindow, self).write(vals)
         self._update_context()

@@ -42,7 +42,7 @@ class AccountInvoice(models.Model):
                 total_discount += 0
             rec.total_discount = total_discount
 
-    @api.one
+    
     @api.depends('invoice_line_ids.price_subtotal', 'tax_line_ids.amount', 'discount', 'discount_type',
                  'tax_line_ids.amount_rounding',
                  'currency_id', 'company_id', 'date_invoice', 'type', 'date')
@@ -80,7 +80,7 @@ class AccountInvoice(models.Model):
         self.amount_total_signed = self.amount_total * sign
         self.amount_untaxed_signed = amount_untaxed_signed * sign
 
-    @api.one
+    
     @api.depends(
         'state', 'currency_id', 'invoice_line_ids.price_subtotal',
         'move_id.line_ids.amount_residual', 'discount', 'discount_type',
@@ -148,7 +148,7 @@ class AccountInvoiceLine(models.Model):
         ('percent', 'Percentage'),
     ], default='percent', help="Select the discount type.")
 
-    @api.one
+    
     @api.depends('price_unit', 'discount', 'discount_type', 'invoice_line_tax_ids', 'quantity',
                  'product_id', 'invoice_id.partner_id', 'invoice_id.currency_id', 'invoice_id.company_id',
                  'invoice_id.date_invoice', 'invoice_id.date')
