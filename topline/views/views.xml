@@ -227,7 +227,6 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- late.arrival.form action-->
 		<record model="ir.actions.act_window" id="topline_late_arrival_form_action">
 			<field name="name">Late Arrival Form</field>
 			<field name="res_model">late.arrival.form</field>
@@ -237,7 +236,6 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- insurance.log action-->
 		<record model="ir.actions.act_window" id="topline_insurance_log_action">
 			<field name="name">Insurance Log</field>
 			<field name="res_model">insurance.log</field>
@@ -247,17 +245,14 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- outgoing.document.template action-->
 		<record model="ir.actions.act_window" id="topline_outgoing_document_template_action">
 			<field name="name">Outgoing Document Template</field>
 			<field name="res_model">outgoing.document.template</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- incoming.document.template action-->
 		<record model="ir.actions.act_window" id="topline_incoming_document_template_action">
 			<field name="name">Incoming Document Template</field>
 			<field name="res_model">incoming.document.template</field>
@@ -267,7 +262,6 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- certificates.for.tendering action-->
 		<record model="ir.actions.act_window" id="topline_certificates_for_tendering_action">
 			<field name="name">Certificates For Tendering</field>
 			<field name="res_model">certificates.for.tendering</field>
@@ -277,11 +271,9 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- journey.request action-->
 		<record model="ir.actions.act_window" id="topline_journey_request_action">
 			<field name="name">Journey Request</field>
 			<field name="res_model">journey.request</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="search_view_id" ref="search_journey_request"/>
 			<field name="domain">[]</field>
@@ -300,18 +292,15 @@
 			</field>
 		</record>
 
-		<!-- calibration.log action-->
 		<record model="ir.actions.act_window" id="topline_calibration_log_action">
 			<field name="name">Calibration Log</field>
 			<field name="res_model">calibration.log</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="search_view_id" ref="topline_qaqc_calibration_log_view_search"/>
 			<field name="domain">[]</field>
 			<field name="context">{'search_default_type_of_calibration_log_id':1, 'group_by':[]}</field>
 		</record>
 
-		<!-- type.calibration.log action-->
 		<record model="ir.actions.act_window" id="topline_type_calibration_log_action">
 			<field name="name">type of calibration log</field>
 			<field name="res_model">type.calibration.log</field>
@@ -321,7 +310,6 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- mdr.forms action-->
 		<record model="ir.actions.act_window" id="topline_mdr_forms_action">
 			<field name="name">Master Document Register</field>
 			<field name="res_model">mdr.forms</field>
@@ -343,22 +331,18 @@
 			</field>
 		</record>
 
-		<!-- prc.forms action-->
 		<record model="ir.actions.act_window" id="topline_prc_forms_action">
 			<field name="name">PRC Forms</field>
 			<field name="res_model">prc.forms</field>
-
 			<field name="view_mode">tree,form,kanban</field>
 			<field name="search_view_id" ref="topline_prc_forms_view_search"/>
 			<field name="domain">[]</field>
 			<field name="context">{'search_default_department_id':1, 'group_by':[]}</field>
 		</record>
 
-		<!-- receiving.inspection.report action-->
 		<record model="ir.actions.act_window" id="topline_receiving_inspection_report_action">
 			<field name="name">Receiving Inspection Report</field>
 			<field name="res_model">receiving.inspection.report</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
@@ -376,11 +360,9 @@
 			</field>
 		</record>
 
-		<!-- tender.analysis action-->
 		<record model="ir.actions.act_window" id="topline_tender_analysis_action">
 			<field name="name">ANALYSIS FOR TECHNICAL BIDS</field>
 			<field name="res_model">tender.analysis</field>
-
 			<field name="view_mode">tree,form,kanban</field>
 			<field name="search_view_id" ref="topline_tender_analysis_view_search"/>
 			<field name="domain">[]</field>
@@ -399,22 +381,18 @@
 			</field>
 		</record>
 
-		<!-- tender.monitoring.sheet action-->
 		<record model="ir.actions.act_window" id="topline_tender_monitoring_sheet_action">
 			<field name="name">Tender Monitoring Sheet</field>
 			<field name="res_model">tender.monitoring.sheet</field>
-
 			<field name="view_mode">tree,form,kanban</field>
 			<field name="search_view_id" ref="topline_tender_monitoring_sheet_view_search"/>
 			<field name="domain">[]</field>
 			<field name="context">{'search_default_tender_id':1, 'group_by':[]}</field>
 		</record>
 
-		<!-- type.tender.monitoring.sheet action-->
 		<record model="ir.actions.act_window" id="topline_type_tender_monitoring_sheet_action">
 			<field name="name">Tender(s)</field>
 			<field name="res_model">type.tender.monitoring.sheet</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
@@ -432,18 +410,15 @@
 			</field>
 		</record>
 
-		<!-- vehicle.movement.register action-->
 		<record model="ir.actions.act_window" id="topline_vehicle_movement_register_action">
 			<field name="name">Vehicle Movement Register</field>
 			<field name="res_model">vehicle.movement.register</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="search_view_id" ref="topline_fleet_vehicle_movement_register_view_search"/>
 			<field name="domain">[]</field>
 			<field name="context">{'search_default_date':1, 'group_by':[]}</field>
 		</record>
 
-		<!-- tpl maintenance.equipment tree view-->
 		<record id="topline_maintenance_equipment_tree_view" model="ir.ui.view">
 			<field name="name">maintenance.equipment.tree</field>
 			<field name="model">maintenance.equipment</field>
@@ -469,11 +444,9 @@
 			</field>
 		</record>
 
-		<!-- tpl maintenance.equipment action-->
 		<record model="ir.actions.act_window" id="topline_maintenance_equipment_action">
 			<field name="name">Equipment Status Log</field>
 			<field name="res_model">maintenance.equipment</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name = "view_id" ref= "topline_maintenance_equipment_tree_view"/>
 			<field name="search_view_id" ref="topline_maintenance_equipment_view_search"/>
@@ -481,8 +454,6 @@
 			<field name="context">{'search_default_category_id':1, 'group_by':[]}</field>
 		</record>
 
-
-		<!-- exit.form action-->
 		<record model="ir.actions.act_window" id="topline_exit_form_action">
 			<field name="name">Exit Form (Working Hours)</field>
 			<field name="res_model">exit.form</field>
@@ -492,196 +463,157 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- absense.information action-->
 		<record model="ir.actions.act_window" id="topline_absense_information_form_action">
 			<field name="name">Absense Information</field>
 			<field name="res_model">absense.information</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- internet.downtime.register action-->
 		<record model="ir.actions.act_window" id="topline_internet_downtime_register_form_action">
 			<field name="name">Internet Downtime Register</field>
 			<field name="res_model">internet.downtime.register</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- ms.office.deployment action-->
 		<record model="ir.actions.act_window" id="topline_ms_office_deployment_form_action">
 			<field name="name">MS Office Deployment</field>
 			<field name="res_model">ms.office.deployment</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- antivirus.tracker.renewal action-->
 		<record model="ir.actions.act_window" id="topline_antivirus_tracker_renewal_form_action">
 			<field name="name">Antivirus Tracker Renewal</field>
 			<field name="res_model">antivirus.tracker.renewal</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- planned.preventive.maintenance action-->
 		<record model="ir.actions.act_window" id="topline_planned_preventive_maintenance_form_action">
 			<field name="name">Planned Preventive Maintenance</field>
 			<field name="res_model">planned.preventive.maintenance</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- equipment.maintenance.register action-->
 		<record model="ir.actions.act_window" id="topline_equipment_maintenance_register_form_action">
 			<field name="name">Equipment Maintenance Register</field>
 			<field name="res_model">equipment.maintenance.register</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- ict.paid.services action-->
 		<record model="ir.actions.act_window" id="topline_ict_paid_services_form_action">
 			<field name="name">ICT Paid Services</field>
 			<field name="res_model">ict.paid.services</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- project.monitoring.sheet action-->
 		<record model="ir.actions.act_window" id="topline_project_monitoring_sheet_form_action">
 			<field name="name">Project Monitoring Sheet</field>
 			<field name="res_model">project.monitoring.sheet</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- client.feedback.log action-->
 		<record model="ir.actions.act_window" id="topline_client_feedback_log_form_action">
 			<field name="name">Client Feedback Log</field>
 			<field name="res_model">client.feedback.log</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- client.complaints.log action-->
 		<record model="ir.actions.act_window" id="topline_client_complaints_log_form_action">
 			<field name="name">Client Complaints Log</field>
 			<field name="res_model">client.complaints.log</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- qaqc.vendors.facility.audit.checklist action-->
 		<record model="ir.actions.act_window" id="topline_qaqc_vendors_facility_audit_checklist_form_action">
 			<field name="name">QA/QC Vendors Facility Audit Checklist</field>
 			<field name="res_model">qaqc.vendors.facility.audit.checklist</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- atp.form action-->
 		<record model="ir.actions.act_window" id="topline_atp_form_action">
 			<field name="name">Authorization To Purchase(ATP)</field>
 			<field name="res_model">atp.form</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- travel.report action-->
 		<record model="ir.actions.act_window" id="topline_travel_report_action">
 			<field name="name">Travel Report</field>
 			<field name="res_model">travel.report</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- stationery.report action-->
 		<record model="ir.actions.act_window" id="topline_stationery_report_action">
 			<field name="name">Stationery Report</field>
 			<field name="res_model">stationery.report</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- salary.advance.form action-->
 		<record model="ir.actions.act_window" id="topline_salary_advance_form_action">
 			<field name="name">Salary Advance</field>
 			<field name="res_model">salary.advance.form</field>
-
 			<field name="view_mode">tree,form,pivot</field>
 			<field name="search_view_id" ref="search_salary_advance_form"/>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-
-		<!-- missing.stolen.asset.report.form action-->
 		<record model="ir.actions.act_window" id="topline_missing_stolen_asset_report_form_action">
 			<field name="name">Missing/Stolen Asset Reporting Form</field>
 			<field name="res_model">missing.stolen.asset.report.form</field>
-
 			<field name="view_mode">tree,form,pivot</field>
 			<field name="search_view_id" ref="search_missing_stolen_asset_report_form"/>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- cash.advance.request.form action-->
 		<record model="ir.actions.act_window" id="topline_cash_advance_request_form_action">
 			<field name="name">Cash Advance Request</field>
 			<field name="res_model">cash.advance.request.form</field>
-
 			<field name="view_mode">tree,form,pivot</field>
 			<field name="search_view_id" ref="search_cash_advance_request_form"/>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- cash.retirement.form action-->
 		<record model="ir.actions.act_window" id="topline_cash_retirement_form_action">
 			<field name="name">Cash Retirement Form</field>
 			<field name="res_model">cash.retirement.form</field>
-
 			<field name="view_mode">tree,form,pivot</field>
 			<field name="search_view_id" ref="search_cash_retirement_form"/>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- site.time.sheet action-->
 		<record model="ir.actions.act_window" id="topline_site_time_sheet_form_action">
 			<field name="name">Site Time Sheet</field>
 			<field name="res_model">site.time.sheet</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
@@ -699,18 +631,15 @@
 			</field>
 		</record>
 
-		<!-- ems.monitoring action-->
 		<record model="ir.actions.act_window" id="topline_ems_monitoring_form_action">
 			<field name="name">EMS Monitoring</field>
 			<field name="res_model">ems.monitoring</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="search_view_id" ref="topline_ems_monitoring_view_search"/>
 			<field name="domain">[]</field>
 			<field name="context">{'search_default_date':1, 'group_by':[]}</field>
 		</record>
 
-		<!-- ems.kpi action-->
 		<record model="ir.actions.act_window" id="topline_ems_kpi_form_action">
 			<field name="name">EMS KPI</field>
 			<field name="res_model">ems.kpi</field>
@@ -719,7 +648,6 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- fumigation.schedule action-->
 		<record model="ir.actions.act_window" id="topline_fumigation_schedule_form_action">
 			<field name="name">Fumigation Schedule</field>
 			<field name="res_model">fumigation.schedule</field>
@@ -728,29 +656,22 @@
 			<field name="context">{}</field>
 		</record>
 
-		<!-- daily.checklist action-->
 		<record model="ir.actions.act_window" id="topline_ict_daily_checklist_form_action">
 			<field name="name">Daily Checklist</field>
 			<field name="res_model">daily.checklist</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- daily.checklist.equipment action-->
 		<record model="ir.actions.act_window" id="topline_daily_checklist_equipment_form_action">
 			<field name="name">Daily Checklist Equipment</field>
 			<field name="res_model">daily.checklist.equipment</field>
-
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-
-
-		<!--		Lifitng Plan Form-->
 		<record id="action_lifting_plan_view" model="ir.actions.act_window">
 			<field name="name">Lifting Plan</field>
 			<field name="type">ir.actions.act_window</field>
@@ -760,17 +681,12 @@
 				<p class="oe_view_nocontent_create">
 		        Lifting Plan
 				</p>
-				<p>
-
-				</p>
 			</field>
 		</record>
-
 
 		<record model="ir.actions.act_window" id="topline_missing_stolen_asset_report_form_reporting_action">
 			<field name="name">Missing Stolen Asset Report Analysis</field>
 			<field name="res_model">missing.stolen.asset.report.form</field>
-
 			<field name="view_mode">graph,pivot,kanban,activity</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
@@ -778,7 +694,6 @@
 		<record model="ir.actions.act_window" id="topline_cash_advance_request_form_reporting_action">
 			<field name="name">Cash Advance Request Analysis</field>
 			<field name="res_model">cash.advance.request.form</field>
-
 			<field name="view_mode">graph,pivot,kanban,activity</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
@@ -786,29 +701,27 @@
 		<record model="ir.actions.act_window" id="topline_cash_retirement_form_reporting_action">
 			<field name="name">Cash Retirement Analysis</field>
 			<field name="res_model">cash.retirement.form</field>
-
 			<field name="view_mode">graph,pivot,kanban,activity</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
+
 		<record model="ir.actions.act_window" id="topline_salary_advance_form_reporting_action">
 			<field name="name">Salary Advance Analysis</field>
 			<field name="res_model">salary.advance.form</field>
-
 			<field name="view_mode">graph,pivot,kanban,activity</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
+
 		<record model="ir.actions.act_window" id="topline_journey_request_form_reporting_action">
 			<field name="name">Journey Request Analysis</field>
 			<field name="res_model">journey.request</field>
-
 			<field name="view_mode">graph,pivot,kanban,activity</field>
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<!-- construction.equipment.checklist tree view-->
 		<record id="topline_construction_equipment_checklist_tree_view" model="ir.ui.view">
 			<field name="name">construction.equipment.checklist.tree</field>
 			<field name="model">construction.equipment.checklist</field>
@@ -820,7 +733,6 @@
 			</field>
 		</record>
 
-		<!-- service.order tree view-->
 		<record id="topline_service_order_tree_view" model="ir.ui.view">
 			<field name="name">service.order.tree</field>
 			<field name="model">service.order</field>
@@ -837,7 +749,6 @@
 			</field>
 		</record>
 
-		<!-- action.request.log tree view-->
 		<record id="topline_action_request_log_tree_view" model="ir.ui.view">
 			<field name="name">action.request.log.tree</field>
 			<field name="model">action.request.log</field>
@@ -849,7 +760,6 @@
 			</field>
 		</record>
 
-		<!-- maintenance.request.failure.report.sheet view-->
 		<record id="topline_maintenance_request_failure_report_sheet_tree_view" model="ir.ui.view">
 			<field name="name">maintenance.request.failure.report.sheet.tree</field>
 			<field name="model">maintenance.request.failure.report.sheet</field>
@@ -864,20 +774,15 @@
 			</field>
 		</record>
 
-		<!-- aqc.premobilization.checklist tree view-->
 		<record id="topline_qaqc_premobilization_checklist_tree_view" model="ir.ui.view">
 			<field name="name">qaqc.premobilization.checklist.tree</field>
 			<field name="model">qaqc.premobilization.checklist</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<field name="project_id"/>
-				<!-- <field name="asset_no"/>
-			<field name="employee_id"/>
-			<field name="date"/> -->
 			</field>
 		</record>
 
-		<!-- employee.requisition.form tree view-->
 		<record id="topline_employee_requisition_form_tree_view" model="ir.ui.view">
 			<field name="name">employee.requisition.form.tree</field>
 			<field name="model">employee.requisition.form</field>
@@ -890,7 +795,6 @@
 			</field>
 		</record>
 
-		<!-- instruments.calibration.status.log tree view-->
 		<record id="topline_instruments_calibration_status_log_tree_view" model="ir.ui.view">
 			<field name="name">instruments.calibration.status.log.tree</field>
 			<field name="model">instruments.calibration.status.log</field>
@@ -901,7 +805,6 @@
 			</field>
 		</record>
 
-		<!-- work.completion.certificate tree view-->
 		<record id="topline_work_completion_certificate_tree_view" model="ir.ui.view">
 			<field name="name">work.completion.certificate.tree</field>
 			<field name="model">work.completion.certificate</field>
@@ -914,7 +817,6 @@
 			</field>
 		</record>
 
-		<!-- electricity.use.monitoring tree view-->
 		<record id="topline_electricity_use_monitoring_tree_view" model="ir.ui.view">
 			<field name="name">electricity.use.monitoring.tree</field>
 			<field name="model">electricity.use.monitoring</field>
@@ -928,7 +830,6 @@
 			</field>
 		</record>
 
-		<!-- water.use.monitoring tree view-->
 		<record id="topline_water_use_monitoring_tree_view" model="ir.ui.view">
 			<field name="name">water.use.monitoring.tree</field>
 			<field name="model">water.use.monitoring</field>
@@ -4867,9 +4768,6 @@ button_hr_approval
 		<p class="oe_view_nocontent_create">
 		        Supplier Re-Evaluation
 		</p>
-		<p>
-
-		</p>
 	</field>
 </record>
 
@@ -4926,71 +4824,6 @@ button_hr_approval
 	</field>
 </record>
 
-
-<!--		Terminal Clearance Form-->
-<!-- <record id="action_terminal_clearance_view" model="ir.actions.act_window">
-		    <field name="name">Terminal Clearance Form</field>
-		    <field name="type">ir.actions.act_window</field>
-		    <field name="res_model">terminal.clearance</field>
-		    <field name="view_mode">tree,form</field>
-		    <field name="help" type="html">
-		      <p class="oe_view_nocontent_create">
-		        Terminal Clearance
-		      </p><p>
-		         Click Create!!
-		      </p>
-		    </field>
-		</record>
-
-		<record id="view_terminal_clearance_form" model="ir.ui.view">
-		    <field name="name">view.terminal.clearance.form</field>
-		    <field name="model">terminal.clearance</field>
-		    <field name="arch" type="xml">
-		        <form string="Terminal Clearance">
-					<header>
-					   <button name="confirm_request" string="Confirm" class="oe_highlight" states="draft" type="object"/>
-					   <button name="validate_request" string="Manager Approval" class="oe_highlight" states="confirm" type="object" groups=""/>
-					   <button name="approve_request" string="Approved" class="oe_highlight" states="validate" type="object" groups=""/>
-					   <button name="refuse_request" string="Refuse" states="draft,confirm,validate" type="object" groups=""/>
-					   <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate,approved"/>
-					</header>
-		            <sheet>
-		                <group>
-		                    <field name="employee_id"/>
-		                    <field name="department_id"/>
-		                </group>
-						<notebook>
-							<page string="ITEMS RETUREND">
-								<field name="terminal_clearance_line_ids">
-									<tree editable="1">
-										<field name="items_id"/>
-										<field name="quantity"/>
-									</tree>
-								</field>
-							</page>
-						</notebook>
-		            </sheet>
-					   <div class="oe_chatter">
-						   <field name="message_follower_ids" widget="mail_followers"/>
-						   <field name="message_ids" widget="mail_thread"/>
-					   </div>
-		        </form>
-		    </field>
-		</record>
-
-		<record id="view_terminal_clearance_tree" model="ir.ui.view">
-		    <field name="name">view..tree</field>
-		    <field name="model">terminal.clearance</field>
-		    <field name="arch" type="xml">
-		        <tree string="Terminal Clearance">
-		            <field name="employee_id"/>
-		            <field name="state"/>
-		        </tree>
-		    </field>
-		</record> -->
-
-<!--		Cathodic Equipment Checklist-->
-
 <record id="action_cathodic_protection_checklist_view" model="ir.actions.act_window">
 	<field name="name">Cathodic Protection Equipment Checklist</field>
 	<field name="type">ir.actions.act_window</field>
@@ -4999,9 +4832,6 @@ button_hr_approval
 	<field name="help" type="html">
 		<p class="oe_view_nocontent_create">
 		        Cathodic Protection Checklist
-		</p>
-		<p>
-
 		</p>
 	</field>
 </record>
@@ -5071,9 +4901,6 @@ button_hr_approval
 		<p class="oe_view_nocontent_create">
 		        Valves Service Checklist
 		</p>
-		<p>
-
-		</p>
 	</field>
 </record>
 
@@ -5140,9 +4967,6 @@ button_hr_approval
 	<field name="help" type="html">
 		<p class="oe_view_nocontent_create">
 		        Pump Equipment Checklist
-		</p>
-		<p>
-
 		</p>
 	</field>
 </record>
@@ -5390,9 +5214,6 @@ button_hr_approval
 		<p class="oe_view_nocontent_create">
 		        Pigging Equipment Checklist
 		</p>
-		<p>
-
-		</p>
 	</field>
 </record>
 
@@ -5477,9 +5298,6 @@ button_hr_approval
 	<field name="help" type="html">
 		<p class="oe_view_nocontent_create">
 		        Preconfirmation Assesment
-		</p>
-		<p>
-
 		</p>
 	</field>
 </record>

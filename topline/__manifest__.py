@@ -39,6 +39,7 @@
         'data/data.xml',
         'wizard/payment_requisition_register_payment.xml',
         'data/mail_template_data.xml',
+        'views/hr_expense_views.xml',
         # 'views/report_invoice.xml',
         # 'views/templates.xml',
         # 'views/views.xml',
