@@ -1,17 +1,7 @@
 <odoo>
 	<data>
 
-		<record id="search_salary_advance_form" model="ir.ui.view">
-			<field name="name">search.salary.advance.form</field>
-			<field name="model">salary.advance.form</field>
-			<field name="arch" type="xml">
-				<search string="Salary Advance">
-					<field name="name"/>
-					<field name="department_id"/>
-					<field name="employee_id"/>
-				</search>
-			</field>
-		</record>
+
 
 		<record id="search_cash_advance_request_form" model="ir.ui.view">
 			<field name="name">search.cash.advance.request.form</field>
@@ -55,22 +45,6 @@
 			</field>
 		</record>
 
-		<record id="search_service_order" model="ir.ui.view">
-			<field name="name">search.service.order</field>
-			<field name="model">service.order</field>
-			<field name="arch" type="xml">
-				<search string="Service Order">
-					<field name="name"/>
-					<field name="department_id"/>
-					<field name="employee_id"/>
-					<field name="project_description"/>
-					<field name="service_order_line_ids" string="Descritpion"/>
-					<field name="date"/>
-				</search>
-			</field>
-		</record>
-
-
 		<record id="search_journey_request" model="ir.ui.view">
 			<field name="name">search.journey.request</field>
 			<field name="model">journey.request</field>
@@ -108,14 +82,7 @@
 			<field name="context">{}</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="topline_service_order_form_action">
-			<field name="name">Service Order</field>
-			<field name="res_model">service.order</field>
-			<field name="view_mode">tree,form</field>
-			<field name="search_view_id" ref="search_service_order"/>
-			<field name="domain">[]</field>
-			<field name="context">{}</field>
-		</record>
+		
 
 		<record model="ir.actions.act_window" id="topline_action_request_log_form_action">
 			<field name="name">CORRECTIVE/PREVENTIVE ACTION LOG</field>
@@ -575,14 +542,7 @@
 			<field name="context">{}</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="topline_salary_advance_form_action">
-			<field name="name">Salary Advance</field>
-			<field name="res_model">salary.advance.form</field>
-			<field name="view_mode">tree,form,pivot</field>
-			<field name="search_view_id" ref="search_salary_advance_form"/>
-			<field name="domain">[]</field>
-			<field name="context">{}</field>
-		</record>
+		
 
 		<record model="ir.actions.act_window" id="topline_missing_stolen_asset_report_form_action">
 			<field name="name">Missing/Stolen Asset Reporting Form</field>
@@ -706,13 +666,7 @@
 			<field name="context">{}</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="topline_salary_advance_form_reporting_action">
-			<field name="name">Salary Advance Analysis</field>
-			<field name="res_model">salary.advance.form</field>
-			<field name="view_mode">graph,pivot,kanban,activity</field>
-			<field name="domain">[]</field>
-			<field name="context">{}</field>
-		</record>
+		
 
 		<record model="ir.actions.act_window" id="topline_journey_request_form_reporting_action">
 			<field name="name">Journey Request Analysis</field>
@@ -1375,21 +1329,6 @@
 			</field>
 		</record>
 
-		<!-- salary.advance.form tree view-->
-		<record id="topline_salary_advance_form_tree_view" model="ir.ui.view">
-			<field name="name">salary.advance.form.tree</field>
-			<field name="model">salary.advance.form</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="employee_id"/>
-				<field name="department_id"/>
-				<field name="job_title"/>
-				<field name="month_of"/>
-				<field name="advance_of"/>
-				<field name="state"/>
-			</field>
-		</record>
 
 
 
@@ -3566,66 +3505,7 @@
 		</record>
 
 
-		<record id="topline_salary_advance_form_view" model="ir.ui.view">
-			<field name="name">salary.advance.form</field>
-			<field name="model">salary.advance.form</field>
-			<field name="priority" eval="2"/>
-			<field name="arch" type="xml">
-				<form string="salary advance form">
-					<header>
-						<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
-						<button name="button_line_manager_approval" states="submit" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
-						<button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
-						<button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md"/>
-						<button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
-						<button name="button_reject" states="submit,line_approve,internal_approve,md_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
-						<field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
-					</header>
-					<sheet>
-						<div class="oe_title">
-							<!--<span class="o_form_label">Service Order</span>-->
-							<h1>
-								<field name="name" readonly="1" attrs="{'invisible': [('name', '=', 'New')]}"/>
-							</h1>
-						</div>
-						<group col="4" colspan="4">
-							<field name="employee_id" required="1" readonly="0"/>
-							<field name="department_id"/>
-							<field name="job_title"/>
-						</group>
-						<span>
-			 		I apply for a salary advance of N<field name="advance_of"/>
- from my salary of the month of <field name="month_of"/>
-					<br/>
-			 		I agree that the advance shall be recovered in full in the month of <field name="pay_off_month"/>
-				</span>
-				<group col="4" colspan="4">
-					<field name="employee_name" readonly="1"/>
-					<field name="employee_approval_date" readonly="1"/>
-				</group>
-				<group string = "Departmental Approval" col="4" colspan="4">
-					<field name="supervisor_approval"/>
-					<field name="supervisor_approval_date"/>
-				</group>
-				<group string = "FOR ACCOUNTS USE ONLY">
-				</group>
-				<span>
-					<b>Accounts/Finance Mgr’s Comments:</b>
-				</span>
-				<field name="finance_comments"/>
-				<group col="4" colspan="4">
-					<field name="finance_approval"/>
-					<field name="finance_approval_date"/>
-				</group>
-			</sheet>
-			<div class="oe_chatter">
-				<field name="message_follower_ids" widget="mail_followers"/>
-				<field name="activity_ids" widget="mail_activity"/>
-				<field name="message_ids" widget="mail_thread"/>
-			</div>
-		</form>
-	</field>
-</record>
+		
 
 
 
@@ -4030,25 +3910,7 @@ button_hr_approval
 	</field>
 </record>
 
-<record id="pipeline_topline_form" model="ir.ui.view">
-	<field name="name">pipeline.topline.form</field>
-	<field name="model">crm.lead</field>
-	<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
-	<field name="arch" type="xml">
-		<field name="team_id" position="after">
-			<field name="bid_category"/>
-		</field>
-		<xpath expr="//page[@name='lead']" position="after">
-			<page string="Contract">
-				<group>
-					<field name="document_submission_date"/>
-					<field name="contract_start_date"/>
-					<field name="contract_end_date"/>
-				</group>
-			</page>
-		</xpath>
-	</field>
-</record>
+
 
 <record id="topline_view_task_form2_form_view" model="ir.ui.view">
 	<field name="name">topline.project.task.form</field>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- salary.advance.form tree view-->
+        <record id="topline_salary_advance_form_tree_view" model="ir.ui.view">
+            <field name="name">salary.advance.form.tree</field>
+            <field name="model">salary.advance.form</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="job_title"/>
+                <field name="month_of"/>
+                <field name="advance_of"/>
+                <field name="state"/>
+            </field>
+        </record>
+
+        <record id="topline_salary_advance_form_view" model="ir.ui.view">
+            <field name="name">salary.advance.form</field>
+            <field name="model">salary.advance.form</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <form string="salary advance form">
+                    <header>
+                        <button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+                        <button name="button_line_manager_approval" states="submit" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+                        <button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
+                        <button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md"/>
+                        <button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
+                        <button name="button_reject" states="submit,line_approve,internal_approve,md_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <!--<span class="o_form_label">Service Order</span>-->
+                            <h1>
+                                <field name="name" readonly="1" attrs="{'invisible': [('name', '=', 'New')]}"/>
+                            </h1>
+                        </div>
+                        <group col="4" colspan="4">
+                            <field name="employee_id" required="1" readonly="0"/>
+                            <field name="department_id"/>
+                            <field name="job_title"/>
+                        </group>
+                        <p>
+                            <span>I apply for a salary advance of N</span>
+                            <field name="advance_of"/>
+                            <span>from my salary of the month of </span>
+                            <field name="month_of"/>
+                        </p>
+                        <p>
+                            <span>I agree that the advance shall be recovered in full in the month of </span>
+                            <field name="pay_off_month"/>
+                        </p>
+                        <group col="4" colspan="4">
+                            <field name="employee_name" readonly="1"/>
+                            <field name="employee_approval_date" readonly="1"/>
+                        </group>
+                        <group string = "Departmental Approval" col="4" colspan="4">
+                            <field name="supervisor_approval"/>
+                            <field name="supervisor_approval_date"/>
+                        </group>
+                        <group string = "FOR ACCOUNTS USE ONLY">
+                        </group>
+                        <span>
+                            <b>Accounts/Finance Mgr’s Comments:</b>
+                        </span>
+                        <field name="finance_comments"/>
+                        <group col="4" colspan="4">
+                            <field name="finance_approval"/>
+                            <field name="finance_approval_date"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="search_salary_advance_form" model="ir.ui.view">
+            <field name="name">search.salary.advance.form</field>
+            <field name="model">salary.advance.form</field>
+            <field name="arch" type="xml">
+                <search string="Salary Advance">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="employee_id"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="topline_salary_advance_form_action">
+            <field name="name">Salary Advance</field>
+            <field name="res_model">salary.advance.form</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="search_view_id" ref="search_salary_advance_form"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="topline_salary_advance_form_reporting_action">
+            <field name="name">Salary Advance Analysis</field>
+            <field name="res_model">salary.advance.form</field>
+            <field name="view_mode">graph,pivot,kanban,activity</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+    </data>
+
+</odoo>

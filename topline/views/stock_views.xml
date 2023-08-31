@@ -54,7 +54,8 @@
             <field name="target">new</field>
         </record>
 
-        <record id="topline_stock_form_view" model="ir.ui.view">
+        <!-- Removed during migration, put back later -->
+        <!-- <record id="topline_stock_form_view" model="ir.ui.view">
             <field name="name">topline.stock.form</field>
             <field name="model">stock.picking</field>
             <field eval="14" name="priority"/>
@@ -132,7 +133,7 @@
                         <notebook>
                             <page string="Detailed Operations" groups="stock.group_stock_user" attrs="{'invisible': [('show_operations', '=', False)]}">
                                 <field name="move_line_ids" attrs="{'readonly': [('state', '=', 'done'), ('is_locked', '=', True)]}" context="{'default_picking_id': id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}">
-                                    <tree editable="bottom" decoration-muted="(state == 'done' and is_locked == True)" decoration-danger="qty_done&gt;product_uom_qty and state!='done'" decoration-success="qty_done==product_uom_qty and state!='done' and not result_package_id">
+                                    <tree editable="bottom" decoration-muted="(state == 'done' and is_locked == True)">
                                         <field name="product_id" required="1" attrs="{'readonly': ['|', ('state', '=', 'done'), ('move_id', '!=', False)]}"/>
                                         <field name="move_id" invisible="1"/>
                                         <field name="picking_type_entire_packs" invisible="1"/>
@@ -222,7 +223,7 @@
                     </div>
                 </form>
             </field>
-        </record>
+        </record> -->
 
         <!-- search views -->
         <record id="search_tpl_stock_picking" model="ir.ui.view">
@@ -234,7 +235,7 @@
                     <field name="department_id"/>
                     <field name="employee_id"/>
                     <field name="project_description"/>
-                    <field name="move_lines" string="Descritpion"/>
+                    <!-- <field name="move_lines" string="Descritpion"/> -->
                     <field name="request_date"/>
                 </search>
             </field>
@@ -256,11 +257,36 @@
             <field name="act_window_id" ref="store_req_action1_window"/>
         </record>
 
-        <record id="store_req_action_form" model="ir.actions.act_window.view">
+        <record id="search_service_order" model="ir.ui.view">
+            <field name="name">search.service.order</field>
+            <field name="model">service.order</field>
+            <field name="arch" type="xml">
+                <search string="Service Order">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="employee_id"/>
+                    <field name="project_description"/>
+                    <field name="service_order_line_ids" string="Descritpion"/>
+                    <field name="date"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Removed during migration, put back later -->
+        <!-- <record id="store_req_action_form" model="ir.actions.act_window.view">
             <field eval="2" name="sequence"/>
             <field name="view_mode">form</field>
             <field name="view_id" ref="topline_stock_form_view"/>
             <field name="act_window_id" ref="store_req_action1_window"/>
+        </record> -->
+
+        <record model="ir.actions.act_window" id="topline_service_order_form_action">
+            <field name="name">Service Order</field>
+            <field name="res_model">service.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="search_service_order"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
         </record>
 
         <menuitem name="Material requisition / Store Request" id="store_request" parent="stock.menu_stock_root" action="store_req_action1_window"/>
