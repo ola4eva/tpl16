@@ -43,6 +43,8 @@
         'views/stock_views.xml',
         'views/salary_advance_views.xml',
         'views/crm_lead_views.xml',
+        'views/project_views.xml',
+        'views/project_task_views.xml',
         # 'views/report_invoice.xml',
         # 'views/templates.xml',
         # 'views/views.xml',

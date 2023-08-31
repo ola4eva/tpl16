@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="topline_edit_project" model="ir.ui.view">
+            <field name="name">topline.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project" />
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="site_eng_id" />
+                    <field name="project_team_ids" widget="many2many_tags"/>
+                </field>
+                <field name="user_id" position="before">
+                    <field name="crm_lead_id"/>
+                </field>
+                <field name="message_follower_ids" position="after">
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </field>
+            </field>
+        </record>
+
+
+    </data>
+
+
+</odoo>
