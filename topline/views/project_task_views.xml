@@ -12,9 +12,6 @@
                 <field name="priority" position="before">
                     <field name="task_done" invisible="1"/>
                 </field>
-                <!-- <field name="user_id" position="after">
-                    <field name="task_team_ids" widge="mamy2many_tags"/>
-                </field> -->
                 <xpath expr="//button[@name='action_assign_to_me']" position="after">
                     <button name="button_task_complete" string="Mark as Complete" attrs="{'invisible': [('task_done', '=', True)]}" type="object" groups="base.group_user" confirm="Confirm Task is Completed?"/>
                 </xpath>
