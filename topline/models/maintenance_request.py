@@ -163,7 +163,7 @@ class MaintenanceRequestAndFailureReportSheet(models.Model):
         ('store', 'Store Approved'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
     def _default_employee(self):
@@ -188,9 +188,9 @@ class MaintenanceRequestAndFailureReportSheet(models.Model):
     action_taken = fields.Char(string='ACTION TAKEN')
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Supervisor Name', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     diagnosis = fields.Char(string='DIAGNOSIS:')
     causes = fields.Char(string='CAUSES:')
@@ -207,9 +207,9 @@ class MaintenanceRequestAndFailureReportSheet(models.Model):
         comodel_name='hr.employee', String='Job Supervised By:')
 
     manager_approval = fields.Many2one(
-        'res.users', 'Manager Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Manager Name', readonly=True, tracking=True)
     manager_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     ref = fields.Char('Order Reference', readonly=False,
                       required=True, index=True, copy=False, default='New')

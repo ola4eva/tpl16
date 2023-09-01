@@ -25,8 +25,7 @@
       <field name="name">Checklist Task Instances</field>
       <field name="model">checklist.task.instance</field>
       <field name="arch" type="xml">
-        <tree string="Tasks"
-          colors="lawngreen:complete and not mandatory;green:complete and mandatory;red:not complete and mandatory;orange:not complete and not mandatory;">
+        <tree string="Tasks">
           <field name="name"/>
           <field name="complete"/>
           <field name="mandatory" invisible="1"/>
@@ -38,7 +37,6 @@
       <field name="name">Checklist</field>
       <field name="type">ir.actions.client</field>
       <field name="res_model">checklist.task.instance</field>
-      
       <field name="view_mode">tree,form</field>
       <field name="domain">[('res_id', '=', active_id), ('model', '=', context.get('active_model'))]</field>
       <field name="target">new</field>

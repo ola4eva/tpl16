@@ -27,21 +27,21 @@ class QAQCPremobilizationChecklist(models.Model):
         'documentation.qaqc.premobilization.checklist', 'qaqc_premobilization_checklist_id', string="QA/QC Premobilization Checklist (Onshore And Offshore)", copy=True)
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Project Supervisor', readonly=True, track_visibility='onchange')
+        'res.users', 'Project Supervisor', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     manager_approval = fields.Many2one(
-        'res.users', 'Project Manager', readonly=True, track_visibility='onchange')
+        'res.users', 'Project Manager', readonly=True, tracking=True)
     manager_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     store_approval = fields.Many2one(
-        'res.users', 'QA/QC Officer', readonly=True, track_visibility='onchange')
+        'res.users', 'QA/QC Officer', readonly=True, tracking=True)
     store_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     qa_qc_approval = fields.Many2one(
-        'res.users', 'QA/QC Manager', readonly=True, track_visibility='onchange')
+        'res.users', 'QA/QC Manager', readonly=True, tracking=True)
     qa_qc_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
 
 class PersonnelQAQCPremobilizationChecklist(models.Model):
@@ -193,7 +193,7 @@ class WorkCompletionCertificate(models.Model):
         ('qa_qc', 'QA/QC Manager'),
         ('approve', 'Approved'),
         ('reject', 'Rejected'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
     def _default_employee(self):
@@ -318,7 +318,7 @@ class ElectricityUseMonitoring(models.Model):
         ('manager', 'Admin Manager'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Employee', default=_default_employee)
@@ -328,14 +328,14 @@ class ElectricityUseMonitoring(models.Model):
                               ('5', 'May'), ('6', 'June'), ('7',
                                                             'July'), ('8', 'August'),
                               ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December'), ],
-                             string='Month', track_visibility='onchange')
+                             string='Month', tracking=True)
     date_of_purchase = fields.Date(
-        string='Date of Purchase', track_visibility='onchange')
-    quantity = fields.Float(string='Quantity', track_visibility='onchange')
+        string='Date of Purchase', tracking=True)
+    quantity = fields.Float(string='Quantity', tracking=True)
     remark = fields.Char(
-        string='Remarks (comment on trend status)', track_visibility='onchange')
+        string='Remarks (comment on trend status)', tracking=True)
     control_measure = fields.Char(
-        string='Control Measure', track_visibility='onchange')
+        string='Control Measure', tracking=True)
 
     def button_submit(self):
         self.write({'state': 'manager'})
@@ -384,20 +384,20 @@ class WaterUseMonitoring(models.Model):
         ('manager', 'Admin Manager'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Employee', default=_default_employee)
     date = fields.Date(string='Date', default=date.today())
 
     date_time = fields.Datetime(
-        string='Date & Time', track_visibility='onchange')
-    level = fields.Char(string='Level', track_visibility='onchange')
-    week = fields.Char(string='Week', track_visibility='onchange')
+        string='Date & Time', tracking=True)
+    level = fields.Char(string='Level', tracking=True)
+    week = fields.Char(string='Week', tracking=True)
     control_measure = fields.Char(
-        string='Control Measure', track_visibility='onchange')
+        string='Control Measure', tracking=True)
     remark = fields.Char(
-        string='Remarks (comment on trend status)', track_visibility='onchange')
+        string='Remarks (comment on trend status)', tracking=True)
 
     def button_submit(self):
         self.write({'state': 'manager'})
@@ -448,7 +448,7 @@ class AssetMovementForm(models.Model):
         ('md', 'MD'),
         ('approve', 'Approved'),
         ('reject', 'Rejected'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     requested_employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Requested by', default=_default_employee)
@@ -456,17 +456,17 @@ class AssetMovementForm(models.Model):
         comodel_name='hr.employee', string='Issued by')
 
     line_manager_approval = fields.Many2one(
-        'res.users', 'Depts Manager Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Depts Manager Name', readonly=True, tracking=True)
     line_manager_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     store_approval = fields.Many2one(
-        'res.users', 'Store Personnel Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Store Personnel Name', readonly=True, tracking=True)
     store_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     md_approval = fields.Many2one(
-        'res.users', 'MD Name', readonly=True, track_visibility='onchange')
+        'res.users', 'MD Name', readonly=True, tracking=True)
     md_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     source_location = fields.Char(string='Transfer From')
     dest_location = fields.Char(string='Transfer To')
@@ -589,7 +589,7 @@ class WasteManagementForm(models.Model):
 
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('validate', 'Validate'),
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
@@ -674,7 +674,7 @@ class DriversHealthChecklistLine(models.Model):
         ('co_ordination', 'Co-ordination'),
         ('blood_pressure', 'Blood Pressure'),
         ('alcohol_drugs', 'Alcohol & Drugs'),
-    ], string='Requirements', readonly=False, index=True, copy=True,  track_visibility='onchange')
+    ], string='Requirements', readonly=False, index=True, copy=True,  tracking=True)
 
     result = fields.Char(string='Result')
 
@@ -691,63 +691,63 @@ class JobSafetyInspectionChecklist(models.Model):
     date = fields.Date(string='Date', default=date.today())
 
     posting_pressure = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                        string='Posting of Pressure and other work site warning Posters', copy=True,  track_visibility='onchange')
+                                        string='Posting of Pressure and other work site warning Posters', copy=True,  tracking=True)
     safety_meeting = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                      string='. Are Safety Meetings conducted periodically? Date of last meeting?', copy=True,  track_visibility='onchange')
+                                      string='. Are Safety Meetings conducted periodically? Date of last meeting?', copy=True,  tracking=True)
     first_aid_box = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                     string='First Aid Box and equipment properly stocked', copy=True,  track_visibility='onchange')
+                                     string='First Aid Box and equipment properly stocked', copy=True,  tracking=True)
     site_injury_record = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                          string='Are work site injury records being kept?', copy=True,  track_visibility='onchange')
+                                          string='Are work site injury records being kept?', copy=True,  tracking=True)
     emergency_tel = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                     string='Are emergency telephone numbers clearly posted?', copy=True,  track_visibility='onchange')
+                                     string='Are emergency telephone numbers clearly posted?', copy=True,  tracking=True)
     emergency_info_posted = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                             string='Is the EMERGENCY INFORMATION form posted?', copy=True,  track_visibility='onchange')
+                                             string='Is the EMERGENCY INFORMATION form posted?', copy=True,  tracking=True)
     describe_violation = fields.Char(
-        string='Describe any Violation – Location – Remedy Taken', copy=True,  track_visibility='onchange')
+        string='Describe any Violation – Location – Remedy Taken', copy=True,  tracking=True)
 
     emergency_lights = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                        string='Are emergency lights fully operational?     ', copy=True,  track_visibility='onchange')
+                                        string='Are emergency lights fully operational?     ', copy=True,  tracking=True)
     general_neatness = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                        string='Is there general neatness of the working areas?', copy=True,  track_visibility='onchange')
+                                        string='Is there general neatness of the working areas?', copy=True,  tracking=True)
     regular_disposal_waste = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                              string='Is there a process for regular disposal of waste and trash?', copy=True,  track_visibility='onchange')
+                                              string='Is there a process for regular disposal of waste and trash?', copy=True,  tracking=True)
     passageways_walkways = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                            string='Are all passageways and walkways clear?', copy=True,  track_visibility='onchange')
+                                            string='Are all passageways and walkways clear?', copy=True,  tracking=True)
     waste_container_usage = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                             string='Are waste containers provided and used by every crew member?', copy=True,  track_visibility='onchange')
+                                             string='Are waste containers provided and used by every crew member?', copy=True,  tracking=True)
     job_sanitary_facilities = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                               string='Are the Job Site’s sanitary facilities adequate and clean?', copy=True,  track_visibility='onchange')
+                                               string='Are the Job Site’s sanitary facilities adequate and clean?', copy=True,  tracking=True)
     adequate_water_supply = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                             string='Is there adequate supply of water?', copy=True,  track_visibility='onchange')
+                                             string='Is there adequate supply of water?', copy=True,  tracking=True)
     adequate_lighting = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                         string='Is there adequate lighting [in the event of night jobs]?', copy=True,  track_visibility='onchange')
+                                         string='Is there adequate lighting [in the event of night jobs]?', copy=True,  tracking=True)
     handrails_good = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                      string='Are handrails and stair treads in good condition? ', copy=True,  track_visibility='onchange')
+                                      string='Are handrails and stair treads in good condition? ', copy=True,  tracking=True)
     smoking_restrictions = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                            string='Is smoking restricted to certain locations? ', copy=True,  track_visibility='onchange')
+                                            string='Is smoking restricted to certain locations? ', copy=True,  tracking=True)
     electrical_cords_good = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                             string='Are electrical cords and plugs in good condition?', copy=True,  track_visibility='onchange')
+                                             string='Are electrical cords and plugs in good condition?', copy=True,  tracking=True)
     circuit_breakers_free = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                             string='Are electric circuit breakers free of obstructions?', copy=True,  track_visibility='onchange')
+                                             string='Are electric circuit breakers free of obstructions?', copy=True,  tracking=True)
     violations_description = fields.Char(
-        string='Describe any Violation – Location – Remedy Taken', copy=True,  track_visibility='onchange')
+        string='Describe any Violation – Location – Remedy Taken', copy=True,  tracking=True)
 
     fire_instructions = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                         string='Have Fire instructions been given to crew members? ', copy=True,  track_visibility='onchange')
+                                         string='Have Fire instructions been given to crew members? ', copy=True,  tracking=True)
     fire_extinguishers = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                          string='Are Fire extinguishers identified, accessible, and fully charged? ', copy=True,  track_visibility='onchange')
+                                          string='Are Fire extinguishers identified, accessible, and fully charged? ', copy=True,  tracking=True)
     no_smoking_signs = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                        string='Are “No Smoking” signs posted and enforced where needed?', copy=True,  track_visibility='onchange')
+                                        string='Are “No Smoking” signs posted and enforced where needed?', copy=True,  tracking=True)
     work_area_tidy = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                      string='Is the work area clean and tidy?    ', copy=True,  track_visibility='onchange')
+                                      string='Is the work area clean and tidy?    ', copy=True,  tracking=True)
     handling_flammables = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                           string='Is the Storage, use and handling of flammable liquids properly done', copy=True,  track_visibility='onchange')
+                                           string='Is the Storage, use and handling of flammable liquids properly done', copy=True,  tracking=True)
     fire_hazards_checked = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                            string='Have all Fire hazards been checked and identified?', copy=True,  track_visibility='onchange')
+                                            string='Have all Fire hazards been checked and identified?', copy=True,  tracking=True)
     diesel_contained_properly = fields.Selection([('yes', 'Yes'), ('no', 'No'), ('n_a', 'N/A')],
-                                                 string='Is diesel contained in properly marked containers and locations?', copy=True,  track_visibility='onchange')
+                                                 string='Is diesel contained in properly marked containers and locations?', copy=True,  tracking=True)
     fire_violations = fields.Char(
-        string='Describe any Violation – Location – Remedy Taken', copy=True,  track_visibility='onchange')
+        string='Describe any Violation – Location – Remedy Taken', copy=True,  tracking=True)
 
 
 class JobCallOutForm(models.Model):
@@ -782,12 +782,12 @@ class JobCallOutForm(models.Model):
     responsible_for_safety = fields.Many2one(
         comodel_name='hr.employee', string='The person responsible for Safety on the job (and possesses HSE Level 3 Certification) is')
     have_hse3 = fields.Selection([('1', 'Yes'), ('2', 'No')],
-                                 string='HSE Level 3? ', track_visibility='onchange')
+                                 string='HSE Level 3? ', tracking=True)
 
     engineer_in_charge_approval = fields.Many2one(
-        'res.users', 'Engineer-In-Charge Signature:', readonly=True, track_visibility='onchange')
+        'res.users', 'Engineer-In-Charge Signature:', readonly=True, tracking=True)
     engineer_in_charge_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     def button_engineer_in_charge_sign(self):
         self.engineer_in_charge_approval_date = date.today()
@@ -836,7 +836,7 @@ class VendorAudit(models.Model):
                                                          ('validate',
                                                           'Validate'), ('refuse', 'Refuse'),
                                                          ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1059,16 +1059,16 @@ class VehiclePretripChecklist(models.Model):
         comodel_name="additional.vehicle.checklist", inverse_name="vehicle_pretrip_checklist_id", string="Additioanl Checks", required=False, copy=True, )
 
     checker = fields.Many2one('hr.employee', 'Checker',
-                              track_visibility='onchange')
+                              tracking=True)
     approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     journey_manager = fields.Many2one(
-        'hr.employee', 'Journey Manager', track_visibility='onchange')
+        'hr.employee', 'Journey Manager', tracking=True)
     driver = fields.Many2one('hr.employee', 'Driver',
-                             track_visibility='onchange')
+                             tracking=True)
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('refuse', 'Refuse'),
                                                          ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1302,7 +1302,7 @@ class LogisticsVendorAuditChecklist(models.Model):
                        default=fields.Date.context_today)
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('refuse', 'Refuse'),
                                                          ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1348,7 +1348,7 @@ class SupplierEvalForm(models.Model):
     comments = fields.Text(string="Comments", required=False, )
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('refuse', 'Refuse'),
                                                          ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1376,7 +1376,7 @@ class SupplierRevaluation(models.Model):
     efficency_score = fields.Integer(string="Efficiency =", required=False, )
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('refuse', 'Refuse'),
                                                          ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1419,7 +1419,7 @@ class CathodicProtectionEquipmentList(models.Model):
                                                         inverse_name="cathodic_protection_checklist_id", string="Equipment Checklist", required=False, )
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('validate', 'Validate'),
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1465,7 +1465,7 @@ class ValvesServiceChecklist(models.Model):
                                                    inverse_name="values_service_checklist_id", string="Valves Service", required=False, )
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('validate', 'Validate'),
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1509,7 +1509,7 @@ class PumpEquipmentChecklist(models.Model):
                                          inverse_name="pump_checklist_id", string="Valves Service", required=False, )
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('validate', 'Validate'),
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1555,7 +1555,7 @@ class PiggingEquipmentChecklist(models.Model):
                                             inverse_name="pigging_checklist_id", string="Pigging Equipment", required=False, )
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('validate', 'Validate'),
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1609,7 +1609,7 @@ class PreConfirmationAssesment(models.Model):
                                                     inverse_name="preconfirmation_assesment_id", string="Preconfirmation Assesment", required=False, )
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('confirm', 'Confirm'), ('validate', 'Validate'),
                                                          ('refuse', 'Refuse'), ('approved', 'Approved')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def confirm_request(self):
         self.state = 'confirm'
@@ -1767,7 +1767,7 @@ class LiftingPlan(models.Model):
 
     state = fields.Selection(string="Status", selection=[('draft', 'Draft'), ('task_sup', 'Task Supervisor'), ('rig_sup', 'Rigging Supervisor'),
                                                          ('refuse', 'Refuse'), ('hse', 'HSE')], default="draft",
-                             track_visibility='onchange')
+                             tracking=True)
 
     def task_sup_confirm(self):
         self.state = 'task_sup'
@@ -1846,7 +1846,7 @@ class LateArrivalForm(models.Model):
         ('manager', 'HR Manager'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Employee Name', default=_default_employee)
@@ -1861,13 +1861,13 @@ class LateArrivalForm(models.Model):
         [('yes', 'Yes'), ('no', 'No')], string='Did you inform your supervisor prior to late arrival')
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Supervisor Name', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     hr_approval = fields.Many2one(
-        'res.users', 'HR Name', readonly=True, track_visibility='onchange')
+        'res.users', 'HR Name', readonly=True, tracking=True)
     hr_approval_date = fields.Date(
-        string='HR Date', readonly=True, track_visibility='onchange')
+        string='HR Date', readonly=True, tracking=True)
 
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
@@ -2034,7 +2034,7 @@ class CertificateforTendering(models.Model):
         ('draft', 'New'),
         ('valid', 'Valid'),
         ('expired', 'Expired'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     name = fields.Char(string='Certificate', required=True)
     expiry_date = fields.Date(string='Expiry Date', required=True)
@@ -2120,7 +2120,7 @@ class JourneyRequest(models.Model):
         ('manager', 'Logistics Manager Approval'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Requester:', required=True, default=_default_employee)
@@ -2149,17 +2149,17 @@ class JourneyRequest(models.Model):
     destination = fields.Char(string='Destination:', required=True)
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Authoriser Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Authoriser Name', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string=' Authorisers Date', readonly=True, track_visibility='onchange')
+        string=' Authorisers Date', readonly=True, tracking=True)
     logistics_approval = fields.Many2one(
-        'res.users', 'HR Name', readonly=True, track_visibility='onchange')
+        'res.users', 'HR Name', readonly=True, tracking=True)
     logistics_approval_date = fields.Date(
-        string='HR Date', readonly=True, track_visibility='onchange')
+        string='HR Date', readonly=True, tracking=True)
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
     vehicle_id = fields.Many2one(
-        'fleet.vehicle', 'Assigned Vehicle', track_visibility='onchange')
+        'fleet.vehicle', 'Assigned Vehicle', tracking=True)
     active = fields.Boolean(string='Active', default=True)
 
     @api.model
@@ -2293,13 +2293,13 @@ class TenderAnalysis(models.Model):
     type = fields.Selection([
         ('successful', 'Successful'),
         ('unsuccessful', 'Unsuccessful'),
-    ], string='Type', readonly=True, index=True, copy=False, track_visibility='onchange')
+    ], string='Type', readonly=True, index=True, copy=False, tracking=True)
 
     state = fields.Selection([
         ('T_C', 'T&C'),
         ('tc', 'T/C'),
         ('t', 'T'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     name = fields.Char(string='TENDER DESCRIPTION', required=True)
     partner_id = fields.Many2one(
@@ -2326,7 +2326,7 @@ class TenderMonitoringSheet(models.Model):
         ('T_C', 'T&C'),
         ('tc', 'T/C'),
         ('t', 'T'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
     source = fields.Char(string='SOURCE')
     tender_number = fields.Char(string="TENDER NUMBER")
     date_submitted = fields.Datetime(string="DATE SUBMITTED")
@@ -2385,7 +2385,7 @@ class ExitForm(models.Model):
         ('manager', 'HR Manager'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Applicants’s Name', required=True, default=_default_employee)
@@ -2397,13 +2397,13 @@ class ExitForm(models.Model):
         string='Time of Returning', required=True)
     date = fields.Date(string="Date")
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Supervisor Name', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     hr_approval = fields.Many2one(
-        'res.users', 'HR Name', readonly=True, track_visibility='onchange')
+        'res.users', 'HR Name', readonly=True, tracking=True)
     hr_approval_date = fields.Date(
-        string='HR Date', readonly=True, track_visibility='onchange')
+        string='HR Date', readonly=True, tracking=True)
 
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
@@ -2486,7 +2486,7 @@ class AbsenseInformation(models.Model):
         ('manager', 'HR Manager'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Employee’s Name', required=True, default=_default_employee)
@@ -2497,7 +2497,7 @@ class AbsenseInformation(models.Model):
         ('maternity_paternity', 'Maternity/Paternity'),
         ('bereavement', 'Bereavement'),
         ('other', 'Other'),
-    ], string='Type of Absense Requested', required=True, copy=False, track_visibility='onchange')
+    ], string='Type of Absense Requested', required=True, copy=False, tracking=True)
     date_absense_from = fields.Datetime(
         string='Date of Absense From', required=True)
     date_absense_to = fields.Datetime(
@@ -2506,13 +2506,13 @@ class AbsenseInformation(models.Model):
     comments = fields.Char(string='Comments')
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Supervisor Name', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     hr_approval = fields.Many2one(
-        'res.users', 'HR Name', readonly=True, track_visibility='onchange')
+        'res.users', 'HR Name', readonly=True, tracking=True)
     hr_approval_date = fields.Date(
-        string='HR Date', readonly=True, track_visibility='onchange')
+        string='HR Date', readonly=True, tracking=True)
 
     def button_submit(self):
         self.write({'state': 'supervisor'})
@@ -2601,11 +2601,11 @@ class AntivirusTrackerRenewal(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='NAME', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     type_of_device = fields.Selection([
         ('desktop', 'Desktop'),
         ('laptop', 'Laptop'),
-    ], string='DESKTOP / LAPTOP', required=True, copy=False, track_visibility='onchange')
+    ], string='DESKTOP / LAPTOP', required=True, copy=False, tracking=True)
     asset_number = fields.Char(string='ASSET NUMBER', required=True)
     renewal_date = fields.Date(string='DATE OF RENEWAL', required=True)
     due_date = fields.Date(string='Due Date', required=True)
@@ -2653,7 +2653,7 @@ class EquipmentMaintenanceRegister(models.Model):
     routine_check = fields.Selection([
         ('yes', 'Yes'),
         ('no', 'No'),
-    ], string='Routine Check', required=True, copy=False, track_visibility='onchange')
+    ], string='Routine Check', required=True, copy=False, tracking=True)
 
 
 class ICTPaidServices(models.Model):
@@ -2662,9 +2662,9 @@ class ICTPaidServices(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Services', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     sub = fields.Char(string='Subscription', required=True,
-                      track_visibility='onchange')
+                      tracking=True)
     cost = fields.Float(string='Cost')
     currency_id = fields.Many2one(
         comodel_name='res.currency', string='Currency')
@@ -2726,13 +2726,13 @@ class MdrForms(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Document Title',
-                       required=True, track_visibility='onchange')
+                       required=True, tracking=True)
     doc_no = fields.Char(string='Document No.',
-                         required=True, track_visibility='onchange')
+                         required=True, tracking=True)
     department_id = fields.Many2one(
-        comodel_name='hr.department', string='Department', track_visibility='onchange')
-    rev_no = fields.Char(string='Rev No.', track_visibility='onchange')
-    issue_date = fields.Date(string='Issue Date', track_visibility='onchange')
+        comodel_name='hr.department', string='Department', tracking=True)
+    rev_no = fields.Char(string='Rev No.', tracking=True)
+    issue_date = fields.Date(string='Issue Date', tracking=True)
 
 
 class ReceivingInspectionReport(models.Model):
@@ -2746,7 +2746,7 @@ class ReceivingInspectionReport(models.Model):
         ('awaiting_verification', 'Awaiting Verification'),
         ('verify', 'Verified'),
         ('reject', 'Rejected'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
@@ -2759,49 +2759,49 @@ class ReceivingInspectionReport(models.Model):
         return super(ReceivingInspectionReport, self).create(vals)
 
     partner_id = fields.Many2one(
-        comodel_name='res.partner', string='Vendor', track_visibility='onchange')
+        comodel_name='res.partner', string='Vendor', tracking=True)
 
-    location_id = fields.Char(string='Location.', track_visibility='onchange')
+    location_id = fields.Char(string='Location.', tracking=True)
 
     receiving_inspection_report_line_ids = fields.One2many(
         'receiving.inspection.report.lines', 'receiving_inspection_report_id', string="Receiving Inspection Report Lines", copy=True)
 
     manufactured_by_specified_manufacturer_comment = fields.Char(
-        string='Verify if product was manufactured by specified manufacturer/distributor and tested as required', required=False, track_visibility='onchange')
+        string='Verify if product was manufactured by specified manufacturer/distributor and tested as required', required=False, tracking=True)
     manufactured_by_specified_manufacturer = fields.Boolean(
-        string='Verify if product was manufactured by specified manufacturer/distributor and tested as required', required=True, track_visibility='onchange')
+        string='Verify if product was manufactured by specified manufacturer/distributor and tested as required', required=True, tracking=True)
     vendor_topline_approved_list_comment = fields.Char(
-        string='Confirm that vendor is on the Topline approved list, if not, confirm reason(s) for usage', required=False, track_visibility='onchange')
+        string='Confirm that vendor is on the Topline approved list, if not, confirm reason(s) for usage', required=False, tracking=True)
     vendor_topline_approved_list = fields.Boolean(
-        string='Confirm that vendor is on the Topline approved list, if not, confirm reason(s) for usage', required=True, track_visibility='onchange')
+        string='Confirm that vendor is on the Topline approved list, if not, confirm reason(s) for usage', required=True, tracking=True)
     incorporated_noted_instructions_comment = fields.Char(
-        string='Verify that items incorporated noted instructions per purchase order', required=False, track_visibility='onchange')
+        string='Verify that items incorporated noted instructions per purchase order', required=False, tracking=True)
     incorporated_noted_instructions = fields.Boolean(
-        string='Verify that items incorporated noted instructions per purchase order', required=True, track_visibility='onchange')
+        string='Verify that items incorporated noted instructions per purchase order', required=True, tracking=True)
     confirm_delivery_time_date_comment = fields.Char(
-        string='Confirm delivery time/date as specified in the request', required=False, track_visibility='onchange')
+        string='Confirm delivery time/date as specified in the request', required=False, tracking=True)
     confirm_delivery_time_date = fields.Boolean(
-        string='Confirm delivery time/date as specified in the request', required=True, track_visibility='onchange')
+        string='Confirm delivery time/date as specified in the request', required=True, tracking=True)
     item_matches_product_description_comment = fields.Char(
-        string='Verify that item matches product description', required=False, track_visibility='onchange')
+        string='Verify that item matches product description', required=False, tracking=True)
     item_matches_product_description = fields.Boolean(
-        string='Verify that item matches product description', required=True, track_visibility='onchange')
+        string='Verify that item matches product description', required=True, tracking=True)
     item_quantity_correct_comment = fields.Char(
-        string='Confirm that item quantity is correct', required=False, track_visibility='onchange')
+        string='Confirm that item quantity is correct', required=False, tracking=True)
     item_quantity_correct = fields.Boolean(
-        string='Confirm that item quantity is correct', required=True, track_visibility='onchange')
+        string='Confirm that item quantity is correct', required=True, tracking=True)
 
-    remarks = fields.Char(string='Remarks', track_visibility='onchange')
+    remarks = fields.Char(string='Remarks', tracking=True)
 
     approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange', copy=False)
+        string='Date', readonly=True, tracking=True, copy=False)
     manager_approval = fields.Many2one(
-        'res.users', 'Topline Qa/Qc', readonly=True, track_visibility='onchange', copy=False)
+        'res.users', 'Topline Qa/Qc', readonly=True, tracking=True, copy=False)
 
     date_verification = fields.Date(
-        string='Date of Verification', track_visibility='onchange', copy=False)
+        string='Date of Verification', tracking=True, copy=False)
     verification_approval = fields.Many2one(
-        'res.users', 'Verified By (End User):', readonly=True, track_visibility='onchange', copy=False)
+        'res.users', 'Verified By (End User):', readonly=True, tracking=True, copy=False)
     end_user_ids = fields.Many2many(
         comodel_name='res.users', string='End User(s)', copy=False)
 
@@ -2874,20 +2874,20 @@ class PrcForms(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Document Title',
-                       required=True, track_visibility='onchange')
+                       required=True, tracking=True)
     doc_ref = fields.Char(string='Document Ref No.',
-                          required=True, track_visibility='onchange')
+                          required=True, tracking=True)
     doc_type = fields.Char(string='Document Type.',
-                           required=True, track_visibility='onchange')
+                           required=True, tracking=True)
     department_id = fields.Many2one(
-        comodel_name='hr.department', string='Department', track_visibility='onchange')
-    rev_no = fields.Char(string='Rev No.', track_visibility='onchange')
+        comodel_name='hr.department', string='Department', tracking=True)
+    rev_no = fields.Char(string='Rev No.', tracking=True)
     review_date = fields.Date(string='Review Date',
-                              track_visibility='onchange')
+                              tracking=True)
     status = fields.Char(string='Status', required=True,
-                         track_visibility='onchange')
+                         tracking=True)
     remark = fields.Char(string='Remark.', required=True,
-                         track_visibility='onchange')
+                         tracking=True)
 
 
 class ProjectMonitoringSheet(models.Model):
@@ -2896,24 +2896,24 @@ class ProjectMonitoringSheet(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Project Title', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     project_id = fields.Many2one(
-        comodel_name='project.project', string='Relating Project', track_visibility='onchange')
+        comodel_name='project.project', string='Relating Project', tracking=True)
     partner_id = fields.Many2one(
-        comodel_name='res.partner', string='Client', track_visibility='onchange')
+        comodel_name='res.partner', string='Client', tracking=True)
     mob_date = fields.Date(string='Mobilization Date',
-                           track_visibility='onchange')
+                           tracking=True)
     demob_date = fields.Date(
-        string='Demobilization Date', track_visibility='onchange')
+        string='Demobilization Date', tracking=True)
 
     close_out_status = fields.Char(
-        string='Close Out Report', track_visibility='onchange')
+        string='Close Out Report', tracking=True)
     client_feedback_status = fields.Char(
-        string='Client Feedback', track_visibility='onchange')
+        string='Client Feedback', tracking=True)
     lessons_learnt_status = fields.Char(
-        string='Lessons Learnt', track_visibility='onchange')
+        string='Lessons Learnt', tracking=True)
 
-    remark = fields.Char(string='remark', track_visibility='onchange')
+    remark = fields.Char(string='remark', tracking=True)
 
 
 class ClientFeedbackLog(models.Model):
@@ -2922,9 +2922,9 @@ class ClientFeedbackLog(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Project Title', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     project_id = fields.Many2one(
-        comodel_name='project.project', string='Relating Project', track_visibility='onchange')
+        comodel_name='project.project', string='Relating Project', tracking=True)
 
     overall_project_outcome = fields.Selection([
         ('0', '0'),
@@ -2981,20 +2981,20 @@ class ClientComplaintsLog(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     partner_id = fields.Many2one(
-        comodel_name='res.partner', required=True, string='Client', track_visibility='onchange')
+        comodel_name='res.partner', required=True, string='Client', tracking=True)
     name = fields.Char(string='Project Title', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     project_id = fields.Many2one(
-        comodel_name='project.project', string='Relating Project', track_visibility='onchange')
+        comodel_name='project.project', string='Relating Project', tracking=True)
     date_complaint = fields.Date(
-        string='Date Complaint', required=True, track_visibility='onchange')
+        string='Date Complaint', required=True, tracking=True)
     description = fields.Char(
-        string='Description of Complaint', required=True, track_visibility='onchange')
-    root_cause = fields.Char(string='Root Cause', track_visibility='onchange')
+        string='Description of Complaint', required=True, tracking=True)
+    root_cause = fields.Char(string='Root Cause', tracking=True)
     action_taken = fields.Char(
-        string='Action Taken', track_visibility='onchange')
+        string='Action Taken', tracking=True)
     date_closed = fields.Date(
-        string='Date Closed/Result', track_visibility='onchange')
+        string='Date Closed/Result', tracking=True)
 
 
 class QAQCVendorsFacilityAuditChecklist(models.Model):
@@ -3006,10 +3006,10 @@ class QAQCVendorsFacilityAuditChecklist(models.Model):
         ('draft', 'New'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     partner_id = fields.Many2one(
-        comodel_name='res.partner', required=True, string='Company Name', track_visibility='onchange')
+        comodel_name='res.partner', required=True, string='Company Name', tracking=True)
 
     cac_docs_provided = fields.Selection([('yes', 'YES'), ('no', 'NO'), (
         'n_a', 'N/A')], string='Have CAC documents been provided', required=True)
@@ -3071,17 +3071,17 @@ class QAQCVendorsFacilityAuditChecklist(models.Model):
 
     accepted = fields.Selection(
         [('yes', 'YES'), ('no', 'NO')], string='Accepted', required=True)
-    comment = fields.Char(string='Comment', track_visibility='onchange')
+    comment = fields.Char(string='Comment', tracking=True)
 
     audit_date = fields.Date(string='Audited Date',
-                             readonly=True, track_visibility='onchange')
+                             readonly=True, tracking=True)
     audit_approval = fields.Many2one(
-        'res.users', 'Audited By', readonly=True, track_visibility='onchange')
+        'res.users', 'Audited By', readonly=True, tracking=True)
 
     approval_date = fields.Date(
-        string='Approved Date', readonly=True, track_visibility='onchange')
+        string='Approved Date', readonly=True, tracking=True)
     manager_approval = fields.Many2one(
-        'res.users', 'Approved By', readonly=True, track_visibility='onchange')
+        'res.users', 'Approved By', readonly=True, tracking=True)
 
     def button_audit_approve(self):
         # self.write({'state':'approve'})
@@ -3108,7 +3108,7 @@ class ATPform(models.Model):
         ('submit', 'Submitted'),
         ('approve', 'QA/QC Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     atp_form_line_ids = fields.One2many(
         'atp.form.lines', 'atp_form_id', string="ATP Form Lines", copy=True)
@@ -3116,17 +3116,17 @@ class ATPform(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
     date = fields.Date(string='Date', required=True,
-                       track_visibility='onchange', default=date.today())
+                       tracking=True, default=date.today())
     project_des = fields.Char(string='Project Title',
-                              required=True, track_visibility='onchange')
+                              required=True, tracking=True)
     project_id = fields.Many2one(
-        comodel_name='project.project', string='Relating Project', track_visibility='onchange')
+        comodel_name='project.project', string='Relating Project', tracking=True)
     remark = fields.Char(string='Remark', required=False)
     stock_picking_id = fields.Many2one(
-        comodel_name='stock.picking', string='Inventory Operation', track_visibility='onchange')
+        comodel_name='stock.picking', string='Inventory Operation', tracking=True)
 
     expected_date = fields.Date(
-        string='Expected Date of Arrival', track_visibility='onchange')
+        string='Expected Date of Arrival', tracking=True)
 
     total = fields.Float(string='Total', compute='_total_unit', readonly=True)
 
@@ -3362,7 +3362,7 @@ class ATPformLines(models.Model):
     certificate_required = fields.Selection([
         ('yes', 'Yes'),
         ('no', 'No'),
-    ], string='Certificate Required', readonly=False, index=True, copy=False, track_visibility='onchange')
+    ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True)
 
     price = fields.Float(string='Est. Price', required=False)
 
@@ -3386,21 +3386,21 @@ class TravelReport(models.Model):
     _order = 'create_date DESC'
 
     date_booking = fields.Date(
-        string='Date of Booking', required=True, track_visibility='onchange')
+        string='Date of Booking', required=True, tracking=True)
     employee_id = fields.Many2one(
-        comodel_name='hr.employee', string='Name', track_visibility='onchange')
+        comodel_name='hr.employee', string='Name', tracking=True)
     department_id = fields.Many2one(comodel_name='hr.department', string='Department',
-                                    related='employee_id.department_id', track_visibility='onchange')
+                                    related='employee_id.department_id', tracking=True)
     from_des = fields.Char(string='From', required=True,
-                           track_visibility='onchange')
+                           tracking=True)
     to_des = fields.Char(string='TO', required=True,
-                         track_visibility='onchange')
+                         tracking=True)
     reason = fields.Char(string='Reason', required=True,
-                         track_visibility='onchange')
+                         tracking=True)
     cost = fields.Float(string='Cost(N)', required=True,
-                        track_visibility='onchange')
-    type = fields.Char(string='Type', track_visibility='onchange')
-    remark = fields.Char(string='Remark', track_visibility='onchange')
+                        tracking=True)
+    type = fields.Char(string='Type', tracking=True)
+    remark = fields.Char(string='Remark', tracking=True)
 
 
 class StationeryReport(models.Model):
@@ -3409,17 +3409,17 @@ class StationeryReport(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     date = fields.Date(string='Date', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     product_id = fields.Many2one(
         comodel_name='product.template', string='Product')
     name = fields.Char(string='Item/Stationery',
-                       required=True, track_visibility='onchange')
+                       required=True, tracking=True)
     qty = fields.Float(string='Quantity', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     employee_id = fields.Many2one(
-        comodel_name='hr.employee', required=True, string='Name', track_visibility='onchange')
+        comodel_name='hr.employee', required=True, string='Name', tracking=True)
     location = fields.Char(string='Location', required=True,
-                           track_visibility='onchange')
+                           tracking=True)
 
 
 class SalaryAdvanceForm(models.Model):
@@ -3456,44 +3456,44 @@ class SalaryAdvanceForm(models.Model):
         ('md_approve', 'MD Approved'),
         ('approve', 'Finance Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     employee_id = fields.Many2one(comodel_name='hr.employee', required=True,
-                                  string='Name', track_visibility='onchange', default=_default_employee)
+                                  string='Name', tracking=True, default=_default_employee)
     department_id = fields.Many2one(comodel_name='hr.department', string='Department',
-                                    related='employee_id.department_id', track_visibility='onchange')
+                                    related='employee_id.department_id', tracking=True)
     job_title = fields.Char(
-        string='Job Title', related='employee_id.job_title', track_visibility='onchange')
+        string='Job Title', related='employee_id.job_title', tracking=True)
 
     advance_of = fields.Float(
-        string='Advance of', required=True, track_visibility='onchange')
+        string='Advance of', required=True, tracking=True)
     month_of = fields.Selection([('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'),
                                  ('5', 'May'), ('6', 'June'), ('7',
                                                                'July'), ('8', 'August'),
                                  ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December'), ],
-                                string='Month of', required=True, track_visibility='onchange')
+                                string='Month of', required=True, tracking=True)
     pay_off_month = fields.Selection([('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'),
                                       ('5', 'May'), ('6', 'June'), ('7',
                                                                     'July'), ('8', 'August'),
                                       ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December'), ],
-                                     string='Month', required=True, track_visibility='onchange')
+                                     string='Month', required=True, tracking=True)
 
     employee_name = fields.Many2one(
-        'res.users', 'Employee Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Employee Name', readonly=True, tracking=True)
     employee_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Supervisor Name', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     finance_comments = fields.Char(
-        string='Comments', track_visibility='onchange')
+        string='Comments', tracking=True)
     finance_approval = fields.Many2one(
-        'res.users', 'Account Manager Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Account Manager Name', readonly=True, tracking=True)
     finance_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
@@ -3611,7 +3611,7 @@ class MissingStolenAssetReportForm(models.Model):
         ('finance_approve', 'Finance Review'),
         ('approve', 'Finance Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     name_ref = fields.Char('Order Reference', readonly=True,
                            required=True, index=True, copy=False, default='New')
@@ -3642,9 +3642,9 @@ class MissingStolenAssetReportForm(models.Model):
         return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
 
     employee_id = fields.Many2one(comodel_name='hr.employee', required=True,
-                                  string='Name', track_visibility='onchange', default=_default_employee)
+                                  string='Name', tracking=True, default=_default_employee)
     department_id = fields.Many2one(comodel_name='hr.department', string='Department',
-                                    related='employee_id.department_id', track_visibility='onchange')
+                                    related='employee_id.department_id', tracking=True)
 
     name = fields.Char(string='Asset Description', required=True)
     serial_no = fields.Char(string='serial/Asset number', required=True)
@@ -3656,19 +3656,19 @@ class MissingStolenAssetReportForm(models.Model):
         string='Incident That Led to Misplacement:')
 
     employee_name = fields.Many2one(
-        'res.users', 'Reported By', readonly=True, track_visibility='onchange')
+        'res.users', 'Reported By', readonly=True, tracking=True)
     employee_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     store_approval = fields.Many2one(
-        'res.users', 'Store Officer’s Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Store Officer’s Name', readonly=True, tracking=True)
     store_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     finance_approval = fields.Many2one(
-        'res.users', 'Account Manager’s Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Account Manager’s Name', readonly=True, tracking=True)
     finance_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     def button_submit_report(self):
         self.write({'state': 'submit'})
@@ -3742,7 +3742,7 @@ class SiteTimeSheet(models.Model):
         ('opm_approve', 'OPM Approved'),
         ('approve', 'HR Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
     def _default_department(self):
@@ -3762,28 +3762,28 @@ class SiteTimeSheet(models.Model):
         'site.time.sheet.lines', 'site_time_sheet_id', string="site time sheet lines", copy=True)
 
     employee_id = fields.Many2one(comodel_name='hr.employee', required=True,
-                                  string='Name of Payee', default=_default_employee, track_visibility='onchange')
+                                  string='Name of Payee', default=_default_employee, tracking=True)
     department_id = fields.Many2one(
         comodel_name='hr.department', string='Department', default=_default_department)
     employee_designstion = fields.Char(
-        string='Employee Designstion',  track_visibility='onchange')
+        string='Employee Designstion',  tracking=True)
     month = fields.Selection([('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'),
                               ('5', 'May'), ('6', 'June'), ('7',
                                                             'July'), ('8', 'August'),
                               ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December'), ],
-                             string='Month', track_visibility='onchange')
+                             string='Month', tracking=True)
     date = fields.Date(string='Date of Submission',
-                       required=True, track_visibility='onchange')
+                       required=True, tracking=True)
 
     opm_approval = fields.Many2one(
-        'res.users', 'OPM Approval', readonly=True, track_visibility='onchange')
+        'res.users', 'OPM Approval', readonly=True, tracking=True)
     opm_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     hr_approval = fields.Many2one(
-        'res.users', 'HR Manager Approval', readonly=True, track_visibility='onchange')
+        'res.users', 'HR Manager Approval', readonly=True, tracking=True)
     hr_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     def button_submit(self):
         self.write({'state': 'submit'})
@@ -3849,7 +3849,7 @@ class SiteTimeSheetLines(models.Model):
         comodel_name='site.time.sheet', string='site time sheet')
 
     date = fields.Date(string='Date', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     name = fields.Char(
         string="Brief Description of Activities", required=True,)
     location = fields.Char(string='Location')
@@ -3872,11 +3872,11 @@ class EmsMonitoring(models.Model):
                               ('5', 'May'), ('6', 'June'), ('7',
                                                             'July'), ('8', 'August'),
                               ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December'), ],
-                             string='Month', track_visibility='onchange', required=True)
+                             string='Month', tracking=True, required=True)
     remarks = fields.Char(
         string="Remarks (comment on trends and equipment calibration status)")
     date = fields.Date(string='Date', required=True,
-                       track_visibility='onchange', default=date.today())
+                       tracking=True, default=date.today())
 
 
 class EmsKpi(models.Model):
@@ -3893,9 +3893,9 @@ class FumigationSchedule(models.Model):
     _order = 'create_date DESC'
 
     due_date = fields.Date(string='Due Date of Fumigation', required=True,
-                           track_visibility='onchange', default=date.today())
+                           tracking=True, default=date.today())
     actual_date = fields.Datetime(
-        string='Actual Date of Service', required=True, track_visibility='onchange')
+        string='Actual Date of Service', required=True, tracking=True)
     location = fields.Char(string="Location", required=True)
     remarks = fields.Char(string="Remarks")
 

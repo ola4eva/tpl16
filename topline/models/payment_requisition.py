@@ -20,7 +20,7 @@ class PaymentRequisitionForm(models.Model):
         ('approve', 'Finance Approved'),
         ('post', 'Posted'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
     def _default_department(self):
@@ -65,24 +65,24 @@ class PaymentRequisitionForm(models.Model):
         'payment.requisition.form.lines', 'payment_requisition_form_id', string="payment requisition form lines", copy=True)
 
     date = fields.Date(string='Date', required=True,
-                       track_visibility='onchange')
+                       tracking=True)
     department_id = fields.Many2one(
         comodel_name='hr.department', string='Department', default=_default_department)
     project_description = fields.Char(
-        string='Project Description',  track_visibility='onchange')
+        string='Project Description',  tracking=True)
     payee_id = fields.Many2one(comodel_name='res.partner', required=False,
-                               string='Name of Payee', default=_default_payee, track_visibility='onchange')
+                               string='Name of Payee', default=_default_payee, tracking=True)
     employee_id = fields.Many2one(comodel_name='hr.employee', required=True,
-                                  string='Requesting Employee', default=_default_employee, track_visibility='onchange')
+                                  string='Requesting Employee', default=_default_employee, tracking=True)
     currency_id = fields.Many2one(comodel_name='res.currency', required=True,
-                                  string='Currency', default=_default_currency, track_visibility='onchange')
+                                  string='Currency', default=_default_currency, tracking=True)
     bank_details = fields.Char(
-        string='Bank Details',  track_visibility='onchange')
+        string='Bank Details',  tracking=True)
 
     total_amount_requested = fields.Float(
-        string='Total amount requested', compute='_total_amount_requested', readonly=True, track_visibility="always")
+        string='Total amount requested', compute='_total_amount_requested', readonly=True, tracking=True)
     total_amount_approved = fields.Float(
-        string='Total amount approved', compute='_total_amount_approved', readonly=True, track_visibility="always")
+        string='Total amount approved', compute='_total_amount_approved', readonly=True, tracking=True)
     discount = fields.Float('Discount (%)')
 
     total_amount_approved_due = fields.Float(
@@ -92,36 +92,36 @@ class PaymentRequisitionForm(models.Model):
                            compute='_compute_amount_in_word')
 
     employee_name = fields.Many2one(
-        'res.users', 'Employee Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Employee Name', readonly=True, tracking=True)
     employee_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Supervisor Name', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     audit_approval = fields.Many2one(
-        'res.users', 'Auditors Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Auditors Name', readonly=True, tracking=True)
     audit_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     md_approval = fields.Many2one(
-        'res.users', 'Managing Director', readonly=True, track_visibility='onchange')
+        'res.users', 'Managing Director', readonly=True, tracking=True)
     md_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     finance_comments = fields.Char(
-        string='Comments', track_visibility='onchange')
+        string='Comments', tracking=True)
     finance_approval = fields.Many2one(
-        'res.users', 'Finance Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Finance Name', readonly=True, tracking=True)
     finance_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     received_approval = fields.Many2one(
-        'res.users', 'Recipients Name',  track_visibility='onchange')
+        'res.users', 'Recipients Name',  tracking=True)
     received_approval_date = fields.Date(
-        string='Date', track_visibility='onchange')
+        string='Date', tracking=True)
 
     journal_id = fields.Many2one('account.journal', string='Payment Journal', states={'done': [(
         'readonly', True)], 'post': [('readonly', True)]}, help="The journal used when the expense is done.")
@@ -315,9 +315,9 @@ class PaymentRequisitionFormLines(models.Model):
         related='payment_requisition_form_id.state', store=True)
     name = fields.Char(string='Details/Purpose of Request', required=True)
     amount_requested = fields.Float(
-        string='Amount Requested', required=True, track_visibility="always")
+        string='Amount Requested', required=True, tracking=True)
     amount_approved = fields.Float(
-        string='Amount Approved', copy=False, track_visibility="always")
+        string='Amount Approved', copy=False, tracking=True)
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account', states={
                                           'post': [('readonly', True)], 'done': [('readonly', True)]}, oldname='analytic_account')
     account_id = fields.Many2one('account.account', string='Account', states={'post': [(

@@ -4,7 +4,7 @@
 
         <!-- Signature print in invoice/bill report -->
         <template id="invoice_qweb_report_inherited" inherit_id="account.report_invoice_document">
-            <xpath expr="//div[hasclass('clearfix')]/div[@id='total']/div/table/tr[1]" position="after">
+            <xpath expr="//div/div/div/div/table/t[1]" position="before">
 <!--                <t t-if="o.is_global_discount == True">-->
                      <tr class="border-black o_subtotal" style="">
                         <td><strong>Discount</strong></td>

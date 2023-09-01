@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-07 10:24+0000\n"
 "PO-Revision-Date: 2019-05-07 10:24+0000\n"
@@ -42,6 +42,11 @@ msgstr "Actif/ve"
 #: model:ir.model.fields,field_description:smile_checklist.field_checklist_task__filter_domain
 msgid "Apply on"
 msgstr "Appliquée sur"
+
+#. module: smile_checklist
+#: model_terms:ir.ui.view,arch_db:smile_checklist.view_checklist_form
+msgid "Archived"
+msgstr "Archivé"
 
 #. module: smile_checklist
 #: code:addons/smile_checklist/models/base.py:35
@@ -190,6 +195,12 @@ msgstr "Le nombre d'appels est non nul"
 #: model:ir.model.fields,field_description:smile_checklist.field_checklist_task_instance__sequence
 msgid "Priority"
 msgstr "Prioritaire"
+
+#. module: smile_checklist
+#: code:addons/smile_checklist/models/checklist.py:0
+#, python-format
+msgid "Progress Rate"
+msgstr "Taux de progression"
 
 #. module: smile_checklist
 #: model:ir.model.fields,field_description:smile_checklist.field_checklist_task__mandatory

@@ -10,8 +10,7 @@ class TestChecklist(TransactionCase):
     def test_create_cron(self):
         """
             This test relies on demo checklist smile_checklist.cron_checklist.
-            The checklist activates crons only if the number of calls 
-                is not null.
+            The checklist activates crons only if active is true.
             I create a cron with null number of calls.
             I check that the cron is inactive.
             I set a number of calls to the cron.
@@ -22,14 +21,17 @@ class TestChecklist(TransactionCase):
             'model_id': self.env.ref('base.model_res_partner').id,
             'numbercall': 0,
         })
+        cron.toggle_active()
         self.assertFalse(
             cron.active,
-            'Cron is active whereas the number of calls is null.')
+            'Cron is active.')
         cron.numbercall = 1
+        cron.toggle_active()
         self.assertTrue(
             cron.active,
-            'Cron is inactive whereas the number of calls is not null.')
+            'Cron is inactive.')
         cron.numbercall = 0
+        cron.toggle_active()
         self.assertFalse(
             cron.active,
-            'Cron is active whereas the number of calls is null.')
+            'Cron is active.')

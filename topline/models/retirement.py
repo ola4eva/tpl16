@@ -18,7 +18,7 @@ class CashRetirementForm(models.Model):
         ('reject', 'Reject'),
         ], string='Status', readonly=False, 
         index=True, copy=False, default='draft', 
-        track_visibility='onchange')
+        tracking=True)
 
     def _default_department(self): 
         """this method is to search the hr.employee 
@@ -46,33 +46,33 @@ class CashRetirementForm(models.Model):
     
     cash_retirement_form_line_ids = fields.One2many('cash.retirement.form.lines', 'cash_retirement_form_id', string="cash retirement form lines", copy=True)
     
-    date = fields.Date(string='Date', required=True, track_visibility='onchange')
+    date = fields.Date(string='Date', required=True, tracking=True)
     department_id = fields.Many2one(comodel_name='hr.department', string='Department', default=_default_department)
-    project_description = fields.Char(string='Project Description',  track_visibility='onchange')
-    employee_id = fields.Many2one(comodel_name='hr.employee', required=True, string='Name of Payee', default=_default_employee, track_visibility='onchange')
-    currency_id = fields.Many2one(comodel_name='res.currency', required=True, string='Currency', default=_default_currency, track_visibility='onchange')
-    location = fields.Char(string='location',  track_visibility='onchange')
+    project_description = fields.Char(string='Project Description',  tracking=True)
+    employee_id = fields.Many2one(comodel_name='hr.employee', required=True, string='Name of Payee', default=_default_employee, tracking=True)
+    currency_id = fields.Many2one(comodel_name='res.currency', required=True, string='Currency', default=_default_currency, tracking=True)
+    location = fields.Char(string='location',  tracking=True)
     
     total_amount_requested = fields.Float(string='Total amount requested', compute='_total_amount_requested', readonly=True)
     total_amount_approved = fields.Float(string='Total amount approved', compute='_total_amount_approved', readonly=True)
     
     num_word = fields.Char(string="Amount In Words:", compute='_compute_amount_in_word')
     
-    employee_name = fields.Many2one('res.users','Employee Name', readonly=True, track_visibility='onchange')
-    employee_approval_date = fields.Date(string='Date', readonly=True, track_visibility='onchange')
+    employee_name = fields.Many2one('res.users','Employee Name', readonly=True, tracking=True)
+    employee_approval_date = fields.Date(string='Date', readonly=True, tracking=True)
     
-    supervisor_approval = fields.Many2one('res.users','Supervisor Name', readonly=True, track_visibility='onchange')
-    supervisor_approval_date = fields.Date(string='Date', readonly=True, track_visibility='onchange')
+    supervisor_approval = fields.Many2one('res.users','Supervisor Name', readonly=True, tracking=True)
+    supervisor_approval_date = fields.Date(string='Date', readonly=True, tracking=True)
     
-    audit_approval = fields.Many2one('res.users','Auditors Name', readonly=True, track_visibility='onchange')
-    audit_approval_date = fields.Date(string='Date', readonly=True, track_visibility='onchange')
+    audit_approval = fields.Many2one('res.users','Auditors Name', readonly=True, tracking=True)
+    audit_approval_date = fields.Date(string='Date', readonly=True, tracking=True)
     
-    finance_comments = fields.Char(string='Comments', track_visibility='onchange')
-    finance_approval = fields.Many2one('res.users','Finance Name', readonly=True, track_visibility='onchange')
-    finance_approval_date = fields.Date(string='Date', readonly=True, track_visibility='onchange')
+    finance_comments = fields.Char(string='Comments', tracking=True)
+    finance_approval = fields.Many2one('res.users','Finance Name', readonly=True, tracking=True)
+    finance_approval_date = fields.Date(string='Date', readonly=True, tracking=True)
     
-    received_approval = fields.Many2one('res.users','Recipients Name',  track_visibility='onchange')
-    received_approval_date = fields.Date(string='Date', track_visibility='onchange')
+    received_approval = fields.Many2one('res.users','Recipients Name',  tracking=True)
+    received_approval_date = fields.Date(string='Date', tracking=True)
     name = fields.Char('Order Reference', readonly=True, required=True, index=True, copy=False, default='New')
     paid = fields.Boolean(string="Paid")
     advance_id = fields.Many2one(comodel_name="cash.advance.request.form", string="Cash Advance")

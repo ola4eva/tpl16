@@ -1,15 +1,14 @@
 odoo.define('checklist.checklist_instance', function (require) {
     "use strict";
-
     var core = require('web.core');
     var QWeb = core.qweb;
     var rpc = require('web.rpc');
     var AbstractAction = require('web.AbstractAction');
 
     var checklistInstanceView = AbstractAction.extend({
-        template: 'Checklist',
-        init: function(parent, context) {
-            this._super(parent, context);
+        contentTemplate: 'Checklist',
+        init: function (parent, context) {
+            this._super.apply(this, arguments);
             this.res_model = context.context.res_model;
             this.res_id = context.context.res_id;
         },
@@ -30,10 +29,8 @@ odoo.define('checklist.checklist_instance', function (require) {
             });
         },
     });
-
     core.action_registry.add('checklist_instance_view', checklistInstanceView);
     return {
         checklistInstanceView: checklistInstanceView,
-    }
-
+    };
 });

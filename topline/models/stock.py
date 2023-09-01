@@ -43,7 +43,7 @@ class Picking(models.Model):
         ('cancel', 'Cancelled'),
     ], string='Status', 
     # compute='_compute_state',
-        copy=False, index=True, readonly=True, store=True, track_visibility='onchange',
+        copy=False, index=True, readonly=True, store=True, tracking=True,
         help=" * Draft: not confirmed yet and will not be scheduled until confirmed.\n"
              " * Waiting Another Operation: waiting for another move to proceed before it becomes automatically available (e.g. in Make-To-Order flows).\n"
              " * Waiting: if it is not ready to be sent because the required products could not be reserved.\n"
@@ -192,19 +192,19 @@ class Picking(models.Model):
         # compute='_total_price', 
         readonly=True, store=True)
     man_confirm = fields.Boolean(
-        'Manager Confirmation', track_visibility='onchange')
+        'Manager Confirmation', tracking=True)
     client_id = fields.Many2one(
         'res.partner', string='Client', index=True, ondelete='cascade', required=False)
     need_approval = fields.Boolean(
         'Need Approval', track_visibility="onchange", copy=False)
     total_cost = fields.Float(
-        string='Total Cost', compute='_total_cost', track_visibility='onchange', readonly=True)
+        string='Total Cost', compute='_total_cost', tracking=True, readonly=True)
     project_id = fields.Many2one(
         'project.project', string='Project', index=True, ondelete='cascade', required=False)
     project_description = fields.Char('Project Description', copy=False)
 
     rejection_reason = fields.Many2one(
-        'stock.rejection.reason', string='Rejection Reason', index=True, track_visibility='onchange')
+        'stock.rejection.reason', string='Rejection Reason', index=True, tracking=True)
 
     
     @api.depends('move_ids_without_package.product_uom_qty')
@@ -367,7 +367,7 @@ class HrExpenseSheet(models.Model):
                               ('open', 'Open'),
                               ('done', 'Paid'),
                               ('cancel', 'Refused')
-                              ], string='Status', index=True, readonly=True, track_visibility='onchange', copy=False, default='submit', required=True,
+                              ], string='Status', index=True, readonly=True, tracking=True, copy=False, default='submit', required=True,
                              help='Expense Report State')
 
     name = fields.Char(string='Expense Report Summary',
@@ -533,7 +533,7 @@ class StockMove(models.Model):
     certificate_required = fields.Selection([
         ('yes', 'Yes'),
         ('no', 'No'),
-    ], string='Certificate Required', readonly=False, index=True, copy=False, track_visibility='onchange')
+    ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True)
 
     def _get_relevant_state_among_moves(self):
         # We sort our moves by importance of state:

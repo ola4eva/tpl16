@@ -25,7 +25,7 @@ class EmployeeRequisitionForm(models.Model):
         ('hr_manager', 'HR Manager'),
         ('approve', 'Approved'),
         ('reject', 'Rejected'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     department_id = fields.Many2one(
         comodel_name='hr.department', string='Department', default=_default_department)

@@ -1,5 +1,6 @@
 .checklist_tasks_list {
     list-style-type: none;
+
 }
 
 .checklist_task_complete {
@@ -10,11 +11,16 @@
 }
 
 .checklist_task_mandatory {
+    list-style-type: none;
     font-weight: bold;
+    margin-left: 55px;
+
 }
 
 .checklist_task_not_mandatory {
+    list-style-type: none;
     font-weight: normal;
+    margin-left: 55px;
 }
 
 .checklist_task_field_filled {

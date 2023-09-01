@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-# (C) 2011 Smile (<http://www.smile.fr>)
+# (C) 2020 Smile (<http://www.smile.fr>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
+from odoo.tools.safe_eval import safe_eval
 
 
 class ChecklistTaskInstance(models.Model):
@@ -24,10 +25,11 @@ class ChecklistTaskInstance(models.Model):
     active = fields.Boolean(compute='_compute_active', store=True)
     complete = fields.Boolean(readonly=True)
 
-    
     @api.depends('task_id.filter_domain', 'task_id.active')
     def _compute_active(self):
-        self.active = self.task_id.active
-        record = self.env[self.task_id.model].browse(self.res_id)
-        if not record.filtered_from_domain(self.task_id.filter_domain):
-            self.active = False
+        for task in self:
+            if task and task.task_id:
+                task.active = task.task_id.active
+                record = self.env[task.task_id.model].browse(task.res_id)
+                if not record.filtered_domain(safe_eval(task.task_id.filter_domain)):
+                    task.active = False

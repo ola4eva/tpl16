@@ -18,7 +18,7 @@ class PurchaseOrder(models.Model):
         ('purchase', 'Purchase Order'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled')
-    ], string='Status', readonly=True, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=True, index=True, copy=False, default='draft', tracking=True)
     num_word = fields.Char(string="Amount In Words:",
                            compute='_compute_amount_in_word')
 
@@ -58,26 +58,26 @@ class PurchaseOrder(models.Model):
                                   help="Default Owner")
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Supervisor Name', readonly=True, tracking=True)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     audit_approval = fields.Many2one(
-        'res.users', 'Auditors Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Auditors Name', readonly=True, tracking=True)
     audit_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     md_approval = fields.Many2one(
-        'res.users', 'Managing Director', readonly=True, track_visibility='onchange')
+        'res.users', 'Managing Director', readonly=True, tracking=True)
     md_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     finance_comments = fields.Char(
-        string='Comments', track_visibility='onchange')
+        string='Comments', tracking=True)
     finance_approval = fields.Many2one(
-        'res.users', 'Finance Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Finance Name', readonly=True, tracking=True)
     finance_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     active = fields.Boolean(string='Active?', default=True)
 
     

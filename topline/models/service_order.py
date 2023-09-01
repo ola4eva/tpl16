@@ -21,7 +21,7 @@ class ServiceOrder(models.Model):
         ('procurement', 'Procurement Approval'),
         ('approve', 'Approved'),
         ('reject', 'Rejected'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     employee_id = fields.Many2one(
         comodel_name='hr.employee', string='Requested by', default=_default_employee)
@@ -37,18 +37,18 @@ class ServiceOrder(models.Model):
         'service.order.line', 'service_order_id', string="Service Order", copy=True)
 
     line_manager_approval = fields.Many2one(
-        'res.users', 'Manager Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Manager Name', readonly=True, tracking=True)
     line_manager_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
     procurement_approval = fields.Many2one(
-        'res.users', 'Procurement Personnel Name', readonly=True, track_visibility='onchange')
+        'res.users', 'Procurement Personnel Name', readonly=True, tracking=True)
     procurement_approval_date = fields.Date(
-        string='Date', readonly=True, track_visibility='onchange')
+        string='Date', readonly=True, tracking=True)
 
     qaqc_approval = fields.Many2one(
-        'res.users', 'QAQC Personnel Name', readonly=True, track_visibility='onchange')
+        'res.users', 'QAQC Personnel Name', readonly=True, tracking=True)
     qaqc_approval_date = fields.Date(
-        string='QAQC Ver. Date', readonly=True, track_visibility='onchange')
+        string='QAQC Ver. Date', readonly=True, tracking=True)
 
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')

@@ -34,7 +34,7 @@ class ActionRequestLog(models.Model):
         ('open', 'Open'),
         ('on_hold', 'On Hold'),
         ('closed', 'Closed'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', track_visibility='onchange')
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     action_request_log_line_ids = fields.One2many(
         'action.request.log.line', 'action_request_log_id', string="Action Request Log Line", copy=True)

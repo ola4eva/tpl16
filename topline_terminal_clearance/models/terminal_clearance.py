@@ -32,7 +32,7 @@ class TerminalClearance(models.Model):
         ('validate', 'Validate'),
         ('approved', 'Approved'),
         ('refuse', 'Refuse'), 
-        ], default="draft", track_visibility='onchange')
+        ], default="draft", tracking=True)
 
     
     def confirm_request(self):

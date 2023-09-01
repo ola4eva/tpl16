@@ -13,7 +13,7 @@ class SaleOrder(models.Model):
         ('sale', 'Sales Order'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
-    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
+    ], string='Status', readonly=True, copy=False, index=True, tracking=True, track_sequence=3, default='draft')
 
     
     def button_submit(self):

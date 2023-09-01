@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# (C) 2011 Smile (<http://www.smile.fr>)
+# (C) 2022 Smile (<http://www.smile.fr>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
@@ -34,21 +33,24 @@ Configuration
 
 Suggestions & Feedback to: corentin.pouhet-brunerie@smile.fr
     """,
-    "depends": ['smile_filtered_from_domain'],
+    "depends": [],
     "data": [
         'security/ir.model.access.csv',
-        'views/checklist_view.xml',
         'views/checklist_task_instance_view.xml',
         'views/checklist_view.xml',
         'views/menus.xml',
-        'views/webclient_templates.xml',
     ],
     "demo": [
         'demo/checklist_demo.xml',
     ],
-    "qweb": [
-        'static/src/xml/checklist.xml',
-    ],
+    'assets': {
+
+        'web.assets_backend': [
+            'smile_checklist/static/src/css/checklist.css',
+            'smile_checklist/static/src/js/checklist.js',
+            'smile_checklist/static/src/xml/checklist.xml',
+        ],
+    },
     "post_init_hook": 'post_init_hook',
     "test": [],
     "installable": True,

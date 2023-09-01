@@ -14,7 +14,7 @@ class HolidaysRequest(models.Model):
         ('refuse', 'Refused'),
         ('validate1', 'Second Approval'),
         ('validate', 'Approved')
-    ], string='Status', readonly=True, track_visibility='onchange', copy=False, default='draft',
+    ], string='Status', readonly=True, tracking=True, copy=False, default='draft',
         help="The status is set to 'To Submit', when a leave request is created." +
         "\nThe status is 'To Approve', when leave request is confirmed by user." +
         "\nThe status is 'Refused', when leave request is refused by manager." +

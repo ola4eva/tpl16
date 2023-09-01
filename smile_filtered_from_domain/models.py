@@ -8,7 +8,7 @@ from operator import and_, or_, sub
 from six import string_types
 import time
 
-from odoo import api, _
+from odoo import _
 from odoo.exceptions import UserError
 from odoo.models import BaseModel
 from odoo.osv.expression import normalize_domain
@@ -27,7 +27,6 @@ SQL2PYTHON_OPERATORS = {
     'not like': 'not in',
     'not ilike': 'not in',
 }
-
 
 
 def filtered_from_domain(self, domain):

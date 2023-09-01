@@ -26,7 +26,7 @@ class ToplineReminder(models.Model):
         ('week', 'Weekly'),
         ('month', 'Monthly'),
         ('year', 'Yearly'),
-        ], string='Periodicity', readonly=False, index=True, copy=False, default='day', track_visibility='onchange', required=True)
+        ], string='Periodicity', readonly=False, index=True, copy=False, default='day', tracking=True, required=True)
     
     day = fields.Integer(string='Day(s) Before')
     week = fields.Integer(string='Week(s) Before')

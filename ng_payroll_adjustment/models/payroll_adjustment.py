@@ -29,7 +29,7 @@ class PayrollAdjustment(models.Model):
                         ('running', 'Running'),\
                         ('close', 'Closed'),('cancel','Cancelled'),('reset','Reset To New')],string='State', \
                         readonly=True, default='new', \
-                        track_visibility='onchange')
+                        tracking=True)
 
     period_total = fields.Integer('Number of Periods', required=True, default=12, readonly=True, states={'new': [('readonly', False)]})
     period_nbr = fields.Integer('Period', required=True, default=1, readonly=True, states={'new': [('readonly', False)]})
