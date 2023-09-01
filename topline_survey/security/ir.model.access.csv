@@ -1,8 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_survey_creator,survey_creator,survey.model_survey_survey,topline_survey.group_survey_creator,1,1,1,1
-access_survey_page_creator,survey_page_creator,survey.model_survey_page,topline_survey.group_survey_creator,1,1,1,1
 access_survey_question_creator,survey_question_creator,survey.model_survey_question,topline_survey.group_survey_creator,1,1,1,1
-access_survey_label_creator,survey_label_creator,survey.model_survey_label,topline_survey.group_survey_creator,1,1,1,1
 access_survey_user_input_creator,survey_user_input_creator,survey.model_survey_user_input,topline_survey.group_survey_creator,1,1,1,1
 access_survey_user_input_line_creator,survey_user_input_line_creator,survey.model_survey_user_input_line,topline_survey.group_survey_creator,1,1,1,1
-access_survey_stage_creator,survey_stage_creator,survey.model_survey_stage,topline_survey.group_survey_creator,1,1,0,0

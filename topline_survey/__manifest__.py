@@ -11,10 +11,12 @@
     'author': "MCEE Solutions",
     'website': "https://www.mceesolutions.com/",
     'category': 'topline',
-    'depends': ['survey'],
+    'depends': [
+        'survey',
+        'hr_appraisal'
+    ],
     'data': [
         'security/access_security.xml',
         'security/ir.model.access.csv',
-        'views/survey_view.xml',
     ],
 }
