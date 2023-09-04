@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_edi_fumigation" model="mail.template">
+            <field name="name">Fumigation Schedule: Send Fumigation Schedule</field>
+            <field name="model_id" ref="topline.model_fumigation_schedule"/>
+            <field name="subject">General Housekeeping and Fumigation of ${object.location} Office Premises</field>
+            <field name="body_html" type="html">
+				<div style="margin: 0px; padding: 0px;">
+				    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+				    	Dear All,
+						<br/><br/>
+						Please be informed that there will be fumigation exercise of Birabi office premises on ${object.actual_date}.
+						<br/><br/>
+						General housekeeping will start by ${object.actual_date}. Tidy and remove all clutters from your offices.
+						<br/><br/>
+						Kindly ensure that you prepare on time and remove all edibles from your lockers or anything that may be affected by the chemicals.
+						<br/><br/>
+						Staff will be provided with old newspapers to cover your desktop, laptops documents and any other valuables, in order to prevent  any chemical damage.
+						<br/><br/>
+						You are advised not to come to the office over the weekend (20th and 21st June, 2020) as the residue of the fumigation chemicals can pose serious health risks if inhaled.
+						<br/><br/>
+						Thank you for your usual co-operation.
+						<br/><br/>
+				    </p>
+				</div></field>
+            <field name="email_to">phstaff@toplinelimited.com</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="pipeline_topline_form" model="ir.ui.view">
+            <field name="name">pipeline.topline.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <field name="team_id" position="after">
+                    <field name="bid_category"/>
+                </field>
+                <xpath expr="//page[@name='lead']" position="after">
+                    <page string="Contract">
+                        <group>
+                            <field name="document_submission_date"/>
+                            <field name="contract_start_date"/>
+                            <field name="contract_end_date"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

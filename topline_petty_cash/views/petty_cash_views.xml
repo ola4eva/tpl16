@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- petty cash tree view-->
+        <record id="petty_cash_tree_view" model="ir.ui.view">
+            <field name="name">petty.cash.tree</field>
+            <field name="model">petty.cash</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="department_id"/>
+                <field name="employee_id"/>
+                <field name="state"/>
+            </field>
+        </record>
+
+        <!-- petty cash form view -->
+        <record id="petty_cash_view" model="ir.ui.view">
+            <field name="name">petty.cash</field>
+            <field name="model">petty.cash</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <form string="Petty Cash">
+                    <header>
+                        <button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+                        <button name="button_line_manager_approval" states="submit" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+                        <button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
+                        <button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md"/>
+                        <button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
+                        <button name="action_sheet_move_create" states="approve" string="Create Journal Entries" type="object"/>
+                        <button name="button_reject" states="submit,line_approve,internal_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group col="4" colspan="4">
+                            <field name="date"/>
+                            <field name="department_id"/>
+                            <!-- <field name="project_description"/> -->
+                            <field name="payee_id" required="1" widget="selection" />
+                            <field name="employee_id" invisible="1"/>
+                            <field name="currency_id"/>
+                            <field name="bank_details"/>
+                        </group>
+                        <notebook>
+                            <page string="Request Lines">
+                                <field name="line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="is_manager" invisible="1"/>
+                                        <field name="name" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
+                                        <field name="account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
+                                        <field name="analytic_account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
+                                        <field name="amount_requested" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
+                                        <field name="amount_approved" attrs="{'readonly':[('is_manager', '=', False)]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Other Info">
+                                <group>
+                                    <group>
+                                        <field name="bank_journal_id" groups="account.group_account_user" options="{'no_open': True, 'no_create': True}" domain="[('type', 'in', ['cash', 'bank'])]" attrs="{'invisible': [('state', 'not in', ['approve', 'post', 'paid'])]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="account_move_id" groups="account.group_account_user" attrs="{'invisible': [('state', 'not in', ['approve', 'post', 'paid'])]}" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        <group colspan="2">
+                            <field name="total_amount_requested" readonly="1"/>
+                            <field name="total_amount_approved" readonly="1"/>
+                            <field name="total_amount_approved_due" invisible="1"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="num_word" readonly="1"/>
+                        </group>
+                        <group string = "Requested By" col="4" colspan="4">
+                            <field name="employee_name" readonly="1"/>
+                            <field name="employee_approval_date" readonly="1"/>
+                        </group>
+                        <group string = "Approved By" col="4" colspan="4">
+                            <field name="finance_approval"/>
+                            <field name="finance_approval_date"/>
+                        </group>
+                        <group string = "Received By" col="4" colspan="4">
+                            <field name="received_approval"/>
+                            <field name="received_approval_date"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Petty cash search Views -->
+        <record id="search_petty_cash" model="ir.ui.view">
+            <field name="name">search.petty.cash</field>
+            <field name="model">petty.cash</field>
+            <field name="arch" type="xml">
+                <search string="Petty Cash">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <!-- <field name="project_description"/> -->
+                    <field name="line_ids" string="Details/purpose"/>
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <filter name="filter_unposted" domain="[('state', 'not in', ['post'])]" string="Unposted" />
+                </search>
+            </field>
+        </record>
+
+        <!-- petty cash action-->
+        <record  id="petty_cash_action" model="ir.actions.act_window">
+            <field name="name">Petty Cash</field>
+            <field name="res_model">petty.cash</field>
+            
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_filter_unposted': True}</field>
+        </record>
+
+        <menuitem name="Petty Cash" id="petty_cash_menu" parent="hr_expense.menu_hr_expense_my_expenses" action="petty_cash_action"/>
+        
+    </data>
+</odoo>

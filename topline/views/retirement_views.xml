@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- cash.retirement.form tree view-->
+        <record id="topline_cash_retirement_form_tree_view" model="ir.ui.view">
+            <field name="name">cash.retirement.form.tree</field>
+            <field name="model">cash.retirement.form</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="department_id"/>
+                <field name="employee_id"/>
+                <field name="total_amount_requested"/>
+                <field name="total_amount_approved"/>
+                <field name="location"/>
+                <field name="project_description"/>
+                <field name="state"/>
+            </field>
+        </record>
+
+        <record id="topline_cash_retirement_form_view" model="ir.ui.view">
+            <field name="name">cash.retirement.form</field>
+            <field name="model">cash.retirement.form</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <form string="Cash Retirement Form">
+                    <header>
+                        <field name="paid" readonly="1" invisible="1" />
+                        <button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+                        <button name="button_line_manager_approval" states="submit" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+                        <button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
+                        <button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md"/>
+                        <button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
+                        <button name="button_reject" states="submit,line_approve,internal_approve,md_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
+                        <button name="post_entries" attrs="{'invisible': ['|', ('paid', '=', True), ('state', 'not in', ['approve'])]}" class="oe_highlight" string="Register Payment" type="object" groups="topline.group_finance_manager"/>
+                        <button name="reset_paid" class="btn-danger" string="Reset Pay" type="object" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" attrs="{'invisible': [('name', '=', 'New')]}"/>
+                            </h1>
+                        </div>
+                        <group col="4" colspan="4">
+                            <field name="date"/>
+                            <field name="department_id"/>
+                            <field name="project_description"/>
+                            <field name="employee_id"/>
+                            <field name="currency_id"/>
+                            <field name="location"/>
+                        </group>
+                        <group>
+                            <field name="advance_id" domain="[('paid', '=', True)]"/>
+                        </group>
+                        <notebook>
+                            <page string="Retirement Lines" name="retirement_lines">
+                                <field name="cash_retirement_form_line_ids" nolabel="1" widget="section_and_note_one2many">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="note"/>
+                                        <field name="account_id"/>
+                                        <field name="analytic_account_id"/>
+                                        <field name="amount_requested"/>
+                                        <field name="amount_approved"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Other Info" name="other_information">
+                                <group>
+                                    <field name="journal_id" />
+                                    <field name="move_id" />
+                                </group>
+                            </page>
+                        </notebook>
+                        <group colspan="2">
+                            <field name="total_amount_requested" readonly="1"/>
+                            <field name="total_amount_approved" readonly="1"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="num_word" readonly="1"/>
+                        </group>
+                        <group string = "Certified By" col="4" colspan="4">
+                            <field name="employee_name" readonly="1"/>
+                            <field name="employee_approval_date" readonly="1"/>
+                        </group>
+                        <span>
+                            <b>By certifying, I hereby acknowledge that I have verified expenditure and that it is a true reflection of 
+			 		what was actually spent.</b>
+                        </span>
+                        <group string = "Approved By" col="4" colspan="4">
+                            <field name="finance_approval"/>
+                            <field name="finance_approval_date"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="search_cash_retirement_form" model="ir.ui.view">
+            <field name="name">search.cash.retirement.form</field>
+            <field name="model">cash.retirement.form</field>
+            <field name="arch" type="xml">
+                <search string="Cash Retirement">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="cash_retirement_form_line_ids" string="Details/purpose"/>
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="topline_cash_retirement_form_action">
+            <field name="name">Cash Retirement Form</field>
+            <field name="res_model">cash.retirement.form</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="search_view_id" ref="search_cash_retirement_form"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="topline_cash_retirement_form_reporting_action">
+            <field name="name">Cash Retirement Analysis</field>
+            <field name="res_model">cash.retirement.form</field>
+            <field name="view_mode">graph,pivot,kanban,activity</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+    </data>
+
+</odoo>

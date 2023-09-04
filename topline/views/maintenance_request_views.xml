@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="maintenance_request_view_tree" model="ir.ui.view">
+            <field name="name">maintenance.request.view.tree</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="inside">
+                    <field name="request_date" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="topline_hr_equipment_request_view_form" model="ir.ui.view">
+            <field name="name">topline.equipment.request.form</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='archive_equipment_request']" position="before">
+                    <button name="button_submit_maintenance_manager" string="Submit" type="object" attrs="{'invisible': [('stage_id', '!=', 1)]}"/>
+                    <button name="button_approval_maintenance_manager" string="Approve" class="btn-primary" type="object" attrs="{'invisible': [('stage_id', '!=', 5)]}" groups="topline.group_hr_line_manager"/>
+                    <button name="button_reject" string="Reject" class="btn-danger" type="object" attrs="{'invisible': [('stage_id', '!=', 5)]}" groups="topline.group_hr_line_manager"/>
+
+                    <button name="button_approval_qaqc_manager" string="Approve" class="btn-primary" type="object" attrs="{'invisible': [('stage_id', '!=', 6)]}" groups="quality.group_quality_manager"/>
+                    <button name="button_reject" string="Reject" class="btn-danger" type="object" attrs="{'invisible': [('stage_id', '!=', 6)]}" groups="quality.group_quality_manager"/>
+
+                    <button name="button_approval_store_manager" string="Approve" class="btn-primary" type="object" attrs="{'invisible': [('stage_id', '!=', 7)]}" groups="stock.group_stock_manager"/>
+                    <button name="button_reject" string="Reject" class="btn-danger" type="object" attrs="{'invisible': [('stage_id', '!=', 7)]}" groups="stock.group_stock_manager"/>
+                </xpath>
+                <field name="priority" position="before">
+                    <!-- <field name="department_id"/> -->
+                    <field name="asset_number"/>
+                </field>
+                <field name="name" position="replace">
+                    <field name="seq_name" attrs="{'invisible': [('seq_name', '=', 'New')]}"/>
+                </field>
+                <field name="seq_name" position="after">
+                    <h3>
+                        <field name="name" placeholder="Maintenance Request Description"/>
+                    </h3>
+                </field>
+            </field>
+        </record>
+
+        <record id="topline_hr_equipment_request_view_kanban" model="ir.ui.view">
+            <field name="name">topline.equipment.request.kanban</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('o_kanban_record_top')] [1]" position="replace">
+                    <div class="o_kanban_record_top">
+                        <b class="o_kanban_record_title">
+                            <field name="seq_name"/>
+                        </b>
+                    </div>
+                </xpath>
+                <xpath expr="//div[hasclass('o_kanban_record_top')] [1]" position="after">
+                    <b>
+                        <field name="name"/>
+                    </b>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="search_maintenance_request_failure_report_sheet" model="ir.ui.view">
+			<field name="name">search.maintenance.request.failure.report.sheet</field>
+			<field name="model">maintenance.request.failure.report.sheet</field>
+			<field name="arch" type="xml">
+				<search string="Maintenance Failure report">
+					<field name="ref"/>
+					<field name="name"/>
+					<field name="asset_no"/>
+					<field name="employee_id"/>
+					<field name="observations"/>
+				</search>
+			</field>
+		</record>
+
+        <record id="topline_maintenance_request_failure_report_sheet_tree_view" model="ir.ui.view">
+			<field name="name">maintenance.request.failure.report.sheet.tree</field>
+			<field name="model">maintenance.request.failure.report.sheet</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field name="ref"/>
+				<field name="name"/>
+				<field name="asset_no"/>
+				<field name="employee_id"/>
+				<field name="date"/>
+				<field name="state"/>
+			</field>
+		</record>
+
+        <record id="topline_maintenance_request_failure_report_sheet_form_view" model="ir.ui.view">
+			<field name="name">maintenance.request.failure.report.sheet.form</field>
+			<field name="model">maintenance.request.failure.report.sheet</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+				<form string="Maintenance Request And Failure Report Sheet">
+					<header>
+						<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+						<button name="action_line_manager_approval" states="supervisor" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+						<button name="action_reject" states="supervisor" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,supervisor,approve"/>
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<span class="o_form_label">MAINTENANCE REQUEST AND FAILURE REPORT SHEET</span>
+							<h1>
+								<field name="ref" readonly="1"/>
+							</h1>
+						</div>
+						<group col="4" colspan="4">
+							<field name="name" />
+							<field name="asset_no"/>
+							<field name="hour_odo_meter"/>
+							<field name="date"/>
+							<field name="project_id" />
+							<field name="location"/>
+							<field name="employee_id"/>
+							<field name="employee_user"/>
+						</group>
+						<notebook>
+							<page string="MAINTENANCE REQUEST/FAILURE DESCRIPTION">
+								<span>
+									<b>OBSERVATIONS</b>
+								</span>
+								<br/>
+								<field name="observations" widget="html"/>
+								<br/>
+								<br/>
+								<span>
+									<b>ACTION TAKEN</b>
+								</span>
+								<br/>
+								<field name="action_taken" widget="html"/>
+								<br/>
+								<group string="Approved By:" col="4" colspan="4">
+									<field name="supervisor_approval"/>
+									<field name="supervisor_approval_date"/>
+								</group>
+							</page>
+							<page string="ANALYSIS OF FAILURE">
+								<span>
+									<b>DIAGNOSIS:</b>
+								</span>
+								<br/>
+								<field name="diagnosis" widget="html"/>
+								<br/>
+								<span>
+									<b>CAUSES:</b>
+								</span>
+								<br/>
+								<field name="causes" widget="html"/>
+								<br/>
+								<span>
+									<b>REPAIRS DONE/TO BE DONE:</b>
+								</span>
+								<br/>
+								<field name="repairs_done" widget="html"/>
+								<br/>
+								<span>
+									<b>PARTS REPLACED/TO BE REPLACED:</b>
+								</span>
+								<br/>
+								<field name="part_replaced" widget="html"/>
+								<br/>
+								<group string="DETAILS OF REPAIR" col="4" colspan="4">
+									<field name="repair_date"/>
+									<field name="cost_of_repair"/>
+									<field name="currency_id"/>
+									<field name="partner_id"/>
+									<field name="job_supervised_by_id"/>
+								</group>
+								<group string="Approved By:" col="4" colspan="4">
+									<field name="manager_approval"/>
+									<field name="manager_approval_date"/>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+        <record model="ir.actions.act_window" id="topline_maintenance_request_failure_report_sheet_form_action">
+			<field name="name">Maintenance Request And Failure Report Sheet</field>
+			<field name="res_model">maintenance.request.failure.report.sheet</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="search_maintenance_request_failure_report_sheet"/>
+			<field name="domain">[]</field>
+			<field name="context">{}</field>
+		</record>
+
+    </data>
+
+
+</odoo>

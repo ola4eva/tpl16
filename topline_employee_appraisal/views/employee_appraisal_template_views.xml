@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="employee_appraisal_template_view_tree" model="ir.ui.view">
+            <field name="name">employee_appraisal_template.view.tree</field>
+            <field name="model">employee_appraisal.appraisal.template</field>
+            <field name="arch" type="xml">
+                <tree string="Appraisal Template">
+                    <field name="name" />
+                    <field name="user_id" />
+                    <field name="department_id" />
+                    <field name="create_date" />
+                    <field name="write_date" />
+                    <field name="write_uid" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_appraisal_template_view_form" model="ir.ui.view">
+            <field name="name">employee_appraisal_template.view.form</field>
+            <field name="model">employee_appraisal.appraisal.template</field>
+            <field name="arch" type="xml">
+                <form string="Appraisal Template">
+                    <header>
+                        <button name="action_submit" type="object" string="Confirm" class="oe_highlight" states="draft" />
+                        <button name="action_approve" type="object" string="Approve" class="oe_highlight" states="open" />
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="user_id" />
+                                <field name="create_date" />
+                                <field name="department_id" />
+                            </group>
+                            <group>
+                                <field name="code_behavioural_section" />
+                                <field name="code_competence_section" />
+                                <field name="write_date" />
+                                <field name="write_uid" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="key_performance_indicators" string="Key Performance Indicators">
+                                <field name="question_ids" context="{'default_template_id': active_id}">
+                                    <tree decoration-bf="(is_section or is_subsection)">
+                                        <field name="name" optional="show" />
+                                        <field name="weight" attrs="{'invisible': ['|', ('is_subsection', '=', True), ('is_section', '=', True)], 'required': [('is_section', '=', False), ('is_subsection', '=', False)]}" optional="show" />
+                                        <field name="code" optional="show"/>
+                                        <field name="section_code" optional="show"/>
+                                        <field name="is_section" invisible="1" />
+                                        <field name="is_subsection" invisible="1" />
+                                        <field name="template_id" invisible="1" />
+                                        <control>
+                                            <create name="add_section_control" string="Add a section" context="{'default_is_section': True}" />
+                                            <create name="add_subsection_control" string="Add a sub-section" context="{'default_is_subsection': True}" />
+                                            <create name="add_question_control" string="Add a question" />
+                                        </control>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="name" optional="show" />
+                                                    <field name="code" attrs="{'invisible': [('is_section', '=', False), ('is_subsection', '=', False)]}"/>
+                                                    <field name="section_code" attrs="{'invisible': [('is_section', '=', True)]}"/>
+                                                    <field name="weight" attrs="{'invisible': ['|', ('is_subsection', '=', True), ('is_section', '=', True)], 'required': [('is_section', '=', False), ('is_subsection', '=', False)]}" optional="show" />
+                                                </group>
+                                                <group>
+                                                    <field name="is_section" invisible="0" />
+                                                    <field name="is_subsection" invisible="0" />
+                                                    <field name="template_id" invisible="1" />
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_appraisal_template_view_search" model="ir.ui.view">
+            <field name="name">employee_appraisal_template.view.search</field>
+            <field name="model">employee_appraisal.appraisal.template</field>
+            <field name="arch" type="xml">
+                <search string="Appraisal Template">
+                    <field name="name" />
+                    <field name="user_id" />
+                    <field name="create_date" />
+                    <field name="department_id" />
+                    <field name="write_date" />
+                    <field name="write_uid" />
+                    <field name="state" />
+                </search>
+            </field>
+        </record>
+
+        <record id="employee_appraisal_template_action" model="ir.actions.act_window">
+            <field name="name">Appraisal Template</field>
+            <field name="res_model">employee_appraisal.appraisal.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_no_content_create">Click to create a new template</p>
+            </field>
+        </record>
+
+        
+    </data>
+</odoo>

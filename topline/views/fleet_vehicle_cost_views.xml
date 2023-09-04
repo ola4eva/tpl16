@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- <record id="topline_fleet_vehicle_costs_view_form" model="ir.ui.view">
+            <field name="name">topline.fleet.vehicle.cost.form</field>
+            <field name="model">fleet.vehicle.cost</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_costs_view_form"/>
+            <field name="arch" type="xml">
+                <field name="parent_id" position="after">
+                    <field name="vehicle_return_date"/>
+                    <field name="vehicle_date_of_standby"/>
+                    <field name="reason_for_standby"/>
+                </field>
+            </field>
+        </record> -->
+
+    </data>
+
+</odoo>

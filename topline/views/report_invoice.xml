@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+            <xpath expr="//p[@t-if='o.comment']" position="after">
+                <p t-if="o.num_word"><span>Amount in Words: </span><span t-field="o.num_word" /></p>
+                <p>Bank Details:</p>
+                <t t-foreach="o.partner_bank_ids" t-as="bank">
+                    <p><span t-field="bank.bank_name" /></p>
+                    <p><span>Bank Address: </span><span t-field="bank.bank_id.street"/>, <span t-field="bank.bank_id.city" />, <span t-field="bank.bank_id.country" /></p>
+                    <p><span>Beneficiary: </span><span t-field="bank.partner_id.name" /></p>
+                    <p><span>Account Number: </span> <span t-field="bank.acc_number" /></p>
+                </t>
+                <p>Head of Accounts &amp; Finance</p>
+                <p>Signature:</p>
+                <p>Prepared By Accountant</p>
+                <p>Signature:</p>
+            </xpath>
+        </template>
+    </data>
+</odoo>

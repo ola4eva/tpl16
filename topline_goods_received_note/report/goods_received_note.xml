@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <template id="goods_received_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            div {
+                                <!-- border: 2px solid gray; -->
+                                border-collapse: collapse;
+                            }
+                        </style>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4"><h4>GOODS RECEIVED NOTE</h4></div>
+                            <div class="col-4"></div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <t t-foreach="docs" t-as="o">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ITEM</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>LPO NO.</th>
+                                        <th>UNIT</th>
+                                        <th>QTY</th>
+                                        <th>UNIT VAL(N)</th>
+                                        <th>TOTAL VALUE(N)</th>
+                                        <th>SUPPLIER DEL NOTE/INV</th>
+                                        <th>REMARK</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="serial" t-value="1" />
+                                    <t t-foreach="o.move_lines" t-as="line">
+                                        <tr>
+                                            <td><t t-esc="serial" /></td>
+                                            <td><t t-esc="line.product_id.name"/></td>
+                                            <td><t t-esc="o.origin" /></td>
+                                            <td><t t-esc="line.product_uom.name" /></td>
+                                            <td><t t-esc="line.quantity_done" /></td>
+                                            <td><t t-esc="line.product_id.standard_price" /></td>
+                                            <td><t t-esc="line.product_id.standard_price * line.quantity_done" /></td>
+                                            <td>SUPPLIER DEL NOTE/INV</td>
+                                            <td><t t-esc="line.report_notes" /></td>
+                                        </tr>
+                                        <t t-set="serial" t-value="serial + 1"/>
+                                    </t>    
+                                </tbody>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>Store Officer's Signature: ______________________</div>
+                                    <br/>
+                                    <div>Date: ______________________________________</div>
+                                </div>
+                                <div class="col-6">
+                                    <div>Manager's Signature: _______________________</div>
+                                    <br />
+                                    <div>Date: ____________________________________</div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_euro_portrait1" model="report.paperformat">
+            <field name="name">European A4 Landscape</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report id="goods_received_note"
+            string="Goods Received"
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            name="topline_goods_received_note.goods_received_template"
+            file="topline_goods_received_note.goods_received"
+            paperformat="paperformat_euro_portrait1"
+        />
+    </data>
+</odoo>

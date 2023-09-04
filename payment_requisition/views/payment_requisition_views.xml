@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="0">
+
+    <record id="view_form_payment_requisition_inherit" model="ir.ui.view">
+      <field name="name">view.form.payment.requisition.inherit</field>
+      <field name="model">payment.requisition.form</field>
+      <field name="inherit_id" ref="topline.topline_payment_requisition_form_view" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='project_description']" position="after">
+          <field name="md_request" groups="payment_requisition.submit_payment_request_for_md" />
+        </xpath>
+        <xpath expr="//header/button[@name='action_sheet_move_create']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//header/button[@name='button_md_approval_notification']" position="attributes">
+          <attribute name="groups">topline.group_md,payment_requisition.approve_payment_for_md</attribute>
+        </xpath>
+        <xpath expr="//header" position="inside">
+          <field name="fully_paid" invisible="1" />
+          <button name="set_to_draft" string="Set to Draft" type="object" states="reject" />
+          <button name="action_finance_reject" string="Finance Reject" type="object" class="btn btn-danger" attrs="{'invisible': [('state', '!=', 'md_approve')]}" groups="topline.group_finance_manager"/>
+          <button name="register_payment" string="Register Payment" type="object" attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('fully_paid', '=', True)]}"/>
+        </xpath>
+        <xpath expr="//sheet/div[hasclass('oe_title')]" position="before">
+          <div class="oe_button_box" name="button_box">
+            <button name="action_view_journal_entries" type="object" class="oe_stat_button" icon="fa-archive">
+              <field name="payment_count" />
+            </button>
+          </div>
+        </xpath>
+        <xpath expr="//field[@name='bank_details']" position="after">
+          <field name="default_expense_account_id" />
+          <field name="default_analytic_account_id" />
+        </xpath>
+        <xpath expr="//field[@name='num_word']" position="before">
+          <field name="total_amount_paid" readonly="1" />
+          <field name="total_amount_outstanding" readonly="1" />
+        </xpath>
+        <xpath expr="//notebook" position="inside">
+          <page string="Rejection Log" name="payment_requisition_rejection_log">
+            <group>
+              <field name="rejection_log_ids" nolabel="1">
+                <tree string="Rejection Log" editable="bottom">
+                  <field name="requisition_id" invisible="1" />
+                  <field name="reason" />
+                  <field name="datetime_rejection" />
+                  <field name="user_id" />
+                </tree>
+              </field>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="topline_payment_requisition_form_tree_view" model="ir.ui.view">
+      <field name="name">payment.requisition.form.tree</field>
+      <field name="model">payment.requisition.form</field>
+      <field name="inherit_id" ref="topline.topline_payment_requisition_form_tree_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='department_id']" position="after">
+          <field name="total_amount_requested"/>
+          <field name="total_amount_approved"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

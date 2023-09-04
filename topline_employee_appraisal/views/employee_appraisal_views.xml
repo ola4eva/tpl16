@@ -1,0 +1,248 @@
+<odoo>
+  <data>
+
+    <record id="employee_appraisal_view_tree" model="ir.ui.view">
+      <field name="name">employee.appraisal.view.tree</field>
+      <field name="model">employee_appraisal.employee_appraisal</field>
+      <field name="arch" type="xml">
+        <tree string="Employee Appraisal">
+          <field name="name" />
+          <field name="employee_id" />
+          <field name="employee_number" />
+          <field name="job_id" />
+          <field name="department_id" />
+          <field name="user_id" />
+          <field name="state" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="employee_appraisal_view_form" model="ir.ui.view">
+      <field name="name">employee.appraisal.view.form</field>
+      <field name="model">employee_appraisal.employee_appraisal</field>
+      <field name="arch" type="xml">
+        <form string="Employee Appraisal">
+          <header>
+            <button name="action_send_to_employee" string="Send to Employee" type="object" class="oe_highlight" states="draft" groups="topline_employee_appraisal.group_employee_appraisal_administrator,topline_employee_appraisal.group_employee_appraisal_manager" />
+            <button name="action_send_to_manager" string="Send to Manager" type="object" class="oe_highlight" states="sent" groups="topline_employee_appraisal.group_employee_appraisal_user" />
+            <button name="action_complete_assessment" string="Confirm Assessment" type="object" class="oe_highlight" states="manager" groups="topline_employee_appraisal.group_employee_appraisal_manager" />
+
+            <button name="accept_appraisal_score" type="object" string="Accept" class="oe_highlight" states="manager"/>
+            <button name="reject_appraisal_score" type="object" string="REJECT" class="btn btn-danger" states="manager" />
+
+            <field name="state" widget="statusbar" />
+          </header>
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <field name="name" default="/" readonly="1"/>
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="employee_id" />
+                <field name="employee_number" />
+                <field name="job_id" />
+                <field name="department_id" />
+              </group>
+              <group>
+                <label for="date_start" string="Duration" />
+                <div class="o_row">
+                  <field name="date_start"/>
+                                -
+                  <field name="date_end"/>
+                </div>
+                <field name="template_id" />
+                <field name="parent_id" />
+                <field name="user_id" />
+                <field name="company_id" invisible="1" />
+              </group>
+            </group>
+            <group>
+              <div class="o_row">
+                <div>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr class="table-primary">
+                        <th rowspan="2">Rating Category</th>
+                        <th rowspan="2">Definition</th>
+                        <th rowspan="2">Rating scale</th>
+                        <th colspan="2">Description</th>
+                      </tr>
+                      <tr class="table-primary">
+                        <th>Performance/Result/KRA</th>
+                        <th>Behavioral competencies</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="table-secondary">
+                        <td>5</td>
+                        <td>Outstanding</td>
+                        <td>Exceeded the target with a score of 100%</td>
+                        <td>
+                          <tr>- Far exceeds expectations; consistently over-achieves the performance targets.</tr>
+                          <tr>- Demonstrates exceptional level of performance in all areas.</tr>
+                          <tr>- Makes an exceptional and unique contribution to functional achievements.</tr>
+                        </td>
+                        <td>
+                          <tr>- Has mastered the competency and demonstrates it all the time.</tr>
+                          <tr>- Others see him/her as an expert or role model in this area.</tr>
+                        </td>
+                      </tr>
+                      <tr class="table-info">
+                        <td>4</td>
+                        <td>Exceeds Expectations</td>
+                        <td>Achieved a score between 90% - 99%</td>
+                        <td>
+                          <tr>Always achieves set goals and frequently exceeds them.</tr>
+                          <tr>Demonstrates a very high level of performance in all areas.</tr>
+                        </td>
+                        <td>
+                          <tr>Demonstrates the competency most of the time.</tr>
+                          <tr>Scope for improvement on some factors to build greater expertise.</tr>
+                        </td>
+                      </tr>
+                      <tr class="table-secondary">
+                        <td>3</td>
+                        <td>Meets Expectation</td>
+                        <td>Achieved a score between 71% - 89%</td>
+                        <td>
+                          <tr>- Consistently performs and achieves set goals.</tr>
+                          <tr>- Performance is high quality and may exceed achievement levels in future.</tr>
+                        </td>
+                        <td>
+                          <tr>- Demonstrates the competency often.</tr>
+                          <tr>- Has the ability to perform independently in this area but may falter in complex situations and would require guidance.</tr>
+                        </td>
+                      </tr>
+                      <tr class="table-success">
+                        <td>2</td>
+                        <td>Needs Improvement</td>
+                        <td>Achieved a score between 60% - 70%</td>
+                        <td>
+                          <tr>- Fails to meet expectations in one or more areas.</tr>
+                          <tr>- Improvement is needed.</tr>
+                        </td>
+                        <td>
+                          <tr>- Demonstrates competency sometimes or only in limited facets. Still needs to learn and improve in this area.</tr>
+                          <tr>- Requires close guidance.</tr>
+                        </td>
+                      </tr>
+                      <tr class="table-secondary">
+                        <td>1</td>
+                        <td>Unacceptable</td>
+                        <td>Achieved a score of 59% and below</td>
+                        <td>
+                          <tr>- Doesn't meet goals most of the time.</tr>
+                          <tr>- Improvement is needed in most aspects.</tr>
+                        </td>
+                        <td>
+                          <tr>- Rarely demonstrates competency.</tr>
+                          <tr>- Needs to learn and improve in most areas.</tr>
+                          <tr>- Requires close guidance and supervision.</tr>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </group>
+            <field name="question_ids" nolabel="1" context="{'default_appraisal_id': active_id}">
+              <tree editable="bottom" decoration-bf="is_section" decoration-danger="score_supervisor=='1'" decoration-warning="score_supervisor=='2' or score_supervisor=='3'" decoration-info="score_supervisor=='4'" decoration-success="score_supervisor=='5'">
+                <field name="name" optional="show" required="1" />
+                <field name="weight" attrs="{'invisible': ['|', ('is_subsection', '=', True), ('is_section', '=', True)]}" optional="show" sum="Total Weight" />
+                <field name="score_total" attrs="{'invisible': ['|', ('is_subsection', '=', True), ('is_section', '=', True)]}" optional="show" sum="Total Score"/>
+                <field name="score_self" attrs="{'invisible': ['|', ('is_subsection', '=', True), ('is_section', '=', True)]}" optional="show" sum="Total Self Score"/>
+                <field name="score_supervisor" attrs="{'invisible': ['|', ('is_subsection', '=', True), ('is_section', '=', True)]}" optional="show" sum="Supervisor"/>
+                <field name="code" invisible="1"/>
+                <field name="section_code" invisible="1"/>
+                <field name="comment_self" />
+                <field name="comment_supervisor" />
+                <field name="state" invisible="1" />
+                <field name="is_section" invisible="1" />
+                <field name="is_subsection" invisible="1" />
+                <control>
+                  <create name="add_section_control" string="Add a section" context="{'default_is_section': True}" />
+                  <create name="add_subsection_control" string="Add a sub-section" context="{'default_is_subsection': True}" />
+                  <create name="add_question_control" string="Add a question" />
+                </control>
+              </tree>
+            </field>
+
+            <div class="oe_separator" />
+
+            <group string="Appraisal summary" col="1">
+              <group>
+                <field name="performance_score" string="Performance Results" />
+                <field name="behavioural_score" string="Behavioral Competencies" />
+                <!-- <field name="total_score" string="Total Score" /> -->
+              </group>
+              <group>
+                <field name="overall_rating" />
+              </group>
+              <group>
+                <field name="key_achievements" />
+              </group>
+              <group>
+                <field name="key_strengths" />
+              </group>
+              <group>
+                <field name="areas_of_improvement" />
+              </group>
+              <group>
+                <field name="development_activities" />
+              </group>
+              <group>
+                <field name="concurrent_reviewer_comment" />
+              </group>
+              <div class="oe_inline">
+                <p>I have read and discussed this evaluation with my supervisor and I agree with the overall appraisal and its contents.</p>
+                <field name="accept" widget="radio" readonly="0" />
+              </div>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+            <field name="activity_ids"/>
+            <field name="message_ids" widget="mail_thread" />
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="employee_appraisal_view_search" model="ir.ui.view">
+      <field name="name">employee.appraisal.view.search</field>
+      <field name="model">employee_appraisal.employee_appraisal</field>
+      <field name="arch" type="xml">
+        <search string="Employee Appraisal">
+          <field name="name" />
+          <field name="state" />
+          <group expand="1" string="Group By">
+            <filter name="status" context="{'group_by': 'state'}" domain="[]" string="Status" />
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <record id="employee_appraisal_action" model="ir.actions.act_window">
+      <field name="name">Employee Appraisal</field>
+      <field name="res_model">employee_appraisal.employee_appraisal</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+      <field name="context">{}</field>
+      <field name="help" type="html">
+        <p class="oe_no_content_create">Click to create a new employee Appraisal</p>
+      </field>
+    </record>
+
+    <record id="employee_appraisal_readonly_action" model="ir.actions.act_window">
+      <field name="name">Employee Appraisal</field>
+      <field name="res_model">employee_appraisal.employee_appraisal</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_no_content_create">Click to create a new employee Appraisal</p>
+      </field>
+    </record>
+
+  </data>
+</odoo>

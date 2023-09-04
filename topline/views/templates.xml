@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+         <template id="assets_backend" name="progress class height" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/topline/static/src/css/progess_class.css"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

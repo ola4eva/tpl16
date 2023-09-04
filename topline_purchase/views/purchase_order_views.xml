@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+
+        <record id="topline_purchase_form_view" model="ir.ui.view">
+            <field name="name">topline.purchase.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <button name="print_quotation" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_user</attribute>
+                </button>
+                <button name="action_rfq_send" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </button>
+
+                <xpath expr="//button[@name='action_rfq_send']" position="before">
+                    <button name="button_submit" string="Submit to Manager" type="object" states="draft,sent" groups="base.group_user"/>
+                    <button name="button_line_manager_approval" string="Approve" type="object" class="btn-primary" states="submit" groups="topline.group_hr_line_manager"/>
+                    <button name="button_audit_approval_notification" string="Approve" type="object" class="btn-primary" states="line_approve" groups="topline.group_internal_audit"/>
+                    <button name="button_reject" string="Reject" type="object" states="submit,line_approve" class="btn-danger" groups="topline.group_hr_line_manager,topline.group_internal_audit"/>
+                </xpath>
+
+
+                <!-- MD Approval -->
+                <xpath expr="//header" position="inside">
+                    <button name="button_md_approval" type="object" states="internal_approve" string="Approve Order" id="purchase.md_approve" groups="topline.group_md"/>
+                </xpath>
+
+                <xpath expr="//button[@name='button_confirm']" position="replace">
+                    <button name="button_confirm" type="object" states="md_approve" string="Approve Order" groups="account.group_account_manager"/>
+                </xpath>
+
+                <xpath expr="//button[@name='button_cancel']" position="replace">
+                    <button name="button_cancel" type="object" states="internal_approve" string="Decline Order" id="draft_decline" groups="topline.group_md"/>
+                </xpath>
+
+                <field name="partner_id" position="after">
+                    <field name="employee_id" groups="topline.group_hr_line_manager"/>
+                </field>
+
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'not in', ['draft', 'md_approve'])]}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

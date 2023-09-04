@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+    
+		<record id="group_survey_creator" model="res.groups">
+	        <field name="name">Creator</field>
+	        <field name="category_id" ref="base.module_category_marketing_surveys"/>
+	        <field name="implied_ids" eval="[(4, ref('survey.group_survey_user'))]"/>
+	        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+	    </record>
+	
+		<delete id="survey.survey_users_access" model="ir.rule" />
+
+		<record id="hr_appraisal.group_hr_appraisal_manager" model="res.groups">
+			<field name="implied_ids" eval="[(3, ref('survey.group_survey_manager'), 0)]" />
+		</record>
+
+		<record id="survey.group_survey_manager" model="res.groups">
+			<field name="implied_ids" eval="[(3, ref('survey.group_survey_user'), 0)]" />
+		</record>
+
+		<record id="survey.group_survey_manager" model="res.groups">
+			<field name="implied_ids" eval="[(4, ref('topline_survey.group_survey_creator'))]" />
+		</record>
+
+		<record id="survey_creator_user_input_rule" model="ir.rule">
+			<field name="name">Survey Creator User Input Rule</field>
+			<field name="model_id" ref="survey.model_survey_user_input" />
+			<field name="domain_force">[('create_uid', '=', user.id)]</field>
+			<field name="groups" eval="[(4, ref('topline_survey.group_survey_creator'))]" />
+		</record>
+
+		<record id="survey_creator_survey_rule" model="ir.rule">
+			<field name="name">Survey Creator Survey Rule</field>
+			<field name="model_id" ref="survey.model_survey_survey" />
+			<field name="domain_force">[('create_uid', '=', user.id)]</field>
+			<field name="groups" eval="[(4, ref('topline_survey.group_survey_creator'))]" />
+		</record>
+
+	</data>
+</odoo>

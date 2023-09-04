@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+
+        <record id="topline_view_task_form2_form_view" model="ir.ui.view">
+            <field name="name">topline.project.task.form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <field name="priority" position="before">
+                    <field name="task_done" invisible="1"/>
+                </field>
+                <xpath expr="//button[@name='action_assign_to_me']" position="after">
+                    <button name="button_task_complete" string="Mark as Complete" attrs="{'invisible': [('task_done', '=', True)]}" type="object" groups="base.group_user" confirm="Confirm Task is Completed?"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="topline_hr_timesheet_view_task_form_inherited" model="ir.ui.view">
+            <field name="name">topline.project.task.form2</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='date']" position="after">
+                    <field name="start_time" widget="float_time"/>
+                    <field name="start_time_am_pm" required="1" string=" "/>
+                    <field name="end_time" widget="float_time"/>
+                    <field name="end_time_am_pm" required="1" string=" "/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>
+
+
