@@ -10,30 +10,11 @@ class DailyChecklist(models.Model):
     _description = 'Daily Checklist'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    '''
-    livestream = fields.Char(string='LIVESTREAM DISPLAY MONITOR', required=True, tracking=True)
-    #livestream_bool = fields.Boolean(string='LIVESTREAM DISPLAY MONITOR', required=True, tracking=True)
-    accounts_server = fields.Char(string='ACCOUNTS SERVER', required=True, tracking=True)
-    #accounts_server_bool = fields.Boolean(string='ACCOUNTS SERVER', required=True, tracking=True)
-    backup_system = fields.Char(string='BACK-UP SYSTEM', required=True, tracking=True)
-    #backup_system_bool = fields.Boolean(string='BACK-UP SYSTEM', required=True, tracking=True)
-    mtn_radio = fields.Char(string='MTN RADIO', required=True, tracking=True)
-    #mtn_radio_bool = fields.Boolean(string='MTN RADIO', required=True, tracking=True)
-    mtn_rounter_wan = fields.Char(string='MAIN ROUTER (WAN)', required=True, tracking=True)
-    #mtn_rounter_wan_bool = fields.Boolean(string='MAIN ROUTER (WAN)', required=True, tracking=True)
-    wireless_bridge_a = fields.Char(string='WIRELESS BRIDGE A', required=True, tracking=True)
-    #wireless_bridge_a_bool = fields.Boolean(string='WIRELESS BRIDGE A', required=True, tracking=True)
-    wireless_bridge_b = fields.Char(string='WIRELESS BRIDGE B', required=True, tracking=True)
-    #wireless_bridge_b_bool = fields.Boolean(string='WIRELESS BRIDGE B', required=True, tracking=True)
-    intercom = fields.Char(string='INTERCOM', required=True, tracking=True)
-    #intercom_bool = fields.Boolean(string='INTERCOM', required=True, tracking=True)
-    '''
-
     state = fields.Selection([
         ('new', 'New'),
         ('on', 'Powered On'),
         ('of', 'Powered Off'),
-    ], string='Status', readonly=False, index=True, copy=False, default='new', tracking=True)
+    ], string='Status', readonly=False, index=True, copy=False, default='new', tracking=True,)
 
     date = fields.Date(string='Date', required=True, default=date.today())
 
@@ -91,12 +72,12 @@ class DailyChecklistPowerOnLines(models.Model):
     equipment_id = fields.Many2one(
         comodel_name='daily.checklist.equipment', string='Daily Checklist Equipment', required=True)
     equipment_on_bool = fields.Boolean(
-        string='On', required=True, tracking=True)
+        string='On', required=True, tracking=True,)
     equipment_off_bool = fields.Boolean(
-        string='Off', required=True, tracking=True)
+        string='Off', required=True, tracking=True,)
     time = fields.Char(string='Time')
     remark = fields.Char(string='Remark', required=False,
-                         tracking=True)
+                         tracking=True,)
 
 
 class DailyChecklistPowerOffLines(models.Model):
@@ -107,14 +88,14 @@ class DailyChecklistPowerOffLines(models.Model):
         comodel_name='daily.checklist', string='Daily Checklist')
 
     equipment_id = fields.Many2one(
-        comodel_name='daily.checklist.equipment', string='Daily Checklist Equipment', required=True)
+        comodel_name='daily.checklist.equipment', string='Daily Checklist Equipment', required=True,)
     equipment_on_bool = fields.Boolean(
-        string='On', required=True, tracking=True)
+        string='On', required=True, tracking=True,)
     equipment_off_bool = fields.Boolean(
-        string='Off', required=True, tracking=True)
+        string='Off', required=True, tracking=True,)
     time = fields.Char(string='Time')
     remark = fields.Char(string='Remark', required=False,
-                         tracking=True)
+                         tracking=True,)
 
 
 class DailyChecklistEquipment(models.Model):
@@ -124,4 +105,4 @@ class DailyChecklistEquipment(models.Model):
 
     name = fields.Char(string='Name', required=True)
     active = fields.Boolean(
-        string='Active', default=True, required=False, tracking=True)
+        string='Active', default=True, required=False, tracking=True,)

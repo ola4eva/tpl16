@@ -3362,7 +3362,7 @@ class ATPformLines(models.Model):
     certificate_required = fields.Selection([
         ('yes', 'Yes'),
         ('no', 'No'),
-    ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True)
+    ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True,)
 
     price = fields.Float(string='Est. Price', required=False)
 

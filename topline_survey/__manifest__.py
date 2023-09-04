@@ -15,6 +15,7 @@
         'survey',
         'hr_appraisal'
     ],
+    'license': 'LGPL-3',
     'data': [
         'security/access_security.xml',
         'security/ir.model.access.csv',

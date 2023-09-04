@@ -53,8 +53,8 @@ class CashRetirementForm(models.Model):
     currency_id = fields.Many2one(comodel_name='res.currency', required=True, string='Currency', default=_default_currency, tracking=True)
     location = fields.Char(string='location',  tracking=True)
     
-    total_amount_requested = fields.Float(string='Total amount requested', compute='_total_amount_requested', readonly=True)
-    total_amount_approved = fields.Float(string='Total amount approved', compute='_total_amount_approved', readonly=True)
+    total_amount_requested = fields.Float(string='Total amount requested', compute='_total_amount_requested', readonly=True,)
+    total_amount_approved = fields.Float(string='Total amount approved', compute='_total_amount_approved', readonly=True,)
     
     num_word = fields.Char(string="Amount In Words:", compute='_compute_amount_in_word')
     

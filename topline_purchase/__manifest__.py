@@ -20,7 +20,7 @@
         'topline',
         'hr',
     ],
-
+    'license': 'LGPL-3',
     'data': [
         'views/purchase_order_views.xml'
     ]

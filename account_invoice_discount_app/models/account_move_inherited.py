@@ -14,7 +14,7 @@ class AccountInvoice(models.Model):
 
     discount = fields.Float(string="Discount")
     total_discount = fields.Float(string="Total Discount", compute="compute_total_discount", store=True)
-    is_global_discount = fields.Boolean(String="Global Discount For Invoice/Bill",
+    is_global_discount = fields.Boolean(string="Global Discount For Invoice/Bill",
                                         default=lambda self: self.env['ir.config_parameter'].sudo().get_param(
                                             'account_invoice_discount_app.is_global_discount'))
 

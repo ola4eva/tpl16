@@ -80,9 +80,9 @@ class PaymentRequisitionForm(models.Model):
         string='Bank Details',  tracking=True)
 
     total_amount_requested = fields.Float(
-        string='Total amount requested', compute='_total_amount_requested', readonly=True, tracking=True)
+        string='Total amount requested', compute='_total_amount_requested', readonly=True, tracking=True,)
     total_amount_approved = fields.Float(
-        string='Total amount approved', compute='_total_amount_approved', readonly=True, tracking=True)
+        string='Total amount approved', compute='_total_amount_approved', readonly=True, tracking=True,)
     discount = fields.Float('Discount (%)')
 
     total_amount_approved_due = fields.Float(
@@ -315,10 +315,10 @@ class PaymentRequisitionFormLines(models.Model):
         related='payment_requisition_form_id.state', store=True)
     name = fields.Char(string='Details/Purpose of Request', required=True)
     amount_requested = fields.Float(
-        string='Amount Requested', required=True, tracking=True)
+        string='Amount Requested', required=True, tracking=True,)
     amount_approved = fields.Float(
         string='Amount Approved', copy=False, tracking=True)
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account', states={
-                                          'post': [('readonly', True)], 'done': [('readonly', True)]}, oldname='analytic_account')
+                                          'post': [('readonly', True)], 'done': [('readonly', True)]})
     account_id = fields.Many2one('account.account', string='Account', states={'post': [(
         'readonly', True)], 'done': [('readonly', True)]}, help="An Payment account is expected")

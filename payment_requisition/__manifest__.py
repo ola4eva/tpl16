@@ -20,6 +20,8 @@
         'topline',
     ],
 
+    'license': 'LGPL-3',
+
     'data': [
         'security/access_groups.xml',
         'security/ir.model.access.csv',

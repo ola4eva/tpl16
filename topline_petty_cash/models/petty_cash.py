@@ -84,7 +84,7 @@ class PettyCash(models.Model):
         compute='_total_amount_requested',
         store=True,
         readonly=True, 
-        tracking=True)
+        tracking=True,)
     total_amount_approved = fields.Float(
         string='Total amount approved', compute='_total_amount_approved', readonly=True, tracking=True)
     discount = fields.Float('Discount (%)')
@@ -322,11 +322,11 @@ class PettyCashLine(models.Model):
         related='petty_cash_id.state', store=True)
     name = fields.Char(string='Details/Purpose of Request', required=True)
     amount_requested = fields.Float(
-        string='Amount Requested', required=True, tracking=True)
+        string='Amount Requested', required=True, tracking=True,)
     amount_approved = fields.Float(
-        string='Amount Approved', copy=False, tracking=True)
+        string='Amount Approved', copy=False, tracking=True,)
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account', states={
-                                          'post': [('readonly', True)], 'done': [('readonly', True)]}, oldname='analytic_account')
+                                          'post': [('readonly', True)], 'done': [('readonly', True)]})
     account_id = fields.Many2one('account.account', string='Account', states={'post': [(
         'readonly', True)], 'done': [('readonly', True)]}, help="An Payment account is expected")
     

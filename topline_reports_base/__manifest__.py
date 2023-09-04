@@ -21,7 +21,7 @@
         'web',
         'topline',
     ],
-
+    'license': 'LGPL-3',
     'data': [
         'views/stock_view.xml',
     ],

@@ -35,7 +35,7 @@ class CashAdvanceRequestForm(models.Model):
         ('md_approve', 'MD Approved'),
         ('approve', 'Finance Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True,)
 
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
@@ -66,14 +66,14 @@ class CashAdvanceRequestForm(models.Model):
     employee_id = fields.Many2one(comodel_name='hr.employee', required=True,
                                   string='Name', tracking=True, default=_default_employee)
     department_id = fields.Many2one(comodel_name='hr.department', string='Department',
-                                    related='employee_id.department_id', tracking=True)
+                                    related='employee_id.department_id', tracking=True,)
     location = fields.Char(string='Location', required=True,
-                           tracking=True)
+                           tracking=True,)
     bank_details = fields.Char(
-        string='Bank Details',  tracking=True)
+        string='Bank Details',  tracking=True,)
 
     currency_id = fields.Many2one(comodel_name='res.currency', required=True,
-                                  string='Currency', default=_default_currency, tracking=True)
+                                  string='Currency', default=_default_currency, tracking=True,)
 
     num_word = fields.Char(string="Amount In Words:",
                            compute='_compute_amount_in_word')
@@ -82,7 +82,7 @@ class CashAdvanceRequestForm(models.Model):
         string='Total amount', compute='_total_amount', readonly=True)
 
     date_recovery = fields.Date(
-        string='Date of Recovery', required=True, tracking=True)
+        string='Date of Recovery', required=True, tracking=True,)
 
     def _compute_amount_in_word(self):
         for rec in self:
@@ -95,31 +95,31 @@ class CashAdvanceRequestForm(models.Model):
             self.total_amount += line.amount
 
     employee_name = fields.Many2one(
-        'res.users', 'Employee Name', readonly=True, tracking=True)
+        'res.users', 'Employee Name', readonly=True, tracking=True,),
     employee_approval_date = fields.Date(
-        string='Date', readonly=True, tracking=True)
+        string='Date', readonly=True, tracking=True,)
 
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, tracking=True)
+        'res.users', 'Supervisor Name', readonly=True, tracking=True,)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, tracking=True)
+        string='Date', readonly=True, tracking=True,)
 
     audit_approval = fields.Many2one(
-        'res.users', 'Auditors Name', readonly=True, tracking=True)
+        'res.users', 'Auditors Name', readonly=True, tracking=True,)
     audit_approval_date = fields.Date(
-        string='Date', readonly=True, tracking=True)
+        string='Date', readonly=True, tracking=True,)
 
     finance_comments = fields.Char(
-        string='Comments', tracking=True)
+        string='Comments', tracking=True,)
     finance_approval = fields.Many2one(
-        'res.users', 'Finance Name', readonly=True, tracking=True)
+        'res.users', 'Finance Name', readonly=True, tracking=True,)
     finance_approval_date = fields.Date(
-        string='Date', readonly=True, tracking=True)
+        string='Date', readonly=True, tracking=True,)
 
     received_approval = fields.Many2one(
-        'res.users', 'Recipients Name',  tracking=True)
+        'res.users', 'Recipients Name',  tracking=True,)
     received_approval_date = fields.Date(
-        string='Date', tracking=True)
+        string='Date', tracking=True,)
     paid = fields.Boolean(string="Paid")
     move_id = fields.Many2one(
         comodel_name="account.move", string="Accounting Entry")

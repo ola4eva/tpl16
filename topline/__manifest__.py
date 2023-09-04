@@ -10,8 +10,8 @@
     """,
 
     'author': "MCEE Solutions",
+    'license': 'LGPL-3',
     'website': "https://www.mceesolutions.com/",
-
     'category': 'topline',
     'version': '0.1.1',
     'depends': [

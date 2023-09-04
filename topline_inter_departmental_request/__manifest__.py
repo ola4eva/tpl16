@@ -14,9 +14,8 @@
 
     'category': 'Uncategorized',
     'version': '0.1',
-
+    'license': 'LGPL-3',
     'depends': ['mail'],
-
     'data': [
         'security/ir.model.access.csv',
         'data/seq_data.xml',

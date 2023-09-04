@@ -204,7 +204,7 @@ class MaintenanceRequestAndFailureReportSheet(models.Model):
     partner_id = fields.Many2one(
         comodel_name='res.partner', string='By/Vendor:')
     job_supervised_by_id = fields.Many2one(
-        comodel_name='hr.employee', String='Job Supervised By:')
+        comodel_name='hr.employee', string='Job Supervised By:')
 
     manager_approval = fields.Many2one(
         'res.users', 'Manager Name', readonly=True, tracking=True)

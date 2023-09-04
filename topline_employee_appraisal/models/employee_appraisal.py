@@ -263,7 +263,7 @@ class EmployeeAppraisalQuestion(models.Model):
     is_subsection = fields.Boolean("Is Subsection")
     code = fields.Char('Code', readonly=True)
     section_code = fields.Char('Section Code', readonly=True)
-    state = fields.Selection(related="appraisal_id.state", default="draft")
+    state = fields.Selection(related="appraisal_id.state")
     score_self = fields.Selection(
         selection=SCORE_SELECTION, string='Self Score',
         #   readonly=True,

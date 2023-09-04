@@ -26,7 +26,7 @@ class ConstructionEquipmentChecklist(models.Model):
         ('qa_qc', 'QA/QC'),
         ('approve', 'Approved'),
         ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True,)
 
     name = fields.Char(string='Name')
     job_location = fields.Char(string='Job Location')
@@ -38,21 +38,21 @@ class ConstructionEquipmentChecklist(models.Model):
         'construction.equipment.checklist.line', 'construction_equpiment_line_id', string="Action Move", copy=True)
     date = fields.Date(string='Date', default=date.today())
     supervisor_approval = fields.Many2one(
-        'res.users', 'Supervisor Name', readonly=True, tracking=True)
+        'res.users', 'Supervisor Name', readonly=True, tracking=True,)
     supervisor_approval_date = fields.Date(
-        string='Date', readonly=True, tracking=True)
+        string='Date', readonly=True, tracking=True,)
     manager_approval = fields.Many2one(
-        'res.users', 'Manager Name', readonly=True, tracking=True)
+        'res.users', 'Manager Name', readonly=True, tracking=True,)
     manager_approval_date = fields.Date(
-        string='Date', readonly=True, tracking=True)
+        string='Date', readonly=True, tracking=True,)
     store_approval = fields.Many2one(
-        'res.users', 'Store Personnel Name', readonly=True, tracking=True)
+        'res.users', 'Store Personnel Name', readonly=True, tracking=True,)
     store_approval_date = fields.Date(
-        string='Date', readonly=True, tracking=True)
+        string='Date', readonly=True, tracking=True,)
     qa_qc_approval = fields.Many2one(
-        'res.users', 'QA/QC Personnel Name', readonly=True, tracking=True)
+        'res.users', 'QA/QC Personnel Name', readonly=True, tracking=True,)
     qa_qc_approval_date = fields.Date(
-        string='Date', readonly=True, tracking=True)
+        string='Date', readonly=True, tracking=True,)
 
     def button_submit(self):
         self.write({'state': 'supervisor'})

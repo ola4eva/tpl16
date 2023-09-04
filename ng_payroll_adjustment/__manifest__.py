@@ -29,7 +29,7 @@
                     """,
     'author': "Mattobell",
     'website': 'http://www.mattobell.com',
-
+    'license': 'LGPL-3',
     'depends': ['base', 'mail', 'hr_contract', 'hr_payroll', 'hr'],
     'data': [
         'views/payroll_adjustment.xml',

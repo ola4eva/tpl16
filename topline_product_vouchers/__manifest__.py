@@ -15,7 +15,7 @@
 
     'category': 'Stock',
     'version': '0.1',
-
+    'license': 'LGPL-3',
     'depends': [
         'base', 
         'stock', 
@@ -25,8 +25,5 @@
 
     'data': [
         'report/stock_issue_voucher.xml',
-    ],
-
-    'demo': [
     ],
 }

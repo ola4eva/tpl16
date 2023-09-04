@@ -32,6 +32,7 @@
     'website': 'http://mceesolutions.com',
     'depends': ['hr_payroll'],
     'sequence': '1000',
+    'license': 'LGPL-3',
     'data': [
         'views/hr_views.xml',
     ],

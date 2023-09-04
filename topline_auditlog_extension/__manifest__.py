@@ -11,10 +11,9 @@
 
     'author': "MCEE Solutions",
     'website': "https://www.mceesolutions.com/",
-
     'category': 'Tools',
+    'license': 'LGPL-3',
     'version': '0.1',
-
     'depends': [
         'auditlog',
         'topline',

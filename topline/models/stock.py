@@ -196,7 +196,7 @@ class Picking(models.Model):
     client_id = fields.Many2one(
         'res.partner', string='Client', index=True, ondelete='cascade', required=False)
     need_approval = fields.Boolean(
-        'Need Approval', track_visibility="onchange", copy=False)
+        'Need Approval', tracking=True, copy=False)
     total_cost = fields.Float(
         string='Total Cost', compute='_total_cost', tracking=True, readonly=True)
     project_id = fields.Many2one(
@@ -533,7 +533,7 @@ class StockMove(models.Model):
     certificate_required = fields.Selection([
         ('yes', 'Yes'),
         ('no', 'No'),
-    ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True)
+    ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True,)
 
     def _get_relevant_state_among_moves(self):
         # We sort our moves by importance of state:

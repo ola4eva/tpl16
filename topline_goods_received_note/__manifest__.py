@@ -13,8 +13,8 @@
     'website': "https://www.mceesolutions.com/",
 
     'category': 'Stock',
+    'license': 'LGPL-3',
     'version': '0.1',
-
     'depends': [
         'base', 
         'stock', 

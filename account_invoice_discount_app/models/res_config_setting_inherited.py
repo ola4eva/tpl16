@@ -14,7 +14,7 @@ class ResCompany(models.Model):
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    is_global_discount = fields.Boolean(String="Global Discount For Invoice/Bill")
+    is_global_discount = fields.Boolean(string="Global Discount For Invoice/Bill")
     invoice_account_id = fields.Many2one('account.account', string="Invoice Account",
                                          related='company_id.invoice_account_id')
     bill_account_id = fields.Many2one('account.account', string="Bill Account", related='company_id.bill_account_id')
