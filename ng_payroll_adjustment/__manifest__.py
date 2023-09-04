@@ -24,9 +24,9 @@
     'Version': '1.0',
     'Category': 'Human Resources',
     'description': """
-                    Payroll Adjustments:
-                    - Adding Menu Payroll Adjustments in Payroll.
-                    """,
+        Payroll Adjustments:
+        - Adding Menu Payroll Adjustments in Payroll.
+    """,
     'author': "Mattobell",
     'website': 'http://www.mattobell.com',
     'license': 'LGPL-3',

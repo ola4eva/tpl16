@@ -7,15 +7,12 @@ import time
 import werkzeug.utils
 import werkzeug.wrappers
 from odoo.http import request
-from collections import OrderedDict
 from odoo.tools.safe_eval import safe_eval
-from werkzeug.urls import url_decode, iri_to_uri
-from odoo.addons.web.controllers.main import ReportController
-from odoo.tools import crop_image, topological_sort, html_escape, pycompat
-from odoo.http import content_disposition, dispatch_rpc, request, \
-    serialize_exception as _serialize_exception, Response
-
-
+from werkzeug.urls import url_decode
+from odoo.addons.web.controllers.report import ReportController
+from odoo.tools import html_escape
+from odoo.http import content_disposition, request, \
+    serialize_exception as _serialize_exception
 
 
 class ReportControllerExtended(ReportController):
@@ -43,17 +40,23 @@ class ReportControllerExtended(ReportController):
 
                 if docids:
                     # Generic report:
-                    response = self.report_routes(reportname, docids=docids, converter='pdf')
+                    response = self.report_routes(
+                        reportname, docids=docids, converter='pdf')
                 else:
                     # Particular report:
-                    data = url_decode(url.split('?')[1]).items()  # decoding the args represented in JSON
+                    # decoding the args represented in JSON
+                    data = url_decode(url.split('?')[1]).items()
 
                     dictData = dict(data)
-                    active_model = json.loads(dictData.get('context')).get('active_model')
-                    NewReportName = json.loads(dictData.get('options')).get('form').get('name')
-                    response = self.report_routes(reportname, converter='pdf', **dictData)
+                    active_model = json.loads(
+                        dictData.get('context')).get('active_model')
+                    NewReportName = json.loads(dictData.get(
+                        'options')).get('form').get('name')
+                    response = self.report_routes(
+                        reportname, converter='pdf', **dictData)
 
-                report = request.env['ir.actions.report']._get_report_from_name(reportname)
+                report = request.env['ir.actions.report']._get_report_from_name(
+                    reportname)
                 filename = "%s.%s" % (report.name, "pdf")
 
                 if active_model == 'payroll.register':
@@ -63,11 +66,13 @@ class ReportControllerExtended(ReportController):
                     ids = [int(x) for x in docids.split(",")]
                     obj = request.env[report.model].browse(ids)
                     if report.print_report_name and not len(obj) > 1:
-                        report_name = safe_eval(report.print_report_name, {'object': obj, 'time': time})
+                        report_name = safe_eval(report.print_report_name, {
+                                                'object': obj, 'time': time})
                         filename = "%s.%s" % (report_name, "pdf")
                     if report.model == 'payroll.register':
                         filename = "%s.%s" % (obj.name, "pdf")
-                response.headers.add('Content-Disposition', content_disposition(filename))
+                response.headers.add('Content-Disposition',
+                                     content_disposition(filename))
                 response.set_cookie('fileToken', token)
                 return response
             else:

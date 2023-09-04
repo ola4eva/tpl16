@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models
@@ -6,8 +6,9 @@ from odoo import api, models
 
 class ToplinePayslipDetailsReport(models.AbstractModel):
     _name = 'report.topline_hr_payroll.report_toplinepayslipdetails'
+    _description = 'Payslip details report'
 
-    def _get_payslip_lines(self, payslip_lines):       
+    def _get_payslip_lines(self, payslip_lines):
         PayslipLine = self.env['hr.payslip.line']
         RuleCateg = self.env['hr.salary.rule.category']
 
@@ -32,7 +33,7 @@ class ToplinePayslipDetailsReport(models.AbstractModel):
                 WHERE pl.id in %s
                 GROUP BY rc.parent_id, pl.sequence, pl.id, pl.category_id
                 ORDER BY pl.sequence, rc.parent_id""",
-                (tuple(payslip_lines.ids),))
+                                (tuple(payslip_lines.ids),))
             for x in self.env.cr.fetchall():
                 result.setdefault(x[2], {})
                 result[x[2]].setdefault(x[1], [])
@@ -53,7 +54,6 @@ class ToplinePayslipDetailsReport(models.AbstractModel):
                             'level': level
                         })
         return res
-
 
     @api.model
     def get_report_values(self, docids, data=None):

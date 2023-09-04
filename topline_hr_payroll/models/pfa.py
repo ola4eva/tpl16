@@ -4,6 +4,7 @@ from odoo import api, fields, models, _
 
 class pfa(models.Model):
     _name = 'pfa'
+    _description = 'Pension Fund Administrator'
 
     name = fields.Char('Name of PFA', size=128, required=True)
     contact_address = fields.Text('Contact Address')

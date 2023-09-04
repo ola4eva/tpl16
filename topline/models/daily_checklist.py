@@ -26,12 +26,13 @@ class DailyChecklist(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'daily.checklist') or '/'
-        return super(DailyChecklist, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'daily.checklist') or '/'
+        return super(DailyChecklist, self).create(vals_list)
 
     def prepare_on_lines(self):
         self.ensure_one()
@@ -65,6 +66,10 @@ class DailyChecklist(models.Model):
 class DailyChecklistPowerOnLines(models.Model):
     _name = 'daily.checklist.power.on.line'
     _description = 'Daily Checklist Power On Lines'
+    
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
 
     daily_checklist_id = fields.Many2one(
         comodel_name='daily.checklist', string='Daily Checklist')
@@ -83,6 +88,10 @@ class DailyChecklistPowerOnLines(models.Model):
 class DailyChecklistPowerOffLines(models.Model):
     _name = 'daily.checklist.power.off.line'
     _description = 'Daily Checklist Power Off Lines'
+
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
 
     daily_checklist_id = fields.Many2one(
         comodel_name='daily.checklist', string='Daily Checklist')

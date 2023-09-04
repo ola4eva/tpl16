@@ -58,12 +58,13 @@ class ServiceOrder(models.Model):
     po_count = fields.Integer(
         compute="_po_count", string="RFQ's/PO's", store=False)
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'service.order') or '/'
-        return super(ServiceOrder, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'service.order') or '/'
+        return super(ServiceOrder, self).create(vals_list)
 
     
     def button_submit(self):

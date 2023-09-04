@@ -100,11 +100,12 @@ class EmployeeAppraisal(models.Model):
         ('reject', 'I Reject')
     ], string='Accept/Reject', readonly=True)
 
-    @api.model
-    def create(self, vals):
-        vals['name'] = self.env['ir.sequence'].sudo(
-        ).next_by_code('employee.appraisal')
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            vals['name'] = self.env['ir.sequence'].sudo(
+            ).next_by_code('employee.appraisal')
+        return super().create(vals_list)
 
     def _compute_overall_rating(self):
         for record in self:

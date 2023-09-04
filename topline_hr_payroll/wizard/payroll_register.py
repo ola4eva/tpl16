@@ -8,6 +8,7 @@ from odoo import api, fields, models
 
 class report_payrollregister(models.AbstractModel):
     _name = 'report.topline_hr_payroll.report_payrollregister'
+    _description = 'Payroll Register Report'
 
     @api.model
     def render_html(self, docids, data=None):

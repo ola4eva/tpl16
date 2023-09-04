@@ -223,12 +223,13 @@ class WorkCompletionCertificate(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'work.completion.certificate') or '/'
-        return super(WorkCompletionCertificate, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'work.completion.certificate') or '/'
+        return super(WorkCompletionCertificate, self).create(vals_list)
 
     def button_submit(self):
         self.write({'state': 'submit'})
@@ -482,12 +483,13 @@ class AssetMovementForm(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'asset.movement.form') or '/'
-        return super(AssetMovementForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'asset.movement.form') or '/'
+        return super(AssetMovementForm, self).create(vals_list)
 
     def button_submit(self):
         self.write({'state': 'line_manager'})
@@ -616,12 +618,13 @@ class WasteManagementForm(models.Model):
     waste_reciever_tel = fields.Char(string='Tel')
     waste_reciever_remark = fields.Char(string='Remarks')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'waste.management.form') or '/'
-        return super(WasteManagementForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'waste.management.form') or '/'
+        return super(WasteManagementForm, self).create(vals_list)
 
     def button_submit(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -654,9 +657,14 @@ class DriversHealthChecklist(models.Model):
     checklist_line_ids = fields.One2many(
         'drivers.health.checklist.line', 'checklist_id', string="Drivers Health Checklist", copy=True)
 
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
+
 
 class DriversHealthChecklistLine(models.Model):
     _name = "drivers.health.checklist.line"
+    _description = "Drivers Health Checklist Line"
 
     checklist_id = fields.Many2one(
         comodel_name='drivers.health.checklist', string='Drivers Health Checklist')
@@ -677,6 +685,10 @@ class DriversHealthChecklistLine(models.Model):
     ], string='Requirements', readonly=False, index=True, copy=True,  tracking=True)
 
     result = fields.Char(string='Result')
+
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
 
 
 class JobSafetyInspectionChecklist(models.Model):
@@ -1390,6 +1402,7 @@ class SupplierRevaluation(models.Model):
 
 class SupplierRevaluationLines(models.Model):
     _name = 'supplier.revaluation.lines'
+    _description = 'Supplier Revaluation Lines'
 
     supplier_revaluation_id = fields.Many2one(
         comodel_name="supplier.revaluation", string="RE-EVALUATION CRITERIA", required=False, )
@@ -1815,6 +1828,7 @@ class SiteInductionLines(models.Model):
 
 class PensionManager(models.Model):
     _name = 'pen.type'
+    _description = 'pen.type'
 
     name = fields.Char(string='Name')
     contact_person = fields.Char(string='Contact person')
@@ -1872,12 +1886,13 @@ class LateArrivalForm(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'late.arrival.form') or '/'
-        return super(LateArrivalForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'late.arrival.form') or '/'
+        return super(LateArrivalForm, self).create(vals_list)
 
     def button_submit(self):
         self.write({'state': 'supervisor'})
@@ -2093,6 +2108,7 @@ class CertificateforTendering(models.Model):
 
 class CertificateforTenderingCategory(models.Model):
     _name = 'certificates.for.tendering.category'
+    _description = 'Certificates For Tendering Category'
 
     name = fields.Char(string='Certificate', required=True)
     active = fields.Boolean(string='Active', default=True)
@@ -2162,12 +2178,13 @@ class JourneyRequest(models.Model):
         'fleet.vehicle', 'Assigned Vehicle', tracking=True)
     active = fields.Boolean(string='Active', default=True)
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'journey.request') or '/'
-        return super(JourneyRequest, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'journey.request') or '/'
+        return super(JourneyRequest, self).create(vals_list)
 
     def button_submit(self):
         self.write({'state': 'supervisor'})
@@ -2408,12 +2425,13 @@ class ExitForm(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'exit.form') or '/'
-        return super(ExitForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'exit.form') or '/'
+        return super(ExitForm, self).create(vals_list)
 
     def button_submit(self):
         self.write({'state': 'supervisor'})
@@ -2751,12 +2769,13 @@ class ReceivingInspectionReport(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'receiving.inspection.report') or '/'
-        return super(ReceivingInspectionReport, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'receiving.inspection.report') or '/'
+        return super(ReceivingInspectionReport, self).create(vals_list)
 
     partner_id = fields.Many2one(
         comodel_name='res.partner', string='Vendor', tracking=True)
@@ -2827,6 +2846,7 @@ class ReceivingInspectionReport(models.Model):
 
 class ReceivingInspectionReportLines(models.Model):
     _name = 'receiving.inspection.report.lines'
+    _description = 'Receiving Inspection Report Lines'
 
     receiving_inspection_report_id = fields.Many2one(
         comodel_name='receiving.inspection.report', string='Receiving Inspection Report')
@@ -3297,12 +3317,13 @@ class ATPform(models.Model):
         for line in self.atp_form_line_ids:
             self.total += line.price_subtotal
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'atp.form') or '/'
-        return super(ATPform, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'atp.form') or '/'
+        return super(ATPform, self).create(vals_list)
 
     def button_submit(self):
         self.write({'state': 'submit'})
@@ -3348,6 +3369,7 @@ class ATPform(models.Model):
 
 class ATPformLines(models.Model):
     _name = 'atp.form.lines'
+    _description = 'ATP Form Lines'
 
     atp_form_id = fields.Many2one(comodel_name='atp.form', string='ATP Frm')
 
@@ -3365,6 +3387,10 @@ class ATPformLines(models.Model):
     ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True,)
 
     price = fields.Float(string='Est. Price', required=False)
+
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
 
     @api.onchange('product_id')
     def _onchange_partner_id(self):
@@ -3498,12 +3524,13 @@ class SalaryAdvanceForm(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'salary.advance') or '/'
-        return super(SalaryAdvanceForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'salary.advance') or '/'
+        return super(SalaryAdvanceForm, self).create(vals_list)
 
     def button_submit(self):
         self.write({'state': 'submit'})
@@ -3624,12 +3651,13 @@ class MissingStolenAssetReportForm(models.Model):
         if not self.env.user in current_managers:
             raise UserError(_("You can only approve your department expenses"))
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name_ref', 'New') == 'New':
-            vals['name_ref'] = self.env['ir.sequence'].next_by_code(
-                'missing.stolen.asset.report') or '/'
-        return super(MissingStolenAssetReportForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name_ref', 'New') == 'New':
+                vals['name_ref'] = self.env['ir.sequence'].next_by_code(
+                    'missing.stolen.asset.report') or '/'
+        return super(MissingStolenAssetReportForm, self).create(vals_list)
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
     def _default_department(self):
@@ -3844,6 +3872,11 @@ class SiteTimeSheet(models.Model):
 
 class SiteTimeSheetLines(models.Model):
     _name = 'site.time.sheet.lines'
+    _description = 'Site Time Sheet Lines'
+
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
 
     site_time_sheet_id = fields.Many2one(
         comodel_name='site.time.sheet', string='site time sheet')
@@ -3881,6 +3914,7 @@ class EmsMonitoring(models.Model):
 
 class EmsKpi(models.Model):
     _name = 'ems.kpi'
+    _description = 'EMS KPI'
 
     name = fields.Char(string="Name", required=True)
     active = fields.Boolean(string='Active', default=True)
@@ -3902,12 +3936,13 @@ class FumigationSchedule(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'fumigation.schedule') or '/'
-        return super(FumigationSchedule, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'fumigation.schedule') or '/'
+        return super(FumigationSchedule, self).create(vals_list)
 
     def action_fumigation_send(self):
         '''
@@ -3969,5 +4004,3 @@ class FumigationSchedule(models.Model):
             'target': 'new',
             'context': ctx,
         }
-
-

@@ -161,11 +161,12 @@ class CashRetirementForm(models.Model):
             amount_advance = self.advance_id.amount_approved
 
    
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code('cash.retirement') or '/'
-        return super(CashRetirementForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code('cash.retirement') or '/'
+        return super(CashRetirementForm, self).create(vals_list)
     
     
     def button_submit(self):
@@ -271,6 +272,7 @@ class CashRetirementForm(models.Model):
     
 class CashRetirementFormLines(models.Model):
     _name = 'cash.retirement.form.lines'
+    _description = 'Cash Retirement Form Lines'
     
     cash_retirement_form_id = fields.Many2one(comodel_name='cash.retirement.form', string='cash retirement form')
     

@@ -50,12 +50,13 @@ class PaymentRequisitionForm(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'payment.requisition') or '/'
-        return super(PaymentRequisitionForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'payment.requisition') or '/'
+        return super(PaymentRequisitionForm, self).create(vals_list)
 
     @api.model
     def _default_currency(self):
@@ -301,6 +302,7 @@ class PaymentRequisitionForm(models.Model):
 
 class PaymentRequisitionFormLines(models.Model):
     _name = 'payment.requisition.form.lines'
+    _description = 'Payment Requisition Form Lines'
 
     payment_requisition_form_id = fields.Many2one(
         comodel_name='payment.requisition.form', string='payment.requisition.form')
@@ -309,6 +311,10 @@ class PaymentRequisitionFormLines(models.Model):
     def _check_user_group(self):
         if self.user_has_groups('account.group_account_manager') or self.user_has_groups('topline.group_hr_line_manager') or self.user_has_groups('topline.group_internal_audit'):
             self.is_manager = True
+
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
 
     is_manager = fields.Boolean(compute='_check_user_group')
     state = fields.Selection(

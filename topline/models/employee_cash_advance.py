@@ -40,12 +40,13 @@ class CashAdvanceRequestForm(models.Model):
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'cash.advance.request') or '/'
-        return super(CashAdvanceRequestForm, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'cash.advance.request') or '/'
+        return super(CashAdvanceRequestForm, self).create(vals_list)
 
     def _check_manager_approval(self):
         # if not self.user_has_groups('hr_expense.group_hr_expense_user'):
@@ -258,6 +259,7 @@ class CashAdvanceRequestForm(models.Model):
 
 class CashAdvanceRequestFormLines(models.Model):
     _name = 'cash.advance.request.form.lines'
+    _description = 'Cash Advance Request Form Lines'
 
     cash_advance_request_form_id = fields.Many2one(
         comodel_name='cash.advance.request.form', string='cash advance request Form')

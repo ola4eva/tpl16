@@ -23,8 +23,6 @@ class AccountMove(models.Model):
         return super(AccountMove, self).action_post()
 
 
-
-
 class Picking(models.Model):
     _name = "stock.picking"
     _inherit = 'stock.picking'
@@ -41,8 +39,8 @@ class Picking(models.Model):
         ('done', 'Done'),
         ('reject', 'Rejected'),
         ('cancel', 'Cancelled'),
-    ], string='Status', 
-    # compute='_compute_state',
+    ], string='Status',
+        # compute='_compute_state',
         copy=False, index=True, readonly=True, store=True, tracking=True,
         help=" * Draft: not confirmed yet and will not be scheduled until confirmed.\n"
              " * Waiting Another Operation: waiting for another move to proceed before it becomes automatically available (e.g. in Make-To-Order flows).\n"
@@ -53,7 +51,7 @@ class Picking(models.Model):
     picking_type_name = fields.Char(
         string='Picking Type Name', related='picking_type_id.name')
     active = fields.Boolean('Active', default=True)
-    
+
     # @api.depends('move_type', 'move_lines.state', 'move_lines.picking_id')
     def _compute_state(self):
         ''' State of a picking depends on the state of its related stock.move
@@ -82,16 +80,16 @@ class Picking(models.Model):
                 self.state = 'assigned'
             else:
                 self.state = relevant_move_state
-                
-    
+
     def unlink(self):
         for picking in self:
-            store_request_picking_type = self.env.ref("topline.stock_picking_type_emp")
+            store_request_picking_type = self.env.ref(
+                "topline.stock_picking_type_emp")
             if picking.picking_type_id == store_request_picking_type:
-                raise UserError("You are not allowed to delete store requests, you may consider archiving instead!!!")
-        return super(Picking, self).unlink()    
+                raise UserError(
+                    "You are not allowed to delete store requests, you may consider archiving instead!!!")
+        return super(Picking, self).unlink()
 
-    
     def button_submit(self):
         self.write({'state': 'submit'})
         for move in self.move_lines:
@@ -107,7 +105,6 @@ class Picking(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    
     def action_confirm(self):
         self.write({'is_locked': True})
         for move in self.move_lines:
@@ -129,7 +126,6 @@ class Picking(models.Model):
             return False
         return res
 
-    
     def action_line_manager_approval(self):
         self.write({'state': 'approve'})
         group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -147,7 +143,6 @@ class Picking(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def action_qa_qc_approval(self):
         self.write({'state': 'qa_qc_approve'})
         for move in self.move_lines:
@@ -162,7 +157,6 @@ class Picking(models.Model):
                           partner_ids=partner_ids)
         self.send_store_request_mail()
 
-    
     def manager_confirm(self):
         for order in self:
             order.write({'man_confirm': True})
@@ -188,8 +182,8 @@ class Picking(models.Model):
         comodel_name='hr.department', string='Department', related='employee_id.department_id')
 
     total_price = fields.Float(
-        string='Total', 
-        # compute='_total_price', 
+        string='Total',
+        # compute='_total_price',
         readonly=True, store=True)
     man_confirm = fields.Boolean(
         'Manager Confirmation', tracking=True)
@@ -206,20 +200,17 @@ class Picking(models.Model):
     rejection_reason = fields.Many2one(
         'stock.rejection.reason', string='Rejection Reason', index=True, tracking=True)
 
-    
     @api.depends('move_ids_without_package.product_uom_qty')
     def _total_cost(self):
         for a in self:
             for line in a.move_ids_without_package:
                 a.total_cost += line.price_cost * line.product_uom_qty
 
-    
     def button_reset(self):
         self.mapped('move_lines')._action_cancel()
         self.write({'state': 'draft'})
         return {}
 
-    
     def send_store_request_mail(self):
         if self.picking_type_id.name == "Staff Store Requests" and self.state in ['draft', 'approve', 'waiting', 'confirmed']:
             group_id = self.env['ir.model.data'].xmlid_to_object(
@@ -237,7 +228,6 @@ class Picking(models.Model):
             return False
         return True
 
-    
     def send_store_request_done_mail(self):
         if self.state in ['done']:
             subject = "Store request '{}', for {} has been approved and validated".format(
@@ -248,7 +238,6 @@ class Picking(models.Model):
             self.sheet_id.message_post(
                 subject=subject, body=subject, partner_ids=partner_ids)
 
-    
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Store request '{}', for {} has been rejected".format(
@@ -259,18 +248,15 @@ class Picking(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_approve_srt(self):
         self.need_approval = False
         return {}
 
-    
     # @api.depends('move_lines.price_unit')
     # def _total_price(self):
     #     for line in self.move_lines:
     #         self.total_price += line.price_subtotal
 
-    
     def create_atp_order(self):
         """
         Method to open create atp form
@@ -321,7 +307,6 @@ class StockPickingRejection(models.TransientModel):
     rejection_reason_id = fields.Many2one(
         'stock.rejection.reason', 'Rejection Reason')
 
-    
     def action_rejection_reason_apply(self):
         leads = self.env['stock.picking'].browse(
             self.env.context.get('active_ids'))
@@ -346,12 +331,13 @@ class ExpenseRef(models.Model):
                        required=True, index=True, copy=False, default='New')
     description = fields.Char(string='Expense Desciption')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'hr.expense') or '/'
-        return super(ExpenseRef, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'hr.expense') or '/'
+        return super(ExpenseRef, self).create(vals_list)
 
 
 class HrExpenseSheet(models.Model):
@@ -375,7 +361,6 @@ class HrExpenseSheet(models.Model):
     description = fields.Char(
         string='Expense Desciption', readonly=True, compute='get_desc')
 
-    
     def get_desc(self):
         for expense in self.expense_line_ids:
             if expense.description:
@@ -394,7 +379,6 @@ class HrExpenseSheet(models.Model):
         return {}
     '''
 
-    
     def button_md_approval(self):
         self.write({'state': 'approve'})
         subject = "Expense '{}' has been approved by MD".format(self.name)
@@ -405,7 +389,6 @@ class HrExpenseSheet(models.Model):
                           partner_ids=partner_ids)
         return {}
 
-    
     def button_audit_approval(self):
         self.write({'state': 'audit'})
         subject = "Expense '{}' has been approved by Audit".format(self.name)
@@ -416,7 +399,6 @@ class HrExpenseSheet(models.Model):
                           partner_ids=partner_ids)
         return {}
 
-    
     def expense_audit_approval_notification(self):
         group_id = self.env['ir.model.data'].xmlid_to_object(
             'topline.group_internal_audit')
@@ -439,7 +421,7 @@ class HrExpenseSheet(models.Model):
             partner_ids.append(partner.id)
         self.sheet_id.message_post(subject=subject,body=subject,partner_ids=partner_ids)
     '''
-    
+
     def approve_expense_sheets(self):
         if not self.user_has_groups('hr_expense.group_hr_expense_user'):
             raise UserError(
@@ -459,7 +441,6 @@ class HrExpenseSheet(models.Model):
         self.activity_update()
         # self.expense_audit_approval_notification()
 
-    
     def action_sheet_move_create(self):
         if any(sheet.state != 'approve' for sheet in self):
             raise UserError(
@@ -514,7 +495,10 @@ class StockMove(models.Model):
              "* Available: When products are reserved, it is set to \'Available\'.\n"
              "* Done: When the shipment is processed, the state is \'Done\'.")
 
-    
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
+
     @api.depends('product_uom_qty', 'price_cost')
     def _compute_subtotal(self):
         for line in self:
@@ -577,5 +561,3 @@ class StockMove(models.Model):
 class StockMoveLine(models.Model):
     _name = "stock.move.line"
     _inherit = ['stock.move.line', 'mail.thread', 'mail.activity.mixin']
-
-

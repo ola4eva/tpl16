@@ -33,12 +33,13 @@ class MaintenanceRequest(models.Model):
                            required=True, index=True, copy=False, default='New')
     active = fields.Boolean(string="Active", default=True)
 
-    @api.model
-    def create(self, vals):
-        if vals.get('seq_name', 'New') == 'New':
-            vals['seq_name'] = self.env['ir.sequence'].next_by_code(
-                'maintenance.request') or '/'
-        return super(MaintenanceRequest, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('seq_name', 'New') == 'New':
+                vals['seq_name'] = self.env['ir.sequence'].next_by_code(
+                    'maintenance.request') or '/'
+        return super(MaintenanceRequest, self).create(vals_list)
 
     def unlink(self):
         for request in self:
@@ -214,12 +215,13 @@ class MaintenanceRequestAndFailureReportSheet(models.Model):
     ref = fields.Char('Order Reference', readonly=False,
                       required=True, index=True, copy=False, default='New')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('ref', 'New') == 'New':
-            vals['ref'] = self.env['ir.sequence'].next_by_code(
-                'maintenance.request.failure.report.sheet') or '/'
-        return super(MaintenanceRequestAndFailureReportSheet, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('ref', 'New') == 'New':
+                vals['ref'] = self.env['ir.sequence'].next_by_code(
+                    'maintenance.request.failure.report.sheet') or '/'
+        return super(MaintenanceRequestAndFailureReportSheet, self).create(vals_list)
 
     # @api.onchange('asset_id')
     # def _update_asset_fields(self):

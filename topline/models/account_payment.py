@@ -3,9 +3,10 @@ from odoo import models, api
 class account_payment(models.Model):
     _inherit = "account.payment"
 
-    @api.model
-    def create(self, vals):
-        payment = super(account_payment, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        # for vals in vals_list:
+        payment = super(account_payment, self).create(vals_list)
         payment.send_payment_creation_mail()
         return payment
 

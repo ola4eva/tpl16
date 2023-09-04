@@ -22,11 +22,10 @@ class Project(models.Model):
     project_team_ids = fields.Many2many(
         comodel_name="hr.employee", string="Project Team", )
 
-    @api.model
-    def create(self, vals):
-        if vals.get('project_code', 'New') == 'New':
-            vals['project_code'] = self.env['ir.sequence'].next_by_code(
-                'project.code') or '/'
-        return super(Project, self).create(vals)
-    
-
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('project_code', 'New') == 'New':
+                vals['project_code'] = self.env['ir.sequence'].next_by_code(
+                    'project.code') or '/'
+        return super(Project, self).create(vals_list)
