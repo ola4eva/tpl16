@@ -248,6 +248,7 @@ class PettyCash(models.Model):
 
     @api.depends('line_ids.amount_approved')
     def _total_amount_approved(self):
+        self.total_amount_approved = self.total_amount_approved_due = 0
         for line in self.line_ids:
             self.total_amount_approved += line.amount_approved
             self.total_amount_approved_due = self.total_amount_approved

@@ -7,13 +7,14 @@
         <record id="petty_cash_tree_view" model="ir.ui.view">
             <field name="name">petty.cash.tree</field>
             <field name="model">petty.cash</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <field name="name"/>
-                <field name="date"/>
-                <field name="department_id"/>
-                <field name="employee_id"/>
-                <field name="state"/>
+                <tree>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="department_id"/>
+                    <field name="employee_id"/>
+                    <field name="state"/>
+                </tree>
             </field>
         </record>
 
@@ -121,16 +122,15 @@
         </record>
 
         <!-- petty cash action-->
-        <record  id="petty_cash_action" model="ir.actions.act_window">
+        <record id="petty_cash_action" model="ir.actions.act_window">
             <field name="name">Petty Cash</field>
             <field name="res_model">petty.cash</field>
-            
             <field name="view_mode">tree,form</field>
             <field name="domain">[]</field>
             <field name="context">{'search_default_filter_unposted': True}</field>
         </record>
 
         <menuitem name="Petty Cash" id="petty_cash_menu" parent="hr_expense.menu_hr_expense_my_expenses" action="petty_cash_action"/>
-        
+
     </data>
 </odoo>

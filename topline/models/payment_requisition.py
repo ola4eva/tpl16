@@ -38,7 +38,6 @@ class PaymentRequisitionForm(models.Model):
             [('user_id', '=', self.env.uid)])
         return self.env['res.partner'].search([('name', '=', employee.name)])
 
-    
     def _check_manager_approval(self):
         current_managers = self.employee_id.parent_id.user_id | self.employee_id.department_id.manager_id.user_id
         if self.employee_id.user_id == self.env.user:
@@ -136,7 +135,6 @@ class PaymentRequisitionForm(models.Model):
     atp_id = fields.Many2one(comodel_name='atp.form', string='ATP Form')
     source = fields.Char(string='Source')
 
-    
     def button_submit(self):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
@@ -152,7 +150,6 @@ class PaymentRequisitionForm(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    
     def button_line_manager_approval(self):
         self._check_manager_approval()
         if self.total_amount_approved == 0.00:
@@ -176,7 +173,6 @@ class PaymentRequisitionForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_audit_approval_notification(self):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
@@ -196,7 +192,6 @@ class PaymentRequisitionForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_md_approval_notification(self):
         self.write({'state': 'md_approve'})
         self.md_approval_date = date.today()
@@ -216,7 +211,6 @@ class PaymentRequisitionForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_finance_approval(self):
         self.write({'state': 'approve'})
         self.finance_approval_date = date.today()
@@ -229,7 +223,6 @@ class PaymentRequisitionForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "Payment Requisition '{}', for {} has been rejected".format(
@@ -240,26 +233,24 @@ class PaymentRequisitionForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     @api.depends('payment_requisition_form_line_ids.amount_requested')
     def _total_amount_requested(self):
+        self.total_amount_requested = 0
         for line in self.payment_requisition_form_line_ids:
             self.total_amount_requested += line.amount_requested
 
-    
     @api.depends('payment_requisition_form_line_ids.amount_approved')
     def _total_amount_approved(self):
+        self.total_amount_approved = self.total_amount_approved_due = 0.0
         for line in self.payment_requisition_form_line_ids:
             self.total_amount_approved += line.amount_approved
             self.total_amount_approved_due = self.total_amount_approved
 
-    
     def _compute_amount_in_word(self):
         for rec in self:
             rec.num_word = str(rec.currency_id.amount_to_text(
                 rec.total_amount_approved)) + ' only'
 
-    
     def action_sheet_move_create(self):
 
         if any(sheet.state != 'approve' for sheet in self):
@@ -307,7 +298,6 @@ class PaymentRequisitionFormLines(models.Model):
     payment_requisition_form_id = fields.Many2one(
         comodel_name='payment.requisition.form', string='payment.requisition.form')
 
-    
     def _check_user_group(self):
         if self.user_has_groups('account.group_account_manager') or self.user_has_groups('topline.group_hr_line_manager') or self.user_has_groups('topline.group_internal_audit'):
             self.is_manager = True
