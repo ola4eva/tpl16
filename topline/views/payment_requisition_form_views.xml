@@ -3,19 +3,19 @@
 
     <data>
 
-        <!-- payment.requisition.form tree view-->
         <record id="topline_payment_requisition_form_tree_view" model="ir.ui.view">
             <field name="name">payment.requisition.form.tree</field>
             <field name="model">payment.requisition.form</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <field name="name"/>
-                <field name="date"/>
-                <field name="department_id"/>
-                <field name="project_description"/>
-                <field name="employee_id"/>
-                <field name="bank_details"/>
-                <field name="state"/>
+                <tree>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="department_id"/>
+                    <field name="project_description"/>
+                    <field name="employee_id"/>
+                    <field name="bank_details"/>
+                    <field name="state"/>
+                </tree>
             </field>
         </record>
 
@@ -104,7 +104,6 @@
             </field>
         </record>
 
-        <!-- Search Views -->
         <record id="search_payment_requisition_form" model="ir.ui.view">
             <field name="name">search.payment.requisition.form</field>
             <field name="model">payment.requisition.form</field>
@@ -142,6 +141,6 @@
 
         <menuitem name="Payment Requisition Form" id="topline_payment_requisition_menu" parent="hr_expense.menu_hr_expense_my_expenses" action="topline_payment_requisition_form_action"/>
         <menuitem name="Payment Requisition Report" id="topline_payment_requisition_form_report_menu" parent="topline_expenses_reporting_main_menu" action="topline_payment_requisition_form_reporting_action"/>
-        
+
     </data>
 </odoo>
