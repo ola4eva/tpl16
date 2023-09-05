@@ -23,16 +23,17 @@
         <record id="topline_cash_advance_request_form_tree_view" model="ir.ui.view">
             <field name="name">cash.advance.request.form.tree</field>
             <field name="model">cash.advance.request.form</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <field name="name"/>
-                <field name="date"/>
-                <field name="employee_id"/>
-                <field name="department_id"/>
-                <field name="total_amount"/>
-                <field name="location"/>
-                <field name="bank_details"/>
-                <field name="state"/>
+                <tree>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="total_amount"/>
+                    <field name="location"/>
+                    <field name="bank_details"/>
+                    <field name="state"/>
+                </tree>
             </field>
         </record>
 

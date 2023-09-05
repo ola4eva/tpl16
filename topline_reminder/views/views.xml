@@ -16,7 +16,6 @@
     <record id="topline_reminder_tree_view" model="ir.ui.view">
 		<field name="name">topline.reminder.tree</field>
 		<field name="model">topline.reminder</field>
-		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree decoration-info="date_deadline == 'False'" decoration-danger="date_deadline &lt; current_date">
 				<field name="name"/>

@@ -324,13 +324,14 @@
 		<record id="topline_maintenance_equipment_tree_view" model="ir.ui.view">
 			<field name="name">maintenance.equipment.tree</field>
 			<field name="model">maintenance.equipment</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="asset_number"/>
-				<field name="location"/>
-				<field name="scrap_date" string="Outgoing Date"/>
-				<field name="current_status"/>
+				<tree>
+					<field name="name"/>
+					<field name="asset_number"/>
+					<field name="location"/>
+					<field name="scrap_date" string="Outgoing Date"/>
+					<field name="current_status"/>
+				</tree>
 			</field>
 		</record>
 
@@ -578,187 +579,201 @@
 		<record id="topline_construction_equipment_checklist_tree_view" model="ir.ui.view">
 			<field name="name">construction.equipment.checklist.tree</field>
 			<field name="model">construction.equipment.checklist</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="date"/>
-				<field name="state"/>
+				<tree>
+					<field name="name"/>
+					<field name="date"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_service_order_tree_view" model="ir.ui.view">
 			<field name="name">service.order.tree</field>
 			<field name="model">service.order</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="employee_id"/>
-				<field name="department_id"/>
-				<field name="location"/>
-				<field name="project_id"/>
-				<field name="project_description"/>
-				<field name="date"/>
-				<field name="state"/>
+				<tree>
+					<field name="name"/>
+					<field name="employee_id"/>
+					<field name="department_id"/>
+					<field name="location"/>
+					<field name="project_id"/>
+					<field name="project_description"/>
+					<field name="date"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_action_request_log_tree_view" model="ir.ui.view">
 			<field name="name">action.request.log.tree</field>
 			<field name="model">action.request.log</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="employee_id"/>
-				<field name="date"/>
-				<field name="state"/>
+				<tree>
+					<field name="employee_id"/>
+					<field name="date"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_qaqc_premobilization_checklist_tree_view" model="ir.ui.view">
 			<field name="name">qaqc.premobilization.checklist.tree</field>
 			<field name="model">qaqc.premobilization.checklist</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="project_id"/>
+				<tree>
+					<field name="project_id"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_employee_requisition_form_tree_view" model="ir.ui.view">
 			<field name="name">employee.requisition.form.tree</field>
 			<field name="model">employee.requisition.form</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="department_id"/>
-				<field name="job_id"/>
-				<field name="employee_id"/>
-				<field name="state"/>
+				<tree>
+					<field name="department_id"/>
+					<field name="job_id"/>
+					<field name="employee_id"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_instruments_calibration_status_log_tree_view" model="ir.ui.view">
 			<field name="name">instruments.calibration.status.log.tree</field>
 			<field name="model">instruments.calibration.status.log</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="employee_id"/>
-				<field name="date"/>
+				<tree>
+					<field name="employee_id"/>
+					<field name="date"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_work_completion_certificate_tree_view" model="ir.ui.view">
 			<field name="name">work.completion.certificate.tree</field>
 			<field name="model">work.completion.certificate</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="employee_id"/>
-				<field name="date"/>
-				<field name="po_ref_id"/>
-				<field name="vendor_rep"/>
+				<tree>
+					<field name="employee_id"/>
+					<field name="date"/>
+					<field name="po_ref_id"/>
+					<field name="vendor_rep"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_electricity_use_monitoring_tree_view" model="ir.ui.view">
 			<field name="name">electricity.use.monitoring.tree</field>
 			<field name="model">electricity.use.monitoring</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="month"/>
-				<field name="date_of_purchase"/>
-				<field name="quantity"/>
-				<field name="remark"/>
-				<field name="control_measure"/>
+				<tree>
+					<field name="month"/>
+					<field name="date_of_purchase"/>
+					<field name="quantity"/>
+					<field name="remark"/>
+					<field name="control_measure"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_water_use_monitoring_tree_view" model="ir.ui.view">
 			<field name="name">water.use.monitoring.tree</field>
 			<field name="model">water.use.monitoring</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="date_time"/>
-				<field name="level"/>
-				<field name="week"/>
-				<field name="remark"/>
-				<field name="control_measure"/>
+				<tree>
+					<field name="date_time"/>
+					<field name="level"/>
+					<field name="week"/>
+					<field name="remark"/>
+					<field name="control_measure"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_asset_movement_form_tree_view" model="ir.ui.view">
 			<field name="name">asset.movement.form.tree</field>
 			<field name="model">asset.movement.form</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="requested_employee_id"/>
-				<field name="source_location"/>
-				<field name="dest_location"/>
-				<field name="date_of_transfer"/>
-				<field name="date_recieved"/>
-				<field name="reason_for_transfer"/>
+				<tree>
+					<field name="requested_employee_id"/>
+					<field name="source_location"/>
+					<field name="dest_location"/>
+					<field name="date_of_transfer"/>
+					<field name="date_recieved"/>
+					<field name="reason_for_transfer"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_job_call_out_form_tree_view" model="ir.ui.view">
 			<field name="name">job.call.out.form.tree</field>
 			<field name="model">job.call.out.form</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="client"/>
-				<field name="job_type"/>
-				<field name="location"/>
-				<field name="est_job_start"/>
-				<field name="engineer_in_charge"/>
+				<tree>
+					<field name="client"/>
+					<field name="job_type"/>
+					<field name="location"/>
+					<field name="est_job_start"/>
+					<field name="engineer_in_charge"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_waste_management_form_tree_view" model="ir.ui.view">
 			<field name="name">waste.management.form.tree</field>
 			<field name="model">waste.management.form</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="waste_originator_name"/>
-				<field name="waste_originator_date"/>
-				<field name="qty"/>
+				<tree>
+					<field name="name"/>
+					<field name="waste_originator_name"/>
+					<field name="waste_originator_date"/>
+					<field name="qty"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_drivers_health_checklist_tree_view" model="ir.ui.view">
 			<field name="name">drivers.health.checklist.tree</field>
 			<field name="model">drivers.health.checklist</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="date"/>
-				<field name="inspector_id"/>
-				<field name="supervisor_id"/>
+				<tree>
+					<field name="date"/>
+					<field name="inspector_id"/>
+					<field name="supervisor_id"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_job_safety_inspection_checklist_tree_view" model="ir.ui.view">
 			<field name="name">job.safety.inspection.checklist.tree</field>
 			<field name="model">job.safety.inspection.checklist</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="client_id"/>
-				<field name="location"/>
-				<field name="date"/>
+				<tree>
+					<field name="client_id"/>
+					<field name="location"/>
+					<field name="date"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_late_arrival_form_tree_view" model="ir.ui.view">
 			<field name="name">late.arrival.form.tree</field>
 			<field name="model">late.arrival.form</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="employee_id"/>
-				<field name="department_id"/>
-				<field name="date"/>
+				<tree>
+					<field name="name"/>
+					<field name="employee_id"/>
+					<field name="department_id"/>
+					<field name="date"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_insurance_log_tree_view" model="ir.ui.view">
 			<field name="name">insurance.log.tree</field>
 			<field name="model">insurance.log</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree decoration-info="expiry_date == 'False'" decoration-danger="expiry_date &lt; current_date">
 					<field name="name"/>
@@ -773,33 +788,34 @@
 		<record id="topline_outgoing_document_template_tree_view" model="ir.ui.view">
 			<field name="name">outgoing.document.template.tree</field>
 			<field name="model">outgoing.document.template</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="destination"/>
-				<field name="date_time_pickup"/>
-				<field name="sent_by"/>
-				<field name="means_of_delivery"/>
+				<tree>
+					<field name="name"/>
+					<field name="destination"/>
+					<field name="date_time_pickup"/>
+					<field name="sent_by"/>
+					<field name="means_of_delivery"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_incoming_document_template_tree_view" model="ir.ui.view">
 			<field name="name">incoming.document.template.tree</field>
 			<field name="model">incoming.document.template</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="recieved_by"/>
-				<field name="destination"/>
-				<field name="date_time_del"/>
-				<field name="issued_to"/>
+				<tree>
+					<field name="name"/>
+					<field name="recieved_by"/>
+					<field name="destination"/>
+					<field name="date_time_del"/>
+					<field name="issued_to"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_certificates_for_tendering_tree_view" model="ir.ui.view">
 			<field name="name">certificates.for.tendering.tree</field>
 			<field name="model">certificates.for.tendering</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree decoration-info="expiry_date == 'False'" decoration-danger="expiry_date &lt; current_date">
 					<field name="name"/>
@@ -813,36 +829,37 @@
 		<record id="topline_journey_request_tree_view" model="ir.ui.view">
 			<field name="name">journey.request.tree</field>
 			<field name="model">journey.request</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="employee_id"/>
-				<field name="department_id"/>
-				<field name="date_of_journey"/>
-				<field name="planned_returned_date"/>
-				<field name="purpose_of_journey"/>
-				<field name="state"/>
+				<tree>
+					<field name="name"/>
+					<field name="employee_id"/>
+					<field name="department_id"/>
+					<field name="date_of_journey"/>
+					<field name="planned_returned_date"/>
+					<field name="purpose_of_journey"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_calibration_log_tree_view" model="ir.ui.view">
 			<field name="name">calibration.log.tree</field>
 			<field name="model">calibration.log</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="calibration_carried_out"/>
-				<field name="calibrated_by_id"/>
-				<field name="date_last_calibration"/>
-				<field name="calibration_next_due"/>
-				<field name="remarks"/>
+				<tree>
+					<field name="name"/>
+					<field name="calibration_carried_out"/>
+					<field name="calibrated_by_id"/>
+					<field name="date_last_calibration"/>
+					<field name="calibration_next_due"/>
+					<field name="remarks"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_type_calibration_log_tree_view" model="ir.ui.view">
 			<field name="name">type.calibration.log.tree</field>
 			<field name="model">type.calibration.log</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree editable="top">
 					<field name="name"/>
@@ -853,380 +870,405 @@
 		<record id="topline_tender_analysis_tree_view" model="ir.ui.view">
 			<field name="name">tender.analysis.tree</field>
 			<field name="model">tender.analysis</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="partner_id"/>
-				<field name="state"/>
-				<field name="source"/>
-				<field name="tender_number"/>
-				<field name="date_submitted"/>
-				<field name="comments"/>
-				<field name="corrective_action"/>
+				<tree>
+					<field name="name"/>
+					<field name="partner_id"/>
+					<field name="state"/>
+					<field name="source"/>
+					<field name="tender_number"/>
+					<field name="date_submitted"/>
+					<field name="comments"/>
+					<field name="corrective_action"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_tender_monitoring_sheet_tree_view" model="ir.ui.view">
 			<field name="name">tender.monitoring.sheet.tree</field>
 			<field name="model">tender.monitoring.sheet</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="partner_id"/>
-				<field name="state"/>
-				<field name="source"/>
-				<field name="tender_number"/>
-				<field name="date_submitted"/>
-				<field name="comments"/>
+				<tree>
+					<field name="name"/>
+					<field name="partner_id"/>
+					<field name="state"/>
+					<field name="source"/>
+					<field name="tender_number"/>
+					<field name="date_submitted"/>
+					<field name="comments"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_type_tender_monitoring_sheet_tree_view" model="ir.ui.view">
 			<field name="name">type.tender.monitoring.sheet.tree</field>
 			<field name="model">type.tender.monitoring.sheet</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="active"/>
+				<tree>
+					<field name="name"/>
+					<field name="active"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_vehicle_movement_register_tree_view" model="ir.ui.view">
 			<field name="name">vehicle.movement.register.tree</field>
 			<field name="model">vehicle.movement.register</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="driver_id"/>
-				<field name="vehicle_no"/>
-				<field name="proceeding_to"/>
-				<field name="requester_id"/>
-				<field name="time_out"/>
-				<field name="mileage_out"/>
-				<field name="gas_level_out"/>
-				<field name="time_in"/>
-				<field name="mileage_in"/>
-				<field name="gas_level_in"/>
-				<field name="date"/>
+				<tree>
+					<field name="driver_id"/>
+					<field name="vehicle_no"/>
+					<field name="proceeding_to"/>
+					<field name="requester_id"/>
+					<field name="time_out"/>
+					<field name="mileage_out"/>
+					<field name="gas_level_out"/>
+					<field name="time_in"/>
+					<field name="mileage_in"/>
+					<field name="gas_level_in"/>
+					<field name="date"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_exit_form_tree_view" model="ir.ui.view">
 			<field name="name">exit.form.tree</field>
 			<field name="model">exit.form</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="employee_id"/>
-				<field name="applicant_function"/>
-				<field name="date"/>
-				<field name="purpose_of_exit"/>
-				<field name="time_of_leaving"/>
-				<field name="time_of_returrning"/>
+				<tree>
+					<field name="name"/>
+					<field name="employee_id"/>
+					<field name="applicant_function"/>
+					<field name="date"/>
+					<field name="purpose_of_exit"/>
+					<field name="time_of_leaving"/>
+					<field name="time_of_returrning"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_absense_information_tree_view" model="ir.ui.view">
 			<field name="name">absense.information.tree</field>
 			<field name="model">absense.information</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="employee_id"/>
-				<field name="department_id"/>
-				<field name="type_of_absense"/>
-				<field name="date_absense_from"/>
-				<field name="date_absense_to"/>
+				<tree>
+					<field name="employee_id"/>
+					<field name="department_id"/>
+					<field name="type_of_absense"/>
+					<field name="date_absense_from"/>
+					<field name="date_absense_to"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_internet_downtime_register_tree_view" model="ir.ui.view">
 			<field name="name">internet.downtime.register.tree</field>
 			<field name="model">internet.downtime.register</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="date"/>
-				<field name="downtime" widget="float_time"/>
-				<field name="uptime" widget="float_time"/>
-				<field name="duration"/>
-				<field name="issue"/>
-				<field name="resolutions"/>
+				<tree>
+					<field name="date"/>
+					<field name="downtime" widget="float_time"/>
+					<field name="uptime" widget="float_time"/>
+					<field name="duration"/>
+					<field name="issue"/>
+					<field name="resolutions"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_ms_office_deployment_tree_view" model="ir.ui.view">
 			<field name="name">ms.office.deployment.tree</field>
 			<field name="model">ms.office.deployment</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="device_type"/>
-				<field name="asset_number"/>
-				<field name="key_in_use"/>
-				<field name="status"/>
-				<field name="remark"/>
+				<tree>
+					<field name="name"/>
+					<field name="device_type"/>
+					<field name="asset_number"/>
+					<field name="key_in_use"/>
+					<field name="status"/>
+					<field name="remark"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_planned_preventive_maintenance_tree_view" model="ir.ui.view">
 			<field name="name">planned.preventive.maintenance.tree</field>
 			<field name="model">planned.preventive.maintenance</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="equipment_id"/>
-				<field name="asset_number"/>
-				<field name="department_id"/>
-				<field name="preventive_action"/>
-				<field name="schedule"/>
-				<field name="next_due_date"/>
-				<field name="due_date"/>
-				<field name="action_party"/>
-				<field name="contingency_plan"/>
+				<tree>
+					<field name="equipment_id"/>
+					<field name="asset_number"/>
+					<field name="department_id"/>
+					<field name="preventive_action"/>
+					<field name="schedule"/>
+					<field name="next_due_date"/>
+					<field name="due_date"/>
+					<field name="action_party"/>
+					<field name="contingency_plan"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_antivirus_tracker_renewal_tree_view" model="ir.ui.view">
 			<field name="name">antivirus.tracker.renewal.tree</field>
 			<field name="model">antivirus.tracker.renewal</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="type_of_device"/>
-				<field name="asset_number"/>
-				<field name="renewal_date"/>
-				<field name="due_date"/>
-				<field name="type"/>
-				<field name="status"/>
-				<field name="remark"/>
+				<tree>
+					<field name="name"/>
+					<field name="type_of_device"/>
+					<field name="asset_number"/>
+					<field name="renewal_date"/>
+					<field name="due_date"/>
+					<field name="type"/>
+					<field name="status"/>
+					<field name="remark"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_equipment_maintenance_register_tree_view" model="ir.ui.view">
 			<field name="name">equipment.maintenance.register.tree</field>
 			<field name="model">equipment.maintenance.register</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="equipment_id"/>
-				<field name="asset_number"/>
-				<field name="department_id"/>
-				<field name="fault_status"/>
-				<field name="repair_status"/>
-				<field name="repair_date"/>
-				<field name="cost"/>
-				<field name="routine_check"/>
+				<tree>
+					<field name="equipment_id"/>
+					<field name="asset_number"/>
+					<field name="department_id"/>
+					<field name="fault_status"/>
+					<field name="repair_status"/>
+					<field name="repair_date"/>
+					<field name="cost"/>
+					<field name="routine_check"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_ict_paid_services_tree_view" model="ir.ui.view">
 			<field name="name">ict.paid.services.tree</field>
 			<field name="model">ict.paid.services</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="sub"/>
-				<field name="cost"/>
-				<field name="currency_id"/>
-				<field name="renewal_date"/>
-				<field name="due_date"/>
-				<field name="status"/>
+				<tree>
+					<field name="name"/>
+					<field name="sub"/>
+					<field name="cost"/>
+					<field name="currency_id"/>
+					<field name="renewal_date"/>
+					<field name="due_date"/>
+					<field name="status"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_mdr_forms_tree_view" model="ir.ui.view">
 			<field name="name">mdr.forms.tree</field>
 			<field name="model">mdr.forms</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="department_id"/>
-				<field name="doc_no"/>
-				<field name="name"/>
-				<field name="rev_no"/>
-				<field name="issue_date"/>
+				<tree>
+					<field name="department_id"/>
+					<field name="doc_no"/>
+					<field name="name"/>
+					<field name="rev_no"/>
+					<field name="issue_date"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_mdr_forms_tree_view" model="ir.ui.view">
 			<field name="name">prc.forms.tree</field>
 			<field name="model">prc.forms</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="doc_type"/>
-				<field name="department_id"/>
-				<field name="doc_ref"/>
-				<field name="name"/>
-				<field name="rev_no"/>
-				<field name="status"/>
-				<field name="review_date"/>
-				<field name="remark"/>
+				<tree>
+					<field name="doc_type"/>
+					<field name="department_id"/>
+					<field name="doc_ref"/>
+					<field name="name"/>
+					<field name="rev_no"/>
+					<field name="status"/>
+					<field name="review_date"/>
+					<field name="remark"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_receiving_inspection_report_tree_view" model="ir.ui.view">
 			<field name="name">receiving.inspection.report.tree</field>
 			<field name="model">receiving.inspection.report</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="partner_id"/>
-				<field name="date_verification"/>
-				<field name="location_id"/>
-				<field name="remarks"/>
-				<field name="state"/>
+				<tree>
+					<field name="partner_id"/>
+					<field name="date_verification"/>
+					<field name="location_id"/>
+					<field name="remarks"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_project_monitoring_sheet_tree_view" model="ir.ui.view">
 			<field name="name">project.monitoring.sheet.tree</field>
 			<field name="model">project.monitoring.sheet</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="partner_id"/>
-				<field name="mob_date"/>
-				<field name="demob_date"/>
-				<field name="remark"/>
+				<tree>
+					<field name="name"/>
+					<field name="partner_id"/>
+					<field name="mob_date"/>
+					<field name="demob_date"/>
+					<field name="remark"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_client_feedback_log_tree_view" model="ir.ui.view">
 			<field name="name">client.feedback.log.tree</field>
 			<field name="model">client.feedback.log</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="project_id"/>
-				<field name="overall_project_outcome"/>
-				<field name="communication"/>
-				<field name="project_leader"/>
-				<field name="staff_competence"/>
-				<field name="delivery_time"/>
-				<field name="quality_project_outcome"/>
+				<tree>
+					<field name="name"/>
+					<field name="project_id"/>
+					<field name="overall_project_outcome"/>
+					<field name="communication"/>
+					<field name="project_leader"/>
+					<field name="staff_competence"/>
+					<field name="delivery_time"/>
+					<field name="quality_project_outcome"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_client_complaints_log_tree_view" model="ir.ui.view">
 			<field name="name">client.complaints.log.tree</field>
 			<field name="model">client.complaints.log</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="partner_id"/>
-				<field name="name"/>
-				<field name="date_complaint"/>
-				<field name="description"/>
-				<field name="root_cause"/>
-				<field name="action_taken"/>
-				<field name="date_closed"/>
+				<tree>
+					<field name="partner_id"/>
+					<field name="name"/>
+					<field name="date_complaint"/>
+					<field name="description"/>
+					<field name="root_cause"/>
+					<field name="action_taken"/>
+					<field name="date_closed"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_qaqc_vendors_facility_audit_checklist_tree_view" model="ir.ui.view">
 			<field name="name">qaqc.vendors.facility.audit.checklist.tree</field>
 			<field name="model">qaqc.vendors.facility.audit.checklist</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="partner_id"/>
-				<field name="state"/>
+				<tree>
+					<field name="partner_id"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_atp_form_tree_view1" model="ir.ui.view">
 			<field name="name">atp.form.tree</field>
 			<field name="model">atp.form</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="project_des"/>
-				<field name="remark"/>
-				<field name="expected_date"/>
-				<field name="state"/>
+				<tree>
+					<field name="name"/>
+					<field name="project_des"/>
+					<field name="remark"/>
+					<field name="expected_date"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_atp_form_tree_view" model="ir.ui.view">
 			<field name="name">travel.report.tree</field>
 			<field name="model">travel.report</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="date_booking"/>
-				<field name="employee_id"/>
-				<field name="department_id"/>
-				<field name="from_des"/>
-				<field name="to_des"/>
-				<field name="reason"/>
-				<field name="cost"/>
-				<field name="type"/>
-				<field name="remark"/>
+				<tree>
+					<field name="date_booking"/>
+					<field name="employee_id"/>
+					<field name="department_id"/>
+					<field name="from_des"/>
+					<field name="to_des"/>
+					<field name="reason"/>
+					<field name="cost"/>
+					<field name="type"/>
+					<field name="remark"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_stationery_report_tree_view" model="ir.ui.view">
 			<field name="name">stationery.report.tree</field>
 			<field name="model">stationery.report</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="date"/>
-				<field name="product_id"/>
-				<field name="name"/>
-				<field name="qty"/>
-				<field name="name"/>
-				<field name="employee_id"/>
-				<field name="location"/>
+				<tree>
+					<field name="date"/>
+					<field name="product_id"/>
+					<field name="name"/>
+					<field name="qty"/>
+					<field name="name"/>
+					<field name="employee_id"/>
+					<field name="location"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_missing_stolen_asset_report_form_tree_view" model="ir.ui.view">
 			<field name="name">missing.stolen.asset.report.form.tree</field>
 			<field name="model">missing.stolen.asset.report.form</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name_ref"/>
-				<field name="name"/>
-				<field name="serial_no"/>
-				<field name="last_known_location"/>
-				<field name="employee_name"/>
-				<field name="state"/>
+				<tree>
+					<field name="name_ref"/>
+					<field name="name"/>
+					<field name="serial_no"/>
+					<field name="last_known_location"/>
+					<field name="employee_name"/>
+					<field name="state"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_site_time_sheet_tree_view" model="ir.ui.view">
 			<field name="name">site.time.sheet.tree</field>
 			<field name="model">site.time.sheet</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="employee_id"/>
-				<field name="department_id"/>
-				<field name="employee_designstion"/>
-				<field name="month"/>
-				<field name="date"/>
+				<tree>
+					<field name="employee_id"/>
+					<field name="department_id"/>
+					<field name="employee_designstion"/>
+					<field name="month"/>
+					<field name="date"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_ems_monitoring_tree_view" model="ir.ui.view">
 			<field name="name">ems.monitoring.tree</field>
 			<field name="model">ems.monitoring</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="date"/>
-				<field name="kpi_id"/>
-				<field name="uom_id"/>
-				<field name="department_id"/>
-				<field name="target"/>
-				<field name="month"/>
-				<field name="remarks"/>
+				<tree>
+					<field name="date"/>
+					<field name="kpi_id"/>
+					<field name="uom_id"/>
+					<field name="department_id"/>
+					<field name="target"/>
+					<field name="month"/>
+					<field name="remarks"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_ems_kpi_tree_view" model="ir.ui.view">
 			<field name="name">ems.kpi.tree</field>
 			<field name="model">ems.kpi</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name"/>
-				<field name="active"/>
+				<tree>
+					<field name="name"/>
+					<field name="active"/>
+				</tree>
 			</field>
 		</record>
 
 		<record id="topline_certificates_for_tendering_tree_view" model="ir.ui.view">
 			<field name="name">fumigation.schedule.tree</field>
 			<field name="model">fumigation.schedule</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree decoration-info="due_date == 'False'" decoration-danger="due_date &lt; current_date">
 					<field name="due_date"/>
@@ -1240,7 +1282,6 @@
 		<record id="topline_ict_daily_checklist_tree_view" model="ir.ui.view">
 			<field name="name">daily checklist tree</field>
 			<field name="model">daily.checklist</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree>
 					<field name="name" string="S/N"/>
@@ -1253,7 +1294,6 @@
 		<record id="topline_daily_checklist_equipment_tree_view" model="ir.ui.view">
 			<field name="name">daily checklist equipment tree</field>
 			<field name="model">daily.checklist.equipment</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree editable="bottom">
 					<field name="name"/>

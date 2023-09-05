@@ -7,17 +7,18 @@
         <record id="topline_cash_retirement_form_tree_view" model="ir.ui.view">
             <field name="name">cash.retirement.form.tree</field>
             <field name="model">cash.retirement.form</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <field name="name"/>
-                <field name="date"/>
-                <field name="department_id"/>
-                <field name="employee_id"/>
-                <field name="total_amount_requested"/>
-                <field name="total_amount_approved"/>
-                <field name="location"/>
-                <field name="project_description"/>
-                <field name="state"/>
+                <tree>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="department_id"/>
+                    <field name="employee_id"/>
+                    <field name="total_amount_requested"/>
+                    <field name="total_amount_approved"/>
+                    <field name="location"/>
+                    <field name="project_description"/>
+                    <field name="state"/>
+                </tree>
             </field>
         </record>
 

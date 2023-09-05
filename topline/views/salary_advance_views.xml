@@ -7,15 +7,16 @@
         <record id="topline_salary_advance_form_tree_view" model="ir.ui.view">
             <field name="name">salary.advance.form.tree</field>
             <field name="model">salary.advance.form</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <field name="name"/>
-                <field name="employee_id"/>
-                <field name="department_id"/>
-                <field name="job_title"/>
-                <field name="month_of"/>
-                <field name="advance_of"/>
-                <field name="state"/>
+                <tree>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="job_title"/>
+                    <field name="month_of"/>
+                    <field name="advance_of"/>
+                    <field name="state"/>
+                </tree>
             </field>
         </record>
 
