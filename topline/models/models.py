@@ -3314,6 +3314,7 @@ class ATPform(models.Model):
 
     @api.depends('atp_form_line_ids.price')
     def _total_unit(self):
+        self.total = 0
         for line in self.atp_form_line_ids:
             self.total += line.price_subtotal
 

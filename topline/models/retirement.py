@@ -256,12 +256,14 @@ class CashRetirementForm(models.Model):
     
     @api.depends('cash_retirement_form_line_ids.amount_requested')
     def _total_amount_requested(self):
+        self.total_amount_requested = 0
         for line in self.cash_retirement_form_line_ids:
             self.total_amount_requested += line.amount_requested
     
     
     @api.depends('cash_retirement_form_line_ids.amount_approved')
     def _total_amount_approved(self):
+        self.total_amount_approved = 0
         for line in self.cash_retirement_form_line_ids:
             self.total_amount_approved += line.amount_approved
     

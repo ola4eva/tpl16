@@ -92,6 +92,7 @@ class CashAdvanceRequestForm(models.Model):
 
     @api.depends('cash_advance_request_form_line_ids.amount')
     def _total_amount(self):
+        self.total_amount = 0
         for line in self.cash_advance_request_form_line_ids:
             self.total_amount += line.amount
 

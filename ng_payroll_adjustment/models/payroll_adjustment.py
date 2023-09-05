@@ -124,8 +124,8 @@ class AdjustmentTypeLine(models.Model):
 
     start_date = fields.Date(string='Start Date', readonly=True)
     end_date = fields.Date(string='End Date')
-    employee_id = fields.Many2one(related='adjustment_line_id.employee_id', string='Employee', type='many2one', relation='hr.employee', store=True)
-    contract_id =fields.Many2one(related='adjustment_line_id.contract_id', string='Contract', type='many2one', relation='hr.contract')
+    employee_id = fields.Many2one(related='adjustment_line_id.employee_id', string='Employee', type='many2one', comodel_name='hr.employee', store=True)
+    contract_id =fields.Many2one(related='adjustment_line_id.contract_id', string='Contract', type='many2one', comodel_name='hr.contract')
     adjustment_line_id = fields.Many2one('payroll.adjustment',string='Adjustment')
     applied = fields.Boolean(string='Applied Payroll ?',default=False, compute='_get_applied', store=True)
     payslip_id = fields.Many2one('hr.payslip', string='Payslip', readonly=True)

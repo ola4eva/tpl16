@@ -53,33 +53,33 @@ class Picking(models.Model):
     active = fields.Boolean('Active', default=True)
 
     # @api.depends('move_type', 'move_lines.state', 'move_lines.picking_id')
-    def _compute_state(self):
-        ''' State of a picking depends on the state of its related stock.move
-        - Draft: only used for "planned pickings"
-        - Waiting: if the picking is not ready to be sent so if
-          - (a) no quantity could be reserved at all or if
-          - (b) some quantities could be reserved and the shipping policy is "deliver all at once"
-        - Waiting another move: if the picking is waiting for another move
-        - Ready: if the picking is ready to be sent so if:
-          - (a) all quantities are reserved or if
-          - (b) some quantities could be reserved and the shipping policy is "as soon as possible"
-        - Done: if the picking is done.
-        - Cancelled: if the picking is cancelled
-        '''
-        if not self.move_lines:
-            self.state = 'draft'
-        elif any(move.state == 'draft' for move in self.move_lines):  # TDE FIXME: should be all ?
-            self.state = 'draft'
-        elif all(move.state == 'cancel' for move in self.move_lines):
-            self.state = 'cancel'
-        elif all(move.state in ['cancel', 'done'] for move in self.move_lines):
-            self.state = 'done'
-        else:
-            relevant_move_state = self.move_lines._get_relevant_state_among_moves()
-            if relevant_move_state == 'partially_available':
-                self.state = 'assigned'
-            else:
-                self.state = relevant_move_state
+    # def _compute_state(self):
+    #     ''' State of a picking depends on the state of its related stock.move
+    #     - Draft: only used for "planned pickings"
+    #     - Waiting: if the picking is not ready to be sent so if
+    #       - (a) no quantity could be reserved at all or if
+    #       - (b) some quantities could be reserved and the shipping policy is "deliver all at once"
+    #     - Waiting another move: if the picking is waiting for another move
+    #     - Ready: if the picking is ready to be sent so if:
+    #       - (a) all quantities are reserved or if
+    #       - (b) some quantities could be reserved and the shipping policy is "as soon as possible"
+    #     - Done: if the picking is done.
+    #     - Cancelled: if the picking is cancelled
+    #     '''
+    #     if not self.move_lines:
+    #         self.state = 'draft'
+    #     elif any(move.state == 'draft' for move in self.move_lines):  # TDE FIXME: should be all ?
+    #         self.state = 'draft'
+    #     elif all(move.state == 'cancel' for move in self.move_lines):
+    #         self.state = 'cancel'
+    #     elif all(move.state in ['cancel', 'done'] for move in self.move_lines):
+    #         self.state = 'done'
+    #     else:
+    #         relevant_move_state = self.move_lines._get_relevant_state_among_moves()
+    #         if relevant_move_state == 'partially_available':
+    #             self.state = 'assigned'
+    #         else:
+    #             self.state = relevant_move_state
 
     def unlink(self):
         for picking in self:
