@@ -56,10 +56,10 @@
                                     <tree editable="bottom">
                                         <field name="is_manager" invisible="1"/>
                                         <field name="name" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
-                                        <field name="account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
-                                        <field name="analytic_account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
                                         <field name="amount_requested" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
                                         <field name="amount_approved" attrs="{'readonly':[('is_manager', '=', False)]}"/>
+                                        <field name="analytic_account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
+                                        <field name="account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
                                     </tree>
                                 </field>
                             </page>
@@ -112,7 +112,6 @@
                 <search string="Petty Cash">
                     <field name="name"/>
                     <field name="department_id"/>
-                    <!-- <field name="project_description"/> -->
                     <field name="line_ids" string="Details/purpose"/>
                     <field name="date"/>
                     <field name="employee_id"/>
