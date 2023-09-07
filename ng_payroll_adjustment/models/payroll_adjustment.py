@@ -66,8 +66,7 @@ class PayrollAdjustment(models.Model):
     def _onchange_employee_id_start_date(self):
         contract_id = False
         if self.employee_id:
-            contract_ids = self.employee_id._get_contracts(
-                self.employee_id, self.start_date, self.start_date)
+            contract_ids = self.employee_id.contract_id
             if contract_ids:
                 contract_id = contract_ids[0]
         self.contract_id = contract_id

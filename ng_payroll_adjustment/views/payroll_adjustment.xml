@@ -23,6 +23,7 @@
                             <group>
                                 <field name="employee_id"/>
                                 <field name="start_date"/>
+                                <field name="end_date"/>
                                 <field name="category_id"/>
                                 <field name="user_id"/>
                                 <field name="company_id"/>
@@ -78,6 +79,7 @@
                     <field name="contract_id"/>
                     <field name="adjustment_type_id"/>
                     <field name="start_date"/>
+                    <field name="end_date"/>
                     <field name="period_type"/>
                     <field name="period_nbr"/>
                     <field name="period_total"/>
@@ -154,7 +156,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="menu_payroll_adjustment" sequence="13" parent="hr_payroll.menu_hr_payroll_root" name="Payroll Adjustments" action="payroll_adjustment_action"/>
+        <menuitem id="menu_payroll_adjustment" sequence="90" parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root" name="Payroll Adjustments" action="payroll_adjustment_action"/>
         <menuitem id="menu_adjustment_type" parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration" name="Adjustment Types" action="adjustment_type_action"/>
 
     </data>
