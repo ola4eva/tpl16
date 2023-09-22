@@ -58,95 +58,93 @@
                 <field name="company_id" invisible="1" />
               </group>
             </group>
-            <group>
-              <div class="o_row">
-                <div>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr class="table-primary">
-                        <th rowspan="2">Rating Category</th>
-                        <th rowspan="2">Definition</th>
-                        <th rowspan="2">Rating scale</th>
-                        <th colspan="2">Description</th>
-                      </tr>
-                      <tr class="table-primary">
-                        <th>Performance/Result/KRA</th>
-                        <th>Behavioral competencies</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="table-secondary">
-                        <td>5</td>
-                        <td>Outstanding</td>
-                        <td>Exceeded the target with a score of 100%</td>
-                        <td>
-                          <tr>- Far exceeds expectations; consistently over-achieves the performance targets.</tr>
-                          <tr>- Demonstrates exceptional level of performance in all areas.</tr>
-                          <tr>- Makes an exceptional and unique contribution to functional achievements.</tr>
-                        </td>
-                        <td>
-                          <tr>- Has mastered the competency and demonstrates it all the time.</tr>
-                          <tr>- Others see him/her as an expert or role model in this area.</tr>
-                        </td>
-                      </tr>
-                      <tr class="table-info">
-                        <td>4</td>
-                        <td>Exceeds Expectations</td>
-                        <td>Achieved a score between 90% - 99%</td>
-                        <td>
-                          <tr>Always achieves set goals and frequently exceeds them.</tr>
-                          <tr>Demonstrates a very high level of performance in all areas.</tr>
-                        </td>
-                        <td>
-                          <tr>Demonstrates the competency most of the time.</tr>
-                          <tr>Scope for improvement on some factors to build greater expertise.</tr>
-                        </td>
-                      </tr>
-                      <tr class="table-secondary">
-                        <td>3</td>
-                        <td>Meets Expectation</td>
-                        <td>Achieved a score between 71% - 89%</td>
-                        <td>
-                          <tr>- Consistently performs and achieves set goals.</tr>
-                          <tr>- Performance is high quality and may exceed achievement levels in future.</tr>
-                        </td>
-                        <td>
-                          <tr>- Demonstrates the competency often.</tr>
-                          <tr>- Has the ability to perform independently in this area but may falter in complex situations and would require guidance.</tr>
-                        </td>
-                      </tr>
-                      <tr class="table-success">
-                        <td>2</td>
-                        <td>Needs Improvement</td>
-                        <td>Achieved a score between 60% - 70%</td>
-                        <td>
-                          <tr>- Fails to meet expectations in one or more areas.</tr>
-                          <tr>- Improvement is needed.</tr>
-                        </td>
-                        <td>
-                          <tr>- Demonstrates competency sometimes or only in limited facets. Still needs to learn and improve in this area.</tr>
-                          <tr>- Requires close guidance.</tr>
-                        </td>
-                      </tr>
-                      <tr class="table-secondary">
-                        <td>1</td>
-                        <td>Unacceptable</td>
-                        <td>Achieved a score of 59% and below</td>
-                        <td>
-                          <tr>- Doesn't meet goals most of the time.</tr>
-                          <tr>- Improvement is needed in most aspects.</tr>
-                        </td>
-                        <td>
-                          <tr>- Rarely demonstrates competency.</tr>
-                          <tr>- Needs to learn and improve in most areas.</tr>
-                          <tr>- Requires close guidance and supervision.</tr>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+            <div>
+              <div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr class="table-primary">
+                      <th rowspan="2">Rating Category</th>
+                      <th rowspan="2">Definition</th>
+                      <th rowspan="2">Rating scale</th>
+                      <th colspan="2">Description</th>
+                    </tr>
+                    <tr class="table-primary">
+                      <th>Performance/Result/KRA</th>
+                      <th>Behavioral competencies</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="table-secondary">
+                      <td>5</td>
+                      <td>Outstanding</td>
+                      <td>Exceeded the target with a score of 100%</td>
+                      <td>
+                        <tr>- Far exceeds expectations; consistently over-achieves the performance targets.</tr>
+                        <tr>- Demonstrates exceptional level of performance in all areas.</tr>
+                        <tr>- Makes an exceptional and unique contribution to functional achievements.</tr>
+                      </td>
+                      <td>
+                        <tr>- Has mastered the competency and demonstrates it all the time.</tr>
+                        <tr>- Others see him/her as an expert or role model in this area.</tr>
+                      </td>
+                    </tr>
+                    <tr class="table-info">
+                      <td>4</td>
+                      <td>Exceeds Expectations</td>
+                      <td>Achieved a score between 90% - 99%</td>
+                      <td>
+                        <tr>Always achieves set goals and frequently exceeds them.</tr>
+                        <tr>Demonstrates a very high level of performance in all areas.</tr>
+                      </td>
+                      <td>
+                        <tr>Demonstrates the competency most of the time.</tr>
+                        <tr>Scope for improvement on some factors to build greater expertise.</tr>
+                      </td>
+                    </tr>
+                    <tr class="table-secondary">
+                      <td>3</td>
+                      <td>Meets Expectation</td>
+                      <td>Achieved a score between 71% - 89%</td>
+                      <td>
+                        <tr>- Consistently performs and achieves set goals.</tr>
+                        <tr>- Performance is high quality and may exceed achievement levels in future.</tr>
+                      </td>
+                      <td>
+                        <tr>- Demonstrates the competency often.</tr>
+                        <tr>- Has the ability to perform independently in this area but may falter in complex situations and would require guidance.</tr>
+                      </td>
+                    </tr>
+                    <tr class="table-success">
+                      <td>2</td>
+                      <td>Needs Improvement</td>
+                      <td>Achieved a score between 60% - 70%</td>
+                      <td>
+                        <tr>- Fails to meet expectations in one or more areas.</tr>
+                        <tr>- Improvement is needed.</tr>
+                      </td>
+                      <td>
+                        <tr>- Demonstrates competency sometimes or only in limited facets. Still needs to learn and improve in this area.</tr>
+                        <tr>- Requires close guidance.</tr>
+                      </td>
+                    </tr>
+                    <tr class="table-secondary">
+                      <td>1</td>
+                      <td>Unacceptable</td>
+                      <td>Achieved a score of 59% and below</td>
+                      <td>
+                        <tr>- Doesn't meet goals most of the time.</tr>
+                        <tr>- Improvement is needed in most aspects.</tr>
+                      </td>
+                      <td>
+                        <tr>- Rarely demonstrates competency.</tr>
+                        <tr>- Needs to learn and improve in most areas.</tr>
+                        <tr>- Requires close guidance and supervision.</tr>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </group>
+            </div>
             <field name="question_ids" nolabel="1" context="{'default_appraisal_id': active_id}">
               <tree editable="bottom" decoration-bf="is_section" decoration-danger="score_supervisor=='1'" decoration-warning="score_supervisor=='2' or score_supervisor=='3'" decoration-info="score_supervisor=='4'" decoration-success="score_supervisor=='5'">
                 <field name="name" optional="show" required="1" />
