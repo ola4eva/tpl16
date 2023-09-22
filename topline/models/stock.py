@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
-import datetime
 
-from datetime import date, timedelta
-from dateutil.relativedelta import relativedelta
-from odoo.tools import email_split, float_is_zero
-from ast import literal_eval
-from odoo.exceptions import UserError, ValidationError
+from datetime import date
+from odoo.tools import float_is_zero
+from odoo.exceptions import UserError
 from odoo import api, fields, models, _
-import traceback
-import sys
-from odoo.addons import decimal_precision as dp
 
 
 class AccountMove(models.Model):
