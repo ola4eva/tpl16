@@ -56,7 +56,7 @@ class ConstructionEquipmentChecklist(models.Model):
 
     def button_submit(self):
         self.write({'state': 'supervisor'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_hr_line_manager')
         user_ids = []
         partner_ids = []
@@ -88,7 +88,7 @@ class ConstructionEquipmentChecklist(models.Model):
         self.write({'state': 'store'})
         self.manager_approval_date = date.today()
         self.manager_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'stock.group_stock_manager')
         user_ids = []
         partner_ids = []
@@ -107,7 +107,7 @@ class ConstructionEquipmentChecklist(models.Model):
         self.write({'state': 'qa_qc'})
         self.store_approval_date = date.today()
         self.store_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'quality.group_quality_manager')
         user_ids = []
         partner_ids = []

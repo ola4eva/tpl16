@@ -106,7 +106,7 @@ class Picking(models.Model):
         res = super(Picking, self).action_confirm()
         if self.picking_type_id.name == 'Staff Store Requests':
             self.button_approve_srt()
-            group_id = self.env['ir.model.data'].xmlid_to_object(
+            group_id = self.env.ref(
                 'stock.group_stock_manager')
             user_ids = []
             partner_ids = []
@@ -122,7 +122,7 @@ class Picking(models.Model):
 
     def action_line_manager_approval(self):
         self.write({'state': 'approve'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_qa')
         for move in self.move_lines:
             move.state = 'approve'
@@ -207,7 +207,7 @@ class Picking(models.Model):
 
     def send_store_request_mail(self):
         if self.picking_type_id.name == "Staff Store Requests" and self.state in ['draft', 'approve', 'waiting', 'confirmed']:
-            group_id = self.env['ir.model.data'].xmlid_to_object(
+            group_id = self.env.ref(
                 'stock.group_stock_manager')
             user_ids = []
             partner_ids = []
@@ -394,7 +394,7 @@ class HrExpenseSheet(models.Model):
         return {}
 
     def expense_audit_approval_notification(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_internal_audit')
         user_ids = []
         partner_ids = []

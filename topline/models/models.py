@@ -233,7 +233,7 @@ class WorkCompletionCertificate(models.Model):
 
     def button_submit(self):
         self.write({'state': 'submit'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'quality.group_quality_manager')
         user_ids = []
         partner_ids = []
@@ -248,7 +248,7 @@ class WorkCompletionCertificate(models.Model):
         return False
 
     def button_submit_to_md(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_md')
         user_ids = []
         partner_ids = []
@@ -340,7 +340,7 @@ class ElectricityUseMonitoring(models.Model):
 
     def button_submit(self):
         self.write({'state': 'manager'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_admin_manager')
         partner_ids = []
         for user in group_id.users:
@@ -402,7 +402,7 @@ class WaterUseMonitoring(models.Model):
 
     def button_submit(self):
         self.write({'state': 'manager'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_admin_manager')
         partner_ids = []
         for user in group_id.users:
@@ -493,7 +493,7 @@ class AssetMovementForm(models.Model):
 
     def button_submit(self):
         self.write({'state': 'line_manager'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_hr_line_manager')
         user_ids = []
         partner_ids = []
@@ -509,7 +509,7 @@ class AssetMovementForm(models.Model):
         return False
 
     def button_submit_to_store(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'stock.group_stock_manager')
         user_ids = []
         partner_ids = []
@@ -524,7 +524,7 @@ class AssetMovementForm(models.Model):
         return False
 
     def alert_hr(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'hr.group_hr_manager')
         user_ids = []
         partner_ids = []
@@ -627,7 +627,7 @@ class WasteManagementForm(models.Model):
         return super(WasteManagementForm, self).create(vals_list)
 
     def button_submit(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_hse')
         user_ids = []
         partner_ids = []
@@ -1908,7 +1908,7 @@ class LateArrivalForm(models.Model):
         return False
 
     def alert_hr(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'hr.group_hr_manager')
         user_ids = []
         partner_ids = []
@@ -1926,7 +1926,7 @@ class LateArrivalForm(models.Model):
         self.write({'state': 'manager'})
         self.supervisor_approval_date = date.today()
         self.supervisor_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'hr.group_hr_manager')
         subject = "Late Arrival Form '{}' for '{}' has been approved by Line Manager".format(
             self.name, self.employee_id.name)
@@ -1973,7 +1973,7 @@ class InsuranceLog(models.Model):
     active = fields.Boolean(string='Active', default=True)
 
     def alert_admin(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_admin')
         user_ids = []
         partner_ids = []
@@ -2067,7 +2067,7 @@ class CertificateforTendering(models.Model):
             self.write({'state': 'expired'})
 
     def alert_bus_dev(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'sales_team.group_sale_salesman_all_leads')
         user_ids = []
         partner_ids = []
@@ -2200,7 +2200,7 @@ class JourneyRequest(models.Model):
         return False
 
     def alert_hr(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'hr.group_hr_manager')
         user_ids = []
         partner_ids = []
@@ -2218,7 +2218,7 @@ class JourneyRequest(models.Model):
         self.write({'state': 'manager'})
         self.supervisor_approval_date = date.today()
         self.supervisor_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'fleet.fleet_group_manager')
         subject = "Journey Request '{}', for '{}' has been approved by Line Manager".format(
             self.name, self.employee_id.name)
@@ -2450,7 +2450,7 @@ class ExitForm(models.Model):
         self.write({'state': 'manager'})
         self.supervisor_approval_date = date.today()
         self.supervisor_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'hr.group_hr_manager')
         subject = "Exit Form '{}' for '{}' has been approved by Line Manager".format(
             self.name, self.employee_id.name)
@@ -2720,7 +2720,7 @@ class ICTPaidServices(models.Model):
         return
 
     def send_the_reminder_notification(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'helpdesk.group_helpdesk_manager')
         user_ids = []
         partner_ids = []
@@ -3328,7 +3328,7 @@ class ATPform(models.Model):
 
     def button_submit(self):
         self.write({'state': 'submit'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'quality.group_quality_manager')
         user_ids = []
         partner_ids = []
@@ -3344,7 +3344,7 @@ class ATPform(models.Model):
 
     def button_approval(self):
         self.write({'state': 'approve'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'purchase.group_purchase_manager')
         user_ids = []
         partner_ids = []
@@ -3553,7 +3553,7 @@ class SalaryAdvanceForm(models.Model):
         self.write({'state': 'line_approve'})
         self.supervisor_approval_date = date.today()
         self.supervisor_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_internal_audit')
         partner_ids = []
         user_ids = []
@@ -3572,7 +3572,7 @@ class SalaryAdvanceForm(models.Model):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
         self.audit_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_md')
         user_ids = []
         partner_ids = []
@@ -3589,7 +3589,7 @@ class SalaryAdvanceForm(models.Model):
         self.write({'state': 'md_approve'})
         self.md_approval_date = date.today()
         self.md_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_finance_manager')
         user_ids = []
         partner_ids = []
@@ -3703,7 +3703,7 @@ class MissingStolenAssetReportForm(models.Model):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
         self.employee_name = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'stock.group_stock_manager')
         user_ids = []
         partner_ids = []
@@ -3722,7 +3722,7 @@ class MissingStolenAssetReportForm(models.Model):
         self.write({'state': 'finance_approve'})
         self.finance_approval_date = date.today()
         self.finance_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_finance_manager')
         user_ids = []
         partner_ids = []
@@ -3816,7 +3816,7 @@ class SiteTimeSheet(models.Model):
 
     def button_submit(self):
         self.write({'state': 'submit'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'project.group_project_manager')
         partner_ids = []
         user_ids = []
@@ -3833,7 +3833,7 @@ class SiteTimeSheet(models.Model):
         self.write({'state': 'opm_approve'})
         self.opm_approval_date = date.today()
         self.opm_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'hr.group_hr_manager')
         partner_ids = []
         user_ids = []

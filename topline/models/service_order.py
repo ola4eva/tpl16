@@ -82,7 +82,7 @@ class ServiceOrder(models.Model):
 
     
     def button_submit_to_qa_qc(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_qa')
         user_ids = []
         partner_ids = []
@@ -98,7 +98,7 @@ class ServiceOrder(models.Model):
 
     
     def button_submit_to_procurement(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'purchase.group_purchase_manager')
         user_ids = []
         partner_ids = []
@@ -114,7 +114,7 @@ class ServiceOrder(models.Model):
 
     
     def alert_hr(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'hr.group_hr_manager')
         user_ids = []
         partner_ids = []

@@ -85,7 +85,7 @@ class PurchaseOrder(models.Model):
         self.write({'state': 'line_approve'})
         self.supervisor_approval_date = date.today()
         self.supervisor_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_internal_audit')
         partner_ids = []
         user_ids = []
@@ -103,7 +103,7 @@ class PurchaseOrder(models.Model):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
         self.audit_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_md')
         user_ids = []
         partner_ids = []
@@ -131,7 +131,7 @@ class PurchaseOrder(models.Model):
     def button_md_approval_notification(self):
         """Notify Finance team of MD's approval...
         """
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'account.group_account_manager')
         user_ids = []
         partner_ids = []

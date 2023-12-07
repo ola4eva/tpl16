@@ -18,7 +18,7 @@ class SaleOrder(models.Model):
     
     def button_submit(self):
         self.write({'state': 'gm'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_gm')
         user_ids = []
         partner_ids = []
@@ -35,7 +35,7 @@ class SaleOrder(models.Model):
 
     
     def button_submit_to_md(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_md')
         user_ids = []
         partner_ids = []

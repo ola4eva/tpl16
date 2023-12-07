@@ -63,7 +63,7 @@ class MaintenanceRequest(models.Model):
 
     def button_submit_qaqc(self):
         self.stage_id = 6
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'quality.group_quality_manager')
         user_ids = []
         partner_ids = []
@@ -79,7 +79,7 @@ class MaintenanceRequest(models.Model):
 
     def button_submit_store(self):
         self.stage_id = 7
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'stock.group_stock_manager')
         user_ids = []
         partner_ids = []
@@ -230,7 +230,7 @@ class MaintenanceRequestAndFailureReportSheet(models.Model):
 
     def button_submit(self):
         self.write({'state': 'supervisor'})
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_hr_line_manager')
         user_ids = []
         partner_ids = []

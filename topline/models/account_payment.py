@@ -12,7 +12,7 @@ class account_payment(models.Model):
 
     
     def send_payment_creation_mail(self):
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_payment_notification')
         user_ids = []
         partner_ids = []

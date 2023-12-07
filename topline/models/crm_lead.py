@@ -17,7 +17,7 @@ class Lead(models.Model):
     
     def write(self, vals):
         if vals.get('stage_id.name', 'Negotiation') == 'Negotiation':
-            group_id = self.env['ir.model.data'].xmlid_to_object(
+            group_id = self.env.ref(
                 'account.group_account_manager')
             user_ids = []
             partner_ids = []

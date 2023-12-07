@@ -148,7 +148,7 @@ class CashAdvanceRequestForm(models.Model):
         self.write({'state': 'line_approve'})
         self.supervisor_approval_date = date.today()
         self.supervisor_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_internal_audit')
         partner_ids = []
         user_ids = []
@@ -167,7 +167,7 @@ class CashAdvanceRequestForm(models.Model):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
         self.audit_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_md')
         user_ids = []
         partner_ids = []
@@ -186,7 +186,7 @@ class CashAdvanceRequestForm(models.Model):
         self.write({'state': 'md_approve'})
         self.md_approval_date = date.today()
         self.md_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object(
+        group_id = self.env.ref(
             'topline.group_finance_manager')
         user_ids = []
         partner_ids = []

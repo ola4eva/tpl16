@@ -187,7 +187,7 @@ class CashRetirementForm(models.Model):
         self.write({'state':'line_approve'})
         self.supervisor_approval_date = date.today()
         self.supervisor_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object('topline.group_internal_audit')
+        group_id = self.env.ref('topline.group_internal_audit')
         partner_ids = []
         user_ids = []
         for user in group_id.users:
@@ -204,7 +204,7 @@ class CashRetirementForm(models.Model):
         self.write({'state':'internal_approve'})
         self.audit_approval_date = date.today()
         self.audit_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object('topline.group_finance_manager')
+        group_id = self.env.ref('topline.group_finance_manager')
         user_ids = []
         partner_ids = []
         for user in group_id.users:
@@ -221,7 +221,7 @@ class CashRetirementForm(models.Model):
         self.write({'state':'md_approve'})
         self.md_approval_date = date.today()
         self.md_approval = self._uid
-        group_id = self.env['ir.model.data'].xmlid_to_object('account.group_account_manager')
+        group_id = self.env.ref('account.group_account_manager')
         user_ids = []
         partner_ids = []
         for user in group_id.users:
