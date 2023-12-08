@@ -67,7 +67,9 @@ class ReportControllerExtended(ReportController):
                     obj = request.env[report.model].browse(ids)
                     if report.print_report_name and not len(obj) > 1:
                         report_name = safe_eval(report.print_report_name, {
-                                                'object': obj, 'time': time})
+                                                'object': obj})
+                        # report_name = safe_eval(report.print_report_name, {
+                        #                         'object': obj, 'time': time})
                         filename = "%s.%s" % (report_name, "pdf")
                     if report.model == 'payroll.register':
                         filename = "%s.%s" % (obj.name, "pdf")
