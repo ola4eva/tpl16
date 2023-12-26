@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 class PaymentWizard(models.TransientModel):
 
     _name = 'payment_requisition.register_payment'
+    _description = 'Register Payment'
 
     payment_type = fields.Selection(selection=[
         ('full_payment', "Register Full Payment"),

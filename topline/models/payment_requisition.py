@@ -151,7 +151,7 @@ class PaymentRequisitionForm(models.Model):
         return False
 
     def button_line_manager_approval(self):
-        self._check_manager_approval()
+        # self._check_manager_approval()
         if self.total_amount_approved == 0.00:
             for line in self.payment_requisition_form_line_ids:
                 line.amount_approved = line.amount_requested
@@ -266,21 +266,23 @@ class PaymentRequisitionForm(models.Model):
                 'ref': requistion.name,
                 'date': date.today(),
                 'journal_id': requistion.bank_journal_id.id,
-                'line_ids': [(0, 0, {
-                             'name': requistion.payee_id.name,
-                             'debit': line.amount_approved > 0 and line.amount_approved,
-                             'credit': 0.0,
-                             'account_id': line.account_id.id,
-                             'analytic_account_id': line.analytic_account_id.id,
-                             'date_maturity': date.today(),
-                             'partner_id': requistion.payee_id.id,
-                             }) for line in requistion.payment_requisition_form_line_ids] +
+                'line_ids': [
+                    (0, 0, {
+                        'name': requistion.payee_id.name,
+                        'debit': line.amount_approved > 0 and line.amount_approved,
+                        'credit': 0.0,
+                        'account_id': line.account_id.id,
+                        'analytic_account_id': line.analytic_account_id.id,
+                        'date_maturity': date.today(),
+                        'partner_id': requistion.payee_id.id,
+                    }
+                    ) for line in requistion.payment_requisition_form_line_ids] +
 
                 [(0, 0, {
                     'name': requistion.payee_id.name,
                     'credit': requistion.total_amount_approved > 0 and requistion.total_amount_approved,
                     'debit': 0.0,
-                    'account_id': requistion.bank_journal_id.default_credit_account_id.id,
+                    'account_id': requistion.bank_journal_id.default_account_id.id,
                     'date_maturity': date.today(),
                     'partner_id': requistion.payee_id.id,
                 })]
@@ -299,8 +301,10 @@ class PaymentRequisitionFormLines(models.Model):
         comodel_name='payment.requisition.form', string='payment.requisition.form')
 
     def _check_user_group(self):
+        is_manager = False
         if self.user_has_groups('account.group_account_manager') or self.user_has_groups('topline.group_hr_line_manager') or self.user_has_groups('topline.group_internal_audit'):
-            self.is_manager = True
+            is_manager = True
+        self.is_manager = is_manager
 
     def _valid_field_parameter(self, field, name):
         # EXTENDS models

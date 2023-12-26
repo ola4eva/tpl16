@@ -79,7 +79,7 @@ class payment_requisition(models.Model):
 
     def button_md_approval_notification(self):
         user = self.env.user
-        is_md = self.is_md(user.id)
+        is_md = self.is_md(user.partner_id.id)
         if not is_md and user.has_group("payment_requisition.approve_payment_for_md"):
             allowed_limit = user.company_id.md_proxy_approval_limit
             if self.total_amount_approved > allowed_limit:
@@ -168,7 +168,7 @@ class payment_requisition(models.Model):
                         'debit': line.amount_approved > 0 and line.amount_approved,
                         'credit': 0.0,
                         'account_id': line.account_id.id or requisition.default_expense_account_id.id,
-                        'analytic_account_id': line.analytic_account_id.id or requisition.default_analytic_account_id.id,
+                        # 'analytic_account_id': line.analytic_account_id.id or requisition.default_analytic_account_id.id,
                         'date_maturity': date.today(),
                         'partner_id': requisition.payee_id.id,
                     }) for line in requisition.payment_requisition_form_line_ids] +
@@ -177,7 +177,7 @@ class payment_requisition(models.Model):
                         'name': requisition.payee_id.name,
                         'credit': requisition.total_amount_approved > 0 and requisition.total_amount_approved,
                         'debit': 0.0,
-                        'account_id': requisition.bank_journal_id.default_credit_account_id.id,
+                        'account_id': requisition.bank_journal_id.default_account_id.id,
                         'date_maturity': date.today(),
                         'partner_id': requisition.payee_id.id,
                     })]
@@ -193,7 +193,7 @@ class payment_requisition(models.Model):
                         'debit': amount > 0 and amount,
                         'credit': 0.0,
                         'account_id': requisition.default_expense_account_id.id,
-                        'analytic_account_id': requisition.default_analytic_account_id.id,
+                        # 'analytic_account_id': requisition.default_analytic_account_id.id,
                         'date_maturity': date.today(),
                         'partner_id': requisition.payee_id.id,
                     })] +
@@ -215,7 +215,8 @@ class payment_requisition(models.Model):
             requisition.write({
                 'payment_ids': [(4, account_move.id, 0)]
             })
-            requisition._check_fully_paid()
+            # TODO: revisit this function
+            # requisition._check_fully_paid()
         return True
 
     

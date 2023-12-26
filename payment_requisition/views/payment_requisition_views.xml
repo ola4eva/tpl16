@@ -39,7 +39,6 @@
         </xpath>
         <xpath expr="//notebook" position="inside">
           <page string="Rejection Log" name="payment_requisition_rejection_log">
-            <group>
               <field name="rejection_log_ids" nolabel="1">
                 <tree string="Rejection Log" editable="bottom">
                   <field name="requisition_id" invisible="1" />
@@ -48,7 +47,6 @@
                   <field name="user_id" />
                 </tree>
               </field>
-            </group>
           </page>
         </xpath>
       </field>
