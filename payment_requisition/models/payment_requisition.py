@@ -202,7 +202,7 @@ class payment_requisition(models.Model):
                         'name': requisition.payee_id.name,
                         'credit': amount > 0 and amount,
                         'debit': 0.0,
-                        'account_id': requisition.bank_journal_id.default_credit_account_id.id,
+                        'account_id': requisition.bank_journal_id.default_account_id.id,
                         'date_maturity': date.today(),
                         'partner_id': requisition.payee_id.id,
                     })]
