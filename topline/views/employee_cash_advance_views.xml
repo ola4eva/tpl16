@@ -82,7 +82,7 @@
                         <group colspan="2">
                             <field name="total_amount" readonly="1"/>
                             <field name="move_id" attrs="{'invisible': [('paid', '=', False)]}" />
-                            <field name="journal_id" required="1"/>
+                            <field name="journal_id" attrs="{'required': [('state', 'in', ['md_approve', 'approve'])]}"/>
                         </group>
                         <group colspan="2">
                             <field name="num_word" readonly="1"/>

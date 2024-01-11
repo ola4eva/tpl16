@@ -198,7 +198,10 @@ class Picking(models.Model):
     def _total_cost(self):
         for a in self:
             for line in a.move_ids_without_package:
-                a.total_cost += line.price_cost * line.product_uom_qty
+                amt = 0
+                if line.price_cost and line.product_uom_qty:
+                    amt = line.price_cost * line.product_uom_qty
+                a.total_cost += amt
 
     def button_reset(self):
         self.mapped('move_lines')._action_cancel()

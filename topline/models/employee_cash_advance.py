@@ -97,7 +97,7 @@ class CashAdvanceRequestForm(models.Model):
             self.total_amount += line.amount
 
     employee_name = fields.Many2one(
-        'res.users', 'Employee Name', readonly=True, tracking=True,),
+        'res.users', 'Employee Name', readonly=True, tracking=True, store=True)
     employee_approval_date = fields.Date(
         string='Date', readonly=True, tracking=True,)
 
@@ -131,7 +131,6 @@ class CashAdvanceRequestForm(models.Model):
     def button_submit(self):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
-        self.employee_name = self._uid
         partner_ids = []
         if self.employee_id.parent_id.user_id:
             partner_ids.append(
