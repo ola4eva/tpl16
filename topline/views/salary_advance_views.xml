@@ -58,8 +58,8 @@
                             <field name="pay_off_month"/>
                         </p>
                         <group col="4" colspan="4">
-                            <field name="employee_name" readonly="1"/>
-                            <field name="employee_approval_date" readonly="1"/>
+                            <field name="employee_name" readonly="1" invisible="1"/>
+                            <field name="employee_approval_date" readonly="1" invisible="1" />
                         </group>
                         <group string = "Departmental Approval" col="4" colspan="4">
                             <field name="supervisor_approval"/>

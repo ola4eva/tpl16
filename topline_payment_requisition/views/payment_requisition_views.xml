@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="topline_payment_requisition_form_tree_view" model="ir.ui.view">
+            <field name="name">payment.requisition.form.tree</field>
+            <field name="model">payment.requisition.form</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="department_id"/>
+                    <field name="total_amount_requested"/>
+                    <field name="total_amount_approved"/>
+                    <field name="project_description"/>
+                    <field name="employee_id"/>
+                    <field name="bank_details"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="topline_payment_requisition_form_view" model="ir.ui.view">
+            <field name="name">payment.requisition.form</field>
+            <field name="model">payment.requisition.form</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <form string="Payment Requisition Form">
+                    <header>
+                        <button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
+                        <button name="button_line_manager_approval" states="submit" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
+                        <button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
+                        <button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md,payment_requisition.approve_payment_for_md"/>
+                        <button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
+                        <!-- <button name="action_sheet_move_create" states="approve" string="Create Journal Entries" type="object"/> -->
+                        <field name="fully_paid" invisible="1" />
+                        <button name="set_to_draft" string="Set to Draft" type="object" states="reject" />
+                        <button name="action_finance_reject" string="Finance Reject" type="object" class="btn btn-danger" attrs="{'invisible': [('state', '!=', 'md_approve')]}" groups="topline.group_finance_manager"/>
+                        <button name="register_payment" string="Register Payment" type="object" attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('fully_paid', '=', True)]}"/>
+                        <button name="button_reject" states="submit,line_approve,internal_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_journal_entries" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="payment_count" />
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" attrs="{'invisible': [('name', '=', 'New')]}"/>
+                            </h1>
+                        </div>
+                        <group col="4" colspan="4">
+                            <field name="date"/>
+                            <field name="department_id"/>
+                            <field name="project_description"/>
+                            <field name="md_request" groups="payment_requisition.submit_payment_request_for_md" />
+                            <field name="payee_id" required="1" options="{'no_create': True}" />
+                            <field name="employee_id" invisible="1"/>
+                            <field name="currency_id"/>
+                            <field name="bank_details"/>
+                            <field name="default_expense_account_id" />
+                            <field name="default_analytic_account_id" />
+                        </group>
+                        <notebook>
+                            <page string="Payment Lines">
+                                <field name="payment_requisition_form_line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="is_manager" invisible="1"/>
+                                        <field name="name" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
+                                        <field name="qty" />
+                                        <field name="unit_price" />
+                                        <field name="amount_requested" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
+                                        <field name="amount_approved" attrs="{'readonly':[('is_manager', '=', False)]}"/>
+                                        <field name="analytic_account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
+                                        <field name="account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Rejection Log" name="payment_requisition_rejection_log">
+                                <field name="rejection_log_ids" nolabel="1">
+                                    <tree string="Rejection Log" editable="bottom">
+                                        <field name="requisition_id" invisible="1" />
+                                        <field name="reason" />
+                                        <field name="datetime_rejection" />
+                                        <field name="user_id" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Other Info">
+                                <group>
+                                    <group>
+                                        <field name="bank_journal_id" groups="account.group_account_user" options="{'no_open': True, 'no_create': True}" domain="[('type', 'in', ['cash', 'bank'])]" attrs="{'invisible': [('state', 'not in', ['approve', 'post', 'paid'])]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="account_move_id" groups="account.group_account_user" attrs="{'invisible': [('state', 'not in', ['approve', 'post', 'paid'])]}" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        <group colspan="2">
+                            <field name="total_amount_requested" readonly="1"/>
+                            <field name="total_amount_approved" readonly="1"/>
+                            <field name="total_amount_approved_due" invisible="1"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="total_amount_paid" readonly="1" />
+                            <field name="total_amount_outstanding" readonly="1" />
+                            <field name="num_word" readonly="1"/>
+                        </group>
+                        <group string = "Requested By" col="4" colspan="4">
+                            <field name="employee_name" readonly="1"/>
+                            <field name="employee_approval_date" readonly="1"/>
+                        </group>
+                        <group string = "Approved By" col="4" colspan="4">
+                            <field name="finance_approval"/>
+                            <field name="finance_approval_date"/>
+                        </group>
+                        <group string = "Received By" col="4" colspan="4">
+                            <field name="received_approval"/>
+                            <field name="received_approval_date"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="search_payment_requisition_form" model="ir.ui.view">
+            <field name="name">search.payment.requisition.form</field>
+            <field name="model">payment.requisition.form</field>
+            <field name="arch" type="xml">
+                <search string="Payment Requisition">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="project_description"/>
+                    <field name="payment_requisition_form_line_ids" string="Details/purpose"/>
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <filter name="filter_unposted" domain="[('state', 'not in', ['post'])]" string="Unposted" />
+                </search>
+            </field>
+        </record>
+
+        <!-- payment.requisition.form action-->
+        <record model="ir.actions.act_window" id="topline_payment_requisition_form_action">
+            <field name="name">Payment Requisition</field>
+            <field name="res_model">payment.requisition.form</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="search_view_id" ref="search_payment_requisition_form"/>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_filter_unposted': True}</field>
+        </record>
+
+        <!-- Reporting Segment -->
+        <record model="ir.actions.act_window" id="topline_payment_requisition_form_reporting_action">
+            <field name="name">Payment Requisition Analysis</field>
+            <field name="res_model">payment.requisition.form</field>
+            <field name="view_mode">graph,pivot,kanban,activity</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem name="Payment Requisition Form" id="topline_payment_requisition_menu" parent="hr_expense.menu_hr_expense_my_expenses" action="topline_payment_requisition_form_action"/>
+        <!-- <menuitem name="Payment Requisition Report" id="topline_payment_requisition_form_report_menu" parent="topline_expenses_reporting_main_menu" action="topline_payment_requisition_form_reporting_action"/> -->
+
+    </data>
+</odoo>

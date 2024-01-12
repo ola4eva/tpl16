@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="payment_register_view_form" model="ir.ui.view">
+            <field name="name">payment.register.view.form</field>
+            <field name="model">payment_requisition.register_payment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="payment_type" required="1"/>
+                        <field name="requisition_id" />
+                        <field name="amount" attrs="{'invisible': [('payment_type', '!=', 'down_payment')]}" />
+                        <field name="total_amount_outstanding" />
+                    </group>
+                    <footer>
+                        <button name="do_pay" string="Register Payment" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

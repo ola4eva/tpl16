@@ -97,8 +97,6 @@ access_atp_form_lines,atp.form.lines,model_atp_form_lines,base.group_user,1,1,1,
 access_travel_report,travel.report,model_travel_report,base.group_user,1,1,1,1
 access_stationery_report,stationery.report,model_stationery_report,base.group_user,1,1,1,1
 access_salary_advance_form,salary.advance.form,model_salary_advance_form,base.group_user,1,1,1,1
-access_payment_requisition_form_lines,payment.requisition.form.lines,model_payment_requisition_form_lines,base.group_user,1,1,1,1
-access_payment_requisition_form,payment.requisition.form,model_payment_requisition_form,base.group_user,1,1,1,1
 access_missing_stolen_asset_report_form,missing.stolen.asset.report.form,model_missing_stolen_asset_report_form,base.group_user,1,1,1,1
 access_cash_advance_request_form,cash.advance.request.form,model_cash_advance_request_form,base.group_user,1,1,1,1
 access_cash_retirement_form,cash.retirement.form,model_cash_retirement_form,base.group_user,1,1,1,1

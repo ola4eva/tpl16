@@ -357,14 +357,7 @@
 			<field name="context">{'search_default_category_id':1, 'group_by':[]}</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="topline_exit_form_action">
-			<field name="name">Exit Form (Working Hours)</field>
-			<field name="res_model">exit.form</field>
-
-			<field name="view_mode">tree,form</field>
-			<field name="domain">[]</field>
-			<field name="context">{}</field>
-		</record>
+		
 
 		<record model="ir.actions.act_window" id="topline_absense_information_form_action">
 			<field name="name">Absense Information</field>
@@ -927,22 +920,6 @@
 					<field name="mileage_in"/>
 					<field name="gas_level_in"/>
 					<field name="date"/>
-				</tree>
-			</field>
-		</record>
-
-		<record id="topline_exit_form_tree_view" model="ir.ui.view">
-			<field name="name">exit.form.tree</field>
-			<field name="model">exit.form</field>
-			<field name="arch" type="xml">
-				<tree>
-					<field name="name"/>
-					<field name="employee_id"/>
-					<field name="applicant_function"/>
-					<field name="date"/>
-					<field name="purpose_of_exit"/>
-					<field name="time_of_leaving"/>
-					<field name="time_of_returrning"/>
 				</tree>
 			</field>
 		</record>
@@ -2488,45 +2465,7 @@
 			</field>
 		</record>
 
-		<record id="topline_exit_form_form_view" model="ir.ui.view">
-			<field name="name">exit.form</field>
-			<field name="model">exit.form</field>
-			<field name="priority" eval="2"/>
-			<field name="arch" type="xml">
-				<form string="Exit Form">
-					<header>
-						<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
-						<button name="action_line_manager_approval" states="supervisor" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
-						<button name="button_hr_approval" states="manager" string="Approve" class="btn btn-primary" type="object" groups="hr.group_hr_manager"/>
-						<button name="action_reject" states="supervisor,manager" class="btn btn-danger" string="Reject" type="object" />
-						<field name="state" widget="statusbar" statusbar_visible="draft,line_manager,store,approve"/>
-					</header>
-					<sheet>
-						<span>
-							<b>Exit Form</b>
-						</span>
-						<div class="oe_title">
-							<h1>
-								<field name="name" readonly="1" attrs="{'invisible': [('name', '=', 'New')]}"/>
-							</h1>
-						</div>
-						<group col="4" colspan="4">
-							<field name="employee_id"/>
-							<field name="applicant_function"/>
-							<field name="purpose_of_exit"/>
-							<field name="date"/>
-							<field name="time_of_leaving" widget="float_time"/>
-							<field name="time_of_returrning" widget="float_time"/>
-						</group>
-					</sheet>
-					<div class="oe_chatter">
-						<field name="message_follower_ids" widget="mail_followers"/>
-						<field name="activity_ids" widget="mail_activity"/>
-						<field name="message_ids" widget="mail_thread"/>
-					</div>
-				</form>
-			</field>
-		</record>
+		
 
 		<record id="topline_absense_information_form_view" model="ir.ui.view">
 			<field name="name">absense.information</field>
@@ -4775,7 +4714,6 @@
 		<menuitem name="Employee Requisition Form" id="topline_employee_requisition_form_menu" parent="hr.menu_hr_root" action="topline_employee_requisition_form_action"/>
 		<menuitem name="Authorization to Purchase(ATP)" id="topline_atp_form_menu" parent="stock.menu_stock_root" action="topline_atp_form_action" groups="stock.group_stock_manager,purchase.group_purchase_manager,topline.group_internal_audit,topline.group_qa"/>
 		<menuitem name="Late Arrival Form" id="topline_late_arrival_form_menu" parent="hr.menu_hr_root" action="topline_late_arrival_form_action"/>
-		<menuitem name="Exit Form" id="topline_exit_form_menu" parent="hr.menu_hr_root" action="topline_exit_form_action"/>
 		<menuitem name="Absense Information" id="topline_absense_information_form_menu" parent="hr_holidays.menu_hr_holidays_root" action="topline_absense_information_form_action"/>
 		<menuitem name="Certificates For Tendering" id="topline_certificates_for_tendering_menu" parent="crm.crm_menu_sales" action="topline_certificates_for_tendering_action"/>
 		<menuitem name="Tender Analysis" id="topline_tender_analysis_menu" parent="crm.crm_menu_sales" action="topline_tender_analysis_action"/>

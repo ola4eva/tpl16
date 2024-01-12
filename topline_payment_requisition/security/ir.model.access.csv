@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_requisition_form_lines,payment.requisition.form.lines,model_payment_requisition_form_lines,base.group_user,1,1,1,1
+access_payment_requisition_form,payment.requisition.form,model_payment_requisition_form,base.group_user,1,1,1,0
+access_reject_payment_requisition_user,access_reject_payment_requisition_user,model_reject_payment_requisition,base.group_user,1,1,1,1
+access_register_payment_user,access_register_payment_user,model_payment_requisition_register_payment,base.group_user,1,1,1,1
+access_payment_requisition_rejection_log_group_user,payment.requisition.rejection.log,model_payment_requisition_rejection_log,base.group_user,1,1,1,1
+access_account_move_internal_user,access_account_move_internal_user,model_account_move,base.group_user,1,0,0,0
