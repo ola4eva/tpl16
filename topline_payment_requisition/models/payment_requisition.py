@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
 
-from odoo import api, fields, models, _
 from datetime import date
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
 
 class PaymentRequisitionForm(models.Model):

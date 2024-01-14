@@ -71,9 +71,10 @@
                                 <field name="payment_requisition_form_line_ids" nolabel="1">
                                     <tree editable="bottom">
                                         <field name="is_manager" invisible="1"/>
+                                        <field name="state" invisible="1" />
                                         <field name="name" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
-                                        <field name="qty" />
-                                        <field name="unit_price" />
+                                        <field name="qty" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                        <field name="unit_price" attrs="{'readonly': [('state', '!=', 'draft')]}" />
                                         <field name="amount_requested" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
                                         <field name="amount_approved" attrs="{'readonly':[('is_manager', '=', False)]}"/>
                                         <field name="analytic_account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
