@@ -61,8 +61,8 @@
                             <field name="employee_id" invisible="1"/>
                             <field name="currency_id"/>
                             <!-- <field name="bank_details"/> -->
-                            <field name="bank_id"/>
-                            <field name="account_number"/>
+                            <field name="bank_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="account_number" attrs="{'readonly': [('state', '!=', 'draft')]}" />
                             <field name="default_expense_account_id" />
                             <field name="default_analytic_account_id" />
                         </group>
