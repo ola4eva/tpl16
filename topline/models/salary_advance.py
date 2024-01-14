@@ -4,6 +4,36 @@ from odoo import api, fields, models, _
 from datetime import date
 from odoo.exceptions import UserError
 
+YEAR_TUPLE = [
+    ('2024', '2024'),
+    ('2025', '2025'),
+    ('2026', '2026'),
+    ('2027', '2027'),
+    ('2028', '2028'),
+    ('2029', '2029'),
+    ('2030', '2030'),
+    ('2031', '2031'),
+    ('2032', '2032'),
+    ('2033', '2033'),
+    ('2034', '2034'),
+    ('2035', '2035'),
+    ('2036', '2036'),
+    ('2037', '2037'),
+    ('2038', '2038'),
+    ('2039', '2039'),
+    ('2040', '2040'),
+    ('2041', '2041'),
+    ('2042', '2042'),
+    ('2043', '2043'),
+    ('2044', '2044'),
+    ('2045', '2045'),
+    ('2046', '2046'),
+    ('2047', '2047'),
+    ('2048', '2048'),
+    ('2049', '2049'),
+    ('2050', '2050'),
+]
+
 
 class SalaryAdvanceForm(models.Model):
     _name = 'salary.advance.form'
@@ -60,6 +90,11 @@ class SalaryAdvanceForm(models.Model):
                                                                     'July'), ('8', 'August'),
                                       ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December'), ],
                                      string='Month', required=True, tracking=True)
+    request_year = fields.Selection(
+        selection=YEAR_TUPLE, string='Request Year')
+
+    pay_off_year = fields.Selection(
+        selection=YEAR_TUPLE, string='Pay Off Year')
 
     employee_name = fields.Many2one(
         'res.users', 'Employee Name', readonly=True, tracking=True)
@@ -180,3 +215,11 @@ class SalaryAdvanceForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
+        
+    @api.constrains('request_year', 'pay_off_year')
+    def _check_request_recovery_year(self):
+        """Check that the pay back year is greater than or equal to request year"""
+        for record in self:
+            if self.request_year and self.pay_off_year:
+                if int(record.pay_off_year) < int(record.request_year):
+                    raise UserError("Pay back year is ahead of request year") 

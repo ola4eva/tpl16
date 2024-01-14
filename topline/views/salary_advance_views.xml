@@ -52,10 +52,11 @@
                             <field name="advance_of"/>
                             <span>from my salary of the month of </span>
                             <field name="month_of"/>
+                            <field name="request_year"/>
                         </p>
                         <p>
                             <span>I agree that the advance shall be recovered in full in the month of </span>
-                            <field name="pay_off_month"/>
+                            <field name="pay_off_month"/> <field name="pay_off_year" />
                         </p>
                         <group col="4" colspan="4">
                             <field name="employee_name" readonly="1" invisible="1"/>

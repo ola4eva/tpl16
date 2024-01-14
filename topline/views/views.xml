@@ -357,7 +357,7 @@
 			<field name="context">{'search_default_category_id':1, 'group_by':[]}</field>
 		</record>
 
-		
+
 
 		<record model="ir.actions.act_window" id="topline_absense_information_form_action">
 			<field name="name">Absense Information</field>
@@ -2465,7 +2465,7 @@
 			</field>
 		</record>
 
-		
+
 
 		<record id="topline_absense_information_form_view" model="ir.ui.view">
 			<field name="name">absense.information</field>
@@ -3185,8 +3185,6 @@
 							</h1>
 						</div>
 						<group string="ASSET DETAILS" col="4" colspan="4">
-							<field name="employee_id"/>
-							<field name="department_id"/>
 							<field name="name"/>
 							<field name="serial_no"/>
 							<field name="cost_asset"/>
@@ -3197,18 +3195,23 @@
 							<field name="incident_lead_misplacement" widget="html"/>
 						</group>
 						<group col="4" colspan="4">
-							<field name="employee_name" readonly="1"/>
+							<field name="employee_id"/>
+							<field name="department_id"/>
+							<!-- <field name="employee_name" readonly="1"/> -->
 							<field name="employee_approval_date" readonly="1"/>
 						</group>
 						<span>(Asset Custodian at Time of Incidence)</span>
 						<br/>
 						<br/>
 						<group string = "ASSET CONTROL USE ONLY" col="4" colspan="4">
-							<field name="store_approval"/>
-							<field name="store_approval_date"/>
-							<br/>
-							<field name="finance_approval"/>
-							<field name="finance_approval_date"/>
+							<group colspan="4">
+								<field name="store_approval"/>
+								<field name="store_approval_date"/>
+							</group>
+							<group colspan="4">
+								<field name="finance_approval"/>
+								<field name="finance_approval_date"/>
+							</group>
 						</group>
 					</sheet>
 					<div class="oe_chatter">

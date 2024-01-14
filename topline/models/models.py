@@ -1931,6 +1931,7 @@ class LateArrivalForm(models.Model):
             self.name, self.employee_id.name)
         partner_ids = []
         for user in group_id.users:
+            partner = user.partner_id
             partner_ids.append(partner.id)
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
@@ -3391,7 +3392,7 @@ class MissingStolenAssetReportForm(models.Model):
         return self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
 
     employee_id = fields.Many2one(comodel_name='hr.employee', required=True,
-                                  string='Name', tracking=True, default=_default_employee)
+                                  string='Reported By', tracking=True, default=_default_employee)
     department_id = fields.Many2one(comodel_name='hr.department', string='Department',
                                     related='employee_id.department_id', tracking=True)
 
@@ -3422,7 +3423,6 @@ class MissingStolenAssetReportForm(models.Model):
     def button_submit_report(self):
         self.write({'state': 'submit'})
         self.employee_approval_date = date.today()
-        self.employee_name = self._uid
         group_id = self.env.ref(
             'stock.group_stock_manager')
         user_ids = []
