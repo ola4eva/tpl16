@@ -60,7 +60,9 @@
                             <field name="payee_id" required="1" options="{'no_create': True}" />
                             <field name="employee_id" invisible="1"/>
                             <field name="currency_id"/>
-                            <field name="bank_details"/>
+                            <!-- <field name="bank_details"/> -->
+                            <field name="bank_id"/>
+                            <field name="account_number"/>
                             <field name="default_expense_account_id" />
                             <field name="default_analytic_account_id" />
                         </group>

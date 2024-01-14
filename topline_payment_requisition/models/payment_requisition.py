@@ -71,6 +71,9 @@ class PaymentRequisitionForm(models.Model):
     bank_details = fields.Char(
         string='Bank Details',  tracking=True)
 
+    bank_id = fields.Many2one('res.bank', string='Bank')
+    account_number = fields.Char('Account No', size=10)
+
     total_amount_requested = fields.Float(
         string='Total amount requested', compute='_total_amount_requested', readonly=True, tracking=True,)
     total_amount_approved = fields.Float(
