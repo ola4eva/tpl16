@@ -243,7 +243,18 @@ class PaymentRequisitionForm(models.Model):
             self.name, self.employee_id.name)
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
-        return False
+        seq_pr = self._get_sequence()
+        return self.update({
+            'name': seq_pr
+        })
+
+    def _get_sequence(self):
+        """Return new sequence"""
+        seq_pr = "New"
+        seq_pr = self.env['ir.sequence'].next_by_code('payment.requisition')
+        if seq_pr:
+            return seq_pr
+        return seq_pr
 
     def set_to_draft(self):
         return self.write({'state': 'draft'})
@@ -468,16 +479,19 @@ class PaymentRequisitionForm(models.Model):
 
     @api.depends('payment_requisition_form_line_ids.amount_requested')
     def _total_amount_requested(self):
-        self.total_amount_requested = 0
-        for line in self.payment_requisition_form_line_ids:
-            self.total_amount_requested += line.amount_requested
+        for rec in self:
+            total_amount_requested = 0
+            for line in rec.payment_requisition_form_line_ids:
+                total_amount_requested += line.amount_requested
+            rec.total_amount_requested = total_amount_requested
 
     @api.depends('payment_requisition_form_line_ids.amount_approved')
     def _total_amount_approved(self):
-        self.total_amount_approved = self.total_amount_approved_due = 0.0
-        for line in self.payment_requisition_form_line_ids:
-            self.total_amount_approved += line.amount_approved
-            self.total_amount_approved_due = self.total_amount_approved
+        for rec in self:
+            rec.total_amount_approved = rec.total_amount_approved_due = 0.0
+            for line in rec.payment_requisition_form_line_ids:
+                rec.total_amount_approved += line.amount_approved
+                rec.total_amount_approved_due = rec.total_amount_approved
 
     def _compute_amount_in_word(self):
         for rec in self:
@@ -516,7 +530,7 @@ class PaymentRequisitionFormLines(models.Model):
                                           'post': [('readonly', True)], 'done': [('readonly', True)]})
     account_id = fields.Many2one('account.account', string='Account', states={'post': [(
         'readonly', True)], 'done': [('readonly', True)]}, help="An Payment account is expected")
-    
+
     def _compute_requested_amount(self):
         """Calculate the requested amount
         """

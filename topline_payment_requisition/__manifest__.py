@@ -25,6 +25,7 @@
     'data': [
         'security/access_groups.xml',
         'security/ir.model.access.csv',
+        'data/sequence.xml',
         'views/payment_requisition_views.xml',
         'views/res_company_view.xml',
         'wizard/payment_view.xml',
