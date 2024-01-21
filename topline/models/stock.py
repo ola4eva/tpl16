@@ -46,35 +46,7 @@ class Picking(models.Model):
         string='Picking Type Name', related='picking_type_id.name')
     active = fields.Boolean('Active', default=True)
 
-    # @api.depends('move_type', 'move_lines.state', 'move_lines.picking_id')
-    # def _compute_state(self):
-    #     ''' State of a picking depends on the state of its related stock.move
-    #     - Draft: only used for "planned pickings"
-    #     - Waiting: if the picking is not ready to be sent so if
-    #       - (a) no quantity could be reserved at all or if
-    #       - (b) some quantities could be reserved and the shipping policy is "deliver all at once"
-    #     - Waiting another move: if the picking is waiting for another move
-    #     - Ready: if the picking is ready to be sent so if:
-    #       - (a) all quantities are reserved or if
-    #       - (b) some quantities could be reserved and the shipping policy is "as soon as possible"
-    #     - Done: if the picking is done.
-    #     - Cancelled: if the picking is cancelled
-    #     '''
-    #     if not self.move_lines:
-    #         self.state = 'draft'
-    #     elif any(move.state == 'draft' for move in self.move_lines):  # TDE FIXME: should be all ?
-    #         self.state = 'draft'
-    #     elif all(move.state == 'cancel' for move in self.move_lines):
-    #         self.state = 'cancel'
-    #     elif all(move.state in ['cancel', 'done'] for move in self.move_lines):
-    #         self.state = 'done'
-    #     else:
-    #         relevant_move_state = self.move_lines._get_relevant_state_among_moves()
-    #         if relevant_move_state == 'partially_available':
-    #             self.state = 'assigned'
-    #         else:
-    #             self.state = relevant_move_state
-
+    
     def unlink(self):
         for picking in self:
             store_request_picking_type = self.env.ref(
@@ -86,7 +58,7 @@ class Picking(models.Model):
 
     def button_submit(self):
         self.write({'state': 'submit'})
-        for move in self.move_lines:
+        for move in self.move_ids_without_package:
             move.state = 'submit'
         partner_ids = []
         if self.employee_id.parent_id.user_id:
@@ -101,7 +73,7 @@ class Picking(models.Model):
 
     def action_confirm(self):
         self.write({'is_locked': True})
-        for move in self.move_lines:
+        for move in self.move_ids_without_package:
             move.state = 'confirmed'
         res = super(Picking, self).action_confirm()
         if self.picking_type_id.name == 'Staff Store Requests':
@@ -124,7 +96,7 @@ class Picking(models.Model):
         self.write({'state': 'approve'})
         group_id = self.env.ref(
             'topline.group_qa')
-        for move in self.move_lines:
+        for move in self.move_ids_without_package:
             move.state = 'approve'
         self.manager_confirm()
         subject = "Store request {} for {} has been approved by line manager".format(
@@ -139,7 +111,7 @@ class Picking(models.Model):
 
     def action_qa_qc_approval(self):
         self.write({'state': 'qa_qc_approve'})
-        for move in self.move_lines:
+        for move in self.move_ids_without_package:
             move.state = 'qa_qc_approve'
         self.manager_confirm()
         subject = "Store request {} for {} has been approved by QA/QC".format(
@@ -177,7 +149,7 @@ class Picking(models.Model):
 
     total_price = fields.Float(
         string='Total',
-        # compute='_total_price',
+        compute='_total_price',
         readonly=True, store=True)
     man_confirm = fields.Boolean(
         'Manager Confirmation', tracking=True)
@@ -197,7 +169,6 @@ class Picking(models.Model):
     @api.depends('move_ids_without_package.product_uom_qty')
     def _total_cost(self):
         for a in self:
-            # total_cost = 0.0
             amt = 0
             for line in a.move_ids_without_package:
                 if line.price_cost and line.product_uom_qty:
@@ -205,7 +176,7 @@ class Picking(models.Model):
             a.total_cost += amt
 
     def button_reset(self):
-        self.mapped('move_lines')._action_cancel()
+        self.mapped('move_ids_without_package')._action_cancel()
         self.write({'state': 'draft'})
         return {}
 
@@ -250,10 +221,12 @@ class Picking(models.Model):
         self.need_approval = False
         return {}
 
-    # @api.depends('move_lines.price_unit')
-    # def _total_price(self):
-    #     for line in self.move_lines:
-    #         self.total_price += line.price_subtotal
+    @api.depends('move_ids_without_package.price_unit')
+    def _total_price(self):
+        total_price = 0.0
+        for line in self.move_ids_without_package:
+            total_price += line.price_subtotal
+        self.total_price += total_price
 
     def create_atp_order(self):
         """
@@ -265,7 +238,7 @@ class Picking(models.Model):
 
         for subscription in self:
             order_lines = []
-            for line in subscription.move_lines:
+            for line in subscription.move_ids_without_package:
                 order_lines.append((0, 0, {
                     'name': line.product_id.name,
                     'product_id': line.product_id.id,
