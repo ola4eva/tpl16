@@ -15,7 +15,6 @@ class PettyCash(models.Model):
         ('submit', 'Submitted'),
         ('line_approve', 'Line Manager Approved'),
         ('internal_approve', 'Internal Audit Approved'),
-        ('md_approve', 'MD Approved'),
         ('paid', 'Paid'),
         ('approve', 'Finance Approved'),
         ('post', 'Posted'),
@@ -195,27 +194,6 @@ class PettyCash(models.Model):
         self.message_subscribe(partner_ids=partner_ids)
         subject = "Petty Cash '{}', for '{}' needs approval".format(
             self.name, self.employee_id.name)
-        # for partner in self.message_partner_ids:
-        #   partner_ids.append(partner.id)
-        self.message_post(subject=subject, body=subject,
-                          partner_ids=partner_ids)
-
-    def button_md_approval_notification(self):
-        self.write({'state': 'md_approve'})
-        self.md_approval_date = date.today()
-        self.md_approval = self._uid
-        group_id = self.env.ref(
-            'topline.group_finance_manager')
-        user_ids = []
-        partner_ids = []
-        for user in group_id.users:
-            user_ids.append(user.id)
-            partner_ids.append(user.partner_id.id)
-        self.message_subscribe(partner_ids=partner_ids)
-        subject = "Petty Cash '{}', for '{}' has been approved by MD and needs approval from Finance".format(
-            self.name,  self.employee_id.name)
-        for partner in self.message_partner_ids:
-            partner_ids.append(partner.id)
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
