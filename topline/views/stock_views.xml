@@ -180,7 +180,8 @@
                                         <field name="show_operations" invisible="1" readonly="1"/>
                                         <field name="additional" invisible="1"/>
                                         <!-- <field name="has_move_lines" invisible="1"/> -->
-                                        <field name="product_id" required="1" attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('additional', '=', False)]}"/>
+                                        <!-- <field name="product_id" required="1" attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('additional', '=', False)]}"/> -->
+                                        <field name="product_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                                         <field name="is_locked" invisible="1"/>
                                         <field name="company_id" invisible="1"/>
                                         <field name="company_id" invisible="1"/>
@@ -256,7 +257,7 @@
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="search_tpl_stock_picking"/>
             <field name="domain">[('picking_type_id.name','=','Staff Store Requests')]</field>
-            <field name="context" eval='{"default_is_locked":False,"default_picking_type_id":ref("topline.stock_picking_type_emp")}'/>
+            <field name="context" eval='{"default_is_locked":False,"default_additional": True,"default_picking_type_id":ref("topline.stock_picking_type_emp")}'/>
         </record>
 
         <record id="store_req_action_tree" model="ir.actions.act_window.view">
