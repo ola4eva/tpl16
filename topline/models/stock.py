@@ -197,11 +197,12 @@ class Picking(models.Model):
     @api.depends('move_ids_without_package.product_uom_qty')
     def _total_cost(self):
         for a in self:
+            # total_cost = 0.0
+            amt = 0
             for line in a.move_ids_without_package:
-                amt = 0
                 if line.price_cost and line.product_uom_qty:
                     amt = line.price_cost * line.product_uom_qty
-                a.total_cost += amt
+            a.total_cost += amt
 
     def button_reset(self):
         self.mapped('move_lines')._action_cancel()
