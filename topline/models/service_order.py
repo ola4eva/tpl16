@@ -298,7 +298,13 @@ class ServiceOrderLine(models.Model):
 
     product_id = fields.Many2one(
         comodel_name='product.product', string='Product')
+    service = fields.Char(string='Service')
     description = fields.Char(string='DESCRIPTION', required=True)
     serial_no = fields.Char(string='EQUIPMENT SERIAL NO./ ASSET NO.')
     qty = fields.Float(string='QTY', required=True)
+
+    @api.onchange('service')
+    def _onchange_service(self):
+        if self.service:
+            self.description = self.service
 

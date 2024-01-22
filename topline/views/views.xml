@@ -1383,7 +1383,7 @@
 						</group>
 						<field name="service_order_line_ids" nolabel="1" widget="section_and_note_one2many">
 							<tree editable="bottom">
-								<field name="product_id"/>
+								<field name="service"/>
 								<field name="description"/>
 								<field name="serial_no"/>
 								<field name="qty"/>
