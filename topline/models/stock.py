@@ -473,7 +473,7 @@ class StockMove(models.Model):
     @api.depends('product_uom_qty', 'price_cost')
     def _compute_subtotal(self):
         for line in self:
-            self.price_subtotal = self.product_uom_qty * line.price_cost
+            line.price_subtotal = line.product_uom_qty * line.price_cost
 
     def _default_cost(self):
         return self.product_id.standard_price
