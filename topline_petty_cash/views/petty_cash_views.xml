@@ -43,8 +43,7 @@
                         <group col="4" colspan="4">
                             <field name="date"/>
                             <field name="department_id"/>
-                            <!-- <field name="project_description"/> -->
-                            <field name="payee_id" required="1" widget="selection" />
+                            <field name="payee_id" required="1" />
                             <field name="employee_id" invisible="1"/>
                             <field name="currency_id"/>
                             <field name="bank_details"/>
