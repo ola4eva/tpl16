@@ -489,6 +489,7 @@ class StockMove(models.Model):
         ('yes', 'Yes'),
         ('no', 'No'),
     ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True,)
+    reserved_uom_qty = fields.Float('reserved_uom_qty', default=1)
 
     def _get_relevant_state_among_moves(self):
         # We sort our moves by importance of state:
