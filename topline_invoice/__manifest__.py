@@ -13,7 +13,7 @@
     'website': "http://www.mceesolutions.com",
 
     'category': 'Accounting/Accounting',
-    'version': '0.1',
+    'version': '12.0.1',
 
     'depends': [
         'account',

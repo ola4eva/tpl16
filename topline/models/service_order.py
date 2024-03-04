@@ -184,17 +184,18 @@ class ServiceOrder(models.Model):
         """
         Method to open create atp form
         """
-        view_ref = self.env['ir.model.data'].get_object_reference(
+        view_ref = self.env['ir.model.data'].check_object_reference(
             'purchase', 'purchase_order_form')
         view_id = view_ref[1] if view_ref else False
+        stmpl = self.env.ref('topline.product_template_service')
+        prd = self.env['product.product'].sudo().search([('product_tmpl_id', '=', stmpl.id)], limit=1)
         for subscription in self:
             order_lines = []
             for line in subscription.service_order_line_ids:
                 order_lines.append((0, 0, {
-                    'name': line.product_id.name,
-                    'product_uom': line.product_id.uom_id.id,
-                    'product_id': line.product_id.id,
-                    'account_id': line.product_id.property_account_expense_id.id,
+                    'name': line.description,
+                    'product_id': prd.id,
+                    'product_uom': prd.uom_id.id,
                     'product_qty': line.qty,
                     'date_planned': date.today(),
                     'price_unit': line.product_id.standard_price,
@@ -208,7 +209,10 @@ class ServiceOrder(models.Model):
             'view_mode': 'form',
             'view_id': view_id,
             'target': 'current',
-            'context': {'default_stock_source': self.name, 'default_atp_id': self.id, 'default_order_line': order_lines}
+            'context': {
+                'default_stock_source': self.name, 
+                'default_order_line': order_lines
+            }
         }
         return res
 
