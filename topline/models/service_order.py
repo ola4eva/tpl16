@@ -221,7 +221,7 @@ class ServiceOrder(models.Model):
         """
         Method to open create payment requisition
         """
-        view_ref = self.env['ir.model.data'].get_object_reference(
+        view_ref = self.env['ir.model.data'].check_object_reference(
             'topline', 'topline_payment_requisition_form_view')
         view_id = view_ref[1] if view_ref else False
         for subscription in self:
