@@ -110,6 +110,6 @@
             <field name="context">{}</field>
         </record>
 
-        <menuitem name="Service Order" id="topline_service_order_menu" parent="stock.menu_stock_root" action="topline.topline_service_order_form_action"/>
+        <menuitem name="Service Order" id="topline_service_order_menu" parent="stock.menu_stock_root" action="topline_service_order_form_action"/>
 
 </odoo>
