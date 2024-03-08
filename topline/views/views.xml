@@ -581,22 +581,7 @@
 			</field>
 		</record>
 
-		<record id="topline_service_order_tree_view" model="ir.ui.view">
-			<field name="name">service.order.tree</field>
-			<field name="model">service.order</field>
-			<field name="arch" type="xml">
-				<tree>
-					<field name="name"/>
-					<field name="employee_id"/>
-					<field name="department_id"/>
-					<field name="location"/>
-					<field name="project_id"/>
-					<field name="project_description"/>
-					<field name="date"/>
-					<field name="state"/>
-				</tree>
-			</field>
-		</record>
+		
 
 		<record id="topline_action_request_log_tree_view" model="ir.ui.view">
 			<field name="name">action.request.log.tree</field>
@@ -1342,73 +1327,7 @@
 			</field>
 		</record>
 
-		<record id="topline_service_order_form_view" model="ir.ui.view">
-			<field name="name">service.order.form</field>
-			<field name="model">service.order</field>
-			<field name="priority" eval="2"/>
-			<field name="arch" type="xml">
-				<form string="Service Order">
-					<header>
-						<button name="button_submit" states="draft" string="Submit To Manager" type="object"/>
-						<button name="action_line_manager_approval" states="line_manager" string="Approve" type="object" class="btn btn-primary" groups="topline.group_hr_line_manager"/>
-						<button name="action_qaqc_approval" states="qaqc" string="Approve" type="object" class="btn btn-primary" groups="topline.group_qa"/>
-						<button name="button_procurement_approval" states="procurement" string="Approve" class="btn btn-primary" type="object" groups="purchase.group_purchase_manager"/>
-						<button name="create_purchase_order2" states="approve" string="Create RFQ" type="object" groups="purchase.group_purchase_manager"/>
-						<button name="create_payment_requisition" states="approve" string="Create Payment Requisition" type="object" groups="purchase.group_purchase_manager"/>
-						<button name="action_reject" states="line_manager,qaqc,procurement," class="btn btn-danger" string="Reject" type="object" />
-						<field name="state" widget="statusbar" statusbar_visible="draft,line_manager,qaqc,procurement,approve"/>
-					</header>
-					<sheet>
-						<div class="oe_button_box" name="button_box">
-							<button name="open_po" type="object" class="oe_stat_button" icon="fa-list">
-								<field name="po_count" widget="statinfo" string="RFQ's"/>
-							</button>
-							<button name="open_payr" type="object" class="oe_stat_button" icon="fa-money">
-								<field name="payment_req_count" widget="statinfo" string="Payment Requisitions"/>
-							</button>
-						</div>
-						<div class="oe_title">
-							<span class="o_form_label">Service Order</span>
-							<h1>
-								<field name="name" readonly="1"/>
-							</h1>
-						</div>
-						<group col="4" colspan="4">
-							<field name="employee_id" required="1" readonly="0"/>
-							<field name="department_id"/>
-							<field name="location"/>
-							<field name="project_id"/>
-							<field name="project_description"/>
-							<field name="date"/>
-						</group>
-						<field name="service_order_line_ids" nolabel="1" widget="section_and_note_one2many">
-							<tree editable="bottom">
-								<field name="service"/>
-								<field name="description"/>
-								<field name="serial_no"/>
-								<field name="qty"/>
-							</tree>
-						</field>
-						<group colspan="2">
-							<field name="employee_id" readonly="1"/>
-						</group>
-						<group string = "Department Approval" col="4" colspan="4">
-							<field name="line_manager_approval"/>
-							<field name="line_manager_approval_date"/>
-						</group>
-						<group string = "Authorization" col="4" colspan="4">
-							<field name="procurement_approval"/>
-							<field name="procurement_approval_date"/>
-						</group>
-					</sheet>
-					<div class="oe_chatter">
-						<field name="message_follower_ids" widget="mail_followers"/>
-						<field name="activity_ids" widget="mail_activity"/>
-						<field name="message_ids" widget="mail_thread"/>
-					</div>
-				</form>
-			</field>
-		</record>
+		
 
 		<record id="topline_action_request_log_form_view" model="ir.ui.view">
 			<field name="name">action.request.log.form</field>

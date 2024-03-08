@@ -4,7 +4,6 @@
 from . import models
 from . import stock
 from . import retirement
-from . import service_order
 from . import request_log
 from . import account_payment
 from . import construction_checklist
@@ -20,7 +19,8 @@ from . import sale_order
 from . import fleet_vehicle
 from . import hr_leave
 from . import daily_checklist
-# from . import fleet_vehicle_cost
-# from . import account_asset
 from . import exit_form
 from . import salary_advance
+# from . import fleet_vehicle_cost
+# from . import account_asset
+# from . import service_order

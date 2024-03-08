@@ -2,8 +2,7 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_construction_equipment_checklist_line_emp,construction.equipment.checklist.line,model_construction_equipment_checklist_line,base.group_user,1,1,1,0
 access_construction_equipment_checklist_emp,construction.equipment.checklist,model_construction_equipment_checklist,base.group_user,1,1,1,0
 access_asset_movement_form_emp,asset.movement.form,model_asset_movement_form,base.group_user,1,1,1,0
-access_service_order_emp,service.order,model_service_order,base.group_user,1,1,1,0
-access_service_order_line_emp,service.order.line,model_service_order_line,base.group_user,1,1,1,0
+
 access_action_request_log_emp,action.request.log,model_action_request_log,base.group_user,1,1,1,0
 access_job_safety_inspection_checklist_emp,job.safety.inspection.checklist,model_job_safety_inspection_checklist,base.group_user,1,1,1,0
 access_drivers_health_checklist_emp,drivers.health.checklist,model_drivers_health_checklist,base.group_user,1,1,1,0

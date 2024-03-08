@@ -268,20 +268,7 @@
             <field name="act_window_id" ref="store_req_action1_window"/>
         </record>
 
-        <record id="search_service_order" model="ir.ui.view">
-            <field name="name">search.service.order</field>
-            <field name="model">service.order</field>
-            <field name="arch" type="xml">
-                <search string="Service Order">
-                    <field name="name"/>
-                    <field name="department_id"/>
-                    <field name="employee_id"/>
-                    <field name="project_description"/>
-                    <field name="service_order_line_ids" string="Descritpion"/>
-                    <field name="date"/>
-                </search>
-            </field>
-        </record>
+        
 
         <!-- Removed during migration, put back later -->
         <record id="store_req_action_form" model="ir.actions.act_window.view">
@@ -291,17 +278,10 @@
             <field name="act_window_id" ref="store_req_action1_window"/>
         </record>
 
-        <record model="ir.actions.act_window" id="topline_service_order_form_action">
-            <field name="name">Service Order</field>
-            <field name="res_model">service.order</field>
-            <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="search_service_order"/>
-            <field name="domain">[]</field>
-            <field name="context">{}</field>
-        </record>
+        
 
         <menuitem name="Material requisition / Store Request" id="store_request" parent="stock.menu_stock_root" action="store_req_action1_window"/>
-        <menuitem name="Service Order" id="topline_service_order_menu" parent="stock.menu_stock_root" action="topline.topline_service_order_form_action"/>
+        
         <menuitem name="Inventory" id="stock.menu_stock_root" sequence="30" groups="base.group_user" web_icon="stock,static/description/icon.png"/>
 
     </data>
