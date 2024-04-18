@@ -3,7 +3,6 @@
 
     <data>
 
-
         <record id="topline_purchase_form_view" model="ir.ui.view">
             <field name="name">topline.purchase.form</field>
             <field name="model">purchase.order</field>
@@ -15,15 +14,12 @@
                 <button name="action_rfq_send" position="attributes">
                     <attribute name="groups">purchase.group_purchase_manager</attribute>
                 </button>
-
                 <xpath expr="//button[@name='action_rfq_send']" position="before">
                     <button name="button_submit" string="Submit to Manager" type="object" states="draft,sent" groups="base.group_user"/>
                     <button name="button_line_manager_approval" string="Approve" type="object" class="btn-primary" states="submit" groups="topline.group_hr_line_manager"/>
                     <button name="button_audit_approval_notification" string="Approve" type="object" class="btn-primary" states="line_approve" groups="topline.group_internal_audit"/>
-                    <button name="button_reject" string="Reject" type="object" states="submit,line_approve" class="btn-danger" groups="topline.group_hr_line_manager,topline.group_internal_audit"/>
+                    <button name="button_reject" string="REJECT" type="object" states="submit,line_approve" class="btn-danger" groups="topline.group_hr_line_manager,topline.group_internal_audit"/>
                 </xpath>
-
-
                 <!-- MD Approval -->
                 <xpath expr="//header" position="inside">
                     <button name="button_md_approval" type="object" states="internal_approve" string="Approve Order" id="purchase.md_approve" groups="topline.group_md"/>
@@ -49,6 +45,5 @@
         </record>
 
     </data>
-
 
 </odoo>
