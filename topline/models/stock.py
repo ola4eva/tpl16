@@ -224,9 +224,10 @@ class Picking(models.Model):
     @api.depends('move_ids_without_package.price_unit')
     def _total_price(self):
         total_price = 0.0
-        for line in self.move_ids_without_package:
-            total_price += line.price_subtotal
-        self.total_price += total_price
+        for rec in self:
+            for line in rec.move_ids_without_package:
+                total_price += line.price_subtotal
+            rec.total_price = total_price
 
     def create_atp_order(self):
         """
