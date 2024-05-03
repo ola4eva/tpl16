@@ -18,7 +18,7 @@ class ProductTemplateRestriction(models.Model):
             if 'name' in vals:
                 name = vals.get("name")
                 Query = """
-                    SELECT COALESCE(name->>'en_US') AS name from product_template where name ->> 'en_US' = %s;
+                    SELECT COALESCE(name->>'en_US') AS name from product_template where name ->> 'en_US' ilike %s;
                 """
                 self.env.cr.execute(Query, (name,))
                 existing_products = self.env.cr.fetchall()
