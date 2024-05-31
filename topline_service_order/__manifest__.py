@@ -15,7 +15,9 @@
     'category': 'Uncategorized',
     'version': '0.1.0',
 
-    'depends': ['topline_payment_requisition'],
+    'depends': [
+        'topline_payment_requisition'
+    ],
 
     'data': [
         'security/ir.model.access.csv',

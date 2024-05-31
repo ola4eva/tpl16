@@ -9,7 +9,6 @@
     "license" : "OPL-1",
     'depends': [
         'account',
-       
     ],
     'data': [
             'views/res_config_settings_inherited_view.xml',
