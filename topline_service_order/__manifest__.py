@@ -16,7 +16,7 @@
     'version': '0.1.0',
 
     'depends': [
-        'topline_payment_requisition'
+        'topline',
     ],
 
     'data': [

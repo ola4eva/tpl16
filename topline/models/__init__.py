@@ -10,7 +10,7 @@ from . import maintenance_request
 from . import employee_requisition
 from . import project
 from . import employee_cash_advance
-from . import account_move
+# from . import account_move
 from . import crm_lead
 from . import project_task
 from . import account_analytic
