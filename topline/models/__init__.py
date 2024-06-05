@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# from . import payment_requisition
 from . import models
 from . import stock
 from . import retirement
@@ -21,6 +20,7 @@ from . import hr_leave
 from . import daily_checklist
 from . import exit_form
 from . import salary_advance
+# from . import payment_requisition
 # from . import fleet_vehicle_cost
 # from . import account_asset
 # from . import service_order
