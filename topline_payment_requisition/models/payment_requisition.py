@@ -129,7 +129,7 @@ class PaymentRequisitionForm(models.Model):
     account_move_id = fields.Many2one(
         'account.move', string='Journal Entry', ondelete='restrict', copy=False)
 
-    # service_order_id = fields.Many2one('service.order', 'Service Order')
+    
     atp_id = fields.Many2one(comodel_name='atp.form', string='ATP Form')
     source = fields.Char(string='Source')
 

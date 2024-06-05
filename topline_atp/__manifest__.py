@@ -1,30 +1,30 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Service Order",
+    'name': "Authority To Purchase",
 
     'summary': """
-        Service Order""",
+        Authority to purchase""",
 
     'description': """
-        Service Order
+        Authority to purchase
     """,
 
-    'author': "Hyper IT Consultatns",
+    'author': "HyperIT Consultants",
     'website': "https://www.yourcompany.com",
 
     'category': 'Uncategorized',
-    'version': '0.1.0',
+    'version': '0.1',
 
     'depends': [
-        'topline',
         'topline_payment_requisition',
         'topline_purchase',
     ],
 
+    # always loaded
     'data': [
         'data/ir_sequence.xml',
-        'data/service_order_data.xml',
         'security/ir.model.access.csv',
-        'views/service_order_views.xml',
+        'views/atp_views.xml',
+
     ],
 }

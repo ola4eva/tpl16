@@ -40,7 +40,6 @@
         'wizard/payment_requisition_register_payment.xml',
         'data/mail_template_data.xml',
         'views/hr_expense_views.xml',
-        # 'views/stock_views.xml',
         'views/salary_advance_views.xml',
         'views/crm_lead_views.xml',
         'views/project_views.xml',

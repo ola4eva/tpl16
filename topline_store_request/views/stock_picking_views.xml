@@ -44,7 +44,6 @@
             </field>
         </record>
 
-
         <record id="stock_rejection_action" model="ir.actions.act_window">
             <field name="name">Rejection Reason</field>
             <field name="type">ir.actions.act_window</field>
@@ -268,8 +267,6 @@
             <field name="act_window_id" ref="store_req_action1_window"/>
         </record>
 
-        
-
         <!-- Removed during migration, put back later -->
         <record id="store_req_action_form" model="ir.actions.act_window.view">
             <field eval="2" name="sequence"/>
@@ -277,8 +274,6 @@
             <field name="view_id" ref="topline_stock_form_view"/>
             <field name="act_window_id" ref="store_req_action1_window"/>
         </record>
-
-        
 
         <menuitem name="Material requisition / Store Request" id="store_request" parent="stock.menu_stock_root" action="store_req_action1_window"/>
         
