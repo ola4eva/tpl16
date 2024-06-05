@@ -447,14 +447,6 @@
 			<field name="context">{}</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="topline_atp_form_action">
-			<field name="name">Authorization To Purchase(ATP)</field>
-			<field name="res_model">atp.form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="domain">[]</field>
-			<field name="context">{}</field>
-		</record>
-
 		<record model="ir.actions.act_window" id="topline_travel_report_action">
 			<field name="name">Travel Report</field>
 			<field name="res_model">travel.report</field>
@@ -1124,19 +1116,7 @@
 			</field>
 		</record>
 
-		<record id="topline_atp_form_tree_view1" model="ir.ui.view">
-			<field name="name">atp.form.tree</field>
-			<field name="model">atp.form</field>
-			<field name="arch" type="xml">
-				<tree>
-					<field name="name"/>
-					<field name="project_des"/>
-					<field name="remark"/>
-					<field name="expected_date"/>
-					<field name="state"/>
-				</tree>
-			</field>
-		</record>
+		
 
 		<record id="topline_atp_form_tree_view" model="ir.ui.view">
 			<field name="name">travel.report.tree</field>
@@ -2966,69 +2946,7 @@
 			</field>
 		</record>
 
-		<record id="topline_atp_form_view" model="ir.ui.view">
-			<field name="name">atp.form.form</field>
-			<field name="model">atp.form</field>
-			<field name="priority" eval="2"/>
-			<field name="arch" type="xml">
-				<form string="Authorization To Purchase">
-					<header>
-						<button name="button_submit" states="draft" string="Submit" type="object"/>
-						<button name="button_approval" states="submit" string="Accept" type="object" class="btn-primary" groups="quality.group_quality_manager,topline.group_qa"/>
-						<button name="button_reject" states="submit" string="Reject" type="object" class="btn-danger" groups="quality.group_quality_manager,topline.group_qa"/>
-						<button name="create_purchase_order2" states="approve" string="Create RFQ" type="object" groups="purchase.group_purchase_manager"/>
-						<button name="create_payment_requisition" states="approve" string="Create Payment Requisition" type="object" groups="purchase.group_purchase_manager"/>
-						<field name="state" widget="statusbar" statusbar_visible="draft,submit,approve"/>
-					</header>
-					<sheet>
-						<div class="oe_button_box" name="button_box">
-							<button name="open_po" type="object" class="oe_stat_button" icon="fa-list">
-								<field name="po_count" widget="statinfo" string="RFQ's"/>
-							</button>
-							<button name="open_payr" type="object" class="oe_stat_button" icon="fa-money">
-								<field name="payment_req_count" widget="statinfo" string="Payment Requisitions"/>
-							</button>
-						</div>
-						<div class="oe_title">
-							<span class="o_form_label">Authorization To Purchase</span>
-							<h1>
-								<field name="name" readonly="1"/>
-							</h1>
-						</div>
-						<group col="4" colspan="4">
-							<field name="project_des" />
-							<field name="date"/>
-							<field name="project_id"/>
-							<field name="expected_date"/>
-						</group>
-						<field name="atp_form_line_ids" nolabel="1" widget="section_and_note_one2many">
-							<tree editable="bottom">
-								<field name="product_id"/>
-								<field name="name"/>
-								<field name="model"/>
-								<field name="size"/>
-								<field name="brand_id"/>
-								<field name="certificate_required"/>
-								<field name="qty"/>
-								<field name="price"/>
-								<field name="price_subtotal"/>
-							</tree>
-						</field>
-						<group class="oe_subtotal_footer oe_right">
-							<field name="total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-						</group>
-						<span>Remarks</span>
-						<br/>
-						<field name="remark"/>
-					</sheet>
-					<div class="oe_chatter">
-						<field name="message_follower_ids" widget="mail_followers"/>
-						<field name="activity_ids" widget="mail_activity"/>
-						<field name="message_ids" widget="mail_thread"/>
-					</div>
-				</form>
-			</field>
-		</record>
+
 
 		<record id="topline_travel_report_view" model="ir.ui.view">
 			<field name="name">travel.report.form</field>
@@ -4634,7 +4552,6 @@
 		<menuitem name="Calibration Log" id="topline_calibration_log_menu" parent="quality_control.menu_quality_control" action="topline_calibration_log_action"/>
 		<menuitem name="Equipment Category" id="topline_type_calibration_log_menu" parent="quality_control.menu_quality_configuration" action="topline_type_calibration_log_action"/>
 		<menuitem name="Employee Requisition Form" id="topline_employee_requisition_form_menu" parent="hr.menu_hr_root" action="topline_employee_requisition_form_action"/>
-		<menuitem name="Authorization to Purchase(ATP)" id="topline_atp_form_menu" parent="stock.menu_stock_root" action="topline_atp_form_action" groups="stock.group_stock_manager,purchase.group_purchase_manager,topline.group_internal_audit,topline.group_qa"/>
 		<menuitem name="Late Arrival Form" id="topline_late_arrival_form_menu" parent="hr.menu_hr_root" action="topline_late_arrival_form_action"/>
 		<menuitem name="Absense Information" id="topline_absense_information_form_menu" parent="hr_holidays.menu_hr_holidays_root" action="topline_absense_information_form_action"/>
 		<menuitem name="Certificates For Tendering" id="topline_certificates_for_tendering_menu" parent="crm.crm_menu_sales" action="topline_certificates_for_tendering_action"/>

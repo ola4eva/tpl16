@@ -66,7 +66,6 @@ class ServiceOrder(models.Model):
                     'service.order') or '/'
         return super(ServiceOrder, self).create(vals_list)
 
-    
     def button_submit(self):
         self.write({'state': 'line_manager'})
         partner_ids = []
@@ -80,7 +79,6 @@ class ServiceOrder(models.Model):
         # self.alert_hr()
         return False
 
-    
     def button_submit_to_qa_qc(self):
         group_id = self.env.ref(
             'topline.group_qa')
@@ -96,7 +94,6 @@ class ServiceOrder(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    
     def button_submit_to_procurement(self):
         group_id = self.env.ref(
             'purchase.group_purchase_manager')
@@ -112,7 +109,6 @@ class ServiceOrder(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    
     def alert_hr(self):
         group_id = self.env.ref(
             'hr.group_hr_manager')
@@ -128,7 +124,6 @@ class ServiceOrder(models.Model):
                           partner_ids=partner_ids)
         return False
 
-    
     def action_line_manager_approval(self):
         self.write({'state': 'qaqc'})
         self.line_manager_approval_date = date.today()
@@ -142,7 +137,6 @@ class ServiceOrder(models.Model):
                           partner_ids=partner_ids)
         self.button_submit_to_qa_qc()
 
-    
     def action_qaqc_approval(self):
         self.write({'state': 'procurement'})
         self.qaqc_approval_date = date.today()
@@ -156,7 +150,6 @@ class ServiceOrder(models.Model):
                           partner_ids=partner_ids)
         self.button_submit_to_procurement()
 
-    
     def button_procurement_approval(self):
         self.write({'state': 'approve'})
         self.procurement_approval_date = date.today()
@@ -169,7 +162,6 @@ class ServiceOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def action_reject(self):
         self.write({'state': 'reject'})
         subject = "Service {} has been Rejected".format(self.name)
@@ -179,7 +171,6 @@ class ServiceOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def create_purchase_order2(self):
         """
         Method to open create atp form
@@ -187,8 +178,9 @@ class ServiceOrder(models.Model):
         view_ref = self.env['ir.model.data'].check_object_reference(
             'purchase', 'purchase_order_form')
         view_id = view_ref[1] if view_ref else False
-        stmpl = self.env.ref('topline.product_template_service')
-        prd = self.env['product.product'].sudo().search([('product_tmpl_id', '=', stmpl.id)], limit=1)
+        stmpl = self.env.ref('topline_service_order.product_template_service')
+        prd = self.env['product.product'].sudo().search(
+            [('product_tmpl_id', '=', stmpl.id)], limit=1)
         for subscription in self:
             order_lines = []
             for line in subscription.service_order_line_ids:
@@ -207,16 +199,17 @@ class ServiceOrder(models.Model):
             'res_model': 'purchase.order',
             'view_type': 'form',
             'view_mode': 'form',
+            'service_order_id': self.id,
             'view_id': view_id,
             'target': 'current',
             'context': {
-                'default_stock_source': self.name, 
-                'default_order_line': order_lines
+                'default_stock_source': self.name,
+                'default_order_line': order_lines,
+                'default_service_order_id': self.id,
             }
         }
         return res
 
-    
     def create_payment_requisition(self):
         """
         Method to open create payment requisition
@@ -240,56 +233,47 @@ class ServiceOrder(models.Model):
             'type': 'ir.actions.act_window',
             'name': ('Payment Requisition'),
             'res_model': 'payment.requisition.form',
+            'service_order_id': self.id,
             'view_type': 'form',
             'view_mode': 'form',
             'view_id': view_id,
             'target': 'current',
-            'context': {'default_source': self.name, 'default_date': date.today(), 'default_service_order_id': self.id, 'default_payment_requisition_form_line_ids': order_lines}
+            'context': {
+                'default_source': self.name, 
+                'default_date': date.today(), 
+                'default_service_order_id': self.id, 
+                'default_payment_requisition_form_line_ids': order_lines}
         }
 
         return res
 
-    
     def _payr_count(self):
-        oe_po = self.env['payment.requisition.form']
-        for pa in self:
-            domain = [('atp_id', '=', pa.id)]
-            pres_ids = oe_po.search(domain)
-            pres = oe_po.browse(pres_ids)
-            payment_req_count = 0
-            for pr in pres:
-                payment_req_count += 1
-            pa.payment_req_count = payment_req_count
+        payment_requisition = self.env['payment.requisition.form']
+        for order in self:
+            domain = [('service_order_id', '=', order.id)]
+            order.payment_req_count = payment_requisition.search_count(domain)
         return True
 
-    
     def _po_count(self):
-        oe_po = self.env['purchase.order']
-        for pa in self:
-            domain = [('atp_id', '=', pa.id)]
-            pres_ids = oe_po.search(domain)
-            pres = oe_po.browse(pres_ids)
-            po_count = 0
-            for pr in pres:
-                po_count += 1
-            pa.po_count = po_count
+        purchase_order = self.env['purchase.order']
+        for service_order in self:
+            domain = [('service_order_id', '=', service_order.id)]
+            service_order.po_count = purchase_order.search_count(domain)
         return True
 
-    
     def open_po(self):
         self.ensure_one()
         action = self.env.ref('purchase.purchase_rfq').read()[0]
         action['domain'] = literal_eval(action['domain'])
-        action['domain'].append(('atp_id', '=', self.id))
+        action['domain'].append(('service_order_id', '=', self.id))
         return action
 
-    
     def open_payr(self):
         self.ensure_one()
         action = self.env.ref(
-            'topline.topline_payment_requisition_form_action').read()[0]
+            'topline_payment_requisition.topline_payment_requisition_form_action').read()[0]
         action['domain'] = literal_eval(action['domain'])
-        action['domain'].append(('atp_id', '=', self.id))
+        action['domain'].append(('service_order_id', '=', self.id))
         return action
 
 
@@ -311,4 +295,3 @@ class ServiceOrderLine(models.Model):
     def _onchange_service(self):
         if self.service:
             self.description = self.service
-

@@ -39,7 +39,7 @@ class PaymentRequisitionForm(models.Model):
     def _default_payee(self):
         employee = self.env['hr.employee'].search(
             [('user_id', '=', self.env.uid)])
-        return self.env['res.partner'].search([('name', '=', employee.name)])
+        return self.env['res.partner'].search([('name', '=', employee.name)], limit=1)
 
     def _check_manager_approval(self):
         current_managers = self.employee_id.parent_id.user_id | self.employee_id.department_id.manager_id.user_id
@@ -129,7 +129,7 @@ class PaymentRequisitionForm(models.Model):
     account_move_id = fields.Many2one(
         'account.move', string='Journal Entry', ondelete='restrict', copy=False)
 
-    service_order_id = fields.Many2one('service.order', 'Service Order')
+    
     atp_id = fields.Many2one(comodel_name='atp.form', string='ATP Form')
     source = fields.Char(string='Source')
 

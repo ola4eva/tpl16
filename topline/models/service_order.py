@@ -187,7 +187,7 @@ class ServiceOrder(models.Model):
         view_ref = self.env['ir.model.data'].check_object_reference(
             'purchase', 'purchase_order_form')
         view_id = view_ref[1] if view_ref else False
-        stmpl = self.env.ref('topline.product_template_service')
+        stmpl = self.env.ref('topline_service_order.product_template_service')
         prd = self.env['product.product'].sudo().search([('product_tmpl_id', '=', stmpl.id)], limit=1)
         for subscription in self:
             order_lines = []
