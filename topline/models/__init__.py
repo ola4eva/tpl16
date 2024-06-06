@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from . import models
-from . import brand_type
 from . import retirement
 from . import request_log
 from . import account_payment

@@ -104,7 +104,6 @@ access_site_time_sheet,site.time.sheet,model_site_time_sheet,base.group_user,1,1
 access_ems_monitoring,ems.monitoring,model_ems_monitoring,base.group_user,1,1,1,1
 access_ems_kpi,ems.kpi,model_ems_kpi,base.group_user,1,1,1,1
 access_fumigation_schedule,fumigation.schedule,model_fumigation_schedule,base.group_user,1,1,1,1
-access_brand_type,brand.type,model_brand_type,base.group_user,1,1,1,1
 access_daily_checklist_equipment,daily.checklist.equipment,model_daily_checklist_equipment,base.group_user,1,1,1,1
 access_daily_checklist_power_on_line,daily.checklist.power.off.line,model_daily_checklist_power_on_line,base.group_user,1,1,1,1
 access_daily_checklist_power_off_line,daily.checklist.power.on.line,model_daily_checklist_power_off_line,base.group_user,1,1,1,1
