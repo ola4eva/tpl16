@@ -142,60 +142,60 @@ class Picking(models.Model):
             order.write({'man_confirm': True})
         return True
 
-#     @api.depends('move_ids_without_package.product_uom_qty')
-#     def _total_cost(self):
-#         for a in self:
-#             amt = 0
-#             for line in a.move_ids_without_package:
-#                 if line.price_cost and line.product_uom_qty:
-#                     amt = line.price_cost * line.product_uom_qty
-#             a.total_cost += amt
+    @api.depends('move_ids_without_package.product_uom_qty')
+    def _total_cost(self):
+        for a in self:
+            amt = 0
+            for line in a.move_ids_without_package:
+                if line.price_cost and line.product_uom_qty:
+                    amt = line.price_cost * line.product_uom_qty
+            a.total_cost += amt
 
-#     def button_reset(self):
-#         self.mapped('move_ids_without_package')._action_cancel()
-#         self.write({'state': 'draft'})
-#         return {}
+    def button_reset(self):
+        self.mapped('move_ids_without_package')._action_cancel()
+        self.write({'state': 'draft'})
+        return {}
 
-#     def send_store_request_mail(self):
-#         if self.picking_type_id.name == "Staff Store Requests" and self.state in ['draft', 'approve', 'waiting', 'confirmed']:
-#             group_id = self.env.ref(
-#                 'stock.group_stock_manager')
-#             user_ids = []
-#             partner_ids = []
-#             for user in group_id.users:
-#                 user_ids.append(user.id)
-#                 partner_ids.append(user.partner_id.id)
-#             self.message_subscribe(partner_ids=partner_ids)
-#             subject = "Store request {} for {} needs Validation from Stock".format(
-#                 self.name, self.employee_id.name)
-#             self.message_post(subject=subject, body=subject,
-#                               partner_ids=partner_ids)
-#             return False
-#         return True
+    def send_store_request_mail(self):
+        if self.picking_type_id.name == "Staff Store Requests" and self.state in ['draft', 'approve', 'waiting', 'confirmed']:
+            group_id = self.env.ref(
+                'stock.group_stock_manager')
+            user_ids = []
+            partner_ids = []
+            for user in group_id.users:
+                user_ids.append(user.id)
+                partner_ids.append(user.partner_id.id)
+            self.message_subscribe(partner_ids=partner_ids)
+            subject = "Store request {} for {} needs Validation from Stock".format(
+                self.name, self.employee_id.name)
+            self.message_post(subject=subject, body=subject,
+                              partner_ids=partner_ids)
+            return False
+        return True
 
-#     def send_store_request_done_mail(self):
-#         if self.state in ['done']:
-#             subject = "Store request '{}', for {} has been approved and validated".format(
-#                 self.name, self.employee_id.name)
-#             partner_ids = []
-#             for partner in self.sheet_id.message_partner_ids:
-#                 partner_ids.append(partner.id)
-#             self.sheet_id.message_post(
-#                 subject=subject, body=subject, partner_ids=partner_ids)
+    def send_store_request_done_mail(self):
+        if self.state in ['done']:
+            subject = "Store request '{}', for {} has been approved and validated".format(
+                self.name, self.employee_id.name)
+            partner_ids = []
+            for partner in self.sheet_id.message_partner_ids:
+                partner_ids.append(partner.id)
+            self.sheet_id.message_post(
+                subject=subject, body=subject, partner_ids=partner_ids)
 
-#     def button_reject(self):
-#         self.write({'state': 'reject'})
-#         subject = "Store request '{}', for {} has been rejected".format(
-#             self.name, self.employee_id.name)
-#         partner_ids = []
-#         for partner in self.message_partner_ids:
-#             partner_ids.append(partner.id)
-#         self.message_post(subject=subject, body=subject,
-#                           partner_ids=partner_ids)
+    def button_reject(self):
+        self.write({'state': 'reject'})
+        subject = "Store request '{}', for {} has been rejected".format(
+            self.name, self.employee_id.name)
+        partner_ids = []
+        for partner in self.message_partner_ids:
+            partner_ids.append(partner.id)
+        self.message_post(subject=subject, body=subject,
+                          partner_ids=partner_ids)
 
-#     def button_approve_srt(self):
-#         self.need_approval = False
-#         return {}
+    def button_approve_srt(self):
+        self.need_approval = False
+        return {}
 
 
     @api.depends('move_ids_without_package.price_unit')
