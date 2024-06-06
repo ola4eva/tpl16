@@ -20,4 +20,3 @@ from . import exit_form
 from . import salary_advance
 from . import account_move
 from . import hr_expense
-from . import brand_type
