@@ -15,6 +15,8 @@
     'category': 'Uncategorized',
     'version': '0.1.0',
 
+    'license': 'LGPL-3',
+
     'depends': [
         'topline',
         'topline_payment_requisition',
