@@ -1,39 +1,7 @@
 <odoo>
     <data>
 
-        <record id="topline_view_move_line_form" model="ir.ui.view">
-            <field name="name">stock.move.line.form</field>
-            <field name="model">stock.move.line</field>
-            <field name="priority" eval="7" />
-            <field name="inherit_id" ref="stock.view_move_line_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//sheet" position="after">
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                        <field name="activity_ids" widget="mail_activity"/>
-                        <field name="message_ids" widget="mail_thread"/>
-                    </div>
-                </xpath>
-            </field>
-        </record>
-
-        <record id="stock_picking_rejection_view_form" model="ir.ui.view">
-            <field name="name">stock.picking.rejected.form</field>
-            <field name="model">stock.picking.rejected</field>
-            <field name="arch" type="xml">
-                <form string="Rejection Reason">
-                    <group class="oe_title">
-                        <field name="rejection_reason_id"/>
-                    </group>
-                    <footer>
-                        <button name="action_rejection_reason_apply" string="Submit" type="object" class="btn btn-sm btn-primary"/>
-                        <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
-                    </footer>
-                </form>
-            </field>
-        </record>
-
-        <record id="store_req_view_tree" model="ir.ui.view">
+        <!-- <record id="store_req_view_tree" model="ir.ui.view">
             <field name="name">store.req.view.tree</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.vpicktree"/>
@@ -42,19 +10,10 @@
                     <field name="project_description" />
                 </xpath>
             </field>
-        </record>
-
-        <record id="stock_rejection_action" model="ir.actions.act_window">
-            <field name="name">Rejection Reason</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">stock.picking.rejected</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="stock_picking_rejection_view_form"/>
-            <field name="target">new</field>
-        </record>
+        </record> -->
 
         <!-- Removed during migration, put back later -->
-        <record id="topline_stock_form_view" model="ir.ui.view">
+        <!-- <record id="topline_stock_form_view" model="ir.ui.view">
             <field name="name">topline.stock.form</field>
             <field name="model">stock.picking</field>
             <field eval="14" name="priority"/>
@@ -128,9 +87,9 @@
                                 <field name="owner_id" groups="topline.group_hr_line_manager" attrs="{'invisible': [('picking_type_name','!=','Staff Store Requests')]}"/>
                                 <field name="employee_id" attrs="{'invisible': [('picking_type_name','!=','Staff Store Requests')]}"/>
                                 <field name="department_id" attrs="{'invisible': [('picking_type_name','!=','Staff Store Requests')]}"/>
-                                <!-- <div groups="stock.group_tracking_owner" colspan="2" col="2">
+                                comment back <div groups="stock.group_tracking_owner" colspan="2" col="2">
                                     <button name="action_assign_owner" string="Assign Owner" type="object" attrs="{'invisible': ['|',('move_line_exist', '=', False),('state', 'not in', ('draft','assigned','confirmed'))]}" class="oe_link"/>
-                                </div> -->
+                                </div>
                             </group>
                         </group>
                         <notebook>
@@ -158,14 +117,14 @@
                                         <field name="qty_done" attrs="{'readonly': ['|', ('state', 'in', ('done', 'cancel')), ('is_locked', '=', True), ('picking_type_entire_packs', '=', True)]}" force_save="1"/>
                                     </tree>
                                 </field>
-                                <!-- <button class="oe_highlight" name="put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}" groups="stock.group_tracking_lot"/> -->
+                                comment back <button class="oe_highlight" name="put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}" groups="stock.group_tracking_lot"/>
                             </page>
                             <page string="Operations">
                                 <field name="id" invisible="1"/>
                                 <field name="move_ids_without_package" attrs="{'readonly': ['|', '&amp;', ('show_operations', '=', True), '|', ('is_locked', '=', True), ('state', '=', 'done'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}" context="{'picking_type_code': picking_type_code, 'default_picking_id': id, 'form_view_ref':'stock.view_move_picking_form', 'address_in_id': partner_id,'default_is_initial_demand_editable': 'True', 'default_picking_type_id': picking_type_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}">
                                     <tree decoration-danger="state != 'done' and quantity_done > reserved_availability and show_reserved_availability" decoration-muted="scrapped == True or state == 'cancel' or (state == 'done' and is_locked == True)" string="Stock Moves" editable="bottom">
                                         <field name="name" invisible="1"/>
-                                        <!-- <field name="date_expected" invisible="1"/> -->
+                                        comment back <field name="date_expected" invisible="1"/>
                                         <field name="state" invisible="1" readonly="0"/>
                                         <field name="picking_type_id" invisible="1" />
                                         <field name="location_id" invisible="1"/>
@@ -178,8 +137,8 @@
                                         <field name="show_reserved_availability" invisible="1"/>
                                         <field name="show_operations" invisible="1" readonly="1"/>
                                         <field name="additional" invisible="1"/>
-                                        <!-- <field name="has_move_lines" invisible="1"/> -->
-                                        <!-- <field name="product_id" required="1" attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('additional', '=', False)]}"/> -->
+                                        comment back <field name="has_move_lines" invisible="1"/>
+                                        comment back <field name="product_id" required="1" attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('additional', '=', False)]}"/>
                                         <field name="product_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                                         <field name="is_locked" invisible="1"/>
                                         <field name="company_id" invisible="1"/>
@@ -189,7 +148,7 @@
                                         <field name="certificate_required"/>
                                         <field name="is_initial_demand_editable" invisible="1"/>
                                         <field name="is_quantity_done_editable" invisible="1"/>
-                                        <!-- reserved_uom_qty field no longer exists in stock.move model -->
+                                        comment back reserved_uom_qty field no longer exists in stock.move model
                                         <field name="reserved_uom_qty" string="Initial Demand" attrs="{'readonly': [('is_initial_demand_editable', '=', False)]}"/>
                                         <field name="reserved_availability" string="Reserved" attrs="{'column_invisible': ['|', ('parent.state','=', 'done'), ('parent.picking_type_code', '=', 'incoming')]}"/>
                                         <field name="quantity_done" string="Done" attrs="{'readonly': [('is_quantity_done_editable', '=', False)]}"/>
@@ -199,7 +158,7 @@
                                         <button name="action_show_details" string="Register lots, packs, location" type="object" icon="fa-list" attrs="{'invisible': [('show_details_visible', '=', False)]}" options='{"warn": true}'/>
                                     </tree>
                                 </field>
-                                <!-- <button class="oe_highlight" name="put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}" groups="stock.group_tracking_lot"/> -->
+                                comment back <button class="oe_highlight" name="put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}" groups="stock.group_tracking_lot"/>
                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="total">
                                     <div class="oe_subtotal_footer_separator oe_inline o_td_label">
                                         <label for="total_price"/>
@@ -214,11 +173,11 @@
                                         <field name="picking_type_code" invisible="1"/>
                                         <field name="move_type" attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
                                         <field name="picking_type_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                                        <!-- <field name="picking_type_name" invisible="1"/> -->
+                                        comment back <field name="picking_type_name" invisible="1"/>
                                         <field name="project_id" readonly="1"/>
                                     </group>
                                     <group>
-                                        <!-- <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/> -->
+                                        comment back <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                                         <field name="group_id" groups="base.group_no_one"/>
                                         <field name="priority" attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
                                     </group>
@@ -233,6 +192,55 @@
                     </div>
                 </form>
             </field>
+        </record> -->
+
+        <!-- Removed during migration, put back later -->
+        <record id="topline_stock_form_view" model="ir.ui.view">
+            <field name="name">stock.picking.view.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <field name="picking_type_name" invisible="1"/>
+                    <button name="button_submit" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'draft')]}" string="Submit To Manager" type="object" class="oe_highlight" groups="base.group_user"/>
+                    <button name="action_line_manager_approval" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'submit')]}" string="Approve" type="object" class="oe_highlight" groups="topline.group_hr_line_manager"/>
+                    <button name="action_qa_qc_approval" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'approve')]}" string="Approve" type="object" class="oe_highlight" groups="topline.group_qa"/>
+                    <button name="%(topline_store_request.stock_rejection_action)d" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('submit', 'approve', 'qa_qc_approve'))]}" string="Reject" class="btn btn-danger" groups="topline.group_hr_line_manager,stock.group_stock_manager" type="action"/>
+                    <button name="create_atp_order" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('qa_qc_approve', 'confirmed'))]}" string="Generate ATP" type="object" class="oe_highlight" groups="stock.group_stock_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,qa_qc_approve,confirmed,partially_available,assigned,done"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[hasclass('o_td_label')]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group/group/field[@name='backorder_id']" position="before">
+                    <field name="client_id" />
+                    <field name="project_id" required="0"/>
+                    <field name="request_date" required="0" />
+                    <field name="project_description" required="0"/>
+                </xpath>
+                <field name="origin" position="after">
+                    <field name="owner_id"/>
+                    <field name="employee_id" />
+                    <field name="department_id" />
+                    <div groups="stock.group_tracking_owner" colspan="2" col="2">
+                        <button name="action_assign_owner" string="Assign Owner" type="object" attrs="{'invisible': ['|',('move_line_exist', '=', False),('state', 'not in', ('draft','assigned','confirmed'))]}" class="oe_link"/>
+                    </div>
+                </field>
+                <xpath expr="//notebook/page[@name='operations']/field[@name='move_ids_without_package']//tree//field[@name='product_id']" position="after">
+                    <field name="store_request_size" />
+                    <field name="brand_id" />
+                    <field name="certificate_required" />
+                </xpath>
+            </field>
         </record>
 
         <!-- search views -->
@@ -244,39 +252,42 @@
                     <field name="name"/>
                     <field name="department_id"/>
                     <field name="employee_id"/>
-                    <field name="project_description"/>
-                    <!-- <field name="move_lines" string="Descritpion"/> -->
+                    <!-- <field name="project_description"/> -->
+                    <!-- <field name="move_lines" string="Descritpion"/> comment back  -->
                     <field name="request_date"/>
                 </search>
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="store_req_action1_window">
+        <record model="ir.actions.act_window" id="store_req_action_window">
             <field name="name">Store Request</field>
             <field name="res_model">stock.picking</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="search_tpl_stock_picking"/>
             <field name="domain">[('picking_type_id.name','=','Staff Store Requests')]</field>
-            <field name="context" eval='{"default_is_locked":False,"default_additional": True,"default_picking_type_id":ref("topline.stock_picking_type_emp")}'/>
+            <field name="context" eval='{
+                "default_is_locked":False,
+                "default_additional": True,
+                "default_picking_type_id": "%(topline_store_request.stock_picking_type_emp)d"
+            }'/>
         </record>
 
         <record id="store_req_action_tree" model="ir.actions.act_window.view">
             <field eval="1" name="sequence"/>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="stock.vpicktree"/>
-            <field name="act_window_id" ref="store_req_action1_window"/>
+            <field name="act_window_id" ref="store_req_action_window"/>
         </record>
 
-        <!-- Removed during migration, put back later -->
         <record id="store_req_action_form" model="ir.actions.act_window.view">
             <field eval="2" name="sequence"/>
             <field name="view_mode">form</field>
             <field name="view_id" ref="topline_stock_form_view"/>
-            <field name="act_window_id" ref="store_req_action1_window"/>
+            <field name="act_window_id" ref="store_req_action_window"/>
         </record>
 
-        <menuitem name="Material requisition / Store Request" id="store_request" parent="stock.menu_stock_root" action="store_req_action1_window"/>
-        
+        <menuitem name="Material requisition / Store Request" id="store_request" parent="stock.menu_stock_root" action="store_req_action_window"/>
+
         <menuitem name="Inventory" id="stock.menu_stock_root" sequence="30" groups="base.group_user" web_icon="stock,static/description/icon.png"/>
 
     </data>

@@ -20,7 +20,10 @@
 			<field name="default_location_src_id" ref="stock_location_employee"/>
 			<field name="default_location_dest_id" ref="stock_location_employee"/>
 		</record>
-
+    
+    </data>
+	<data noupdate="0">
+	
 		<record model="ir.actions.server" id="pick_stock_view">
 			<field name="name">Stock Picking Server Action</field>
 			<field name="model_id" ref="stock.model_stock_picking"/>
@@ -35,7 +38,7 @@
 		            }
 			</field>
 		</record>
-    
-    </data>
+	
+	</data>
 
 </odoo>
