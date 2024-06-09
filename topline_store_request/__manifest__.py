@@ -24,7 +24,7 @@
         'data/store_request_data.xml',
         'security/ir.model.access.csv',
         'views/stock_move_views.xml',
-        'views/stock_picking_rejection_views.xml',
-        'views/stock_picking_views.xml',
+        # 'views/stock_picking_rejection_views.xml',
+        # 'views/stock_picking_views.xml',
     ],
 }
