@@ -255,34 +255,30 @@ class ATPformLines(models.Model):
     _name = 'atp.form.lines'
     _description = 'ATP Form Lines'
 
-    atp_form_id = fields.Many2one(comodel_name='atp.form', string='ATP Frm')
+    def _valid_field_parameter(self, field, name):
+        # EXTENDS models
+        return name == 'tracking' or super()._valid_field_parameter(field, name)
 
+    atp_form_id = fields.Many2one(comodel_name='atp.form', string='ATP Frm')
     product_id = fields.Many2one(
         comodel_name='product.product', string='Product')
     name = fields.Char(string='ASset/Material Name', required=True)
     qty = fields.Float(string='Quantity', required=True)
     model = fields.Char(string='Model', required=False)
-
     size = fields.Char('Size', copy=False)
     brand_id = fields.Many2one('brand.type', 'Make/Brand', copy=False)
     certificate_required = fields.Selection([
         ('yes', 'Yes'),
         ('no', 'No'),
     ], string='Certificate Required', readonly=False, index=True, copy=False, tracking=True,)
-
     price = fields.Float(string='Est. Price', required=False)
-
-    def _valid_field_parameter(self, field, name):
-        # EXTENDS models
-        return name == 'tracking' or super()._valid_field_parameter(field, name)
+    price_subtotal = fields.Float(
+        string='Est. Price Subtotal', readonly=True, compute='_price_subtotal')
 
     @api.onchange('product_id')
     def _onchange_partner_id(self):
         self.name = self.product_id.name
         self.price = self.product_id.standard_price
-
-    price_subtotal = fields.Float(
-        string='Est. Price Subtotal', readonly=True, compute='_price_subtotal')
 
     def _price_subtotal(self):
         for line in self:
