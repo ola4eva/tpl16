@@ -22,11 +22,11 @@
             <field name="arch" type="xml">
                 <xpath expr="//header" position="inside">
                     <field name="picking_type_name" invisible="1"/>
-                    <!-- <button name="button_submit" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'draft')]}" string="Submit To Manager" type="object" class="oe_highlight" groups="base.group_user"/> -->
-                    <!-- <button name="action_line_manager_approval" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'submit')]}" string="Approve" type="object" class="oe_highlight" groups="topline.group_hr_line_manager"/> -->
-                    <!-- <button name="action_qa_qc_approval" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'approve')]}" string="Approve" type="object" class="oe_highlight" groups="topline.group_qa"/> -->
-                    <!-- <button name="%(topline_store_request.stock_rejection_action)d" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('submit', 'approve', 'qa_qc_approve'))]}" string="Reject" class="btn btn-danger" groups="topline.group_hr_line_manager,stock.group_stock_manager" type="action"/> -->
-                    <!-- <button name="create_atp_order" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('qa_qc_approve', 'confirmed'))]}" string="Generate ATP" type="object" class="oe_highlight" groups="stock.group_stock_manager"/> -->
+                    <button name="button_submit" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'draft')]}" string="Submit To Manager" type="object" class="oe_highlight" groups="base.group_user"/>
+                    <button name="action_line_manager_approval" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'submit')]}" string="Approve" type="object" class="oe_highlight" groups="topline.group_hr_line_manager"/>
+                    <button name="action_qa_qc_approval" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'approve')]}" string="Approve" type="object" class="oe_highlight" groups="topline.group_qa"/>
+                    <button name="%(topline_store_request.stock_rejection_action)d" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('submit', 'approve', 'qa_qc_approve'))]}" string="Reject" class="btn btn-danger" groups="topline.group_hr_line_manager,stock.group_stock_manager" type="action"/>
+                    <button name="create_atp_order" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('qa_qc_approve', 'confirmed'))]}" string="Generate ATP" type="object" class="oe_highlight" groups="stock.group_stock_manager"/>
                 </xpath>
                 <xpath expr="//header/button[@name='action_confirm']" position="attributes">
                     <attribute name="invisible">1</attribute>
