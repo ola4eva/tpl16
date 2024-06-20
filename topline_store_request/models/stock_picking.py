@@ -79,6 +79,16 @@ class StockPicking(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
         return False
+    
+    def action_confirm2(self):
+        self.action_confirm()
+        self.write({'is_locked': True})
+        for move in self.move_ids_without_package:
+            move.state = 'confirmed'
+        return True
+    
+    def button_validate2(self):
+        return self.button_validate()
 
     def action_confirm(self):
         # self.write({'is_locked': True})
