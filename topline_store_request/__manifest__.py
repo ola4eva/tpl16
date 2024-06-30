@@ -17,7 +17,12 @@
 
     'license': 'LGPL-3',
 
-    'depends': ['stock'],
+    'depends': [
+        'stock',
+        'hr',
+        'project',
+        'topline',
+    ],
 
     'data': [
         'data/ir_sequence.xml',

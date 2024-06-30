@@ -29,7 +29,7 @@ class StockPicking(models.Model):
     department_id = fields.Many2one(
         comodel_name='hr.department', string='Department', related='employee_id.department_id')
     project_id = fields.Many2one(
-        'project.project', string='Project', index=True, ondelete='cascade', required=False)
+        comodel_name='project.project', string='Project', index=True, ondelete='cascade', required=False)
     project_description = fields.Char('Project Description', copy=False)
     rejection_reason = fields.Many2one(
         'stock.rejection.reason', string='Rejection Reason', index=True, tracking=True)

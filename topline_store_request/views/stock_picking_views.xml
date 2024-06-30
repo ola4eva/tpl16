@@ -55,13 +55,16 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='picking_type_id']" position="attributes">
-                    <attribute name="invisible">0</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='extra']//group/group" position="inside">
+                    <field name="picking_type_id" readonly="1"/>
                 </xpath>
                 <xpath expr="//group/group/field[@name='backorder_id']" position="before">
-                    <field name="client_id" />
-                    <field name="project_id" required="0"/>
-                    <field name="request_date" required="0" />
-                    <field name="project_description" required="0"/>
+                    <field name="client_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                    <field name="project_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="request_date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                    <field name="project_description" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                 </xpath>
                 <field name="origin" position="after">
                     <field name="owner_id"/>
