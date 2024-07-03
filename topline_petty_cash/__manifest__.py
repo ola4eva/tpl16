@@ -18,6 +18,7 @@
     'depends': ['hr_expense'],
 
     'data': [
+        'data/petty_cash_sequence.xml',
         'security/ir.model.access.csv',
         'views/petty_cash_views.xml',
     ],

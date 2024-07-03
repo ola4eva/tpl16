@@ -37,15 +37,6 @@ class PettyCash(models.Model):
             [('user_id', '=', self.env.uid)])
         return self.env['res.partner'].search([('name', '=', employee.name)])
 
-    #
-    # def _check_manager_approval(self):
-    #     current_managers = self.employee_id.parent_id.user_id | self.employee_id.department_id.manager_id.user_id
-    #     if self.employee_id.user_id == self.env.user:
-    #         raise UserError(_("You cannot approve your own Request"))
-
-    #     if not self.env.user in current_managers:
-    #         raise UserError(_("You can only approve your department expenses"))
-
     name = fields.Char('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New')
 
@@ -54,7 +45,7 @@ class PettyCash(models.Model):
         for vals in vals_list:
             if vals.get('name', 'New') == 'New':
                 vals['name'] = self.env['ir.sequence'].next_by_code(
-                    'payment.requisition') or '/'
+                    'petty.cash') or '/'
         return super(PettyCash, self).create(vals_list)
 
     @api.model
@@ -221,8 +212,11 @@ class PettyCash(models.Model):
 
     @api.depends('line_ids.amount_requested')
     def _total_amount_requested(self):
-        for line in self.line_ids:
-            self.total_amount_requested += line.amount_requested
+        amount = 0
+        for rec in self:
+            for line in rec.line_ids:
+                amount += line.amount_requested
+            rec.total_amount_requested = amount
 
     @api.depends('line_ids.amount_approved')
     def _total_amount_approved(self):
@@ -237,13 +231,15 @@ class PettyCash(models.Model):
                 rec.total_amount_approved)) + ' only'
 
     def action_sheet_move_create(self):
-
         if any(sheet.state != 'approve' for sheet in self):
             raise UserError(
                 _("You can only generate accounting entry for approved payment(s)."))
 
         if self.account_move_id:
             raise UserError(_("This Payment already has a journal entry ."))
+        
+        if not self.bank_journal_id:
+            raise UserError(_("Bank Journal is not set!"))
 
         for requistion in self:
             account_move_obj = self.env['account.move'].sudo()
@@ -256,7 +252,7 @@ class PettyCash(models.Model):
                              'debit': line.amount_approved > 0 and line.amount_approved,
                              'credit': 0.0,
                              'account_id': line.account_id.id,
-                             'analytic_account_id': line.analytic_account_id.id,
+                            #  'analytic_account_id': line.analytic_account_id.id,
                              'date_maturity': date.today(),
                              'partner_id': requistion.payee_id.id,
                              }) for line in requistion.line_ids] +
@@ -265,7 +261,7 @@ class PettyCash(models.Model):
                     'name': requistion.payee_id.name,
                     'credit': requistion.total_amount_approved > 0 and requistion.total_amount_approved,
                     'debit': 0.0,
-                    'account_id': requistion.bank_journal_id.default_credit_account_id.id,
+                    'account_id': requistion.bank_journal_id.default_account_id.id,
                     'date_maturity': date.today(),
                     'partner_id': requistion.payee_id.id,
                 })]
