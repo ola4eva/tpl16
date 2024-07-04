@@ -15,8 +15,8 @@ class PettyCash(models.Model):
         ('submit', 'Submitted'),
         ('line_approve', 'Line Manager Approved'),
         ('internal_approve', 'Internal Audit Approved'),
-        ('paid', 'Paid'),
         ('approve', 'Finance Approved'),
+        ('paid', 'Paid'),
         ('post', 'Posted'),
         ('reject', 'Reject'),
     ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
