@@ -13,19 +13,8 @@ class PaymentRequisitionForm(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'create_date DESC'
 
-    state = fields.Selection([
-        ('draft', 'New'),
-        ('submit', 'Submitted'),
-        ('line_approve', 'Line Manager Approved'),
-        ('internal_approve', 'Internal Audit Approved'),
-        ('md_approve', 'MD Approved'),
-        ('paid', 'Paid'),
-        ('approve', 'Finance Approved'),
-        ('post', 'Posted'),
-        ('reject', 'Reject'),
-    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
-
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
+
     def _default_department(self):
         user = self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
         return user.department_id.id
@@ -49,12 +38,24 @@ class PaymentRequisitionForm(models.Model):
         if not self.env.user in current_managers:
             raise UserError(_("You can only approve your department expenses"))
 
-    name = fields.Char('Order Reference', readonly=True,
-                       required=True, index=True, copy=False, default='New')
-
     @api.model
     def _default_currency(self):
         return self.env.user.company_id.currency_id
+
+    name = fields.Char('Order Reference', readonly=True,
+                       required=True, index=True, copy=False, default='New')
+
+    state = fields.Selection([
+        ('draft', 'New'),
+        ('submit', 'Submitted'),
+        ('line_approve', 'Line Manager Approved'),
+        ('internal_approve', 'Internal Audit Approved'),
+        ('md_approve', 'MD Approved'),
+        ('paid', 'Paid'),
+        ('approve', 'Finance Approved'),
+        ('post', 'Posted'),
+        ('reject', 'Reject'),
+    ], string='Status', readonly=False, index=True, copy=False, default='draft', tracking=True)
 
     payment_requisition_form_line_ids = fields.One2many(
         'payment.requisition.form.lines', 'payment_requisition_form_id', string="payment requisition form lines", copy=True)
@@ -129,7 +130,6 @@ class PaymentRequisitionForm(models.Model):
     account_move_id = fields.Many2one(
         'account.move', string='Journal Entry', ondelete='restrict', copy=False)
 
-    
     atp_id = fields.Many2one(comodel_name='atp.form', string='ATP Form')
     source = fields.Char(string='Source')
 
@@ -152,7 +152,8 @@ class PaymentRequisitionForm(models.Model):
         comodel_name='payment.requisition.rejection.log', inverse_name='requisition_id', string='Rejection Logs')
 
     def _total_amount_outstanding(self):
-        self.total_amount_outstanding = self.total_amount_approved - self.total_amount_paid
+        for rec in self:
+            rec.total_amount_outstanding = rec.total_amount_approved - rec.total_amount_paid
 
     def _compute_amount_paid(self, amount_paid=0.0):
         self.total_amount_paid += amount_paid
