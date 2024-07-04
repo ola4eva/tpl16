@@ -19,6 +19,7 @@
 
     'data': [
         'data/petty_cash_sequence.xml',
+        'security/access_groups.xml',
         'security/ir.model.access.csv',
         'views/petty_cash_views.xml',
     ],

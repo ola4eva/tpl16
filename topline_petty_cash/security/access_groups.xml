@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="category_root_petty_cash" model="ir.module.category">
+            <field name="name">Petty Cash</field>
+            <field name="description">Petty Cash</field>
+        </record>
+        
+        <record id="category_petty_cash" model="ir.module.category">
+            <field name="name">Petty Cash</field>
+            <field name="parent_id" ref="category_root_petty_cash"/>
+            <field name="description">Petty Cash</field>
+        </record>
+
+        <record id="group_petty_cash_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="category_petty_cash"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+        </record>
+
+        <record id="group_petty_cash_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="category_petty_cash" />
+            <field name="implied_ids" eval="[(4, ref('topline_petty_cash.group_petty_cash_user'))]" />
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+        </record>
+        
+        <record id="group_petty_cash_admin" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="category_petty_cash" />
+            <field name="implied_ids" eval="[(4, ref('topline_petty_cash.group_petty_cash_manager'))]" />
+            <field name="users" eval="[(4, ref('base.user_admin'))]" />
+        </record>
+
+        <record id="topline.group_hr_line_manager" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('group_petty_cash_manager'))]" />
+        </record>
+        
+        <record id="topline.group_internal_audit" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('group_petty_cash_admin'))]" />
+        </record>
+
+        <record id="account.group_account_manager" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('group_petty_cash_admin'))]" />
+        </record>
+        
+    </data>
+
+    <!-- Payment Requsition Record Rule -->
+    <data noupdate="0">
+
+        <record id="rule_petty_cash_user" model="ir.rule">
+            <field name="name">User: see own petty cash</field>
+            <field name="model_id" ref="model_petty_cash" />
+            <field name="groups" eval="[(4, ref('topline_petty_cash.group_petty_cash_user'))]" />
+            <field name="domain_force">['|', ('employee_name', '=', user.id), ('payee_id', '=', user.partner_id.id)]</field>
+        </record>
+
+        <record id="rule_petty_cash_manager" model="ir.rule">
+            <field name="name">Manager: See own &amp; subordinates petty cash</field>
+            <field name="model_id" ref="model_petty_cash" />
+            <field name="groups" eval="[(4, ref('topline_petty_cash.group_petty_cash_manager'))]" />
+            <field name="domain_force">['|', '|', ('employee_id.parent_id.user_id', '=', user.id), ('employee_id.user_id', '=', user.id), ('payee_id', '=', user.partner_id.id)]</field>
+        </record>
+        
+        <record id="rule_petty_cash_admin" model="ir.rule">
+            <field name="name">Admin: See own petty cash</field>
+            <field name="model_id" ref="model_petty_cash" />
+            <field name="groups" eval="[(4, ref('topline_petty_cash.group_petty_cash_admin'))]" />
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

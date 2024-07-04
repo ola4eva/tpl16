@@ -284,8 +284,11 @@ class PettyCashLine(models.Model):
         return name == 'tracking' or super()._valid_field_parameter(field, name)
 
     def _check_user_group(self):
-        if self.user_has_groups('account.group_account_manager') or self.user_has_groups('topline.group_hr_line_manager') or self.user_has_groups('topline.group_internal_audit'):
-            self.is_manager = True
+        for record in self:
+            is_manager = False
+            if self.user_has_groups('account.group_account_manager') or self.user_has_groups('topline.group_hr_line_manager') or self.user_has_groups('topline.group_internal_audit'):
+                is_manager = True
+            record.is_manager = is_manager
 
     is_manager = fields.Boolean(compute='_check_user_group')
     state = fields.Selection(
