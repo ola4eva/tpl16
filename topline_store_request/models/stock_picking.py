@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from datetime import date
-from odoo.tools import float_is_zero
+from werkzeug import urls
+from urllib.parse import urlencode
 from odoo.exceptions import UserError
 from odoo import fields, models, api, _
 
@@ -245,3 +246,58 @@ class StockPicking(models.Model):
             'context': {'default_project_des': self.project_description, 'default_stock_source': self.name, 'default_expected_date': self.scheduled_date, 'default_atp_form_line_ids': order_lines}
         }
         return res
+    
+    # def _notify_get_action_link(self, link_type, **kwargs):
+    #     """ Prepare link to an action: view document, follow document, ... """
+    #     params = {
+    #         'model': kwargs.get('model', self._name),
+    #         'res_id': kwargs.get('res_id', self.ids and self.ids[0] or False),
+    #     }
+    #     # keep only accepted parameters:
+    #     # - action (deprecated), token (assign), access_token (view)
+    #     # - auth_signup: auth_signup_token and auth_login
+    #     # - portal: pid, hash
+    #     params.update(dict(
+    #         (key, value)
+    #         for key, value in kwargs.items()
+    #         if key in ('action', 'token', 'access_token', 'auth_signup_token',
+    #                    'auth_login', 'pid', 'hash')
+    #     ))
+
+    #     if link_type in ['view', 'assign', 'follow', 'unfollow']:
+    #         base_link = '/mail/%s' % link_type
+    #     elif link_type == 'controller':
+    #         controller = kwargs.get('controller')
+    #         params.pop('model')
+    #         base_link = '%s' % controller
+    #     else:
+    #         return ''
+
+    #     if link_type not in ['view']:
+    #         token = self._notify_encode_link(base_link, params)
+    #         params['token'] = token
+
+    #     link = '%s?%s' % (base_link, urls.url_encode(params))
+    #     if self:
+    #         link = self[0].get_base_url() + link
+    #     print("Here is our link", link)
+    #     return link
+
+    def _notify_get_action_link(self, link_type, **kwargs):
+        res = super()._notify_get_action_link(link_type, **kwargs)
+        if self.picking_type_id == self.env.ref("topline_store_request.stock_picking_type_emp"):
+            return self._get_record_url()
+        return res
+    
+    def _get_record_url(self):
+        base_url = self.get_base_url()
+        params = {
+            "id": self.id,
+            "cids": self.id,
+            "action": int(self.env.ref("topline_store_request.store_req_action_window")),
+            "model": self._name,
+            "menu_id": int(self.env.ref("topline_store_request.store_request")),
+            "view_type": "form",
+        }
+        url = f"{base_url}/web#{urlencode(params)}"
+        return url
