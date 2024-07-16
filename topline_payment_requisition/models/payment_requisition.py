@@ -14,7 +14,6 @@ class PaymentRequisitionForm(models.Model):
     _order = 'create_date DESC'
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
-
     def _default_department(self):
         user = self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
         return user.department_id.id
@@ -60,7 +59,7 @@ class PaymentRequisitionForm(models.Model):
     payment_requisition_form_line_ids = fields.One2many(
         'payment.requisition.form.lines', 'payment_requisition_form_id', string="payment requisition form lines", copy=True)
 
-    date = fields.Date(string='Date', required=True,
+    date = fields.Date(string='Date', required=True, default=fields.Date.today(),
                        tracking=True)
     department_id = fields.Many2one(
         comodel_name='hr.department', string='Department', default=_default_department)
@@ -239,6 +238,11 @@ class PaymentRequisitionForm(models.Model):
         if self.employee_id.parent_id.user_id:
             partner_ids.append(
                 self.employee_id.parent_id.user_id.partner_id.id)
+        # add colleagues to followers of the document
+        employees_in_department = self.env['hr.employee'].sudo().search(
+            [('department_id', '=', self.department_id.id)])
+        colleague_ids = employees_in_department.mapped('user_id').partner_ids
+        partner_ids.extend(colleague_ids)
         self.message_subscribe(partner_ids=partner_ids)
         subject = "Payment Requisition '{}', for {} needs approval".format(
             self.name, self.employee_id.name)

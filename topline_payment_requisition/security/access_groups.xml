@@ -17,7 +17,7 @@
     <!-- Payment Requsition Record Rule -->
     <data noupdate="1">
         <record id="employee_payment_requisition_rule" model="ir.rule">
-            <field name="name">Employee: See own and followed requisition</field>
+            <field name="name">Payment Requisition: Employee see own and followed requisition</field>
             <field name="model_id" ref="model_payment_requisition_form" />
             <field name="groups" eval="[(4, ref('base.group_user'))]" />
             <field name="domain_force">['|',('employee_id.user_id', '=', user.id), ('message_partner_ids','in',[user.partner_id.id])]</field>

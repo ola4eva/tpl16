@@ -60,7 +60,6 @@
                             <field name="payee_id" required="1" options="{'no_create': True}" attrs="{'readonly': [('state', '!=', 'draft')]}" />
                             <field name="employee_id" invisible="1"/>
                             <field name="currency_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
-                            <!-- <field name="bank_details"/> -->
                             <field name="bank_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="account_number" attrs="{'readonly': [('state', '!=', 'draft')]}" />
                             <field name="default_expense_account_id" />
