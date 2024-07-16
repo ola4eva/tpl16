@@ -241,8 +241,8 @@ class PaymentRequisitionForm(models.Model):
         # add colleagues to followers of the document
         employees_in_department = self.env['hr.employee'].sudo().search(
             [('department_id', '=', self.department_id.id)])
-        colleague_ids = employees_in_department.mapped('user_id').partner_ids
-        partner_ids.extend(colleague_ids)
+        colleague_partners = employees_in_department.mapped('user_id').mapped('partner_id')
+        partner_ids.extend(colleague_partners.ids)
         self.message_subscribe(partner_ids=partner_ids)
         subject = "Payment Requisition '{}', for {} needs approval".format(
             self.name, self.employee_id.name)
