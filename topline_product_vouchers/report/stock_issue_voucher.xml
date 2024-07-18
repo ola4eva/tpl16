@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                     <t t-set="serial" t-value="1" />
-                                    <t t-foreach="o.move_lines" t-as="line">
+                                    <t t-foreach="o.move_ids_without_package" t-as="line">
                                         <tr>
                                             <td><t t-esc="serial" /></td>
                                             <td><t t-esc="line.product_id.name" /></td>
