@@ -42,7 +42,7 @@ class PaymentRequisitionForm(models.Model):
         return self.env.user.company_id.currency_id
 
     name = fields.Char('Order Reference', readonly=True,
-                       required=True, index=True, copy=False, default='New')
+                       required=True, index=True, copy=False, default='New', tracking=True)
 
     state = fields.Selection([
         ('draft', 'New'),
@@ -230,6 +230,9 @@ class PaymentRequisitionForm(models.Model):
             [('partner_id', '=', self.payee_id.id)])
         is_internal_auditor = requester.has_group(
             'topline.group_internal_audit')
+        if any(line.amount_requested == 0 for line in self.payment_requisition_form_line_ids):
+            raise UserError("The following lines have no valid requested amount\n{}".format(
+                ', '.join(self.payment_requisition_form_line_ids.filtered(lambda l: l.amount_requested == 0).mapped('name'))))
         self.write(
             {'state': 'submit' if not is_internal_auditor else 'internal_approve'})
         self.employee_approval_date = date.today()
@@ -241,7 +244,8 @@ class PaymentRequisitionForm(models.Model):
         # add colleagues to followers of the document
         employees_in_department = self.env['hr.employee'].sudo().search(
             [('department_id', '=', self.department_id.id)])
-        colleague_partners = employees_in_department.mapped('user_id').mapped('partner_id')
+        colleague_partners = employees_in_department.mapped(
+            'user_id').mapped('partner_id')
         partner_ids.extend(colleague_partners.ids)
         self.message_subscribe(partner_ids=partner_ids)
         subject = "Payment Requisition '{}', for {} needs approval".format(
@@ -249,6 +253,8 @@ class PaymentRequisitionForm(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
         seq_pr = self._get_sequence()
+        if self.name:
+            return True
         return self.update({
             'name': seq_pr
         })
