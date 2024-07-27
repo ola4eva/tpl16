@@ -15,7 +15,10 @@
     'category': 'Uncategorized',
     'license': 'LGPL-3',
     'version': '0.1',
-    'depends': ['hr_expense'],
+    'depends': [
+        'hr_expense',
+        'topline',
+    ],
 
     'data': [
         'data/petty_cash_sequence.xml',
