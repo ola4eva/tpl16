@@ -25,9 +25,7 @@ class PaymentRequisitionForm(models.Model):
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
     def _default_payee(self):
-        employee = self.env['hr.employee'].search(
-            [('user_id', '=', self.env.uid)])
-        return self.env['res.partner'].search([('name', '=', employee.name)], limit=1)
+        return self.env.user.partner_id
 
     def _check_manager_approval(self):
         current_managers = self.employee_id.parent_id.user_id | self.employee_id.department_id.manager_id.user_id
@@ -149,16 +147,7 @@ class PaymentRequisitionForm(models.Model):
         string='Total Amount Outstanding', compute="_total_amount_outstanding")
     rejection_log_ids = fields.One2many(
         comodel_name='payment.requisition.rejection.log', inverse_name='requisition_id', string='Rejection Logs')
-    department_follower_ids = fields.Many2many('res.partner', string='Department Followers', compute="_compute_department_followers", store=True)
-
-    def _compute_department_followers(self):
-        for record in self:
-            department_follower_ids = self.env['res.partner'].sudo()
-            departmental_colleagues = self.env['hr.employee'].sudo().search([('department_id', '=', record.department_id.id)])
-            departmental_colleagues_users = departmental_colleagues.mapped('user_id')
-            department_follower_ids += departmental_colleagues_users.mapped('partner_id') 
-            record.department_follower_ids = department_follower_ids
-
+   
     def _total_amount_outstanding(self):
         for rec in self:
             rec.total_amount_outstanding = rec.total_amount_approved - rec.total_amount_paid
