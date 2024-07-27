@@ -33,7 +33,6 @@
                         <button name="button_audit_approval_notification" states="line_approve" string="Approve" type="object" class="btn btn-primary" groups="topline.group_internal_audit"/>
                         <button name="button_md_approval_notification" states="internal_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_md,payment_requisition.approve_payment_for_md"/>
                         <button name="button_finance_approval" states="md_approve" string="Approve" class="btn btn-primary" type="object" groups="topline.group_finance_manager"/>
-                        <!-- <button name="action_sheet_move_create" states="approve" string="Create Journal Entries" type="object"/> -->
                         <field name="fully_paid" invisible="1" />
                         <button name="set_to_draft" string="Set to Draft" type="object" states="reject" />
                         <button name="action_finance_reject" string="Finance Reject" type="object" class="btn btn-danger" attrs="{'invisible': [('state', '!=', 'md_approve')]}" groups="topline.group_finance_manager"/>
@@ -174,7 +173,6 @@
         </record>
 
         <menuitem name="Payment Requisition Form" id="topline_payment_requisition_menu" parent="hr_expense.menu_hr_expense_my_expenses" action="topline_payment_requisition_form_action"/>
-        <!-- <menuitem name="Payment Requisition Report" id="topline_payment_requisition_form_report_menu" parent="topline_expenses_reporting_main_menu" action="topline_payment_requisition_form_reporting_action"/> -->
 
     </data>
 </odoo>
