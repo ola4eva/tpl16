@@ -149,6 +149,15 @@ class PaymentRequisitionForm(models.Model):
         string='Total Amount Outstanding', compute="_total_amount_outstanding")
     rejection_log_ids = fields.One2many(
         comodel_name='payment.requisition.rejection.log', inverse_name='requisition_id', string='Rejection Logs')
+    department_follower_ids = fields.Many2many('res.partner', string='Department Followers', compute="_compute_department_followers", store=True)
+
+    def _compute_department_followers(self):
+        for record in self:
+            department_follower_ids = self.env['res.partner'].sudo()
+            departmental_colleagues = self.env['hr.employee'].sudo().search([('department_id', '=', record.department_id.id)])
+            departmental_colleagues_users = departmental_colleagues.mapped('user_id')
+            department_follower_ids += departmental_colleagues_users.mapped('partner_id') 
+            record.department_follower_ids = department_follower_ids
 
     def _total_amount_outstanding(self):
         for rec in self:

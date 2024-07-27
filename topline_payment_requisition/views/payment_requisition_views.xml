@@ -52,6 +52,7 @@
                                 <field name="name" readonly="1" attrs="{'invisible': [('name', '=', 'New')]}"/>
                             </h1>
                         </div>
+<<<<<<< Updated upstream
                         <group>
                             <group name="general_information" string="General Information">
                                 <field name="payee_id" required="1" options="{'no_create': True}" attrs="{'readonly': [('state', '!=', 'draft')]}" />
@@ -68,6 +69,21 @@
                                 <field name="default_expense_account_id" />
                                 <field name="default_analytic_account_id" />
                             </group>
+=======
+                        <field name="department_follower_ids" />
+                        <group col="4" colspan="4">
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="department_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="project_description" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="md_request" attrs="{'readonly': [('state', '!=', 'draft')]}" groups="payment_requisition.submit_payment_request_for_md" />
+                            <field name="payee_id" required="1" options="{'no_create': True}" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="employee_id" invisible="1"/>
+                            <field name="currency_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="bank_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="account_number" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            <field name="default_expense_account_id" />
+                            <field name="default_analytic_account_id" />
+>>>>>>> Stashed changes
                         </group>
                         <notebook>
                             <page string="Payment Lines">
