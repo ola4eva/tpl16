@@ -18,6 +18,7 @@
     'depends': [
         'base',
         'topline',
+        'base_extension',
     ],
 
     'license': 'LGPL-3',

@@ -18,6 +18,7 @@
     'depends': [
         'hr_expense',
         'topline',
+        'base_extension',
     ],
 
     'data': [
