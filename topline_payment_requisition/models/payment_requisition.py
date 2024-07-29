@@ -39,7 +39,7 @@ class PaymentRequisitionForm(models.Model):
     def _default_currency(self):
         return self.env.user.company_id.currency_id
 
-    name = fields.Char('Order Reference', readonly=True,
+    name = fields.Text('Order Reference', readonly=True,
                        required=True, index=True, copy=False, default='New', tracking=True)
 
     state = fields.Selection([
@@ -61,7 +61,7 @@ class PaymentRequisitionForm(models.Model):
                        tracking=True)
     department_id = fields.Many2one(
         comodel_name='hr.department', string='Department', default=_default_department)
-    project_description = fields.Char(
+    project_description = fields.Text(
         string='Project Description',  tracking=True)
     payee_id = fields.Many2one(comodel_name='res.partner', required=False,
                                string='Name of Payee', default=_default_payee, tracking=True)
@@ -528,7 +528,7 @@ class PaymentRequisitionFormLines(models.Model):
     is_manager = fields.Boolean(compute='_check_user_group')
     state = fields.Selection(
         related='payment_requisition_form_id.state', store=True)
-    name = fields.Char(string='Details/Purpose of Request', required=True)
+    name = fields.Text(string='Details/Purpose of Request', required=True)
     qty = fields.Float(string='Quantity', required=True, default=1)
     unit_price = fields.Float(string="Unit Price", required=True)
     amount_requested = fields.Float(
