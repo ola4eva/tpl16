@@ -21,6 +21,7 @@
         'stock',
         'hr',
         'project',
+        'base_extension',
         'topline',
     ],
 

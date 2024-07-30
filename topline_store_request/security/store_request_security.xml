@@ -11,7 +11,7 @@
             <field name="perm_read">1</field>
             <field name="perm_unlink">1</field>
             <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
-            <field name="domain_force">[('picking_type_id', '=', int(user.env.ref('topline_store_request.stock_picking_type_emp'))), "|", ('employee_id', '=', False), ('employee_id.user_id', '=', user.id)]</field>
+            <field name="domain_force">[('picking_type_id', '=', int(user.env.ref('topline_store_request.stock_picking_type_emp'))), "|", '|', ('department_id', 'in', user.get_user_department()), ('employee_id', '=', False), ('employee_id.user_id', '=', user.id)]</field>
         </record>
 
         <record id="rule_store_request_line_manager" model="ir.rule">
