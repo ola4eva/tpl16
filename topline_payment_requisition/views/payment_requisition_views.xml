@@ -36,7 +36,8 @@
                         <field name="fully_paid" invisible="1" />
                         <button name="set_to_draft" string="Set to Draft" type="object" states="reject" />
                         <button name="action_finance_reject" string="Finance Reject" type="object" class="btn btn-danger" attrs="{'invisible': [('state', '!=', 'md_approve')]}" groups="topline.group_finance_manager"/>
-                        <button name="register_payment" string="Register Payment" class="btn btn-primary" type="object" attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('fully_paid', '=', True)]}"/>
+                        <button name="register_payment" string="Register Payment" class="btn btn-primary" type="object" attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('fully_paid', '=', True)]}" groups='account.group_account_manager,account.group_account_user
+'/>
                         <button name="button_reject" states="submit,line_approve,internal_approve" class="btn btn-danger" string="Reject" type="object" groups="topline.group_hr_line_manager,topline.group_internal_audit,topline.group_md,topline.group_finance_manager"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,submit,line_approve,internal_approve,md_approve,approve"/>
                     </header>
