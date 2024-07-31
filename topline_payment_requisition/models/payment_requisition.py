@@ -172,7 +172,6 @@ class PaymentRequisitionForm(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        print("&&&&&&&&&&&&&&&& create function 1 &&&&&&&&&&&&&&&&&&&&&")
         for vals in vals_list:
             if vals.get('name', 'New') == 'New':
                 vals['name'] = self.env['ir.sequence'].next_by_code(
@@ -188,7 +187,6 @@ class PaymentRequisitionForm(models.Model):
 
     # @api.model
     # def create(self, values):
-    #     print("&&&&&&&&&&&&&&&& create function 2 &&&&&&&&&&&&&&&&&&&&&")
     #     if values.get("payee_id"):
     #         payee_id = values.get("payee_id")
     #         is_md = self.is_md(payee_id)
