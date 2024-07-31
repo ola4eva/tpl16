@@ -172,23 +172,32 @@ class PaymentRequisitionForm(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        print("&&&&&&&&&&&&&&&& create function 1 &&&&&&&&&&&&&&&&&&&&&")
         for vals in vals_list:
             if vals.get('name', 'New') == 'New':
                 vals['name'] = self.env['ir.sequence'].next_by_code(
                     'payment.requisition') or '/'
+            if vals.get("payee_id"):
+                payee_id = vals.get("payee_id")
+                is_md = self.is_md(payee_id)
+                if is_md is True:
+                    vals['state'] = "md_approve"
+                elif is_md is False and vals.get('md_request') is True:
+                    vals["state"] = "md_approve"
         return super(PaymentRequisitionForm, self).create(vals_list)
 
-    @api.model
-    def create(self, values):
-        if values.get("payee_id"):
-            payee_id = values.get("payee_id")
-            is_md = self.is_md(payee_id)
-            if is_md is True:
-                values['state'] = "md_approve"
-            elif is_md is False and values.get('md_request') is True:
-                values["state"] = "md_approve"
-        res = super().create(values)
-        return res
+    # @api.model
+    # def create(self, values):
+    #     print("&&&&&&&&&&&&&&&& create function 2 &&&&&&&&&&&&&&&&&&&&&")
+    #     if values.get("payee_id"):
+    #         payee_id = values.get("payee_id")
+    #         is_md = self.is_md(payee_id)
+    #         if is_md is True:
+    #             values['state'] = "md_approve"
+    #         elif is_md is False and values.get('md_request') is True:
+    #             values["state"] = "md_approve"
+    #     res = super().create(values)
+    #     return res
 
     def unlink(self):
         for rec in self:
