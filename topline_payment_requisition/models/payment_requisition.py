@@ -147,7 +147,7 @@ class PaymentRequisitionForm(models.Model):
         string='Total Amount Outstanding', compute="_total_amount_outstanding")
     rejection_log_ids = fields.One2many(
         comodel_name='payment.requisition.rejection.log', inverse_name='requisition_id', string='Rejection Logs')
-   
+
     def _total_amount_outstanding(self):
         for rec in self:
             rec.total_amount_outstanding = rec.total_amount_approved - rec.total_amount_paid
@@ -185,18 +185,6 @@ class PaymentRequisitionForm(models.Model):
                     vals["state"] = "md_approve"
         return super(PaymentRequisitionForm, self).create(vals_list)
 
-    # @api.model
-    # def create(self, values):
-    #     if values.get("payee_id"):
-    #         payee_id = values.get("payee_id")
-    #         is_md = self.is_md(payee_id)
-    #         if is_md is True:
-    #             values['state'] = "md_approve"
-    #         elif is_md is False and values.get('md_request') is True:
-    #             values["state"] = "md_approve"
-    #     res = super().create(values)
-    #     return res
-
     def unlink(self):
         for rec in self:
             if rec.state != 'draft':
@@ -231,6 +219,8 @@ class PaymentRequisitionForm(models.Model):
                     })
 
     def button_submit(self):
+        if not self.payment_requisition_form_line_ids:
+            raise UserError("Requisition Lines are empty!")
         requester = self.env['res.users'].search(
             [('partner_id', '=', self.payee_id.id)])
         is_internal_auditor = requester.has_group(
@@ -257,19 +247,16 @@ class PaymentRequisitionForm(models.Model):
             self.name, self.employee_id.name)
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
-        seq_pr = self._get_sequence()
-        if self.name:
-            return True
-        return self.update({
-            'name': seq_pr
-        })
+        vals = dict(name=self.name)
+        if name := vals.get("name"):
+            if name == "New" or name == "/":
+                name = self._get_sequence()
+                vals.update(name=name)
+        return self.update(vals)
 
     def _get_sequence(self):
         """Return new sequence"""
-        seq_pr = "New"
         seq_pr = self.env['ir.sequence'].next_by_code('payment.requisition')
-        if seq_pr:
-            return seq_pr
         return seq_pr
 
     def set_to_draft(self):
@@ -520,7 +507,7 @@ class PaymentRequisitionFormLines(models.Model):
     _description = 'Payment Requisition Form Lines'
 
     payment_requisition_form_id = fields.Many2one(
-        comodel_name='payment.requisition.form', string='payment.requisition.form')
+        comodel_name='payment.requisition.form', string='Payment Requisition')
 
     def _check_user_group(self):
         is_manager = False
