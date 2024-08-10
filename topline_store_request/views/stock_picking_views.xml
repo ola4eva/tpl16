@@ -83,6 +83,14 @@
                     <field name="brand_id" />
                     <field name="certificate_required" />
                 </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="rejection_reason" string="Rejection">
+                        <group>
+                            <label for="rejection_reason"/>
+                            <field name="rejection_reason" readonly="1" nolabel="1"/>
+                        </group>
+                    </page>
+                </xpath>
             </field>
         </record>
 

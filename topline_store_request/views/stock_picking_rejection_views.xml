@@ -3,7 +3,7 @@
 
     <data>
 
-        <!-- <record id="stock_picking_rejection_view_form" model="ir.ui.view">
+        <record id="stock_picking_rejection_view_form" model="ir.ui.view">
             <field name="name">stock.picking.rejected.form</field>
             <field name="model">stock.picking.rejected</field>
             <field name="arch" type="xml">
@@ -17,14 +17,14 @@
                     </footer>
                 </form>
             </field>
-        </record> -->
+        </record>
 
         <record id="stock_rejection_action" model="ir.actions.act_window">
             <field name="name">Rejection Reason</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">stock.picking.rejected</field>
             <field name="view_mode">form</field>
-            <!-- <field name="view_id" ref="stock_picking_rejection_view_form"/> -->
+            <field name="view_id" ref="stock_picking_rejection_view_form"/>
             <field name="target">new</field>
         </record>
 
