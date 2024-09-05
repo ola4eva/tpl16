@@ -269,7 +269,7 @@ class PettyCash(models.Model):
             }
             account_move = account_move_obj.create(move_vals)
             requistion.account_move_id = account_move.id
-        return True
+        return self.write({'state': 'post'})
 
 
 class PettyCashLine(models.Model):
