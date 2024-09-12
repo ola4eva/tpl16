@@ -77,8 +77,8 @@
                                         <field name="name" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
                                         <field name="qty" attrs="{'readonly': [('state', '!=', 'draft')]}" />
                                         <field name="unit_price" attrs="{'readonly': [('state', '!=', 'draft')]}" />
-                                        <field name="amount_requested" attrs="{'readonly':[('parent.state', '!=', 'draft')]}"/>
-                                        <field name="amount_approved" attrs="{'readonly':[('is_manager', '=', False)]}"/>
+                                        <field name="amount_requested" attrs="{'readonly':[('parent.state', '!=', 'draft')]}" sum="Total"/>
+                                        <field name="amount_approved" attrs="{'readonly':[('is_manager', '=', False)]}" sum="Total"/>
                                         <field name="analytic_account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
                                         <field name="account_id" attrs="{'readonly':[('parent.state', '!=', 'approve')]}"/>
                                     </tree>

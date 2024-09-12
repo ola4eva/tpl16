@@ -294,10 +294,9 @@ class PaymentRequisitionForm(models.Model):
                     'journal_id': requisition.bank_journal_id.id,
                     'line_ids': [(0, 0, {
                         'name': requisition.payee_id.name,
-                        'debit': line.amount_approved > 0 and (line.amount_approved / requisition.total_amount_approved) * amount,
+                        'debit': (line.amount_approved / requisition.total_amount_approved) * amount,
                         'credit': 0.0,
                         'account_id': line.account_id.id or requisition.default_expense_account_id.id,
-                        # 'analytic_account_id': line.analytic_account_id.id or requisition.default_analytic_account_id.id,
                         'date_maturity': date.today(),
                         'partner_id': requisition.payee_id.id,
                     }) for line in requisition.payment_requisition_form_line_ids] +
