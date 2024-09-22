@@ -28,7 +28,7 @@
                     <button name="action_qa_qc_approval" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', '!=', 'approve')]}" string="Approve" type="object" class="oe_highlight" groups="topline.group_qa"/>
                     <button name="action_confirm2" string="Mark As Todo" type="object" states="qa_qc_approve" class="oe_highlight" />
                     <button name="button_validate2" string="Validate" type="object" states="assigned,confirmed" class="oe_highlight" />
-                    <button name="%(topline_store_request.stock_rejection_action)d" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('submit', 'approve', 'qa_qc_approve'))]}" string="Reject" class="btn btn-danger" groups="topline.group_hr_line_manager,stock.group_stock_manager" type="action"/>
+                    <button name="%(topline_store_request.stock_rejection_action)d" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('submit', 'approve', 'qa_qc_approve'))]}" string="REJECT" class="btn btn-danger" groups="topline.group_hr_line_manager,stock.group_stock_manager" type="action"/>
                     <button name="create_atp_order" attrs="{'invisible': ['|', ('picking_type_name','!=','Staff Store Requests'), ('state', 'not in', ('qa_qc_approve', 'confirmed'))]}" string="Generate ATP" type="object" class="oe_highlight" groups="stock.group_stock_manager"/>
                 </xpath>
                 <xpath expr="//header/button[@name='action_confirm']" position="attributes">
