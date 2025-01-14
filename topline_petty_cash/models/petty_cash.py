@@ -130,7 +130,7 @@ class PettyCash(models.Model):
 
     @api.constrains('total_amount_requested')
     def _constrains_total_amount_requested(self):
-        if self.total_amount_requested > 10000:
+        if self.total_amount_requested > 50000:
             raise UserError("Please the limit for the petty cash is 10,000!!!")
 
     def button_submit(self):
