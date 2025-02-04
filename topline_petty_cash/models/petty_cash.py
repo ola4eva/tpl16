@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import date
+from datatime import datetime
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
@@ -55,8 +56,7 @@ class PettyCash(models.Model):
     line_ids = fields.One2many(
         'petty.cash.line', 'petty_cash_id', string="Petty Cash form lines", copy=True)
 
-    date = fields.Date(string='Date', required=True,
-                       tracking=True)
+    date = fields.Datetime(string='Date', default=lambda self: fields.datetime.now(), readonly=True)
     department_id = fields.Many2one(
         comodel_name='hr.department', string='Department', default=_default_department)
     project_description = fields.Char(
