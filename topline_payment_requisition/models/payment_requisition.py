@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-
 from datetime import date
+from datetime import datetime
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import pprint
@@ -81,7 +81,7 @@ class PaymentRequisitionForm(models.Model):
     )
 
     date = fields.Date(
-        string="Date", required=True, default=fields.Date.today(), tracking=True
+        string="Date", readonly=True, default=lambda self: fields.datetime.now()
     )
     department_id = fields.Many2one(
         comodel_name="hr.department", string="Department", default=_default_department
