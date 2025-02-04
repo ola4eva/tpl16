@@ -80,7 +80,7 @@ class PaymentRequisitionForm(models.Model):
         copy=True,
     )
 
-    date = fields.Date(
+    date = fields.Datetime(
         string="Date", readonly=True, default=lambda self: fields.datetime.now()
     )
     department_id = fields.Many2one(
