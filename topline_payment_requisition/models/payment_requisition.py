@@ -12,7 +12,7 @@ class PaymentRequisitionForm(models.Model):
     _name = "payment.requisition.form"
     _description = "PAYMENT REQUISITION FORM"
     _inherit = ["mail.thread", "mail.activity.mixin"]
-    #_order = "name DESC"
+    _order = "name DESC"
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
     def _default_department(self):
