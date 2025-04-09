@@ -12,7 +12,8 @@ This module provides enhancements for the Helpdesk module in Odoo. It includes f
     "website": "https://yourwebsite.com",
     "depends": ["helpdesk"],
     "data": [
-        # "views/helpdesk_ticket_views.xml",
+        "data/email_template.xml",
+        "views/helpdesk_ticket_views.xml",
     ],
     "installable": True,
     "application": False,
