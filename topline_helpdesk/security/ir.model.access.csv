@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+topline_helpdesk.access_topline_helpdesk_issue_category,access_topline_helpdesk_issue_category,topline_helpdesk.model_topline_helpdesk_issue_category,base.group_user,1,1,1,1

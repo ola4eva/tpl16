@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from odoo import models, fields, api
+from odoo import models, fields
 
 _logger = logging.getLogger(__name__)
 
@@ -12,17 +12,9 @@ class HelpdeskTicket(models.Model):
     date_resolved = fields.Datetime("Resolution On", readonly=True)
     resolution_time = fields.Char("Resolution Time", compute="_compute_resolution_time")
     submitted = fields.Boolean("Submitted")
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        """Override the create method to set the date_created field."""
-        for vals in vals_list:
-            if not vals.get("date_created"):
-                vals["date_created"] = fields.Datetime.now()
-        return super().create(vals_list)
-
-    def _creation_subtype(self):
-        return None
+    issue_category_id = fields.Many2one(
+        comodel_name="topline_helpdesk.issue.category", string="Issue Category"
+    )
 
     def action_mark_close(self):
         """Mark the ticket as closed."""
@@ -79,12 +71,13 @@ class HelpdeskTicket(models.Model):
 
     def write(self, vals):
         super().write(vals)
-        if vals.get("stage_id"):
-            if (
-                self.env["helpdesk.stage"].browse(vals.get("stage_id")).fold
-                and not self.date_resolved
-            ):
-                self.action_mark_close()
+        for record in self:
+            if vals.get("stage_id"):
+                if (
+                    self.env["helpdesk.stage"].browse(vals.get("stage_id")).fold
+                    and not record.date_resolved
+                ):
+                    record.action_mark_close()
 
     def action_reset(self):
         self.date_created = False
