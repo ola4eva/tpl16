@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2024 HyperIT Consultant (www.hyperitconsultant.com>).
+
+For Module Support : ola4eva2001@gmail.com  or Skype : lukmanyusuff
+ -->
+<odoo>
+	<record id="purchase_amount_in_words_view" model="ir.ui.view">
+	     <field name="name">purhcase.amount.in.words.view</field>
+	     <field name="model">purchase.order</field>
+	     <field name="inherit_id" ref="purchase.purchase_order_form"/>
+	     <field name="arch" type="xml">
+	        <xpath expr="//field[@name='notes']" position="after">
+                        <group colspan="2">
+                            <field name="num_word" readonly="1"/>
+                        </group>
+	     	</xpath>
+	     </field>
+	</record>
+</odoo>
