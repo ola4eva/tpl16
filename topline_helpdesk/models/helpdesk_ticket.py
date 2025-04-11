@@ -50,18 +50,10 @@ class HelpdeskTicket(models.Model):
         """
         if self.submitted:
             not self.submitted
-        template = self.env.ref("topline_helpdesk.email_template_ticket_submitted")
+        template = self.env.ref("helpdesk.new_ticket_request_email_template")
         for record in self:
             try:
-                _logger.info(f"Sending email to {self.team_id.message_partner_ids}")
-                _logger.info(
-                    f"Sending email to {','.join(recipient.email_formatted for recipient in self.team_id.message_partner_ids) }"
-                )
-                template.with_context(
-                    recipients=self.team_id.message_partner_ids.mapped(
-                        "email_formatted"
-                    )
-                ).send_mail(record.id, force_send=True)
+                template.send_mail(record.id, force_send=True)
             except Exception as e:
                 _logger.error("Failed to send email: %s", e)
             else:
@@ -80,6 +72,7 @@ class HelpdeskTicket(models.Model):
                     record.action_mark_close()
 
     def action_reset(self):
+        "Reset ticket to draft state"
         self.date_created = False
         self.date_resolved = False
         self.resolution_time = False
