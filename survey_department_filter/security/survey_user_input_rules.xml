@@ -1,0 +1,14 @@
+<odoo>
+
+  <delete id="survey.survey_user_input_rule_survey_user_read" model="ir.rule"/>
+  <record id="survey_user_input_department_rule" model="ir.rule">
+    <field name="name">Survey Responses by Department</field>
+    <field name="model_id" ref="survey.model_survey_user_input"/>
+    <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    <field name="domain_force">[('department_id', 'in', user.employee_ids.department_id.ids)]</field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="True"/>
+    <field name="perm_create" eval="True"/>
+    <field name="perm_unlink" eval="False"/>
+  </record>
+</odoo>
