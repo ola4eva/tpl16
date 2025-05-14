@@ -3,6 +3,10 @@
 
     <data>
 
+        <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('topline_purchase.group_purchase_follower'))]" />
+        </record>
+
         <record id="topline_purchase_form_view" model="ir.ui.view">
             <field name="name">topline.purchase.form</field>
             <field name="model">purchase.order</field>
