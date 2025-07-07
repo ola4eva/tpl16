@@ -12,7 +12,7 @@ class PaymentRequisitionForm(models.Model):
     _name = "payment.requisition.form"
     _description = "PAYMENT REQUISITION FORM"
     _inherit = ["mail.thread", "mail.activity.mixin"]
-    _order = "name DESC"
+    _order = "create_date DESC"
 
     # this method is to search the hr.employee and return the user id of the person clicking the form atm
     def _default_department(self):
@@ -252,6 +252,10 @@ class PaymentRequisitionForm(models.Model):
                     vals["state"] = "md_approve"
                 elif is_md is False and vals.get("md_request") is True:
                     vals["state"] = "md_approve"
+            if vals.get("name", "New") == "New":
+                vals["name"] = (
+                    self.env["ir.sequence"].next_by_code("payment.requisition") or "/"
+                )
         return super(PaymentRequisitionForm, self).create(vals_list)
 
     def unlink(self):
