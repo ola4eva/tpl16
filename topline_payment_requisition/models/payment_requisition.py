@@ -357,7 +357,6 @@ class PaymentRequisitionForm(models.Model):
         }
 
     def action_sheet_move_create(self, payment_type, amount=None):
-
         if any(sheet.state != "approve" for sheet in self):
             raise UserError(
                 _("You can only generate accounting entry for approved payment(s).")
@@ -395,12 +394,20 @@ class PaymentRequisitionForm(models.Model):
                             0,
                             {
                                 "name": requisition.payee_id.name,
-                                "debit": (
-                                    line.amount_approved
-                                    / requisition.total_amount_approved
-                                )
-                                * amount,
-                                "credit": 0.0,
+                                "currency_id": (
+                                    requisition.currency_id.id
+                                    if requisition.currency_id
+                                    else False
+                                ),
+                                "amount_currency": (
+                                    (
+                                        (
+                                            line.amount_approved
+                                            / requisition.total_amount_approved
+                                        )
+                                        * amount
+                                    )
+                                ),
                                 "account_id": line.account_id.id
                                 or requisition.default_expense_account_id.id,
                                 "date_maturity": date.today(),
@@ -415,12 +422,15 @@ class PaymentRequisitionForm(models.Model):
                             0,
                             {
                                 "name": requisition.payee_id.name,
-                                "credit": requisition.total_amount_approved > 0
-                                and amount,
-                                "debit": 0.0,
+                                "amount_currency": -1 * (amount),
                                 "account_id": requisition.bank_journal_id.default_account_id.id,
                                 "date_maturity": date.today(),
                                 "partner_id": requisition.payee_id.id,
+                                "currency_id": (
+                                    requisition.currency_id.id
+                                    if requisition.currency_id
+                                    else False
+                                ),
                             },
                         )
                     ],
@@ -436,12 +446,15 @@ class PaymentRequisitionForm(models.Model):
                             0,
                             {
                                 "name": requisition.payee_id.name,
-                                "debit": amount > 0 and amount,
-                                "credit": 0.0,
+                                "amount_currency": amount > 0 and amount,
                                 "account_id": requisition.default_expense_account_id.id,
-                                # 'analytic_account_id': requisition.default_analytic_account_id.id,
                                 "date_maturity": date.today(),
                                 "partner_id": requisition.payee_id.id,
+                                "currency_id": (
+                                    requisition.currency_id.id
+                                    if requisition.currency_id
+                                    else False
+                                ),
                             },
                         )
                     ]
@@ -451,16 +464,19 @@ class PaymentRequisitionForm(models.Model):
                             0,
                             {
                                 "name": requisition.payee_id.name,
-                                "credit": amount > 0 and amount,
-                                "debit": 0.0,
+                                "amount_currency": -1 * (amount > 0 and amount),
                                 "account_id": requisition.bank_journal_id.default_account_id.id,
                                 "date_maturity": date.today(),
                                 "partner_id": requisition.payee_id.id,
+                                "currency_id": (
+                                    requisition.currency_id.id
+                                    if requisition.currency_id
+                                    else False
+                                ),
                             },
                         )
                     ],
                 }
-            pp.pprint(move_vals)
             account_move = account_move_obj.create(move_vals)
             requisition.account_move_id = account_move.id
             self._compute_amount_paid(amount)
