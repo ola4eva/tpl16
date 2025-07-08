@@ -19,8 +19,6 @@
 
     'depends': [
         'topline',
-        'topline_payment_requisition',
-        'topline_purchase',
     ],
 
     'data': [
@@ -28,5 +26,6 @@
         'data/service_order_data.xml',
         'security/ir.model.access.csv',
         'views/service_order_views.xml',
+
     ],
 }

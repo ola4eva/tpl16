@@ -18,8 +18,7 @@
     'license': 'LGPL-3',
 
     'depends': [
-        'topline_payment_requisition',
-        'topline_purchase',
+        "topline"
     ],
 
     # always loaded

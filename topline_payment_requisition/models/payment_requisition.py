@@ -215,6 +215,36 @@ class PaymentRequisitionForm(models.Model):
         string="Rejection Logs",
     )
 
+    service_order_id = fields.Many2one("service.order", string="Service Order")
+    project_id = fields.Many2one("project.project", string="Project", readonly=True)
+    type_requisition = fields.Selection(
+        [
+            ("service_order", "Service order"),
+            ("atp", "ATP"),
+        ],
+        string="Type",
+    )
+
+    @api.onchange("type_requisition")
+    def _onchange_type_requisition(self):
+        self.service_order_id = False
+        self.atp_id = False
+        self.project_id = False
+
+    @api.onchange("service_order_id")
+    def _onchange_service_order_id(self):
+        self.project_id = False
+        self.atp_id = False
+        if self.service_order_id:
+            self.project_id = self.service_order_id.project_id
+
+    @api.onchange("atp_id")
+    def _onchange_atp_id(self):
+        self.project_id = False
+        self.service_order_id = False
+        if self.atp_id:
+            self.project_id = self.atp_id.project_id
+
     def _total_amount_outstanding(self):
         for rec in self:
             rec.total_amount_outstanding = (
