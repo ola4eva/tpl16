@@ -14,11 +14,14 @@
 
     'category': 'Purchase',
     'version': '0.1',
+    # 'version': '16.0.0.1',
 
     'depends': [
         'purchase',
         'topline',
         'hr',
+        'topline_service_order',
+        'topline_atp',
     ],
     'license': 'LGPL-3',
     'data': [

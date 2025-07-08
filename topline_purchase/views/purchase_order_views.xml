@@ -45,6 +45,16 @@
                     <attribute name="attrs">{'readonly': [('state', 'not in', ['draft', 'md_approve'])]}</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="type_of_purchase" />
+                    <field name="service_order_id"
+                        attrs="{'invisible': [('type_of_purchase', '!=', 'service_order')], 'readonly': [('state', '!=', 'draft')], 'required': [('state', '=', 'draft'), ('type_of_purchase', '=', 'service_order')]}" />
+                    <field name="atp_id"
+                        attrs="{'invisible': [('type_of_purchase', '!=', 'atp')], 'readonly': [('state', '!=', 'draft')], 'required': [('state', '=', 'draft'), ('type_of_purchase', '=', 'atp')]}" />
+                    <field name="project_id"
+                        attrs="{'invisible': [('project_id', '=', False)], 'readonly': [('state', '!=', 'draft')]}" />
+                </xpath>
+
             </field>
         </record>
 
