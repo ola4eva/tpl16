@@ -446,6 +446,9 @@ class PaymentRequisitionForm(models.Model):
                                 or requisition.default_expense_account_id.id,
                                 "date_maturity": date.today(),
                                 "partner_id": requisition.payee_id.id,
+                                "analytic_distribution": {
+                                    line.analytic_account_id.id: 100
+                                },
                             },
                         )
                         for line in requisition.payment_requisition_form_line_ids
@@ -481,7 +484,13 @@ class PaymentRequisitionForm(models.Model):
                             {
                                 "name": requisition.payee_id.name,
                                 "amount_currency": amount > 0 and amount,
-                                "account_id": requisition.default_expense_account_id.id,
+                                "amount_currency": amount > 0
+                                and (
+                                    (amount * line.amount_approved)
+                                    / self.total_amount_approved
+                                ),
+                                "account_id": line.account_id.id,
+                                "account_id": line.account_id.id,
                                 "date_maturity": date.today(),
                                 "partner_id": requisition.payee_id.id,
                                 "currency_id": (
@@ -489,8 +498,12 @@ class PaymentRequisitionForm(models.Model):
                                     if requisition.currency_id
                                     else False
                                 ),
+                                "analytic_distribution": {
+                                    line.analytic_account_id.id: 100
+                                },
                             },
                         )
+                        for line in requisition.payment_requisition_form_line_ids
                     ]
                     + [
                         (
