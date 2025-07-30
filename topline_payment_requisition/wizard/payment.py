@@ -10,6 +10,7 @@ class PaymentWizard(models.TransientModel):
     payment_type = fields.Selection(selection=[
         ('full_payment', "Register Full Payment"),
         ('down_payment', "Down Payment"),
+        ('balance_payment', "Balance Payment"),
     ], required=True)
     requisition_id = fields.Many2one("payment.requisition.form", "Requisition")
     amount = fields.Float("Amount", required=True)
@@ -22,7 +23,7 @@ class PaymentWizard(models.TransientModel):
 
     @api.onchange('payment_type')
     def _onchange_payment_type(self):
-        if self.payment_type and self.payment_type == 'full_payment':
+        if self.payment_type and self.payment_type in ['full_payment', 'balance_payment']:
             self.amount = self.total_amount_outstanding
 
     def do_pay(self):
