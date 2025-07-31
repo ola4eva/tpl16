@@ -2,6 +2,14 @@
 from datetime import date
 from odoo import models, fields, api
 
+# -*- coding: utf-8 -*-
+from datetime import date
+from odoo import models, fields, api
+
+
+# class PurchaseOrder(models.Model):
+#     _inherit = "purchase.order"
+
 
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
@@ -28,8 +36,36 @@ class PurchaseOrder(models.Model):
 
     order_line = fields.One2many(comodel_name="purchase.order.line", inverse_name="order_id",
                                  readonly=True, states={'draft': [('readonly', False)], 'md_approve': [('readonly', False)]})
+    service_order_id = fields.Many2one("service.order", string="Service Order")
+    project_id = fields.Many2one("project.project", string="Project", readonly=True)
+    type_of_purchase = fields.Selection(
+        [
+            ("service_order", "Service order"),
+            ("atp", "ATP"),
+        ],
+        string="Type",
+    )
 
-    
+    @api.onchange("type_of_purchase")
+    def _onchange_type_of_purchase(self):
+        self.service_order_id = False
+        self.atp_id = False
+        self.project_id = False
+
+    @api.onchange("service_order_id")
+    def _onchange_service_order_id(self):
+        self.project_id = False
+        self.atp_id = False
+        if self.service_order_id:
+            self.project_id = self.service_order_id.project_id
+
+    @api.onchange("atp_id")
+    def _onchange_atp_id(self):
+        self.project_id = False
+        self.service_order_id = False
+        if self.atp_id:
+            self.project_id = self.atp_id.project_id
+
     def button_submit(self):
         self.write({'state': 'submit'})
         partner_ids = []
@@ -81,7 +117,6 @@ class PurchaseOrder(models.Model):
         string='Date', readonly=True, tracking=True)
     active = fields.Boolean(string='Active?', default=True)
 
-    
     def button_line_manager_approval(self):
         self.write({'state': 'line_approve'})
         self.supervisor_approval_date = date.today()
@@ -99,7 +134,6 @@ class PurchaseOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_audit_approval_notification(self):
         self.write({'state': 'internal_approve'})
         self.audit_approval_date = date.today()
@@ -117,7 +151,6 @@ class PurchaseOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_reject(self):
         self.write({'state': 'reject'})
         subject = "RFQ '{}', for {} has been rejected".format(
@@ -128,7 +161,6 @@ class PurchaseOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_md_approval_notification(self):
         """Notify Finance team of MD's approval...
         """
@@ -145,7 +177,6 @@ class PurchaseOrder(models.Model):
         self.message_post(subject=subject, body=subject,
                           partner_ids=partner_ids)
 
-    
     def button_md_approval(self):
         """Managing director approves purchase order and notification is sent to finance
         """
@@ -160,7 +191,6 @@ class PurchaseOrder(models.Model):
             })
         return True
 
-    
     def button_confirm(self):
         for order in self:
             if order.state not in ['md_approve']:
@@ -177,7 +207,6 @@ class PurchaseOrder(models.Model):
             order.button_approve()
         return True
 
-    
     def _compute_amount_in_word(self):
         for rec in self:
             rec.num_word = str(rec.currency_id.amount_to_text(

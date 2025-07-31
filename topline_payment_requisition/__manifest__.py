@@ -17,7 +17,8 @@
 
     'depends': [
         'base',
-        'topline',
+        'topline_service_order',
+        'topline_atp',
         'base_extension',
     ],
 

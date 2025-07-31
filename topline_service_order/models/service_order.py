@@ -34,7 +34,7 @@ class ServiceOrder(models.Model):
     date = fields.Date(string='Date', default=date.today())
 
     service_order_line_ids = fields.One2many(
-        'service.order.line', 'service_order_id', string="Service Order", copy=True)
+        comodel_name='service.order.line', inverse_name='service_order_id', string="Order Lines", copy=True)
 
     line_manager_approval = fields.Many2one(
         'res.users', 'Manager Name', readonly=True, tracking=True)
@@ -283,7 +283,6 @@ class ServiceOrderLine(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     service_order_id = fields.Many2one('service.order', 'Service Order')
-
     product_id = fields.Many2one(
         comodel_name='product.product', string='Product')
     service = fields.Char(string='Service')
