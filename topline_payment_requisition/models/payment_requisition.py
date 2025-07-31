@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from datetime import date
-from datetime import datetime
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import pprint
@@ -254,11 +253,32 @@ class PaymentRequisitionForm(models.Model):
     def _compute_amount_paid(self, amount_paid=0.0):
         self.total_amount_paid += amount_paid
 
+    def _has_no_outstanding_amount(self):
+        for rec in self:
+            if rec.total_amount_outstanding <= 0.0:
+                return True
+        return False
+    
+    def _has_all_payments_posted(self):
+        for rec in self:
+            if not all(state == "posted" for state in rec.payment_ids.mapped("state")):
+                return False
+        return True
+
     def _confirm_post(self):
-        if all(state == "posted" for state in self.payment_ids.mapped("state")):
-            self.state = "post"
-        else:
-            self.state = self.state
+        for record in self:
+            print("Record state before posting <<<<<>>>>>>>>>>", record.state)
+            has_no_outstanding = record._has_no_outstanding_amount()
+            has_all_payments_posted = record._has_all_payments_posted()
+            print("has_no_outstanding", has_no_outstanding)
+            print("has_all_payments_posted", has_all_payments_posted)
+            if has_no_outstanding and has_all_payments_posted:
+                print("Posting the record >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                record.state = "post"
+            else:
+                record.state = "approve"
+            print("Record state after posting <<<<<>>>>>>>>>>", record.state)
+            return False
 
     def _compute_total_payments(self):
         self.payment_count = (
@@ -427,7 +447,7 @@ class PaymentRequisitionForm(models.Model):
                             0,
                             0,
                             {
-                                "name": requisition.payee_id.name,
+                                "name": line.name,
                                 "currency_id": (
                                     requisition.currency_id.id
                                     if requisition.currency_id
@@ -458,7 +478,7 @@ class PaymentRequisitionForm(models.Model):
                             0,
                             0,
                             {
-                                "name": requisition.payee_id.name,
+                                "name": requisition.name,
                                 "amount_currency": -1 * (amount),
                                 "account_id": requisition.bank_journal_id.default_account_id.id,
                                 "date_maturity": date.today(),
@@ -482,7 +502,7 @@ class PaymentRequisitionForm(models.Model):
                             0,
                             0,
                             {
-                                "name": requisition.payee_id.name,
+                                "name": line.name,
                                 "amount_currency": amount > 0 and amount,
                                 "amount_currency": amount > 0
                                 and (
@@ -510,7 +530,7 @@ class PaymentRequisitionForm(models.Model):
                             0,
                             0,
                             {
-                                "name": requisition.payee_id.name,
+                                "name": requisition.name,
                                 "amount_currency": -1 * (amount > 0 and amount),
                                 "account_id": requisition.bank_journal_id.default_account_id.id,
                                 "date_maturity": date.today(),
