@@ -3,6 +3,8 @@ from datetime import date
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import pprint
+from odoo.tools.float_utils import float_round
+
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -430,7 +432,29 @@ class PaymentRequisitionForm(models.Model):
                     "ref": requisition.name,
                     "date": date.today(),
                     "journal_id": requisition.bank_journal_id.id,
-                    "line_ids": [
+                    "line_ids": [],
+                }
+                lines = requisition.payment_requisition_form_line_ids
+                allocated_amounts = []
+                cumulative = 0.0
+                for i, line in enumerate(lines):
+                    proportion = (
+                        line.amount_approved / requisition.total_amount_approved
+                        if requisition.total_amount_approved
+                        else 0.0
+                    )
+                    if i < len(lines) - 1:
+                        line_amount = float_round(
+                            proportion * amount, precision_digits=2
+                        )
+                        allocated_amounts.append(line_amount)
+                        cumulative += line_amount
+                    else:
+                        residual = float_round(amount - cumulative, precision_digits=2)
+                        allocated_amounts.append(residual)
+                # Build debit lines from allocated_amounts
+                for line, line_amount in zip(lines, allocated_amounts):
+                    move_vals["line_ids"].append(
                         (
                             0,
                             0,
@@ -441,45 +465,38 @@ class PaymentRequisitionForm(models.Model):
                                     if requisition.currency_id
                                     else False
                                 ),
-                                "amount_currency": (
-                                    (
-                                        (
-                                            line.amount_approved
-                                            / requisition.total_amount_approved
-                                        )
-                                        * amount
-                                    )
-                                ),
+                                "amount_currency": line_amount,
                                 "account_id": line.account_id.id
                                 or requisition.default_expense_account_id.id,
                                 "date_maturity": date.today(),
                                 "partner_id": requisition.payee_id.id,
-                                "analytic_distribution": {
-                                    line.analytic_account_id.id: 100
-                                },
-                            },
-                        )
-                        for line in requisition.payment_requisition_form_line_ids
-                    ]
-                    + [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": requisition.name,
-                                "amount_currency": -1 * (amount),
-                                "account_id": requisition.bank_journal_id.default_account_id.id,
-                                "date_maturity": date.today(),
-                                "partner_id": requisition.payee_id.id,
-                                "currency_id": (
-                                    requisition.currency_id.id
-                                    if requisition.currency_id
-                                    else False
+                                "analytic_distribution": (
+                                    {line.analytic_account_id.id: 100}
+                                    if line.analytic_account_id
+                                    else {}
                                 ),
                             },
                         )
-                    ],
-                }
+                    )
+                # Credit line
+                move_vals["line_ids"].append(
+                    (
+                        0,
+                        0,
+                        {
+                            "name": requisition.name,
+                            "amount_currency": -1 * amount,
+                            "account_id": requisition.bank_journal_id.default_account_id.id,
+                            "date_maturity": date.today(),
+                            "partner_id": requisition.payee_id.id,
+                            "currency_id": (
+                                requisition.currency_id.id
+                                if requisition.currency_id
+                                else False
+                            ),
+                        },
+                    )
+                )
             else:
                 move_vals = {
                     "ref": requisition.name,
