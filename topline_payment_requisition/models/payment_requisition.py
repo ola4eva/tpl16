@@ -401,160 +401,115 @@ class PaymentRequisitionForm(models.Model):
         }
 
     def action_sheet_move_create(self, payment_type, amount=None):
-        if any(sheet.state != "approve" for sheet in self):
-            raise UserError(
-                _("You can only generate accounting entry for approved payment(s).")
-            )
-
-        if not self.bank_journal_id:
-            raise UserError(_("No journal selected."))
-
-        if any(
-            list(
-                not line.account_id
-                for sheet in self
-                for line in sheet.payment_requisition_form_line_ids
-            )
-        ):
-            if not self.default_expense_account_id:
-                raise UserError(
-                    _(
-                        "No default expense account selected and no expense account set on the lines."
-                    )
-                )
-        if not amount:
-            amount = 0.0
+        """
+        Create account.move entries for payment requisitions. Handles both full and partial
+        (down) payments by proportionally allocating the payment amount across lines and
+        adjusting the last line for any rounding residuals to ensure the journal entry is
+        balanced.
+        """
         for requisition in self:
-            account_move_obj = self.env["account.move"].sudo()
-            move_vals = {}
-            if payment_type == "full_payment":
-                move_vals = {
-                    "ref": requisition.name,
-                    "date": date.today(),
-                    "journal_id": requisition.bank_journal_id.id,
-                    "line_ids": [],
-                }
-                lines = requisition.payment_requisition_form_line_ids
-                allocated_amounts = []
-                cumulative = 0.0
-                for i, line in enumerate(lines):
-                    proportion = (
-                        line.amount_approved / requisition.total_amount_approved
-                        if requisition.total_amount_approved
-                        else 0.0
-                    )
-                    if i < len(lines) - 1:
-                        line_amount = float_round(
-                            proportion * amount, precision_digits=2
-                        )
-                        allocated_amounts.append(line_amount)
-                        cumulative += line_amount
-                    else:
-                        residual = float_round(amount - cumulative, precision_digits=2)
-                        allocated_amounts.append(residual)
-                # Build debit lines from allocated_amounts
-                for line, line_amount in zip(lines, allocated_amounts):
-                    move_vals["line_ids"].append(
-                        (
-                            0,
-                            0,
-                            {
-                                "name": line.name,
-                                "currency_id": (
-                                    requisition.currency_id.id
-                                    if requisition.currency_id
-                                    else False
-                                ),
-                                "amount_currency": line_amount,
-                                "account_id": line.account_id.id
-                                or requisition.default_expense_account_id.id,
-                                "date_maturity": date.today(),
-                                "partner_id": requisition.payee_id.id,
-                                "analytic_distribution": (
-                                    {line.analytic_account_id.id: 100}
-                                    if line.analytic_account_id
-                                    else {}
-                                ),
-                            },
-                        )
-                    )
-                # Credit line
+            if requisition.state != "approve":
+                raise UserError(_("You can only generate accounting entry for approved payment(s)."))
+            if not requisition.bank_journal_id:
+                raise UserError(_("No journal selected."))
+
+            # Ensure there is an expense account on all lines or a default expense account set
+            if any(not line.account_id for line in requisition.payment_requisition_form_line_ids):
+                if not requisition.default_expense_account_id:
+                    raise UserError(_(
+                        "No default expense account selected and no expense account set on the lines."
+                    ))
+
+            # Default to full payment amount if not provided
+            if not amount:
+                payment_amount = requisition.total_amount_approved or 0.0
+            else:
+                payment_amount = amount
+
+            # Build proportional allocation based on amount_approved of each line
+            lines = requisition.payment_requisition_form_line_ids
+            allocated_amounts = []
+            cumulative = 0.0
+            total_approved = sum(l.amount_approved for l in lines) or 0.0
+
+            # If there is nothing to allocate, raise an error
+            if payment_amount <= 0 or total_approved <= 0:
+                raise UserError(_("Invalid payment amount or no approved amounts on lines."))
+
+            for i, line in enumerate(lines):
+                proportion = (line.amount_approved / total_approved) if total_approved else 0.0
+                if i < len(lines) - 1:
+                    line_amount = float_round(proportion * payment_amount, precision_digits=2)
+                    allocated_amounts.append(line_amount)
+                    cumulative += line_amount
+                else:
+                    # last line picks up residual so totals exactly match
+                    residual = float_round(payment_amount - cumulative, precision_digits=2)
+                    allocated_amounts.append(residual)
+
+            # Prepare account.move values
+            move_vals = {
+                "ref": requisition.name,
+                "date": date.today(),
+                "journal_id": requisition.bank_journal_id.id,
+                "line_ids": [],
+            }
+
+            # Debit lines (expense/analytic)
+            for line, line_amount in zip(lines, allocated_amounts):
                 move_vals["line_ids"].append(
                     (
                         0,
                         0,
                         {
-                            "name": requisition.name,
-                            "amount_currency": -1 * amount,
-                            "account_id": requisition.bank_journal_id.default_account_id.id,
+                            "name": line.name,
+                            "currency_id": (
+                                requisition.currency_id.id if requisition.currency_id else False
+                            ),
+                            "amount_currency": line_amount,
+                            "account_id": (
+                                line.account_id.id or requisition.default_expense_account_id.id
+                            ),
                             "date_maturity": date.today(),
                             "partner_id": requisition.payee_id.id,
-                            "currency_id": (
-                                requisition.currency_id.id
-                                if requisition.currency_id
-                                else False
+                            "analytic_distribution": (
+                                {line.analytic_account_id.id: 100}
+                                if line.analytic_account_id
+                                else {}
                             ),
                         },
                     )
                 )
-            else:
-                move_vals = {
-                    "ref": requisition.name,
-                    "date": date.today(),
-                    "journal_id": requisition.bank_journal_id.id,
-                    "line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": line.name,
-                                "amount_currency": amount > 0 and amount,
-                                "amount_currency": amount > 0
-                                and (
-                                    (amount * line.amount_approved)
-                                    / self.total_amount_approved
-                                ),
-                                "account_id": line.account_id.id,
-                                "account_id": line.account_id.id,
-                                "date_maturity": date.today(),
-                                "partner_id": requisition.payee_id.id,
-                                "currency_id": (
-                                    requisition.currency_id.id
-                                    if requisition.currency_id
-                                    else False
-                                ),
-                                "analytic_distribution": {
-                                    line.analytic_account_id.id: 100
-                                },
-                            },
-                        )
-                        for line in requisition.payment_requisition_form_line_ids
-                    ]
-                    + [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": requisition.name,
-                                "amount_currency": -1 * (amount > 0 and amount),
-                                "account_id": requisition.bank_journal_id.default_account_id.id,
-                                "date_maturity": date.today(),
-                                "partner_id": requisition.payee_id.id,
-                                "currency_id": (
-                                    requisition.currency_id.id
-                                    if requisition.currency_id
-                                    else False
-                                ),
-                            },
-                        )
-                    ],
-                }
-            account_move = account_move_obj.create(move_vals)
+
+            # Single credit line to bank account (negative amount_currency)
+            move_vals["line_ids"].append(
+                (
+                    0,
+                    0,
+                    {
+                        "name": requisition.name,
+                        "amount_currency": -1 * payment_amount,
+                        "account_id": requisition.bank_journal_id.default_account_id.id,
+                        "date_maturity": date.today(),
+                        "partner_id": requisition.payee_id.id,
+                        "currency_id": (
+                            requisition.currency_id.id if requisition.currency_id else False
+                        ),
+                    },
+                )
+            )
+
+            # Create the account.move and link it
+            account_move = self.env["account.move"].sudo().create(move_vals)
             requisition.account_move_id = account_move.id
-            self._compute_amount_paid(amount)
+
+            # Mark partial/full payment recorded on requisition
+            # Increase the computed total amount paid
+            requisition._compute_amount_paid(payment_amount)
+
+            # Link created move to payment_ids (many2one relation usage as in original code)
             requisition.write({"payment_ids": [(4, account_move.id, 0)]})
-            # TODO: revisit this function
-            # requisition._check_fully_paid()
+
         return True
 
     def action_view_journal_entries(self):
