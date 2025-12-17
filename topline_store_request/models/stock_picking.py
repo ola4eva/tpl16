@@ -56,6 +56,28 @@ class StockPicking(models.Model):
         'Manager Confirmation', tracking=True)
     client_id = fields.Many2one(
         'res.partner', string='Client', index=True, ondelete='cascade', required=False)
+    atp_count = fields.Integer('atp_count', compute="_compute_atp_count")
+
+    def action_view_atps(self):
+        """
+        Open Linked ATPs
+        -------
+        """
+        action = self.env.ref("topline_atp.topline_atp_form_action")
+        result = action.read()[0]
+        linked_atps = self.env['atp.form'].search([('stock_source', '=', self.name)])
+        if self.atp_count != 1:
+            result["domain"] = "[('id', 'in', " + str(linked_atps.ids) + ")]"
+        elif self.atp_count == 1:
+            res = self.env.ref("topline_atp.topline_atp_form_view", False)
+            result["views"] = [(res and res.id or False, "form")]
+            result["res_id"] = linked_atps.id
+        return result
+
+    def _compute_atp_count(self):
+        for request in self:
+            atp_count = self.env['atp.form'].search_count([('stock_source', '=', request.name)])
+            request.atp_count = atp_count
 
     def unlink(self):
         for picking in self:
