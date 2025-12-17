@@ -61,6 +61,7 @@ class PaymentRequisitionForm(models.Model):
             ("line_approve", "Line Manager Approved"),
             ("internal_approve", "Internal Audit Approved"),
             ("md_approve", "MD Approved"),
+            ("awaiting_payment", "Awaiting Payment"),
             ("paid", "Paid"),
             ("approve", "Finance Approved"),
             ("post", "Posted"),
@@ -613,6 +614,10 @@ class PaymentRequisitionForm(models.Model):
             partner_ids.append(partner.id)
         self.message_post(subject=subject, body=subject, partner_ids=partner_ids)
         return True
+    
+    def button_await_payment(self):
+        """Set record to awaiting payment."""
+        return self.write({'state': "awaiting_payment"})
 
     def button_finance_approval(self):
         for record in self:
